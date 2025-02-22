@@ -4,8 +4,6 @@
 
 
 
-
-
 <form action="password" method="post">
 <div class="container w-400">
 	<div class="cell center">

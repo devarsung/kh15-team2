@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>메뉴창</title>
-</head>
-<booy>
+
      <div class="w-1100 center">
     <div class="flex-box p-10">
         <div class="w-25 right flex-box flex-center">
@@ -46,4 +40,3 @@
         </div>
     </div>
 </body>
-</html>

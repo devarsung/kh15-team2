@@ -2,21 +2,6 @@
     pageEncoding="UTF-8"%>
 
 
-  <style>
-h1 {
-    white-space: nowrap;
-}
-html, body{
-    height: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: center; /* 세로 중앙 정렬 */
-    text-align: center; /* 내부 글자도 중앙 정렬 */
-    background-color: #f8f9fa; /* 배경 색상 추가 */
-}
-    </style>
-    
     
     
     <div class="content w-500">
@@ -45,8 +30,6 @@ html, body{
         </div>
     </div>
     
-    
-      
     
     
     
