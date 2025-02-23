@@ -42,11 +42,16 @@
         </div>
 
         <div class="cell my-50">
-            <textarea class="field w-100 target" rows="7">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod, est non egestas vestibulum, nisi ex ullamcorper erat, eget hendrerit ante metus vitae leo. Curabitur mattis orci porta libero sagittis interdum. Vivamus ullamcorper id metus nec porttitor. Phasellus sed ex risus. Ut bibendum molestie pharetra. Duis eleifend risus quis tortor sagittis congue. Proin a mollis libero. Aenean euismod turpis lacus, sed consequat enim pellentesque a. Sed dapibus lorem nec quam ornare maximus eget a est. Pellentesque et feugiat tortor, a mollis velit. Pellentesque eu turpis maximus, porta neque ornare, suscipit sem. Proin pharetra eget ipsum quis egestas. In ac tortor interdum, lobortis ex quis, elementum ipsum.
-                Sed vitae tortor vulputate, tempor massa at, condimentum lectus. Quisque vitae dignissim diam, venenatis dapibus magna. Donec sit amet felis urna. Suspendisse pulvinar sed est in mattis. Duis in metus eu purus convallis dictum. Nam sapien lorem, scelerisque ac imperdiet id, dignissim sit amet quam. Suspendisse turpis felis, tristique nec felis dignissim, ornare luctus sapien. Duis egestas risus sed libero iaculis, id iaculis turpis lacinia. Integer eleifend metus a blandit aliquet. Morbi feugiat lectus et tincidunt pharetra.
-                Curabitur congue iaculis purus, sit amet lobortis metus sagittis sit amet. Donec id maximus lacus. Morbi a porta ante, in tempus tortor. Sed at eleifend tellus. Maecenas vulputate, ante in posuere vulputate, quam leo semper est, et gravida purus ante id metus. Quisque non dictum augue. Ut magna massa, tempor vel est et, efficitur fringilla sapien. Nullam sed tempor purus, non volutpat felis. In dignissim accumsan purus, a porttitor urna sagittis eget.
-                Sed id nulla eleifend, interdum orci in, ullamcorper risus. Nam laoreet cursus turpis, eget maximus leo bibendum eu. Nulla scelerisque, ligula nec dignissim euismod, mauris eros volutpat neque, eu sodales velit metus sed odio. Fusce tristique volutpat finibus. Praesent fermentum sed ipsum rhoncus lobortis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam et nisi magna. Nam eu euismod tortor. Donec id velit diam.
-                Quisque pulvinar dolor tincidunt mi porttitor, eu sagittis risus finibus. Nunc non consectetur tellus. Curabitur mauris libero, auctor a turpis sit amet, imperdiet euismod nisl. Ut ultrices augue quis consectetur cursus. Vivamus non blandit quam. Donec dolor quam, sagittis in nisi eu, placerat consequat justo. Vivamus aliquet ligula purus, eget lacinia massa dictum ut. Vivamus nec bibendum tortor. Pellentesque vehicula, ipsum nec pellentesque venenatis, urna enim malesuada metus, a facilisis felis enim ac urna. Ut ac nulla in erat ultricies interdum sed eget enim. Sed porta rutrum ante.</textarea>
+            <textarea class="field w-100 target" rows="7">개인 이용 약관 (예시)
+
+1.본 약관은 회사가 제공하는 서비스의 이용 조건을 규정합니다.
+2.이용자는 본 약관에 동의함으로써 서비스를 사용할 수 있습니다.
+3.회사는 서비스 개선을 위해 필요 시 약관을 변경할 수 있습니다.
+4.이용자는 법령 및 공공질서를 준수하며 서비스를 이용해야 합니다.
+5.회사는 서비스 제공과 관련하여 이용자의 개인정보를 보호합니다.
+6.이용자의 부정 이용이 발견될 경우 서비스 이용이 제한될 수 있습니다.
+7.회사는 불가피한 사유로 서비스 제공을 중단할 수 있으며, 사전 공지합니다.
+8.본 약관과 관련된 분쟁은 대한민국 법률에 따릅니다.</textarea>
         </div>
       
         <div class="cell mt-20">
