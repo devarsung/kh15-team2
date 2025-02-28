@@ -13,6 +13,7 @@ import com.kh.semiproject.dto.NoticeDto;
 @RequestMapping("/notice")
 public class NoticeController {
 
+
 	@Autowired
 	private NoticeDao noticeDao;
 	
@@ -27,5 +28,5 @@ public class NoticeController {
 		return "/WEB-INF/views/notice/detail.jsp";
 	}
 	
-	
+
 }

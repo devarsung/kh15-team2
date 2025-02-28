@@ -25,6 +25,7 @@ public class ReviewController {
 		return "/WEB-INF/views/review/list.jsp";
 	}
 	
+
 	@GetMapping("/add")
 	public String add() {
 		return "/WEB-INF/views/review/add.jsp";
@@ -50,6 +51,7 @@ public class ReviewController {
 	public String edit(@ModelAttribute ReviewDto reviewDto) {
 		return "redirect:list";
 	}
+
 }
 
 

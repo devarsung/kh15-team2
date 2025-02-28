@@ -12,6 +12,7 @@ import com.kh.semiproject.dto.PlaceDto;
 @Controller
 @RequestMapping("/place")
 public class PlaceController {
+
 	@Autowired
 	public PlaceDao placeDao;
 	
@@ -26,5 +27,9 @@ public class PlaceController {
 		model.addAttribute("placeDto",placeDto);
 		return "/WEB-INF/views/place/detail.jsp";
 	}
+
+
+	
+
 
 }
