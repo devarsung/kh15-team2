@@ -1,0 +1,226 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <!--google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+    <!--font awesome cdn-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+    <link rel="stylesheet" type="text/css" href="./css/commons.css">
+    <link rel="stylesheet" type="text/css" href="./css/text.css">
+
+    <!-- jQuery-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+
+    </style>
+
+    <!-- summernote cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+
+
+    <!-- Kakao Map API -->
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=1aecdde2565bbb75bfd9dd611109d4e0"></script>
+
+   
+    <style>
+.Cannes-p12{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 가로 3개 */
+    grid-auto-rows: minmax(220px, auto); /* 행 높이를 유동적으로 조정 */
+    gap: 5% 2%; /* 세로 간격 줄이고 가로 간격 추가 */
+    width: 91.5%;/*널비*/
+}
+        .Cannes-width{
+            margin-top: 74px;
+        }
+        .Cannes-height{
+    height: auto; /* 높이를 자동 조정 */
+    min-height: 600px; /* 최소 높이만 설정 */
+}
+.img {
+    width: 190px; /* 부모 요소의 너비를 꽉 채우도록 조정 */
+    height: 190px;
+    object-fit: cover;
+}
+
+        .image {
+            border-radius: 11.8%;
+            /* 각도  */
+        }
+        .content-box {
+         
+    /* display: block; */
+}
+.geoli-size{
+    margin-left: 70px !important;
+}
+    </style>
+
+    <script type="text/javascript">
+ function truncateText(selector, maxLength) {
+    $(selector).each(function () {
+        let text = $(this).text().trim();
+        if (text.length > maxLength) {
+            $(this).attr("title", text);
+            $(this).text(text.substring(0, maxLength) + "...");
+        }
+    });
+}
+
+// 실행 (페이지 로드 후)
+$(function () {
+    truncateText(".content-box", 15);
+});
+
+// 버튼 클릭 시 다시 실행 가능 (예: 새로운 요소 추가 후 적용)
+$("#refresh").on("click", function () {
+    truncateText(".content-box", 20);
+});
+
+    </script>
+    <div class="container w-1200 center">
+        <div class="cell center  ">
+            <h1>여행지 목록 페이지</h1>
+        </div>
+        <div class="cell my-50">
+            <div class="cell center">
+                <form action="list" method="get">
+                    <select name="column" class="field">
+                        <option value="" ${param.column=='' ? 'selected' : '' }>??</option>
+                        <option value="" ${param.column=='' ? 'selected' : '' }>??</option>
+                    </select>
+                    <input type="text" name="keyword" value="" class="field w-50">
+                    <button class="btn btn-positive"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <div class="cell flex-box Cannes-p12 Cannes-height " >
+            <div class="cell geoli-size  center">
+                <div class="cell ">
+
+                    <a href="#" class="">
+                        <img class="cell image img" src="https://cdn.discoverynews.kr/news/photo/202002/161226_24366_2811.jpg">
+                    </a>
+                    <br>
+                    <span class="content-box">
+                        샐랙여행 페이지ㅁㄴㅇㅁㅇㅁㅇㅁㅇㄴㅁㄴㅇㅁㄴㅇㅁㅇㄴㅁㅇㅁㅇㅁㄴㅇㅁㅇ
+                    </span>
+                    <br>
+                    <span class="content-box">
+                        샐랙여행ㄴㅁㅇㅁㅇㅁㅇㅁㅇㅁㅇㅁㄴㅇㄴㅁ
+                    </span>
+
+                </div>
+            </div>
+            <div class="cell geoli-size  center ">
+                <div class="cell">
+
+                    <a href="#" class="">
+                        <img class="cell image img" src="https://cdn.informaticsview.com/news/photo/202408/485_1741_4410.jpg">
+                    </a>
+                    <br>
+                    <span class="content-box">
+                        샐랙여행 페이지
+                    </span>
+                    <br>
+                    <span class="content-box">
+                        샐랙여행
+                    </span>
+
+                </div>
+            </div>
+            <div class="cell geoli-size  center ">
+                <div class="cell">
+
+                    <a href="#" class="">
+                        <img class="cell image img" src="https://pimg.mk.co.kr/meet/neds/2020/05/image_readtop_2020_506007_15897737584203733.jpg">
+                    </a>
+                    <br>
+                    <span class="content-box">
+                        샐랙여행 페이지
+                    </span>
+                    <br>
+                    <span class="content-box">
+                        샐랙여행
+                    </span>
+
+                </div>
+            </div>
+            <div class="cell geoli-size  center ">
+                <div class="cell">
+
+                    <a href="#" class="">
+                        <img class="cell image img" src="https://placehold.co/265x202">
+                    </a>
+                    <br>
+                    <span class="content-box">
+                        샐랙여행 페이지
+                    </span>
+                    <br>
+                    <span class="content-box">
+                        샐랙여행
+                    </span>
+
+                </div>
+            </div>
+            <div class="cell geoli-size  center " >
+                <div class="cell">
+
+                    <a href="#" class="">
+                        <img class="cell image img" src="https://placehold.co/265x202">
+                    </a>
+                    <br>
+                    <span class="content-box">
+                        샐랙여행 페이지
+                    </span>
+                    <br>
+                    <span class="content-box">
+                        샐랙여행
+                    </span>
+
+                </div>
+              
+
+            </div>
+            <div class="cell geoli-size  center ">
+                <div class="cell">
+
+                    <a href="#" class="">
+                        <img class="cell image img" src="https://placehold.co/265x202">
+                    </a>
+                    <br>
+                    <span class="content-box">
+                        샐랙여행 페이지
+                    </span>
+                    <br>
+                    <span class="content-box">
+                        샐랙여행
+                    </span>
+
+                </div>
+            </div>
+            
+       
+        </div>
+        <div class="cell center Cannes-width">
+      
+      
+            ◁이전 1 2 3 4 5 6 7 8 9 다음▷
+        </div>
+    </div>
+    
+
+
+
+
+
