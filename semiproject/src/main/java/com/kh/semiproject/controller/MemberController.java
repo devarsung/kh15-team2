@@ -32,7 +32,7 @@ public class MemberController {
 	}
 	@RequestMapping("/joinFinish")
 	public String joinFinish() {
-		return "/WEB-INF-views/member/joinFinish.jsp";
+		return "/WEB-INF/views/member/joinFinish.jsp";
 	}
 	
 	//로그인 매핑
