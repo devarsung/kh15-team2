@@ -12,5 +12,13 @@ public class ReviewController {
 	@Autowired
 	private ReviewDao reviewDao;
 	
+	@RequestMapping("/list")
+	public String list() {
+		return "/WEB-INF/views/review/list.jsp";
+	}
 	
+	@RequestMapping("/detail")
+	public String detail() {
+		return "/WEB-INF/views/review/detail.jsp";
+	}
 }
