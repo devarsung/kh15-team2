@@ -17,7 +17,7 @@ public class MemberMapper implements RowMapper<MemberDto>{
 				.memberId(rs.getString("member_id"))
 				.memberPw(rs.getString("member_pw"))
 				.memberNickname(rs.getString("member_nickname"))
-				.memberBirth(rs.getString("member_birrh"))
+				.memberBirth(rs.getString("member_birth"))
 				.memberGender(rs.getString("member_gender"))
 				.memberContact(rs.getString("member_contact"))
 				.memberEmail(rs.getString("member_email"))
