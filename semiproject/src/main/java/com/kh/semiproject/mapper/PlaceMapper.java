@@ -26,6 +26,8 @@ public class PlaceMapper implements RowMapper<PlaceDto>{
 				.placeEtime(rs.getTimestamp("place_etime"))
 				.placeLegion(rs.getString("place_legion"))
 				.placeWriter(rs.getString("place_writer"))
+				.placeLat(rs.getDouble("place_lat"))
+				.placeLng(rs.getDouble("place_lng"))
 				.build();
 	}
 
