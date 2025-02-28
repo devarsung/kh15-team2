@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+    
+    
+  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
   <!--google font-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +20,8 @@
    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
   
-  
+   <link rel="stylesheet" type="text/css" href="./css/commons.css">
+    <link rel="stylesheet" type="text/css" href="./css/text.css">
     <div class="container w-400">
         <div class="cell center">
             <h1> 회원 정보 변경</h1>
@@ -86,6 +89,7 @@
                 </div>
                 </div>
             </form>
+            </div>
             <c:if test="${param.error != null}">
                 <h2 style="color:red">비밀번호가 일치하지 않습니다</h2>
             </c:if>
