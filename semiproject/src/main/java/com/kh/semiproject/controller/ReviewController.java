@@ -12,5 +12,5 @@ public class ReviewController {
 	@Autowired
 	private ReviewDao reviewDao;
 	
-	@Reques
+	
 }
