@@ -1,0 +1,58 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+  
+ <!--google font-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+<!--font awesome cdn-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+   
+     <!-- jQuery-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    
+    
+    <form action="password" method="post">
+        <div class="container w-400">
+            <div class="cell center">
+                <h1>비밀번호 변경</h1>
+            </div>
+            <div class="cell">
+                <label>기존 비밀번호</label>
+                <input type="password" name="currentPw" required class="field w-100">
+                <div class="fail-feedback"></div>
+            </div>
+            <div class="cell">
+                <label>변경할 비밀번호</label>
+                <input type="password" name="newPw" required class="field w-100">
+            <div class="fail-feedback"></div>
+            </div>
+            <div class="cell">
+                <label>비밀번호 확인</label>
+                <input type="password" name="newPw" required class="field w-100">
+            <div class="fail-feedback"></div>
+            </div>
+          
+            <div class="cell">
+                <button type="submit" class="field w-100">변경하기</button>
+            </div>
+            
+         
+            <c:if test="${param.error == '1'}">
+            <div class="cell center">
+                <h3 class="red">비밀번호가 일치하지 않습니다</h3>
+            </div>
+            </c:if>
+            <c:if test="${param.error == '2'}">
+            <div class="cell center">
+                <h3 class="red">같은 비밀번호로는 변경할 수 없습니다</h3>
+            </div>
+            </c:if>
+        </div>
+                
+        </form>
+        
