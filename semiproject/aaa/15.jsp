@@ -1,0 +1,70 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+   
+  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+  
+ <!--google font-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+<!--font awesome cdn-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+   
+     <!-- jQuery-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+  
+  
+  
+   <style>
+   .round-image {
+border-radius: 50%;
+}
+   </style>
+   
+   
+    <div class="container w-700">
+        <div class="cell center">
+            <h1>유저 정보 상세</h1>
+        </div>
+        <div class="cell center">
+            <img src="https://placehold.co/350x350" class="round-image">
+        </div>
+        <div class="cell">
+            <table class="table table-border table-stripe">
+                <thead>
+                </thead>
+                <tbody class="center">
+                    <tr>
+                        <th>ID</th>  
+                        <td>여행자A</td>  
+                    </tr>
+                    <tr>
+                        <th>닉네임</th>
+                        <td>낭만적인 곳입니다!</td>
+                    </tr>
+                    <tr>
+                        <th>생년월일</th>
+                        <td>2025-02-23</td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th>
+                        <td>2025-02-23</td>
+                    </tr>
+                    <tr>
+                        <th>연락처</th>
+                        <td>2025-02-23</td>
+                    </tr>
+                    <tr>
+                        <th>주소</th>
+                        <td>2025-02-23</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="cell  right">
+            <a href="#" class="btn btn-neutral">회원정보 수정</a>
+        </div>
+    </div>
