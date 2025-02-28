@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
@@ -36,54 +37,28 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>testuser1</td>
-                    <td>
-                    	<%-- <a href="detail?memberId=${memberDto.memberId}">${memberDto.memberNickname}</a> --%>
-                    	<a href="detail?memberId=">신짱구</a>
-                    </td>
-                    <td>2000-10-10</td>
-                    <td>010-1234-5678</td>
-                    <td>xx123@g.com</td>
-                    <td>2025-01-01</td>
-                    <td>일반회원</td>
-                </tr>
-                <tr>
-                    <td>testuser1</td>
-                    <td>
-                    	<%-- <a href="detail?memberId=${memberDto.memberId}">${memberDto.memberNickname}</a> --%>
-                    	<a href="detail?memberId=">신짱구</a>
-                    </td>
-                    <td>2000-10-10</td>
-                    <td>010-1234-5678</td>
-                    <td>xx123@g.com</td>
-                    <td>2025-01-01</td>
-                    <td>일반회원</td>
-                </tr>
-                <tr>
-                    <td>testuser1</td>
-                    <td>
-                    	<%-- <a href="detail?memberId=${memberDto.memberId}">${memberDto.memberNickname}</a> --%>
-                    	<a href="detail?memberId=">신짱구</a>
-                    </td>
-                    <td>2000-10-10</td>
-                    <td>010-1234-5678</td>
-                    <td>xx123@g.com</td>
-                    <td>2025-01-01</td>
-                    <td>일반회원</td>
-                </tr>
-                <tr>
-                    <td>testuser1</td>
-                    <td>
-                    	<%-- <a href="detail?memberId=${memberDto.memberId}">${memberDto.memberNickname}</a> --%>
-                    	<a href="detail?memberId=">신짱구</a>
-                    </td>
-                    <td>2000-10-10</td>
-                    <td>010-1234-5678</td>
-                    <td>xx123@g.com</td>
-                    <td>2025-01-01</td>
-                    <td>일반회원</td>
-                </tr>
+            	<c:choose>
+            		<c:when test="${list.isEmpty()}">
+            			<tr >
+							<td colspan="7">검색 결과가 없습니다</td>
+						</tr>
+            		</c:when>
+            		<c:otherwise>
+            			<c:forEach var="memberDto" items="${list}">
+            				<tr>
+			                    <td>${memberDto.memberId}</td>
+			                    <td>
+			                    	<a href="detail?memberId=${memberDto.memberId}">${memberDto.memberNickname}</a>
+			                    </td>
+			                    <td>${memberDto.memberBirth}</td>
+			                    <td>${memberDto.memberContact}</td>
+			                    <td>${memberDto.memberEmail}</td>
+			                    <td>${memberDto.memberJoin}</td>
+			                    <td>${memberDto.memberLevel}</td>
+			                </tr>
+            			</c:forEach>
+            		</c:otherwise>
+            	</c:choose>
             </tbody>
         </table>
     </div>
