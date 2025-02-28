@@ -1,16 +1,88 @@
 package com.kh.semiproject.dao;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.kh.semiproject.dto.NoticeDto;
+import com.kh.semiproject.mapper.NoticeMapper;
+
 
 @Repository
 public class NoticeDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
+	@Autowired
+	private NoticeMapper noticeMapper;
+	
+	
 	public int sequence() {
 		String sql = "select notice_seq.nextval from dual";
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
+	
+	public void insert(NoticeDto noticeDto) {
+		int noticeNo = this.sequence();
+		noticeDto.setNoticeNo(noticeNo);
+		String sql = "insert into notice(notice_title, notice_content, notice_writer) valuse(?,?,?)";
+		Object[] data = {noticeDto.getNoticeTitle(), noticeDto.getNoticeContent(), noticeDto.getNoticeWriter()};
+		jdbcTemplate.update(sql,data);
+	}
+	
+	public boolean delete(int noticeNo) {
+		String sql = "delete from notice where notice_no = ?";
+		Object[] data = {noticeNo};
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+	
+	public boolean update(NoticeDto noticeDto) {
+		String sql = "update notice set notice_title = ?, notice_content = ?, notice_etime=systimestamp where notice_no = ?";
+		Object[] data = {noticeDto.getNoticeTitle(), noticeDto.getNoticeContent(), noticeDto.getNoticeNo()};
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+
+	
+	public List<NoticeDto> selectList(){
+		String sql = "select * from notice";
+		return jdbcTemplate.query(sql, noticeMapper);
+	}
+	
+	public NoticeDto selectOne(int noticeNo) {
+		String sql = "select * from notice where notice_no =?";
+		Object[] data = {noticeNo};
+		List<NoticeDto> list = jdbcTemplate.query(sql,  noticeMapper, data);
+		return list.isEmpty() ? null:list.get(0);
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
