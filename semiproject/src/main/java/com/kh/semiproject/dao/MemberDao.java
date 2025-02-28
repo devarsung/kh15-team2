@@ -67,4 +67,12 @@ public class MemberDao {
 		 String sql = "select * from member";
 		 return jdbcTemplate.query(sql, memberMapper);
 	 }
+	 
+	 //상세조회메소드
+	 public MemberDto selectOne(String memberId) {
+		 String sql = "select * from member where member_id=?";
+		 Object[] data = {memberId};
+		 List<MemberDto> list = jdbcTemplate.query(sql, memberMapper, data);
+		 return list.isEmpty() ? null : list.get(0);
+	 }
 }
