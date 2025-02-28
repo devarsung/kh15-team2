@@ -15,64 +15,78 @@ public class MemberDao {
 	private MemberMapper memberMapper;
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
-	//시퀀스+등록메소드
-	 public String sequence() {
-		 String sql = "select member_seq.nextval from dual";
-		 return jdbcTemplate.queryForObject(sql, String.class);
-	 }
-	 public void insert(MemberDto memberDto) {
-		 String sql = "insert into member( "
-					 		+ "member_id, member_pw, member_nickname, "
-					 		+ "member_birth, member_gender, member_contact, "
-					 		+ "member_email, member_post, member_address1, "
-					 		+ "member_address2, member_level "
-					 		+ ") "
-					 		+ "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		 Object[] data = {
-			memberDto.getMemberId(), memberDto.getMemberPw(), memberDto.getMemberNickname(),
-			memberDto.getMemberBirth(), memberDto.getMemberGender(), memberDto.getMemberContact(),
-			memberDto.getMemberEmail(), memberDto.getMemberPost(), memberDto.getMemberAddress1(),
-			memberDto.getMemberAddress2(), memberDto.getMemberLevel()
-		 };
-		 jdbcTemplate.update(sql, data);
-	 }
-	 
-	 //수정메소드
-	 public boolean update(MemberDto memberDto) {
-		 String sql = "update member "
-						 		+ "set "
-						 		+ "member_nickname=?, member_birth=?, member_gender=?, "
-						 		+ "member_contact=?, member_email=?, member_post=?, "
-						 		+ "member_address1=?, member_address2=?, member_level=? "
-						 		+ "where member_id=?";
-		 Object[] data = {
-			memberDto.getMemberNickname(), memberDto.getMemberBirth(), memberDto.getMemberGender(),
-			memberDto.getMemberContact(), memberDto.getMemberEmail(), memberDto.getMemberPost(),
-			memberDto.getMemberAddress1(), memberDto.getMemberAddress2(), memberDto.getMemberLevel(),
-			memberDto.getMemberId()
-		 };
-		 return jdbcTemplate.update(sql, data) > 0;
-	 }
-	 
-	 //삭제메소드
-	 public boolean delete(String memberId) {
-		 String sql = "delete member where member_id=?";
-		 Object[] data = {memberId};
-		 return jdbcTemplate.update(sql, data) > 0;
-	 }
-	 
-	 //조회메소드
-	 public List<MemberDto> selectList(){
-		 String sql = "select * from member";
-		 return jdbcTemplate.query(sql, memberMapper);
-	 }
-	 
-	 //상세조회메소드
-	 public MemberDto selectOne(String memberId) {
-		 String sql = "select * from member where member_id=?";
-		 Object[] data = {memberId};
-		 List<MemberDto> list = jdbcTemplate.query(sql, memberMapper, data);
-		 return list.isEmpty() ? null : list.get(0);
-	 }
+
+	// 시퀀스+등록 메소드
+	public String sequence() {
+		String sql = "select member_seq.nextval from dual";
+		return jdbcTemplate.queryForObject(sql, String.class);
+	}
+
+	public void insert(MemberDto memberDto) {
+		String sql = "insert into member( " + "member_id, member_pw, member_nickname, "
+				+ "member_birth, member_gender, member_contact, " + "member_email, member_post, member_address1, "
+				+ "member_address2, member_level " + ") " + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		Object[] data = { memberDto.getMemberId(), memberDto.getMemberPw(), memberDto.getMemberNickname(),
+				memberDto.getMemberBirth(), memberDto.getMemberGender(), memberDto.getMemberContact(),
+				memberDto.getMemberEmail(), memberDto.getMemberPost(), memberDto.getMemberAddress1(),
+				memberDto.getMemberAddress2(), memberDto.getMemberLevel() };
+		jdbcTemplate.update(sql, data);
+	}
+
+	// 수정 메소드
+	public boolean update(MemberDto memberDto) {
+		String sql = "update member " + "set " + "member_nickname=?, member_birth=?, member_gender=?, "
+				+ "member_contact=?, member_email=?, member_post=?, " + "member_address1=?, member_address2=? "
+				+ "where member_id=?";
+		Object[] data = { memberDto.getMemberNickname(), memberDto.getMemberBirth(), memberDto.getMemberGender(),
+				memberDto.getMemberContact(), memberDto.getMemberEmail(), memberDto.getMemberPost(),
+				memberDto.getMemberAddress1(), memberDto.getMemberAddress2() };
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+
+	// 회원 탈퇴 메소드(삭제)
+	public boolean delete(String memberId) {
+		String sql = "delete member where member_id=?";
+		Object[] data = { memberId };
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+
+	// 조회 메소드
+	public List<MemberDto> selectList() {
+		String sql = "select * from member";
+		return jdbcTemplate.query(sql, memberMapper);
+	}
+
+	// 상세조회 메소드
+	public MemberDto selectOne(String memberId) {
+		String sql = "select * from member where member_id=?";
+		Object[] data = { memberId };
+		List<MemberDto> list = jdbcTemplate.query(sql, memberMapper, data);
+		return list.isEmpty() ? null : list.get(0);
+	}
+
+	// 최종 로그인 시각 갱신 메소드
+	public boolean updateMemberLogin(String memberId) {
+		String sql = "update member set member_login=systimestamp " + "where member_id=?";
+		Object[] data = { memberId };
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+
+	// 비밀번호 변경(최종 비밀번호 변경일도 같이 변경) 메소드
+	public boolean updateMemberPassword(MemberDto memberDto) {
+		String sql = "update member " + "set member_pw=?, member_change=systimestamp " + "where member_id=?";
+		Object[] data = { memberDto.getMemberPw(), memberDto.getMemberId() };
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+
+	// 개인정보 변경 메소드
+	public boolean updateChange(MemberDto memberDto) {
+		String sql = "update member " + "set " + "member_nickname=?, member_birth=?, member_gender=?, "
+				+ "member_contact=?, member_email=?, member_post=?, " + "member_address1=?, member_address2=? "
+				+ "where member_id=?";
+		Object[] data = { memberDto.getMemberNickname(), memberDto.getMemberBirth(), memberDto.getMemberGender(),
+				memberDto.getMemberContact(), memberDto.getMemberEmail(), memberDto.getMemberPost(),
+				memberDto.getMemberAddress1(), memberDto.getMemberAddress2(), memberDto.getMemberId() };
+		return jdbcTemplate.update(sql, data) > 0;
+	}
 }
