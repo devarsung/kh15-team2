@@ -14,7 +14,7 @@ public class MemberDto {
 	private String memberNickname;//닉네임
 	private String memberBirth;//생년월일
 	private String memberGender;//성별
-	private String memberContact;//번화번호
+	private String memberContact;//전화번호
 	private String memberEmail;//이메일
 	private String memberPost;//우편번호
 	private String memberAddress1;//기본주소
