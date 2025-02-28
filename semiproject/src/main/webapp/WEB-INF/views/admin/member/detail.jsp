@@ -5,7 +5,7 @@
 
 <div class="container w-800">
     <div class="cell center">
-        <h1>"testuser1" 정보 상세</h1>
+        <h1>"${memberDto.memberId}" 정보 상세</h1>
     </div>
     <div class="cell mt-50 center">
         <img src="https://placehold.co/150x150" style="border-radius: 50%; width: 300px; height: 300px;">
@@ -14,53 +14,57 @@
         <table class="table table-border table-hover">
             <tr>
                 <th>ID</th>
-                <td>testuser1</td>
+                <td>${memberDto.memberId}</td>
             </tr>
             <tr>
                 <th>닉네임</th>
-                <td>테스트유저1</td>
+                <td>${memberDto.memberNickname}</td>
             </tr>
             <tr>
                 <th>생년월일</th>
-                <td>2000-10-10</td>
+                <td>${memberDto.memberBirth}</td>
             </tr>
             <tr>
                 <th>성별</th>
-                <td>여</td>
+                <td>${memberDto.memberGender}</td>
             </tr>
             <tr>
                 <th>연락처</th>
-                <td>010-1234-5678</td>
+                <td>${memberDto.memberContact}</td>
             </tr>
             <tr>
                 <th>이메일</th>
-                <td>xx123@g.com</td>
+                <td>${memberDto.memberEmail}</td>
             </tr>
             <tr>
                 <th>주소</th>
-                <td>서울시 영등포구 이레빌딩</td>
+                <td>
+                	[${memberDto.memberPost}]<br>
+                	${memberDto.memberAddress1}<br>
+                	${memberDto.memberAddress2}<br>
+               	</td>
             </tr> 
             <tr>
                 <th>등급</th>
-                <td>일반회원</td>
+                <td>${memberDto.memberLevel}</td>
             </tr> 
             <tr>
                 <th>가입일</th>
-                <td>2025-01-11</td>
+                <td>${memberDto.memberJoin}</td>
             </tr> 
             <tr>
                 <th>최종 로그인일</th>
-                <td>2025-01-01</td>
+                <td>${memberDto.memberLogin}</td>
             </tr> 
             <tr>
                 <th>최종 비밀번호 변경일</th>
-                <td>2025-01-01</td>
-            </tr> 
+                <td>${memberDto.memberChange}</td>
+            </tr>
         </table>  
     </div>
 
     <div class="cell right">
-        <a href="edit?memberId=" class="btn btn-neutral">회원정보 수정</a>
+        <a href="edit?memberId=${memberDto.memberId}" class="btn btn-neutral">회원정보 수정</a>
     </div>
 </div>
 

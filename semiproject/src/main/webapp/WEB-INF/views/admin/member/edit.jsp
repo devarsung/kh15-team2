@@ -7,7 +7,7 @@
 	<form action="edit" method="post" autocomplete="off">
 		
 	    <div class="cell center">
-	        <h1>"testuser1" 정보 수정</h1>
+	        <h1>"${memberDto.memberId}" 정보 수정</h1>
 	    </div>
 	    <div class="cell mt-50 center">
 	        <img src="https://placehold.co/150x150" style="border-radius: 50%; width: 300px; height: 300px;">
