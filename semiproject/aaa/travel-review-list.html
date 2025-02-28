@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>여행후기 목록</title>
+
+    <!--google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+    <!--font awesome cdn-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" type="text/css" href="/css/commons.css">
+    <!-- <link rel="stylesheet" type="text/css" href="./css/test.css"> -->
+    <style>
+        .table{
+            height: 5cm;
+        }
+    </style>
+
+
+    <!-- jQuery cdn-->
+    <script src=https://code.jquery.com/jquery-3.7.1.min.js></script>
+    <script type="text/javascript">
+
+    </script>
+</head>
+
+<body>
+    <div class="container w-1000">
+        <div class="cell center">
+            <h1> 여행 후기 목록 </h1>
+        </div>
+        <div class="cell center mt-30">
+            <form action="" method="">
+                <select name="column" class="field">
+                    <option value="">제목</option>
+                    <option value="">작성자</option>
+                </select>
+                <input type="text" name="" value="" class="field w-500"  placeholder="찾고있는 여행지 후기를 검색해보세요!">
+                <button class="btn btn-positive">검색</button>
+            </form>
+        </div>
+        <div class="cell mt-30">
+            <table class="table table-border table-hover">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>지역</th>
+                        <th>작성자</th>
+                        <th>제목</th>
+                        <th>조회수</th>
+                        <th>작성일</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>서울</td>
+                        <td>시우</td>
+                        <td>당산에 이런곳이?![댓글수]</td>
+                        <td>369</td>
+                        <td>2020.02.27</td>
+
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>부산</td>
+                        <td>잉여인간</td>
+                        <td>부산 가성비 맛집모음[댓글수]</td>
+                        <td>115</td>
+                        <td>2022.01.05</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>강원도</td>
+                        <td>감자소년</td>
+                        <td>강원도 감자에 대해서</td>
+                        <td>102</td>
+                        <td>2021.11.25</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>여수</td>
+                        <td>장범준아님</td>
+                        <td>불꽃축제 다녀왔어요</td>
+                        <td>98</td>
+                        <td>2022.05.14</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="cell center mt-30">
+            <span> 이전 1 2 3 4 5 6 7 8 9 다음</span>
+        </div>
+    </div>
+
+
+    </form>
+</body>
+
+</html>
