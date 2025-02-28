@@ -21,4 +21,6 @@ public class PlaceDto {
 	private Timestamp placeEtime;
 	private String placeLegion;
 	private String placeWriter;
+	private Double placeLat;
+	private Double placeLng;
 }
