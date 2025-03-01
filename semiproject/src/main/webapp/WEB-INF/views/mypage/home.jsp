@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-
     <!-- google font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,40 +34,56 @@
             <h1>마이페이지</h1>
         </div>
         <div class=" cell mt-50 center">
-            
-            <img src="https://placehold.co/150x150" style="border-radius: 50%; width: 300px; height: 300px;">
+            <img name=memberProfile src="https://placehold.co/150x150" style="border-radius: 50%; width: 300px; height: 300px;">
             </div>
             <div class="cell mt-30">
-            <table class="table table-hover">
-                <tr>
-                    <th>ID</th>
-                    <td class="p-10">testuser1</td>
-                </tr>
-                <tr>
-                    <th>닉네임</th>
-                    <td class="p-10">테스트유저1</td>
-                </tr>
-                <tr>
+                <table class="table table-hover">
+                    <tr>
+                        <th>ID</th>
+                    <td class="p-10">
+                        <input name="memberId" type="text" class="field w-50" value="${memberDto.memberId}" readonly>
+                    </td>
+                    </tr>
+                    <tr>
+                        <th>닉네임</th>
+                    <td class="p-10">
+                        <input name="memberNickname" type="text" class="field  w-50" value="${memberDto.memberNickname}" readonly>
+                    </td>
+
+                    </tr>
+                    <tr>
                     <th>성별</th>
-                    <td class="p-10">여자</td>
-                </tr>
-                <tr>
-                    <th>생년월일</th>
-                    <td class="p-10">2000-10-10</td>
-                </tr>
-                <tr>
-                    <th>이메일</th>
-                    <td class="p-10">xx123@g.com</td>
-                </tr>
-                <tr>
-                    <th>연락처</th>
-                    <td class="p-10">010-1234-5678</td>
-                </tr>
-                <tr>
-                    <th>주소</th>
-                    <td class="p-10">서울시 영등포구 이레빌딩</td>
-                </tr> 
-            </table>  
+                    <td class="p-10">
+                        <input name="memberGender"type="text" class="field  w-50" value="${memberDto.memberGender}" readonly>
+                    </td>
+                    </tr>
+                    <tr>
+                        <th>생년월일</th>
+                    <td class="p-10">
+                        <input name="memberBirth"type="text" class="field  w-50" value="${memberDto.memberBirth}" readonly>
+                    </td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th>
+                    <td class="p-10">
+                        <input name="memberEmail"type="email" class="field  w-50" value="${memberDto.memberEmail}" readonly>
+                    </td>
+                    </tr>
+                    <tr>
+                        <th>연락처</th>
+                    <td class="p-10">
+                        <input name="memberContact"type="text" class="field  w-50" value="${memberDto.memberContact}" readonly>
+                    </td>
+                    </tr>
+                    <tr>
+                        <th>주소</th>
+                    <td class="p-10">
+                        <input name="memberPost"type="text" class="field  w-50" value="${memberDto.memberPost}" readonly>
+                        <input name="memberAddress1" type="text" class="field w-50" value="${memberDto.memberAddress1}" readonly>
+                        <input name="memberAddress2" type="text" class="field w-50" value="${memberDto.memberAddress2}" readonly>
+                    </td>
+                    </tr>
+                    </table>
         </div>
 
         <div class="cell float-box">
@@ -83,5 +98,4 @@
 
 </body>
 </html>
-
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
