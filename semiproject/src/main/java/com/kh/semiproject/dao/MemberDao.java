@@ -89,4 +89,14 @@ public class MemberDao {
 				memberDto.getMemberAddress1(), memberDto.getMemberAddress2(), memberDto.getMemberId() };
 		return jdbcTemplate.update(sql, data) > 0;
 	}
+	
+	//회원 프로필 등록(연결)
+	public void connect(String memberId, int attachmentNo) {
+		String sql = "insert into member_profile ( "
+				+ "member_id, attachment_no "
+				+ ") "
+				+ "values(?, ?)";
+		Object[] data = {memberId, attachmentNo};
+		jdbcTemplate.update(sql, data);
+	}
 }
