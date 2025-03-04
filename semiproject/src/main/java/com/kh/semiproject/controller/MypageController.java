@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semiproject.dao.MemberDao;
 import com.kh.semiproject.dao.PlaceLikeDao;
-import com.kh.semiproject.dao.ReviewDao;
+import com.kh.semiproject.dao.ReviewLikeDao;
 import com.kh.semiproject.dto.MemberDto;
 import com.kh.semiproject.dto.PlaceLikeDto;
-import com.kh.semiproject.dto.ReviewDto;
+import com.kh.semiproject.dto.ReviewLikeDto;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -28,7 +28,7 @@ public class MypageController {
 	@Autowired
 	private PlaceLikeDao placeLikeDao;
 	@Autowired
-	private ReviewDao reviewDao;
+	private ReviewLikeDao reviewLikeDao;
 
 	// 비밀번호 변경 매핑
 	@GetMapping("/password")
@@ -115,5 +115,13 @@ public class MypageController {
 	    List<PlaceLikeDto> placeLikeList = placeLikeDao.selectPlaceLikeList(memberId); // 좋아요한 여행지 목록 조회
 	    model.addAttribute("placeLikeList", placeLikeList);
 	    return "/WEB-INF/views/mypage/myLikePlace.jsp";  
+	}
+	
+	//내가좋아요표시한 후기 목록 매핑
+	@RequestMapping("myLikeReview")
+	public String myLikeReview(@RequestParam String memberId, Model model) {
+		List<ReviewLikeDto> reviewLikeList = reviewLikeDao.selectReviewLikeList(memberId);//좋아요한 후기 목록 조회
+		model.addAttribute("reviewLikeList", reviewLikeList);
+		return "/WEB-INF/views/mypage/myLikeReview.jsp";
 	}
 }

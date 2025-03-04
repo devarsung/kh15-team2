@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
-public class PlaceLikeDto {
-	 private int placeNo;
-	 private int likeCount;//여행지 좋아요 수
+public class ReviewLikeDto {
+	private int reviewNo;
+	private int likeCount;//후기 좋아요수
 }
