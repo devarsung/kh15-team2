@@ -21,7 +21,7 @@
    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
   
    <link rel="stylesheet" type="text/css" href="./css/commons.css">
-    <link rel="stylesheet" type="text/css" href="./css/text.css">
+ <!--    <link rel="stylesheet" type="text/css" href="./css/text.css"> -->
 <style>
     a {
 text-decoration: none; /* 밑줄 제거 */
@@ -45,9 +45,11 @@ color: #3498db; /* 마우스를 올렸을 때 변경할 색상 */
                 <label>pass word</label>
                 <input type="password" name="memberPw" required class="field w-100">
             </div>
-          <div class="cell right">
-            <label><a href="">아이디를 잊으셨나요?</a></label>
-          </div>
+           <div class="flex-box">
+                <div class="w-100 left me-10">
+               <input type="checkbox" > 아이디를 기억하기</div>           
+                <div class="w-100 right">아이디를 잊으셨나요?</div>
+            </div>
             <div class="cell mt-20 center">
                 <button type="submit" class="btn btn-positive w-25">로그인하기</button>
             </div>

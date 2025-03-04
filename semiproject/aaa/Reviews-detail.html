@@ -1,0 +1,175 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+ 
+   <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+  
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>예시 디자인</title>
+<!--google font-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+<!--font awesome cdn-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+   
+   
+    <link rel="stylesheet" type="text/css" href="./css/commons.css">
+    <link rel="stylesheet" type="text/css" href="./css/text.css">
+
+   <!-- jQuery-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <style>
+    	
+    	
+    
+    
+        /* 🔹 후기 작성 컨테이너 */
+        .container {
+            width: 80%; 
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        }
+
+        /* 🔹 후기 제목 스타일 */
+        .title-input {
+            width: 100%;
+            height: 45px;
+            font-size: 18px;
+        }
+
+        /* 🔹 지도 영역 스타일 */
+        .map-container {
+            width: 100%;
+            height: 400px;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 🔹 별점 스타일 */
+        .score-size {
+            font-size: 30px;
+        }
+
+        /* 🔹 이미지 업로드 스타일 */
+        .file-input {
+            display: none;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .preview {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .preview img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        /* 🔹 버튼 정렬 */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+    </style>
+
+
+   <!-- summernote cdn -->
+   <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+   <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+
+
+
+    <script type="text/javascript">
+    
+    </script>
+
+
+
+  <div>
+<div class="container w-800">
+
+    <div class="cell">
+        <h1>후기 상세</h1>
+    </div>
+    <div class="cell ">
+        작성자-시우|조회수 369|댓글수30|작성일2020-02-02
+    </div>
+    <div class="cell p-20 ms-10">
+        <h1>
+            당산에 이런곳이?!
+        </h1>
+        <img src="https://placehold.co/400x400">
+    </div>
+    다름아닌 요즘 가장 핫한 이레빌딩을 보기 위해서
+
+    <div class="cell my-30 p-10">
+        
+        <div class="cell">
+            <table class="table table-border table-stripe">
+                <tbody class="center">
+                    <tr>
+                        <td>1</td>
+                        <td >티티</td>
+                        <td>오 정말 좋아 보여요</td>
+                        <td>2024-02-22</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td >배고픈 사람 </td>
+                        <td>별룬디?</td>
+                        <td>2024-02-12</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td >티티</td>
+                        <td>오 정말 좋아 보여요</td>
+                        <td>2024-02-12</td>
+                    </tr>
+             
+            </tbody>
+        </table>
+    </div>
+    <div class="cell flex-box mt-50 center" >
+        &lt; 이전글
+        <a href="#" class="btn btn-neutral center">목록으로 </a>
+        다음글 &gt; <div class="cell"><a href="#" class="btn btn-negative ">삭제</a></div>
+<c:if test="${sessionScope.userId != null}">
+    <a href="#" class="btn btn-negative  >삭제</a>
+</c:if>
+  
+
+    </div>
+    
+
+</div>
+
+</div>
+</div>
+  
