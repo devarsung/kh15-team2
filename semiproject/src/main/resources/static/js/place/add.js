@@ -30,6 +30,9 @@ $(function() {
             ["acion", ["undo", "redo"]]
         ],
         callback: {
+			onBlur: function() {
+				
+			},
             onlmageUpload: function (files) {
                 return;
             },
@@ -51,13 +54,22 @@ $(function() {
 
 				document.querySelector("[name=placePost]").value = data.zonecode;
 				document.querySelector("[name=placeAddress1]").value = addr;
+				//새주소 선택, 좌표정보 초기화
+				checkAddressValid();
+				initLatLng();
+				
 				// 커서를 상세주소 필드로 이동한다.
 				document.querySelector("[name=placeAddress2]").focus();
-				checkAddress();
+				//값이 입력되었으니 x버튼 보여줘야함
 				displayClearButton();
 			}
 		}).open();
 	});
+	
+	//주소가 변경되면 좌표정보 초기화
+	//주소가 변경되는 경우
+	//[1] 새 주소 선택
+	//[2] x 버튼으로 지웠을 때
 	
 	//우편번호 숫자 외의 값 차단
 	$("[name=placePost]").on("input", function(){
@@ -66,16 +78,35 @@ $(function() {
         $(this).val(convert);
     });
 	
-	function checkAddress() {
+	//주소 유효성 검사
+	function checkAddressValid() {
 		var post = $("[name=placePost]").val();
         var address1 = $("[name=placeAddress1]").val();
 		var isValid = post.length > 0 && address1.length > 0;
 		$("[name=placePost], [name=placeAddress1]")
 		                .removeClass("fail").addClass(isValid ? "" : "fail");
-		status.placeAddress = isValid;				
+		status.placeAddress = isValid;			
+	}
+	
+	//좌표 유효성 검사
+	function checkLatLngValid() {
+		var lat = $("[name=placeLat]").val();
+		var lng = $("[name=placeLng]").val();
+		var isValid = lat.length > 0 && lng.length > 0;
+		$("[name=placeLat], [name=placeLng]")
+				                .removeClass("fail").addClass(isValid ? "" : "fail");
+		status.placeLatLng = isValid;
+	}
+	
+	//주소 변경되면 좌표 정보 초기화
+	function initLatLng() {
+		$("[name=placeLat]").val("");
+		$("[name=placeLng]").val("");
+		status.placeLatLng = false;
 	}
 	
     $("[name=placeAddress2]").on("input", function(){
+		//값이 입력되었으니 x버튼 보여줘야함
         displayClearButton();
     });
 	
@@ -84,7 +115,10 @@ $(function() {
         $("[name=placePost]").val("");
         $("[name=placeAddress1]").val("");
         $("[name=placeAddress2]").val("");
-		checkAddress();
+		//주소가 변경되었기에 좌표 초기화
+		checkAddressValid();
+		initLatLng();
+		//값이 지워졌으니 x버튼 사라져야함
         displayClearButton();
     });
 	
@@ -106,14 +140,16 @@ $(function() {
 	$(".btn-search-xy").click(function(){
 		var post = $("[name=placePost]").val();
         var address1 = $("[name=placeAddress1]").val();
+		//주소 입력되어있지 않으면 return
 		if(post.length==0 || address1.length==0) {
-			checkAddress();
+			checkAddressValid();
 			return;
 		}
 		
 		searchLatLng();
 	});
 	
+	//지도 그리기
 	function drawMap(lat, lng) {
 		var container = $('#map')[0];//jQuery
 		$(container).show();
@@ -132,6 +168,7 @@ $(function() {
         map.setCenter(location);
 	}
 	
+	//위도 경도 실제로 구하기
 	function searchLatLng() {
 		var address = $("[name=placeAddress1]").val();
 		var regex = /^(?=.*?[가-힣]+).+$/;
@@ -173,15 +210,43 @@ $(function() {
 	});
 	
 	//설명 overview
-	$("[name=placeOverview]").blur(function(){
+	/*$("[name=placeOverview]").blur(function(){
 		var isValid = $(this).val().length > 0;
 		$(this).removeClass("fail").addClass(isValid ? "" : "fail");
+		$(".note-editor").css("border", isValid ? "" : "1px solid red");
+		status.placeOverview = isValid;
+	});*/
+	
+	$("[name=placeOverview]").on("summernote.blur", function(){
+		var isValid = $(this).val().length > 0;
+		$(this).removeClass("fail").addClass(isValid ? "" : "fail");
+		$(".note-editor").css("border", isValid ? "" : "1px solid red");
 		status.placeOverview = isValid;
 	});
 	
 	//폼 전송
-	$(".form-check").submit(function() {
-		return status.ok();
+	/*$(".form-checkasdfasdf").submit(function() {
+		$("[name=placeTitle]").trigger("blur");
+		$("[name=placeOverview]").trigger("summernote.blur");
+		$("[name=placeRegion]").trigger("input");
+		$("[name=placeType]").trigger("input");
+		checkAddressValid();
+		checkLatLngValid();
+		
+		return false;
+	});*/
+	
+	//폼 전송 테스트
+	$(".btn-submit").click(function(){
+		$("[name=placeTitle]").trigger("blur");
+		
+		$("[name=placeRegion]").trigger("input");
+		$("[name=placeType]").trigger("input");
+		
+		checkAddressValid();
+		checkLatLngValid();
+		$("[name=placeOverview]").trigger("summernote.blur");
+		return false;
 	});
 	
 	//대표 이미지
