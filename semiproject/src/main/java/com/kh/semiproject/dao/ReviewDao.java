@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.semiproject.dto.ReplyDto;
 import com.kh.semiproject.dto.ReviewDto;
 import com.kh.semiproject.mapper.ReviewMapper;
 
@@ -46,6 +47,13 @@ public class ReviewDao {
 	public List<ReviewDto> selectList(){
 		String sql = "select * from review";
 		return jdbcTemplate.query(sql, reviewMapper);
+	}
+	
+	//내가 작성한 후기 목록
+	public List<ReviewDto> selectListByUserId(String userId) {
+	    String sql = "select * from review where member_id = ?";
+	    Object[] data = {userId};
+	    return jdbcTemplate.query(sql, reviewMapper, data);
 	}
 	
 	public ReviewDto selectOne(int reviewNo) {
