@@ -1,5 +1,7 @@
 package com.kh.semiproject.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semiproject.dao.MemberDao;
+import com.kh.semiproject.dao.PlaceLikeDao;
+import com.kh.semiproject.dao.ReplyDao;
+import com.kh.semiproject.dao.ReviewDao;
+import com.kh.semiproject.dao.ReviewLikeDao;
 import com.kh.semiproject.dto.MemberDto;
+import com.kh.semiproject.dto.PlaceLikeDto;
+import com.kh.semiproject.dto.ReplyDto;
+import com.kh.semiproject.dto.ReviewDto;
+import com.kh.semiproject.dto.ReviewLikeDto;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -19,6 +29,14 @@ import jakarta.servlet.http.HttpSession;
 public class MypageController {
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private PlaceLikeDao placeLikeDao;
+	@Autowired
+	private ReviewLikeDao reviewLikeDao;
+	@Autowired
+	private ReplyDao replyDao;
+	@Autowired
+	private ReviewDao reviewDao;
 
 	// 비밀번호 변경 매핑
 	@GetMapping("/password")
@@ -42,7 +60,7 @@ public class MypageController {
 		return "redirect:mypage";
 	}
 
-	// 개인정보 변경 매핑
+	// 개인정보 변경 매핑  
 	@GetMapping("/change")
 	public String change(HttpSession session, Model model) {
 		String userId = (String) session.getAttribute("userId");// 내 아이디 추출
@@ -97,5 +115,45 @@ public class MypageController {
 	@RequestMapping("/exitFinish")
 	public String exitFinish() {
 		return "/WEB-INF/views/member/exitFinish.jsp";
+	}
+
+	// 내가좋아요표시한 여행지 목록 매핑
+	@RequestMapping("/myLikePlace")
+	public String myLikePlace(HttpSession session, Model model) {
+		String userId = (String) session.getAttribute("userId");// 내 아이디 추출
+		MemberDto memberDto = memberDao.selectOne(userId);// 내정보 획득
+		List<PlaceLikeDto> placeLikeList = placeLikeDao.selectPlaceLikeList(userId); // 좋아요한 여행지 목록 조회
+		model.addAttribute("placeLikeList", placeLikeList);
+		return "/WEB-INF/views/mypage/myLikePlace.jsp";
+	}
+
+	// 내가좋아요표시한 후기 목록 매핑
+	@RequestMapping("myLikeReview")
+	public String myLikeReview(HttpSession session, Model model) {
+		String userId = (String) session.getAttribute("userId");// 내 아이디 추출
+		MemberDto memberDto = memberDao.selectOne(userId);// 내정보 획득
+		List<ReviewLikeDto> reviewLikeList = reviewLikeDao.selectReviewLikeList(userId);// 좋아요한 후기 목록 조회
+		model.addAttribute("reviewLikeList", reviewLikeList);
+		return "/WEB-INF/views/mypage/myLikeReview.jsp";
+	}
+
+	// 내가 작성한 후기 목록 매핑
+	@RequestMapping("myReview")
+	public String myReview(HttpSession session, Model model) {
+		String userId = (String) session.getAttribute("userId");// 내 아이디 추출
+		MemberDto memberDto = memberDao.selectOne(userId);// 내정보 획득
+		List<ReviewDto> list = reviewDao.selectListByUserId(userId);
+		model.addAttribute("list", list);
+		return "/WEB-INF/views/mypage/myReview.jsp";
+	}
+
+	// 내가 작성한 댓글 목록 매핑
+	@RequestMapping("myReply")
+	public String myReply(HttpSession session, Model model, int reviewNo) {
+		String userId = (String) session.getAttribute("userId");// 내 아이디 추출
+		MemberDto memberDto = memberDao.selectOne(userId);// 내정보 획득
+		List<ReplyDto> list = replyDao.selectListByUserIdAndReviewNo(userId, reviewNo);
+		model.addAttribute("list", list);
+		return "/WEB-INF/views/mypage/myReply.jsp";
 	}
 }

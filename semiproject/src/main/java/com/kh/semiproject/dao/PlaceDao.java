@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semiproject.dto.PlaceDto;
+import com.kh.semiproject.dto.PlaceLikeDto;
 import com.kh.semiproject.mapper.PlaceMapper;
 import com.kh.semiproject.vo.PageVO;
 
@@ -94,12 +95,7 @@ public class PlaceDao {
 		List<PlaceDto> list = jdbcTemplate.query(sql,  placeMapper, data);
 		return list.isEmpty() ? null:list.get(0);
 	}
-	
-//	public int findAttachment(int placeFirstImageNo) {
-//		String sql = "select * from attachment where attachment_no = ?";
-//		Object[] data = {placeFirstImageNo};
-//		
-//	}
+
 }
 
 
