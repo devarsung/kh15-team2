@@ -61,7 +61,7 @@
     </div>
 </script>
 
-<form class="form-check" action="add" method="post" autocomplete="off" enctype="multipart/form-data">
+<form class="form-check" action="asdf" method="post" autocomplete="off" enctype="multipart/form-data">
 	<div class="container w-1000">
 	    <div class="cell center">
 	        <h1>여행지 등록</h1>
@@ -109,6 +109,7 @@
 	    	<div class="w-25">
 	    		<h2><i class="fa-solid fa-square-pen"></i> 위도/경도</h2>
 	    		<input type="text" name="placeLat" class="field w-100" placeholder="위도" readonly>
+	    		<div class="fail-feedback">위도/경도 정보를 입력해주세요</div>
     		</div>
 	    	<div class="w-25 mx-10">
 	    		<h2>&nbsp;</h2>
@@ -180,7 +181,7 @@
 	    </div>
 	    
 	    <div class="cell">
-			<button type="submit" class="btn btn-positive">전송</button>
+			<button type="button" class="btn btn-positive btn-submit">전송</button>
 		</div>
 	</div>
 	
