@@ -1,5 +1,7 @@
 package com.kh.semiproject.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,9 +10,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.semiproject.dao.MemberDao;
 import com.kh.semiproject.dto.MemberDto;
+import com.kh.semiproject.service.AttachmentService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -19,6 +23,8 @@ import jakarta.servlet.http.HttpSession;
 public class MemberController {
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private AttachmentService attachmentService;
 	
 	//회원가입 매핑
 	@GetMapping("/join")
@@ -26,8 +32,17 @@ public class MemberController {
 		return "/WEB-INF/views/member/join.jsp";
 	}
 	@PostMapping("/join")
-	public String join(@ModelAttribute MemberDto memberDto) {
-		memberDao.insert(memberDto);//회원가입
+	public String join(@ModelAttribute MemberDto memberDto,
+										@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
+		String memberId = memberDao.sequence();
+		memberDto.setMemberId(memberId);
+		memberDao.insert(memberDto);
+		if(attach.isEmpty()==false) {
+		//첨부파일 등록
+		int attachmentNo = attachmentService.save(attach);
+		//회원 프로필 등록
+		memberDao.connect(memberId, attachmentNo);
+		}
 		return "redirect:joinFinish";
 	}
 	@RequestMapping("/joinFinish")
