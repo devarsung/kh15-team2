@@ -23,4 +23,6 @@ public class PlaceDto {
 	private String placeWriter;
 	private Double placeLat;
 	private Double placeLng;
+	private String placeType;
+	private int placeFirstImage;
 }
