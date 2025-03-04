@@ -114,32 +114,6 @@
                 reader.readAsDataURL(this.files[0]);  //순서가 헷갈려^_^ 비동기라 파일 다읽은후 콜백함수 부름
             });
 
-            //프로필저장 처리
-            $("[name=memberProfile]").change(function(){
-                 if(this.files.length > 0){
-    
-                //FormData는 multipart/form-data 방식에서도 사용할 수 있는 저장소
-                 const formData = new FormData();
-                 //파일 only 1개 저장..
-                formData.append("attach", this.files[0]);
-            
-                $.ajax({
-                url:"/morla",
-                method:"post",
-                contentType:false,//파일 업로드를 위한 설정
-                processData:false,//파일 업로드를 위한 설정
-                data:formData,
-                success:function(resp){
-                    console.log("업로드 성공", resp);
-                    status.memberProfile = true;
-                },
-                error:function(){
-                    console.log("업로드 실패");
-                    status.memberProfile = false;
-                }
-                });
-             }
-            });
 
               //닉네임 처리 //////////////////////////닉네임url추가
                 $("[name=memberNickname]").blur(function(){
@@ -269,7 +243,7 @@
         </div>
         <form class="form-check" action="change" method="post" enctype="multipart/form-data" autocomplete="off">
         <div class="cell center">
-            <input  type="file" name=memberProfile class="field w-100" accept=".png, .jpg" style="display: none;">
+            <input  type="file" name="memberProfile" class="field w-100" accept=".png, .jpg" style="display: none;">
         </div>
         <div class=" cell mt-50 center">
             <img id="myPhoto" src="https://placehold.co/150x150" style="border-radius: 50%; width: 300px; height: 300px;">
