@@ -4,9 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import com.kh.semiproject.dto.NoticeListViewDto;
-
+@Component
 public class NoticeListViewMapper implements RowMapper<NoticeListViewDto>{
 
 	@Override
