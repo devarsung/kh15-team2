@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class PageVO {
-	private int page;
-	private int size;
+	private int page = 1;
+	private int size = 16;
 	private int count; // 전체 rownum 수량
-	private int blockSize;
+	private int blockSize = 10;
 	private String column;
 	private String keyword;
 	public boolean search() {
@@ -36,7 +36,40 @@ public class PageVO {
 	public int getPageCount() {
 		return (count - 1)/size + 1;
 	}
+	
 
+	public int getPrevBlock() {
+		return getStartBlock() - 1;
+	}
+	
+	public int getNextBlock() {
+		return getFinishBlock() + 1;
+	}
+	
+	public boolean hasPrevBlock() {
+		return getStartBlock() > 1;
+	}
+	
+	public boolean hasNextBlock() {
+		return getFinishBlock() < getPageCount();
+	}
+	
+	public boolean isLastBlock() {
+		return getFinishBlock() == getPageCount();
+	}
+	
+	public boolean isFirstBlock() {
+		return getStartBlock() == 1;
+	}
+	
+	public String getParameters() {
+		if(isList()) {
+			return "size="+size;
+		}
+		else {
+			return "column="+column+"&keyword="+keyword+"&size="+size;
+		}
+	}
 }
 
 

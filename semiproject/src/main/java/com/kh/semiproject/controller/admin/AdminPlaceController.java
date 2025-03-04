@@ -33,9 +33,7 @@ public class AdminPlaceController {
 		//img
 		int placeNo = placeDao.sequence();
 		placeDto.setPlaceNo(placeNo);
-		
 		placeDao.insert(placeDto);
-		
 		return "redirect:detail?placeNo="+placeNo;
 	}
 	
@@ -62,10 +60,12 @@ public class AdminPlaceController {
 	}
 	
 	@PostMapping("/edit")
-	public String edit(@ModelAttribute PlaceDto palceDto) {
-		placeDao.update(palceDto);
-		return "redirect:list";
+	public String edit(@ModelAttribute PlaceDto placeDto) {
+		placeDao.update(placeDto);
+		int placeNo = placeDto.getPlaceNo();
+		return "redirect:/admin/detail?placeNo="+placeNo;
 	}
+	
 }
 
 
