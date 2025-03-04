@@ -81,7 +81,7 @@
         		<!-- 로그인 시 -->
         		<c:if test="${sessionScope.userId != null}">
         		<li class="menu-end">
-        			<a href="/member/mypage">${sessionScope.userId}</a>
+        			<a href="/mypage/home">${sessionScope.userId}</a>
         			<ul>
 	        			<c:if test="${sessionScope.userLevel == '관리자'}">
     	    			<li><a href="/admin/home">관리자메뉴</a></li>
