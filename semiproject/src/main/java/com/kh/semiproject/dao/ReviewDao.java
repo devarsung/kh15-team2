@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.semiproject.dto.ReplyDto;
 import com.kh.semiproject.dto.ReviewDto;
 import com.kh.semiproject.mapper.ReviewMapper;
+import com.kh.semiproject.vo.PageVO;
 
 @Repository
 public class ReviewDao {
@@ -63,6 +64,19 @@ public class ReviewDao {
 		return list.isEmpty() ? null:list.get(0);
 	}
 	
+	
+	public int count(PageVO pageVO) {
+		if(pageVO.isList()) {
+			String sql = "select count(*) from review";
+			return jdbcTemplate.queryForObject(sql,  int.class);
+		}
+		else {
+			String sql = "select count(*) from reivew where instr(#1, ?) > 0";
+			sql = sql.replace("#1", pageVO.getColumn());
+			Object[] data = {pageVO.getKeyword()};
+			return jdbcTemplate.queryForObject(sql, int.class, data);
+		}
+	}
 }
 
 

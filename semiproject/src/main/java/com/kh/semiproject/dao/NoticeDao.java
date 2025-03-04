@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.semiproject.dto.NoticeDto;
 import com.kh.semiproject.mapper.NoticeMapper;
+import com.kh.semiproject.vo.PageVO;
 
 
 @Repository
@@ -55,6 +56,19 @@ public class NoticeDao {
 		Object[] data = {noticeNo};
 		List<NoticeDto> list = jdbcTemplate.query(sql,  noticeMapper, data);
 		return list.isEmpty() ? null:list.get(0);
+	}
+	
+	public int count(PageVO pageVO) {
+		if(pageVO.isList()) {
+			String sql = "select count(*) from notice";
+			return jdbcTemplate.queryForObject(sql,  int.class);
+		}
+		else {
+			String sql = "select count(*) from notice where instr(#1, ?) > 0";
+			sql = sql.replace("#1", pageVO.getColumn());
+			Object[] data = {pageVO.getKeyword()};
+			return jdbcTemplate.queryForObject(sql, int.class, data);
+		}
 	}
 	
 }
