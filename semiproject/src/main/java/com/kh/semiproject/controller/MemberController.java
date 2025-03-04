@@ -85,13 +85,4 @@ public class MemberController {
 		session.removeAttribute("userId");
 		return "redirect:/";
 	}
-	
-	//마이페이지 매핑
-	@RequestMapping("/mypage")
-	public String mypage(HttpSession session, Model model) {
-		String userId = (String) session.getAttribute("userId");//내 아이디 추출
-		MemberDto  memberDto = memberDao.selectOne(userId);//내정보 획득
-		model.addAttribute("memberDto", memberDto);
-		return "/WEB-INF/views/member/mypage.jsp";
-	}
 }

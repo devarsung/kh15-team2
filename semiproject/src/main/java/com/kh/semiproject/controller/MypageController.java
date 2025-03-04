@@ -37,11 +37,19 @@ public class MypageController {
 	private ReplyDao replyDao;
 	@Autowired
 	private ReviewDao reviewDao;
-
+	
+	//마이페이지 매핑
+	@RequestMapping("/home")
+	public String mypage(HttpSession session, Model model) {
+		String userId = (String) session.getAttribute("userId");//내 아이디 추출
+		MemberDto  memberDto = memberDao.selectOne(userId);//내정보 획득
+		model.addAttribute("memberDto", memberDto);
+		return "/WEB-INF/views/mypage/home.jsp";
+	}
 	// 비밀번호 변경 매핑
 	@GetMapping("/password")
 	public String password() {
-		return "/WEB-INF/views/member/password.jsp";
+		return "/WEB-INF/views/mypage/password.jsp";
 	}
 
 	@PostMapping("/password")
@@ -66,7 +74,7 @@ public class MypageController {
 		String userId = (String) session.getAttribute("userId");// 내 아이디 추출
 		MemberDto memberDto = memberDao.selectOne(userId);// 내정보 획득
 		model.addAttribute("memberDto", memberDto);
-		return "/WEB-INF/views/member/change.jsp";
+		return "/WEB-INF/views/mypage/change.jsp";
 	}
 
 	@PostMapping("/change")
@@ -94,7 +102,7 @@ public class MypageController {
 	// 회원 탈퇴 매핑
 	@GetMapping("/exit")
 	public String exit() {
-		return "/WEB-INF/views/member/exit.jsp";
+		return "/WEB-INF/views/mypage/exit.jsp";
 	}
 
 	@PostMapping("/exit")
@@ -114,7 +122,7 @@ public class MypageController {
 
 	@RequestMapping("/exitFinish")
 	public String exitFinish() {
-		return "/WEB-INF/views/member/exitFinish.jsp";
+		return "/WEB-INF/views/mypage/exitFinish.jsp";
 	}
 
 	// 내가좋아요표시한 여행지 목록 매핑
