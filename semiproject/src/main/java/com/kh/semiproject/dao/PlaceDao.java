@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semiproject.dto.PlaceDto;
+import com.kh.semiproject.dto.PlaceLikeDto;
 import com.kh.semiproject.mapper.PlaceMapper;
 
 @Repository
@@ -54,6 +55,16 @@ public class PlaceDao {
 		List<PlaceDto> list = jdbcTemplate.query(sql,  placeMapper, data);
 		return list.isEmpty() ? null:list.get(0);
 	}
+	
+//	public List<PlaceLikeDto> selectPlaceLikeList(String memberId){
+//		String sql = "select place_no, count(*) as like_count "
+//				+ "from place_like "
+//				+ "where member_id=? "
+//				+ "group by place_no "
+//				+ "order by like_count desc";
+//		Object[] data = {memberId};
+//		return jdbcTemplate.queryForList(sql, PlaceLikeDto.class, data);
+//	}
 }
 
 

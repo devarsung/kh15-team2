@@ -1,5 +1,7 @@
 package com.kh.semiproject.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,7 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semiproject.dao.MemberDao;
+import com.kh.semiproject.dao.PlaceLikeDao;
+import com.kh.semiproject.dao.ReviewDao;
 import com.kh.semiproject.dto.MemberDto;
+import com.kh.semiproject.dto.PlaceLikeDto;
+import com.kh.semiproject.dto.ReviewDto;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -19,6 +25,10 @@ import jakarta.servlet.http.HttpSession;
 public class MypageController {
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private PlaceLikeDao placeLikeDao;
+	@Autowired
+	private ReviewDao reviewDao;
 
 	// 비밀번호 변경 매핑
 	@GetMapping("/password")
@@ -97,5 +107,13 @@ public class MypageController {
 	@RequestMapping("/exitFinish")
 	public String exitFinish() {
 		return "/WEB-INF/views/member/exitFinish.jsp";
+	}
+	
+	//내가좋아요표시한 여행지 목록 매핑
+	@RequestMapping("/myLikePlace")
+	public String myLikePlace(@RequestParam String memberId, Model model) {
+	    List<PlaceLikeDto> placeLikeList = placeLikeDao.selectPlaceLikeList(memberId); // 좋아요한 여행지 목록 조회
+	    model.addAttribute("placeLikeList", placeLikeList);
+	    return "/WEB-INF/views/mypage/myLikePlace.jsp";  
 	}
 }
