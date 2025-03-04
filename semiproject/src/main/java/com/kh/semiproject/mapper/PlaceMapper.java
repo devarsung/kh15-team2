@@ -26,8 +26,10 @@ public class PlaceMapper implements RowMapper<PlaceDto>{
 				.placeEtime(rs.getTimestamp("place_etime"))
 				.placeLegion(rs.getString("place_legion"))
 				.placeWriter(rs.getString("place_writer"))
-				.placeLat(rs.getDouble("place_lat"))
-				.placeLng(rs.getDouble("place_lng"))
+				.placeLat(rs.getObject("place_lat", Double.class))
+				.placeLng(rs.getObject("place_lng", Double.class))
+				.placeType(rs.getString("place_type"))
+				.placeFirstImage(rs.getInt("place_first_image"))
 				.build();
 	}
 
