@@ -17,7 +17,7 @@ import com.kh.semiproject.dao.PlaceDao;
 import com.kh.semiproject.dto.PlaceDto;
 import com.kh.semiproject.error.TargetNotFoundException;
 import com.kh.semiproject.service.AttachmentService;
-import com.kh.semiproject.vo.PageVO;
+import com.kh.semiproject.vo.PlacePageVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -66,9 +66,11 @@ public class AdminPlaceController {
 	}
 	
 	@RequestMapping("/list")
-	public String list(@ModelAttribute("pageVO") PageVO pageVO, Model model) {
-		List<PlaceDto> list = placeDao.selectList(pageVO);
+	public String list(@ModelAttribute("pageVO") PlacePageVO placePageVO, Model model) {
+		List<PlaceDto> list = placeDao.selectList(placePageVO);
 		model.addAttribute("list", list);
+		int count = placeDao.count(placePageVO);
+		placePageVO.setCount(count);
 		return "/WEB-INF/views/admin/place/list.jsp";
 	}
 

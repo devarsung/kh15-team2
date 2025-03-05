@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.semiproject.dao.PlaceDao;
 import com.kh.semiproject.dto.PlaceDto;
 import com.kh.semiproject.error.TargetNotFoundException;
-import com.kh.semiproject.vo.PageVO;
+import com.kh.semiproject.vo.PlacePageVO;
 
 @Controller
 @RequestMapping("/place")
@@ -23,8 +23,8 @@ public class PlaceController {
 	
 	
 	@RequestMapping("/list")
-	public String list(@ModelAttribute ("pageVO")PageVO pageVO, Model model) {
-		List<PlaceDto> list = placeDao.selectList(pageVO);
+	public String list(@ModelAttribute ("pageVO")PlacePageVO placePageVO, Model model) {
+		List<PlaceDto> list = placeDao.selectList(placePageVO);
 		model.addAttribute("list", list);
 		return "/WEB-INF/views/place/list.jsp";
 	}

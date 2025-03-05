@@ -109,17 +109,17 @@
 	            <select name="type" class="field">
 	            	<option value="">선택하세요</option>
 	                <option ${param.type == '여행지' ? 'selected' : ''}>여행지</option>
-	                <option ${param.type == '음식점' ? 'selected' : ''}>음식점</option>
-	                <option ${param.type == '숙박' ? 'selected' : ''}>숙박</option>
+	                <option ${param.type == '맛집' ? 'selected' : ''}>맛집</option>
+	                <option ${param.type == '숙소' ? 'selected' : ''}>숙소</option>
 	            </select>
         	</div>
             
             <div class="cell">
             	<select name="column" class="field">
-            		<option value="placeTitle" ${param.column == '여행지' ? 'placeTitle' : ''}>여행지명</option>
-            		<option value="placeWriter" ${param.column == '여행지' ? 'placeWriter' : ''}>작성자</option>
+            		<option value="place_title"  ${param.column == 'place_title' ? 'selected' : ''}>여행지명</option>
+            		<option value="place_writer" ${param.column == 'place_writer' ? 'selected' : ''}>작성자</option>
             	</select>
-	            <input type="text" name="keyword" value="${keyword}" class="field">
+	            <input type="text" name="keyword" value="${param.keyword}" class="field">
 	            <button class="btn btn-positive">검색</button>	
             </div>
             
