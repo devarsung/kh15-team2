@@ -14,6 +14,14 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bb3ee3a13bf05ba14dafda342aa87cd1&libraries=services"></script>
 
 <style>
+	.preview-detailImages {
+		display: grid;
+        grid-template-columns: repeat(4, 1fr); 
+        padding: 10px;
+        place-items: center;
+        margin: 0 auto;
+        gap: 20px;
+	}
     .img-container {
         position: relative;
         display: inline-block;
@@ -50,6 +58,9 @@
     	display: none;
    	 	width: 100%; height: 300px; 
     }
+    .btn-submit {
+    	height: 3.5em;
+    }
 </style>
 
 <script type="text/javascript" src="/js/place/add.js"></script>
@@ -60,8 +71,7 @@
         <button class="btn-close">&times;</button>
     </div>
 </script>
-
-<form class="form-check" action="asdf" method="post" autocomplete="off" enctype="multipart/form-data">
+<form class="form-check" action="add" method="post" autocomplete="off" enctype="multipart/form-data">
 	<div class="container w-1000">
 	    <div class="cell center">
 	        <h1>여행지 등록</h1>
@@ -100,6 +110,7 @@
 	    <div class="cell">
 	        <input type="text" name="placeAddress1" class="field w-100" placeholder="기본주소" readonly>
 	        <div class="fail-feedback">주소를 작성해주세요</div>
+	        <div class="fail2-feedback">주소를 먼저 작성해주세요</div>
 	    </div>
 	    <div class="cell">
 	        <input type="text" name="placeAddress2" class="field w-100" placeholder="상세주소(선택)">
@@ -109,7 +120,7 @@
 	    	<div class="w-25">
 	    		<h2><i class="fa-solid fa-square-pen"></i> 위도/경도</h2>
 	    		<input type="text" name="placeLat" class="field w-100" placeholder="위도" readonly>
-	    		<div class="fail-feedback">위도/경도 정보를 입력해주세요</div>
+	    		<div class="fail-feedback">위도/경도 정보를 설정해주세요</div>
     		</div>
 	    	<div class="w-25 mx-10">
 	    		<h2>&nbsp;</h2>
@@ -121,7 +132,7 @@
     		</div>
 	    </div>
 	    
-	    <div class="cell">
+	    <div class="cell map-area">
 	    	<div id="map"></div>
 	    </div>
 	
@@ -180,8 +191,8 @@
 	        <input type="file" name="detailImages" class="detailImages" multiple>
 	    </div>
 	    
-	    <div class="cell">
-			<button type="button" class="btn btn-positive btn-submit">전송</button>
+	    <div class="cell mt-50">
+			<button type="submit" class="btn btn-positive w-100 btn-submit">등록하기</button>
 		</div>
 	</div>
 	

@@ -16,7 +16,12 @@
 
     <link rel="stylesheet" type="text/css" href="./css/commons.css">
     <!-- <link rel="stylesheet" type="text/css" href="./css/test.css"> -->
-
+<style>
+a {
+        text-decoration: none;
+        color: inherit; 
+        }
+</style>
     <!-- jQuery cdn-->
     <script src=https://code.jquery.com/jquery-3.7.1.min.js></script>
     <script type="text/javascript">
@@ -93,8 +98,8 @@
                     <textarea class="field w-100 target" rows="7" maxlength="500px" cols="20" placeholder="의견을 남겨주시면 감사하겠습니다"></textarea>
                 </div>
                 <div class="cell right my-20">
-                    <button class="btn btn-neutral w-25 mt-20 mx-10">돌아가기</button>
-                    <button class="btn btn-negative w-25 mt-20">회원 탈퇴</button>
+                    <button class="btn btn-neutral w-25 mt-20 mx-10"><a href="home">돌아가기</a></button>
+                    <button class="btn btn-negative w-25 mt-20"  type="submit">회원 탈퇴</button>
                 </div>
             </form>
         </div>

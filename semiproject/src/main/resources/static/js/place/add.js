@@ -1,7 +1,6 @@
 /**
  * 여행지 등록: /admin/place/add 페이지의 자바스크립트
  */
-
 $(function() {
 	//상태변수
 	var status = {
@@ -18,7 +17,7 @@ $(function() {
 		}
 	};
 	
-	//overview 섬머노트
+	//섬머노트
 	$("[name=placeOverview]").summernote({
         height: 250,//높이(px)
         minHeight: 200,//최소 높이(px)
@@ -30,9 +29,6 @@ $(function() {
             ["acion", ["undo", "redo"]]
         ],
         callback: {
-			onBlur: function() {
-				
-			},
             onlmageUpload: function (files) {
                 return;
             },
@@ -54,14 +50,12 @@ $(function() {
 
 				document.querySelector("[name=placePost]").value = data.zonecode;
 				document.querySelector("[name=placeAddress1]").value = addr;
-				//새주소 선택, 좌표정보 초기화
+				//새주소 선택 -> 주소유효성검사 + 좌표초기화
 				checkAddressValid();
 				initLatLng();
-				
-				// 커서를 상세주소 필드로 이동한다.
-				document.querySelector("[name=placeAddress2]").focus();
-				//값이 입력되었으니 x버튼 보여줘야함
-				displayClearButton();
+				deleteMap();
+				//값이 입력되었으니 x버튼 표시
+				$(".btn-address-clear").fadeIn();
 			}
 		}).open();
 	});
@@ -84,7 +78,7 @@ $(function() {
         var address1 = $("[name=placeAddress1]").val();
 		var isValid = post.length > 0 && address1.length > 0;
 		$("[name=placePost], [name=placeAddress1]")
-		                .removeClass("fail").addClass(isValid ? "" : "fail");
+		                .removeClass("fail fail2").addClass(isValid ? "" : "fail");
 		status.placeAddress = isValid;			
 	}
 	
@@ -102,39 +96,20 @@ $(function() {
 	function initLatLng() {
 		$("[name=placeLat]").val("");
 		$("[name=placeLng]").val("");
-		status.placeLatLng = false;
+		checkLatLngValid();
 	}
 	
-    $("[name=placeAddress2]").on("input", function(){
-		//값이 입력되었으니 x버튼 보여줘야함
-        displayClearButton();
-    });
-	
+	//주소 초기화
     $(".btn-address-clear").click(function(){
-		//주소를 모두 지우고 상태변수 false, x버튼 지우기
         $("[name=placePost]").val("");
         $("[name=placeAddress1]").val("");
-        $("[name=placeAddress2]").val("");
-		//주소가 변경되었기에 좌표 초기화
+		//주소가 변경 됨 -> 주소유효성체크, 좌표초기화
 		checkAddressValid();
 		initLatLng();
+		deleteMap();
 		//값이 지워졌으니 x버튼 사라져야함
-        displayClearButton();
+		$(".btn-address-clear").fadeOut();
     });
-	
-    //주소 삭제 버튼을 표시/제거하는 함수
-    function displayClearButton() {
-        var post = $("[name=placePost]").val();
-        var address1 = $("[name=placeAddress1]").val();
-        var address2 = $("[name=placeAddress2]").val();
-        var exist = post.length > 0 || address1.length > 0 || address2.length > 0;
-        if(exist) {
-            $(".btn-address-clear").fadeIn();
-        }
-        else {
-            $(".btn-address-clear").fadeOut();
-        }
-    }
 	
 	//위도 경도 구하기 버튼
 	$(".btn-search-xy").click(function(){
@@ -142,31 +117,11 @@ $(function() {
         var address1 = $("[name=placeAddress1]").val();
 		//주소 입력되어있지 않으면 return
 		if(post.length==0 || address1.length==0) {
-			checkAddressValid();
+			$("[name=placePost], [name=placeAddress1]").removeClass("fail").addClass("fail2");
 			return;
 		}
-		
 		searchLatLng();
 	});
-	
-	//지도 그리기
-	function drawMap(lat, lng) {
-		var container = $('#map')[0];//jQuery
-		$(container).show();
-        var options = {
-            center: new kakao.maps.LatLng(37.566395, 126.987778),
-            level: 3
-        };
-		
-		var map = new kakao.maps.Map(container, options);
-		
-		var location = new kakao.maps.LatLng(lat, lng);
-        var marker = new kakao.maps.Marker({
-            position: location, //위치 설정
-        });
-		marker.setMap(map);
-        map.setCenter(location);
-	}
 	
 	//위도 경도 실제로 구하기
 	function searchLatLng() {
@@ -181,10 +136,50 @@ $(function() {
 				var lng = Number(data[0].x).toFixed(6);//경도
 				$("[name=placeLat]").val(lat);
 				$("[name=placeLng]").val(lng);
-				status.placeLatLng = true;
+				checkLatLngValid();
 				drawMap(lat, lng);
 	    	}
     	});
+	}
+	
+	//지도
+	var map;
+	var marker;
+	
+	//지도 그리기
+	function drawMap(lat, lng) {
+		var container = $('#map')[0];
+		$(container).show();
+		
+	    var options = {
+	        center: new kakao.maps.LatLng(lat, lng),
+	        level: 3
+	    };
+		map = new kakao.maps.Map(container, options);
+		
+		var location = new kakao.maps.LatLng(lat, lng);
+	    marker = new kakao.maps.Marker({
+	        position: location, //위치 설정
+	    });
+		marker.setMap(map);
+	}
+	
+	//지도 지우기
+	function deleteMap() {
+		if(marker) {
+			marker.setMap(null);
+			marker = null;
+		}
+		if(map) {
+			map = null;
+		}
+		
+		var mapElement = $("#map")[0];
+		$(mapElement).remove();
+		
+		var newMapElement = $("<div>");
+		$(newMapElement).attr("id", "map");
+		$(".map-area").append(newMapElement);
 	}
 	
 	//유효성 검사
@@ -210,13 +205,6 @@ $(function() {
 	});
 	
 	//설명 overview
-	/*$("[name=placeOverview]").blur(function(){
-		var isValid = $(this).val().length > 0;
-		$(this).removeClass("fail").addClass(isValid ? "" : "fail");
-		$(".note-editor").css("border", isValid ? "" : "1px solid red");
-		status.placeOverview = isValid;
-	});*/
-	
 	$("[name=placeOverview]").on("summernote.blur", function(){
 		var isValid = $(this).val().length > 0;
 		$(this).removeClass("fail").addClass(isValid ? "" : "fail");
@@ -225,29 +213,36 @@ $(function() {
 	});
 	
 	//폼 전송
-	/*$(".form-checkasdfasdf").submit(function() {
+	$(".form-check").submit(function() {
 		$("[name=placeTitle]").trigger("blur");
-		$("[name=placeOverview]").trigger("summernote.blur");
 		$("[name=placeRegion]").trigger("input");
 		$("[name=placeType]").trigger("input");
 		checkAddressValid();
 		checkLatLngValid();
-		
+		checkFirstImageValid();
+		$(".note-editable").trigger("blur");
+		return status.ok();
+	});
+	
+	//폼 전송 테스트
+	/*$(".btn-submit").click(function(){
+		$("[name=placeTitle]").trigger("blur");
+		$("[name=placeRegion]").trigger("input");
+		$("[name=placeType]").trigger("input");
+		checkAddressValid();
+		checkLatLngValid();
+		checkFirstImageValid();
+		$(".note-editable").trigger("blur");
 		return false;
 	});*/
 	
-	//폼 전송 테스트
-	$(".btn-submit").click(function(){
-		$("[name=placeTitle]").trigger("blur");
-		
-		$("[name=placeRegion]").trigger("input");
-		$("[name=placeType]").trigger("input");
-		
-		checkAddressValid();
-		checkLatLngValid();
-		$("[name=placeOverview]").trigger("summernote.blur");
-		return false;
-	});
+	//대표 이미지 유효성 검사
+	function checkFirstImageValid() {
+		var isValid = $(".firstImage")[0].files.length > 0;
+		$(".firstImage").removeClass("fail").addClass(isValid ? "" : "fail");
+		$(".preview-firstImage").find("img").css("border", isValid ? "" : "1px solid red");
+		status.firstImage = isValid;
+	}
 	
 	//대표 이미지
 	$(".btn-add-first").click(function(){
@@ -259,7 +254,7 @@ $(function() {
 		previousFile = null;
 		$(".preview-firstImage").find("img").attr("src", "/images/defaultBack.png");
 		$(".first-name").text("");
-		status.firstImage = false;
+		checkFirstImageValid();
 	});
 	
 	var previousFile = null;
@@ -273,7 +268,7 @@ $(function() {
 	        reader.onload = function(e) {
 	            $(".preview-firstImage").find("img").attr("src", e.target.result);
 				$(".first-name").text(file.name);
-				status.firstImage = true;
+				checkFirstImageValid();
 	        };
 	        reader.readAsDataURL(file);
 			return;
@@ -286,47 +281,54 @@ $(function() {
 			$(".firstImage")[0].files = dataTransfer.files;//input값 변경
 			//.preiew-firstImage, .first-name, status.firstImage는 그대로 유지됨. 여기서 또 설정할 필요없음
 		}
+		else {
+			checkFirstImageValid();
+		}
 	});
 	
 	//상세 이미지
-	var fileList = [];
+	var fileListMap = new Map();
+	var fileCnt = 0;
+	
 	$(".detailImages").change(function(){
 		var selectedFiles = this.files;
 		for(var i=0; i<selectedFiles.length; i++) {
-			fileList.push(selectedFiles[i]);
-			showDetailPreview(selectedFiles[i]);
+			var fileIndex = fileCnt++;
+			fileListMap.set(fileIndex, selectedFiles[i]);
+			showDetailPreview(fileIndex, selectedFiles[i]);
 		}
 		updateDetailInput();
 	});
 	
 	$(document).on("click", ".btn-close", function(){
-        var index = $(this).parent().index();
-        fileList.splice(index, 1);
+        var index = $(this).parent().data("index");
+		fileListMap.delete(index);
 
-        if(fileList.length > 0) {
-            updateDetailInput();
-        }
-        else {
-            $(".detailImages")[0].files = new DataTransfer().files;
-        }
+		if(fileListMap.size > 0) {
+			updateDetailInput();
+		}
+		else {
+			$(".detailImages")[0].files = new DataTransfer().files;
+		}		
         
         $(this).parent().remove();
     });
 	
 	function updateDetailInput() {
 		var dataTransfer = new DataTransfer();
-		for(var i=0; i<fileList.length; i++) {
-			dataTransfer.items.add(fileList[i]);
+		for(var value of fileListMap.values()) {
+			dataTransfer.items.add(value);	
 		}
 		$(".detailImages")[0].files = dataTransfer.files;
 	}
 	
-	function showDetailPreview(file) {
+	function showDetailPreview(index, file) {
 		var reader = new FileReader();
 		reader.onload = function(e){
 			var template = $("#imgTag").text();
 			var html = $.parseHTML(template);
 			$(html).find("img").attr("src", e.target.result);
+			$(html).attr("data-index", index);
 			$(".preview-detailImages").append(html);
 		};
 		reader.readAsDataURL(file);
