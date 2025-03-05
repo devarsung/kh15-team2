@@ -164,4 +164,16 @@ public class MypageController {
 		model.addAttribute("list", list);
 		return "/WEB-INF/views/mypage/myReply.jsp";
 	}
+	
+	//회원아이디로 이미지 주소를 반환하는 매핑
+	@RequestMapping("/profile")
+	public String image(@RequestParam String memberId) {
+		try {//플랜 A : 이미지가 있는 경우
+			int attachmentNo = memberDao.findAttachment(memberId);
+			return "redirect:/attachment/download?attachmentNo="+attachmentNo;
+		}
+		catch(Exception e) {//플랜 B : 이미지가 없는 경우
+			return "redirect:https://placehold.co/400x400?text=p";
+		}
+	}
 }

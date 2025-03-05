@@ -104,4 +104,12 @@ public class MemberDao {
 		Object[] data = { memberId, attachmentNo };
 		jdbcTemplate.update(sql, data);
 	}
+	
+	//회원 이미지 찾기
+	public int findAttachment(String memberId) {
+		String sql = "select attachment_no from member_profile "
+				+ "where member_id=?";
+		Object[] data = {memberId};
+		return jdbcTemplate.queryForObject(sql, int.class, data);
+	}
 }
