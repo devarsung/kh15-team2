@@ -97,6 +97,11 @@ public class PlaceDao {
 		return list.isEmpty() ? null:list.get(0);
 	}
 
+	public boolean findAttachment(int placeFirstImage) {
+		String sql = "select count(*) from attachment where attachment_no = ?";
+		Object[] data = {placeFirstImage};
+		return jdbcTemplate.update(sql, data) > 0;
+	}
 }
 
 
