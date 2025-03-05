@@ -28,7 +28,7 @@
     <link rel="stylesheet" type="text/css" href="./css/text.css">
   
           <!-- Kakao Map API -->
-          <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=1aecdde2565bbb75bfd9dd611109d4e0"></script>
+          <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b439f58e06531c14c23c9a255b141aa6"></script>
     
   
         <script type="text/javascript">        
@@ -169,6 +169,9 @@
                       map: map,//지도 설정
                       position: location,//위치 설정
                   });
+                  $(".latitude").val(result[0].y);
+                  $(".longitude").val(result[0].x);
+                  
 
                   //인포윈도우 생성
                   var content = "<div>위도 : "+location.getLat().toFixed(6)+" <br> 경도 : "+location.getLng().toFixed(6)+"</div>";
@@ -187,51 +190,45 @@
 
   });
           </script>
-  <div class="container w-800">
-        <div class="cell center">
-            <h2>여행지 등록</h2>
-        </div>
-
-        <div class=" class">
-            <div class="cell">
-                <label>주소 검색</label>
+     <form enctype="application/x-www-form-urlencoded"></form>
+    <form action="" method="post">
+        <div class="container w-800">
+            <div class="cell center">
+                <h2>여행지 등록</h2>
             </div>
+            <label>주소 검색</label>
             <div class="cell flex-box">
-                <input type="text" class="field w-100 address-input">
+                <input type="text" class="field w-500 address-input">
                 <button type="button" class="btn btn-positive btn-address-search">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
             </div>
+
+            <!-- 위도(latitude), 경도(longitude) 값을 담을 숨겨진 input 필드 -->
+            <input type="hidden" name="latitude" class="latitude">
+            <input type="hidden" name="longitude" class="longitude">
+
             <div class="cell">
                 <div id="map"></div>
             </div>
-        <div class="cell">
-            <input class="field w-50 p-10"  type="file" id="imageUpload" multiple accept="image/*">
-            <div class="preview-container" id="preview"></div>
-        </div>
-        <div>
-
-            <form enctype="application/x-www-form-urlencoded"></form>
             <div class="cell">
-                <div class="cell">
+                <input class="field w-50 p-10" type="file" id="imageUpload" multiple accept="image/*">
+                <div class="preview-container" id="preview"></div>
+            </div>
+            <div>
+                <label>머릿글</label>
 
-                    <label>머릿글</label>
+                <div class="cell">
+                    <input class="field w-75 -p10">
                 </div>
-                <input class="field w-75 -p10">
-            </div>
-            <div class="cell my-20">
-                <form action="" method="post">
-                    <div class="cell">
-                        <textarea name="boardContent"></textarea>
-                    </div>
-                    
-                    <div class="cell center mt-20">
-                        <button type="submit" class="btn btn-positive w-100">여행지 등록</button>
-                    </div>
-                </form>
-            </div>
-        
-        </div>
-     
+
+                <textarea name="boardContent"></textarea>
+
+
+                <div class="cell center mt-20">
+                    <button type="submit" class="btn btn-positive w-50">여행지 등록</button>
+
+    </form>
     </div>
-</div>
+
+    </div>
