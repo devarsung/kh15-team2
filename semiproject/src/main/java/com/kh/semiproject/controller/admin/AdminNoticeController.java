@@ -15,6 +15,7 @@ import com.kh.semiproject.dao.NoticeDao;
 import com.kh.semiproject.dao.NoticeListViewDao;
 import com.kh.semiproject.dto.NoticeDto;
 import com.kh.semiproject.dto.NoticeListViewDto;
+import com.kh.semiproject.error.TargetNotFoundException;
 import com.kh.semiproject.vo.PageVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -53,6 +54,9 @@ public class AdminNoticeController {
 	@RequestMapping("/detail")
 	public String detail(@RequestParam int noticeNo, Model model) {
 		NoticeDto noticeDto = noticeDao.selectOne(noticeNo);
+		if(noticeDto == null) {
+			throw new TargetNotFoundException("존재 하지 않는 공지 사항 입니다");
+		}
 		model.addAttribute("noticeDto",noticeDto);
 		return "/WEB-INF/views/admin/notice/detail.jsp";
 	}
@@ -60,6 +64,9 @@ public class AdminNoticeController {
 	@GetMapping("/edit")
 	public String edit(@RequestParam int noticeNo, Model model) {
 		NoticeDto noticeDto = noticeDao.selectOne(noticeNo);
+		if(noticeDto == null) {
+			throw new TargetNotFoundException("존재 하지 않는 공지 사항 입니다");
+		}
 		model.addAttribute("noticeDto",noticeDto);
 		return "/WEB-INF/views/admin/notice/edit.jsp";
 	}
@@ -68,7 +75,17 @@ public class AdminNoticeController {
 	public String edit(@ModelAttribute NoticeDto noticeDto) {
 		int noticeNo = noticeDto.getNoticeNo();
 		noticeDao.update(noticeDto);
-		return "redirect:admin/detail?noticeNo="+noticeNo;
+		return "redirect:/admin/detail?noticeNo="+noticeNo;
+	}
+	
+	@RequestMapping("/delete")
+	public String delete(@RequestParam int noticeNo) {
+		NoticeDto noticeDto = noticeDao.selectOne(noticeNo);
+		if(noticeDto == null) {
+			throw new TargetNotFoundException("존재 하지 않는 공지 사항 입니다");
+		}
+		noticeDao.delete(noticeNo);
+		return "redirect:/admin/list";
 	}
 }
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semiproject.dao.PlaceDao;
 import com.kh.semiproject.dto.PlaceDto;
+import com.kh.semiproject.error.TargetNotFoundException;
 import com.kh.semiproject.vo.PageVO;
 
 @Controller
@@ -31,6 +32,9 @@ public class PlaceController {
 	@RequestMapping("/detail")
 	public String detail(@RequestParam int placeNo, Model model) {
 		PlaceDto placeDto = placeDao.selectOne(placeNo);
+		if(placeDto == null) {
+			throw new TargetNotFoundException("존재 하지 않는 여행지 입니다");
+		}
 		model.addAttribute("placeDto",placeDto);
 		return "/WEB-INF/views/place/detail.jsp";
 	}

@@ -13,6 +13,7 @@ import com.kh.semiproject.dao.NoticeDao;
 import com.kh.semiproject.dao.NoticeListViewDao;
 import com.kh.semiproject.dto.NoticeDto;
 import com.kh.semiproject.dto.NoticeListViewDto;
+import com.kh.semiproject.error.TargetNotFoundException;
 import com.kh.semiproject.vo.PageVO;
 
 @Controller
@@ -35,6 +36,9 @@ public class NoticeController {
 	@RequestMapping("/detail")
 	public String detail(@RequestParam int noticeNo, Model model) {
 		NoticeDto noticeDto = noticeDao.selectOne(noticeNo);
+		if(noticeDto == null) {
+			throw new TargetNotFoundException("존재 하지 않는 공지 사항 입니다");
+		}
 		model.addAttribute("noticeDto",noticeDto);
 		return "/WEB-INF/views/notice/detail.jsp";
 	}
