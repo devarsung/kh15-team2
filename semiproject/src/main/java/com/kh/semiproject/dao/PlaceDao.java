@@ -67,8 +67,8 @@ public class PlaceDao {
 		if(pageVO.isList()) {
 		sql =  "select * from ("
             + "select rownum rn, TMP.* from ("
-                + "select * from place"
-                + "order  place_no asc"
+                + "select * from place "
+                + "order by place_no asc"
             + ") TMP"
             + ") where rn between ? and ?";
 		return jdbcTemplate.query(sql, placeMapper);
