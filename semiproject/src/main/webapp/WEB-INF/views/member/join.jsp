@@ -67,14 +67,14 @@
                 <input type="text" name="memberNickname" class="field w-100">
                 <div class="success-feedback blue"><i class="fa-regular fa-circle"></i>사용 가능한 닉네임 입니다.</div>
                 <div class="fail-feedback red"><i class="fa-solid fa-check"></i>닉네임은 한글 또는 숫자 2~10자로 작성하세요</div>
-                <div class="fail2-feedback red"><i class="fa-solid fa-check"></i>닉네임이 이미 사용중입니다</div>
+                <div class="fail2-feedback red"><i class="fa-solid fa-check"></i>이미 사용중인 닉네임 입니다</div>
             </div>
             <div class="cell">
                 <label>성별  <i class="fa-solid fa-asterisk red"></i></label>
                 <select class="field w-100" name="memberGender">
                     <option value="">선택하세요</option>
-                    <option>남자</option>
-                    <option>여자</option>
+                    <option ${memberDto.memberGender == 'M' ? 'selected' : ''} value="M">남자</option>
+                    <option ${memberDto.memberGender == 'F' ? 'selected' : ''} value="F">여자</option>
                 </select>
                 <div class="success-feedback blue"></div>
                 <div class="fail-feedback red"><i class="fa-solid fa-check"></i>성별을 선택해주세요</div>
