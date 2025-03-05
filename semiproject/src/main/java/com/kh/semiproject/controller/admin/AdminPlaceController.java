@@ -58,7 +58,7 @@ public class AdminPlaceController {
 			throw new TargetNotFoundException("존재 하지 않는 여행지 입니다");
 		}
 		if(placeDao.findAttachment(placeDto.getPlaceFirstImage()) == true) {
-			//attachmentService.delete(placeNo)
+			attachmentService.delete(placeNo);
 		}
 		
 		placeDao.delete(placeNo);
@@ -85,22 +85,33 @@ public class AdminPlaceController {
 	@GetMapping("/edit")
 	public String edit(@RequestParam int placeNo, Model model) {
 		PlaceDto placeDto = placeDao.selectOne(placeNo);
-		if(placeDto == null) {
-			throw new TargetNotFoundException("존재 하지 않는 여행지 입니다");
-		}
 		model.addAttribute(placeDto);
 		return "/WEB-INF/views/admin/place/edit.jsp";
 	}
 
 	@PostMapping("/edit")
-	public String edit(@ModelAttribute PlaceDto placeDto) {
-		placeDao.update(placeDto);
+	public String edit(@ModelAttribute PlaceDto placeDto,  @RequestParam MultipartFile firstImage) throws IllegalStateException, IOException {
+		boolean success = placeDao.update(placeDto);
+		if(placeDto == null) {
+			throw new TargetNotFoundException("존재 하지 않는 여행지 입니다");
+		}
+		if(firstImage != null) {
+			try {
+				attachmentService.delete(placeDto.getPlaceFirstImage());
+			}
+			catch(Exception e) {}
+			
+			int placeFirstImage = attachmentService.save(firstImage);
+			placeDto.setPlaceFirstImage(placeFirstImage);
+		}
+		
 		int placeNo = placeDto.getPlaceNo();
 		return "redirect:/admin/detail?placeNo=" + placeNo;
 	}
 
 	@RequestMapping("/image")
 	public String image() {
+		
 		return "";
 	}
 
