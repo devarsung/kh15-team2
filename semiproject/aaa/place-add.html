@@ -32,42 +32,67 @@
     
   
         <script type="text/javascript">        
-              $(document).ready(function() {
-                   const $previewContainer = $('#preview');
-          
-                   // 기본 이미지 추가 (초기 상태)
-                   const defaultImg = $('<img>').attr('src', 'https://placehold.co/300x300') 
-                       .css({
-                           'width': '200px',
-                           'height': '200px',
-                           'object-fit': 'cover',
-                           'border-radius': '10px',
-                           'border': '1px solid #ddd',
-                           'padding': '5px'
-                       });
-                   $previewContainer.append(defaultImg);
-          
-                   $('#imageUpload').on('change', function(event) {
-                       const files = event.target.files;
-          
-                       // 기존 미리보기 초기화
-                       $previewContainer.empty();
-          
-                       if (files.length > 0) {
-                           $.each(files, function(index, file) {
-                               const reader = new FileReader();
-                               reader.onload = function(e) {
-                                   const $imgElement = $('<img>').attr('src', e.target.result);
-                                   $previewContainer.append($imgElement);
-                               };
-                               reader.readAsDataURL(file);
-                           });
-                       } else {
-                           // 파일이 없으면 다시 기본 이미지 표시
-                           $previewContainer.append(defaultImg);
-                       }
-                   });
-               });
+        const $previewContainer = $('#preview');
+        let selectedFiles = []; // 선택한 파일을 저장할 배열
+
+        //  1️ 이미지 선택 시 미리보기 추가 + 파일 저장
+        $('#imageUpload').on('change', function(event) {
+            const files = event.target.files;
+
+            // 기존 미리보기 초기화
+            $previewContainer.empty();
+            selectedFiles = []; // 기존 파일 배열 초기화
+
+            if (files.length > 0) {
+                $.each(files, function(index, file) {
+                    selectedFiles.push(file); // 선택한 파일 저장
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const $imgElement = $('<img>').attr('src', e.target.result)
+                            .css({
+                                'width': '200px',
+                                'height': '200px',
+                                'object-fit': 'cover',
+                                'border-radius': '10px',
+                                'border': '1px solid #ddd',
+                                'padding': '5px'
+                            });
+
+                        $previewContainer.append($imgElement);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+        });
+
+        // ✅ 2️⃣ 서버로 이미지 파일만 전송
+        $("#uploadBtn").on("click", function() {
+            if (selectedFiles.length === 0) {
+                alert(" 업로드할 이미지를 선택하세요!");
+                return;
+            }
+
+            const formData = new FormData();
+            $.each(selectedFiles, function(index, file) {
+                formData.append("files", file);
+            });
+
+            $.ajax({
+                url: "http://localhost:8080/upload", // 백엔드 업로드 URL
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    alert(" 파일 업로드 성공!");
+                },
+                error: function(error) {
+                    alert(" 파일 업로드 실패!");
+                    console.error(error);
+                }
+            });
+        });
                //------------------------
                $(function () {
                    $("[name=boardContent]").summernote({
@@ -191,7 +216,7 @@
   });
           </script>
      <form enctype="application/x-www-form-urlencoded"></form>
-    <form action="" method="post">
+    <form action="??" method="post" enctype="multipart/form-data">
         <div class="container w-800">
             <div class="cell center">
                 <h2>여행지 등록</h2>
@@ -211,12 +236,12 @@
             <div class="cell">
                 <div id="map"></div>
             </div>
-            <div class="cell">
-                <input class="field w-50 p-10" type="file" id="imageUpload" multiple accept="image/*">
-                <div class="preview-container" id="preview"></div>
-            </div>
-            <div>
-                <label>머릿글</label>
+             <div class="cell flex-box">
+                        <input type="file" id="imageUpload" multiple accept="image/*">
+                        <div class="preview-container" id="preview"></div>
+
+                </div>
+                <label>제목</label>
 
                 <div class="cell">
                     <input class="field w-75 -p10">
@@ -227,8 +252,7 @@
 
                 <div class="cell center mt-20">
                     <button type="submit" class="btn btn-positive w-50">여행지 등록</button>
+		</div>
 
+    </div>
     </form>
-    </div>
-
-    </div>
