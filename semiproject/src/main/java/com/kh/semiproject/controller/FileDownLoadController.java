@@ -1,5 +1,6 @@
 package com.kh.semiproject.controller;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,27 +27,24 @@ public class FileDownLoadController {
 	private AttachmentService attachmentService;
 	
 	@RequestMapping("/download")
-	public ResponseEntity<ByteArrayResource> download(@RequestParam int attachmentNo){
-		//byte[] data = attachmentService.load(attachmentNo);
-//		AttachmentDto attachmentDto = attachmentDao.selectOne(attachmentNo);
-//		
-//		//포장(Wrap)
-//		ByteArrayResource resource = new ByteArrayResource(data);
-//		
-//		//반환
-//		return ResponseEntity.ok()
-//							.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
-//							.header(HttpHeaders.CONTENT_TYPE, attachmentDto.getAttachmentType())
-//							.contentLength(attachmentDto.getAttachmentSize())
-//							.header(HttpHeaders.CONTENT_DISPOSITION, 
-//								ContentDisposition.attachment()
-//									.filename(attachmentDto.getAttachmentName(), 
-//													StandardCharsets.UTF_8)
-//								.build().toString()
-//							)
-//						.body(resource);
-	return null;
+	public ResponseEntity<ByteArrayResource> download(@RequestParam int attachmentNo) throws IOException{
+		byte[] data = attachmentService.load(attachmentNo);
+		AttachmentDto attachmentDto = attachmentDao.selectOne(attachmentNo);
+		
+		//포장(Wrap)
+		ByteArrayResource resource = new ByteArrayResource(data);
+		
+		//반환
+		return ResponseEntity.ok()
+							.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+							.header(HttpHeaders.CONTENT_TYPE, attachmentDto.getAttachmentType())
+							.contentLength(attachmentDto.getAttachmentSize())
+							.header(HttpHeaders.CONTENT_DISPOSITION, 
+								ContentDisposition.attachment()
+									.filename(attachmentDto.getAttachmentName(), 
+													StandardCharsets.UTF_8)
+								.build().toString()
+							)
+						.body(resource);
 	}
-	
-	
 }
