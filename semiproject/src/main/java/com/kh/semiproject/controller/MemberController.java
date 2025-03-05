@@ -34,9 +34,8 @@ public class MemberController {
 	@PostMapping("/join")
 	public String join(@ModelAttribute MemberDto memberDto,
 										@RequestParam MultipartFile memberProfile) throws IllegalStateException, IOException {
-		String memberId = memberDao.sequence();
-		memberDto.setMemberId(memberId);
 		memberDao.insert(memberDto);
+		String memberId = (String)memberDao.sequence();
 		if(memberProfile.isEmpty()==false) {
 		//첨부파일 등록
 		int attachmentNo = attachmentService.save(memberProfile);

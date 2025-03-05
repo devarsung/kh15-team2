@@ -25,11 +25,11 @@ public class MemberDao {
 	public void insert(MemberDto memberDto) {
 		String sql = "insert into member( " + "member_id, member_pw, member_nickname, "
 				+ "member_birth, member_gender, member_contact, " + "member_email, member_post, member_address1, "
-				+ "member_address2, member_level " + ") " + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "member_address2" + ") " + "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Object[] data = { memberDto.getMemberId(), memberDto.getMemberPw(), memberDto.getMemberNickname(),
 				memberDto.getMemberBirth(), memberDto.getMemberGender(), memberDto.getMemberContact(),
 				memberDto.getMemberEmail(), memberDto.getMemberPost(), memberDto.getMemberAddress1(),
-				memberDto.getMemberAddress2(), memberDto.getMemberLevel() };
+				memberDto.getMemberAddress2()};
 		jdbcTemplate.update(sql, data);
 	}
 
@@ -61,9 +61,7 @@ public class MemberDao {
 	public MemberDto selectOne(String memberId) {
 		String sql = "select * from member where member_id=?";
 		Object[] data = { memberId };
-		System.out.println("조회할 memberId: " + memberId);  // memberId 확인
 		List<MemberDto> list = jdbcTemplate.query(sql, memberMapper, data);
-		System.out.println("조회 결과 리스트 사이즈: " + list.size());  // 리스트 사이즈 확인
 		return list.isEmpty() ? null : list.get(0);
 	}
 	
