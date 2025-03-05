@@ -1,7 +1,13 @@
 package com.kh.semiproject.controller.admin;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +22,7 @@ import com.kh.semiproject.dao.NoticeListViewDao;
 import com.kh.semiproject.dto.NoticeDto;
 import com.kh.semiproject.dto.NoticeListViewDto;
 import com.kh.semiproject.error.TargetNotFoundException;
+import com.kh.semiproject.service.AttachmentService;
 import com.kh.semiproject.vo.PageVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -24,10 +31,13 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("/admin/notice")
 public class AdminNoticeController {
 	@Autowired
-	public NoticeDao noticeDao;
+	private NoticeDao noticeDao;
 	
 	@Autowired
-	public NoticeListViewDao noticeListViewDao;
+	private NoticeListViewDao noticeListViewDao;
+	
+	@Autowired
+	private AttachmentService attachmentService;
 	
 	@GetMapping("/add")
 	public String add() {
@@ -72,8 +82,33 @@ public class AdminNoticeController {
 	}
 	
 	@PostMapping("/edit")
-	public String edit(@ModelAttribute NoticeDto noticeDto) {
+	public String edit(@ModelAttribute NoticeDto noticeDto ) {
 		int noticeNo = noticeDto.getNoticeNo();
+		NoticeDto originDto = noticeDao.selectOne(noticeNo);
+		
+		Set<Integer> before = new HashSet<>();
+		Document beforeDocument = Jsoup.parse(originDto.getNoticeContent());
+		Elements beforeElements = beforeDocument.select(".somnething");
+		for(Element element:beforeElements) {
+			int attachmentNo = Integer.parseInt(element.attr(".attach"));
+			before.add(attachmentNo);
+		}
+		
+		
+		Set<Integer> after = new HashSet<>();
+		Document afterDocument = Jsoup.parse(noticeDto.getNoticeContent());
+		Elements afterElements = afterDocument.select(".something");
+		for(Element element:afterElements) {
+			int attachmentNo = Integer.parseInt(element.attr(".attach"));
+			after.add(attachmentNo);
+		}
+		
+		Set<Integer> minus = new HashSet<>(before);
+		minus.removeAll(after);
+		
+		for(int attachmentNo:minus) {
+			attachmentService.delete(attachmentNo);
+		}
 		noticeDao.update(noticeDto);
 		return "redirect:/admin/detail?noticeNo="+noticeNo;
 	}
@@ -84,6 +119,16 @@ public class AdminNoticeController {
 		if(noticeDto == null) {
 			throw new TargetNotFoundException("존재 하지 않는 공지 사항 입니다");
 		}
+		String content = noticeDto.getNoticeContent();
+		Document document = Jsoup.parse(content);
+		Elements elements = document.select(".ddd");
+		
+		for(Element element : elements) {
+			String data = element.attr("data-set");
+			int attachmentNo = Integer.parseInt(data);
+			attachmentService.delete(attachmentNo);
+		}
+		
 		noticeDao.delete(noticeNo);
 		return "redirect:/admin/list";
 	}

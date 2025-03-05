@@ -87,7 +87,6 @@ public class ReviewController {
 	
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute ReviewDto reviewDto) {
-		reviewDao.update(reviewDto);
 		int reviewNo = reviewDto.getReviewNo();
 		
 		ReviewDto originDto = reviewDao.selectOne(reviewNo);
@@ -111,6 +110,13 @@ public class ReviewController {
 		}
 		
 		// 비교
+		Set<Integer> minus = new HashSet<>(before);
+		minus.removeAll(after);
+		
+		for(int attachmentNo:minus) {
+			attachmentService.delete(attachmentNo);
+		}
+		reviewDao.update(reviewDto);
 		return "redirect:detail?reviewNo="+reviewNo;
 	}
 
@@ -128,7 +134,7 @@ public class ReviewController {
 		for(Element element : elements) {
 			String dataset = element.attr("data-attachment-no");
 			int attachmentNo = Integer.parseInt(dataset);
-			//attachmentService.delete(attachmentNo);
+			attachmentService.delete(attachmentNo);
 		}
 		
 		reviewDao.delete(reviewNo);
