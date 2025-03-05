@@ -4,12 +4,13 @@ import lombok.Data;
 
 @Data
 public class PageVO {
-	private int page = 1;
-	private int size = 16;
-	private int count; // 전체 rownum 수량
-	private int blockSize = 10;
-	private String column;
-	private String keyword;
+	protected int page = 1;
+	protected int size = 16;
+	protected int count; // 전체 rownum 수량
+	protected int blockSize = 10;
+	protected String column;
+	protected String keyword;
+	
 	public boolean search() {
 		return column != null && keyword != null;
 	}

@@ -1,5 +1,6 @@
 package com.kh.semiproject.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semiproject.dto.PlaceDto;
-import com.kh.semiproject.dto.PlaceLikeDto;
 import com.kh.semiproject.mapper.PlaceMapper;
-import com.kh.semiproject.vo.PageVO;
+import com.kh.semiproject.vo.PlacePageVO;
 
 @Repository
 public class PlaceDao {
@@ -23,9 +23,7 @@ public class PlaceDao {
 		String sql = "select place_seq.nextval from dual";
 		return jdbcTemplate.queryForObject(sql,  int.class);
 	}
-	
-
-	
+		
 	public void insert(PlaceDto placeDto) {
 		String sql = "insert into place(place_title, place_overview, place_post, place_address1, place_address2, place_region, place_writer, place_lat, place_lng, place_type) "
 				+ "valuse(?,?,?,?,?,?,?)";
@@ -47,47 +45,87 @@ public class PlaceDao {
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 	
-	public int count(PageVO pageVO) {
-		String sql = "";
-		if(pageVO.isList()) {
-			sql = "select count(*) from place";
-			return jdbcTemplate.queryForObject(sql, int.class);
+	//목록(검색) 결과 카운트
+	public int count(PlacePageVO placePageVO) {
+		StringBuilder sql = new StringBuilder();
+	    
+		if(placePageVO.isList()) {
+			sql.append("select count(*) from place");
+			return jdbcTemplate.queryForObject(sql.toString(), int.class);
 		}
 		else {
-			sql = "select count(*) from place where instr(#1, ?) > 0";
-			sql = sql.replace("#1", pageVO.getColumn());
-			Object[] data = {pageVO.getKeyword()};
-			return jdbcTemplate.queryForObject(sql,  int.class, data);
+			List<Object> dataList = new ArrayList<>();
+			sql.append("select count(*) from place ")
+	           .append("where 1=1 ");
+	        
+	        if(placePageVO.getKeyword() != null) {
+	        	sql.append("and instr(")
+	        		.append(placePageVO.getColumn())
+	        		.append(", ?) > 0 ");
+	        	dataList.add(placePageVO.getKeyword());
+	        }
+
+	        if (placePageVO.getRegion() != null) {
+	            sql.append("and place_region = ? ");
+	            dataList.add(placePageVO.getRegion());
+	        }
+
+	        if (placePageVO.getType() != null) {
+	            sql.append("and place_type = ? ");
+	            dataList.add(placePageVO.getType());
+	        }
+
+			return jdbcTemplate.queryForObject(sql.toString(),  int.class, dataList.toArray());
 		}
 	}
 	
-	
-	public List<PlaceDto> selectList(PageVO pageVO){
-		String sql = "";
-		if(pageVO.isList()) {
-		sql =  "select * from ("
-            + "select rownum rn, TMP.* from ("
-                + "select * from place "
-                + "order by place_no asc"
-            + ") TMP"
-            + ") where rn between ? and ?";
-		Object[] data = { pageVO.getStartRownum(), pageVO.getFinishRownum()};
-		return jdbcTemplate.query(sql, placeMapper,data);
-		}
-		else{
-			sql = "select * from ("
-		            + "select rownum rn, TMP.* from ("
-		                + "select * from place "
-		                + "where instr(#1, ?) > 0 "
-		                + "order by place_no asc"
-		            + ") TMP"
-		            + ") where rn between ? and ?";
-			
-			sql.replace("#1", pageVO.getColumn());
-			Object[] data = {pageVO.getKeyword(), pageVO.getStartRownum(), pageVO.getFinishRownum()};
-			return jdbcTemplate.query(sql, placeMapper, data);
-		}
-		
+	//여행지 목록 조회+검색
+	public List<PlaceDto> selectList(PlacePageVO placePageVO) {
+		StringBuilder sql = new StringBuilder();
+	    List<Object> dataList = new ArrayList<>();
+
+	    if (placePageVO.isList()) {
+	        sql.append("select * from (")
+	           .append("select rownum rn, TMP.* from (")
+	           .append("select * from place ")
+	           .append("order by place_no asc")
+	           .append(") TMP")
+	           .append(") where rn between ? and ?");
+
+	        dataList.add(placePageVO.getStartRownum());
+	        dataList.add(placePageVO.getFinishRownum());
+	    } else {
+	        sql.append("select * from (")
+	           .append("select rownum rn, TMP.* from (")
+	           .append("select * from place ")
+	           .append("where 1=1 ");
+	        
+	        if(placePageVO.getKeyword() != null) {
+	        	sql.append("and instr(")
+	        		.append(placePageVO.getColumn())
+	        		.append(", ?) > 0 ");
+	        	dataList.add(placePageVO.getKeyword());
+	        }
+
+	        if (placePageVO.getRegion() != null) {
+	            sql.append("and place_region = ? ");
+	            dataList.add(placePageVO.getRegion());
+	        }
+
+	        if (placePageVO.getType() != null) {
+	            sql.append("and place_type = ? ");
+	            dataList.add(placePageVO.getType());
+	        }
+
+	        sql.append("order by place_no asc")
+	           .append(") TMP")
+	           .append(") where rn between ? and ?");
+
+	        dataList.add(placePageVO.getStartRownum());
+	        dataList.add(placePageVO.getFinishRownum());
+	    }
+
+	    return jdbcTemplate.query(sql.toString(), placeMapper, dataList.toArray());
 	}
 	
 	public PlaceDto selectOne(int placeNo) {
