@@ -7,7 +7,7 @@ $(function(){
                memberBirth : true,
                memberContact : true,
                memberAddress : true,
-			   memberPw : false,
+			   memberPw : false,      
 			   
                ok : function(){
                    return  this.memberNickname
@@ -134,6 +134,11 @@ $(function(){
                displayClearButton();
            });
            
+		   $("[name=memberPw]").blur(function(){
+				var isValid = $(this).val().length > 0;
+			      $(this).removeClass("success fail").addClass(isValid ? "success" : "fail")
+			       status.memberPw = isValid;
+		   });
 		   
            //폼검사
            $(".form-check").submit(function(){
