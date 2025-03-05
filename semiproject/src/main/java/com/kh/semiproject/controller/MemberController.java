@@ -33,13 +33,12 @@ public class MemberController {
 	}
 	@PostMapping("/join")
 	public String join(@ModelAttribute MemberDto memberDto,
-										@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
-		String memberId = memberDao.sequence();
-		memberDto.setMemberId(memberId);
+										@RequestParam MultipartFile memberProfile) throws IllegalStateException, IOException {
 		memberDao.insert(memberDto);
-		if(attach.isEmpty()==false) {
+		String memberId = (String)memberDao.sequence();
+		if(memberProfile.isEmpty()==false) {
 		//첨부파일 등록
-		int attachmentNo = attachmentService.save(attach);
+		int attachmentNo = attachmentService.save(memberProfile);
 		//회원 프로필 등록
 		memberDao.connect(memberId, attachmentNo);
 		}
