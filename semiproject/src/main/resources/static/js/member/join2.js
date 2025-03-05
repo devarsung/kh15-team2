@@ -83,7 +83,7 @@ $(function(){
 
         //비밀번호 처리
         $("[name=memberPw]").blur(function(){
-            var regex = /^[A-Za-z0-9!@#$]{8,16}$/; 
+            var regex =  /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$])[A-Za-z0-9!@#$]{8,16}$/;
             var isValid = regex.test($(this).val());
             $(this).removeClass("success fail fail2").addClass(isValid ? "success" : "fail")
             status.memberPw = isValid;
