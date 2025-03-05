@@ -73,8 +73,8 @@
                 <label>성별  <i class="fa-solid fa-asterisk red"></i></label>
                 <select class="field w-100" name="memberGender">
                     <option value="">선택하세요</option>
-                    <option ${memberDto.memberGender == 'M' ? 'selected' : ''} value="M">남자</option>
-                    <option ${memberDto.memberGender == 'F' ? 'selected' : ''} value="F">여자</option>
+                    <option value="M">남자</option>
+                    <option value="F">여자</option>
                 </select>
                 <div class="success-feedback blue"></div>
                 <div class="fail-feedback red"><i class="fa-solid fa-check"></i>성별을 선택해주세요</div>

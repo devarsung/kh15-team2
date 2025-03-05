@@ -3,16 +3,6 @@
     <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-    <!-- google font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
-
-    <!-- font awesome cdn -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
-    <link rel="stylesheet" type="text/css" href="/css/commons.css">
-    <!-- <link rel="stylesheet" type="text/css" href="./css/test.css"> -->
     <style>
 
     </style>
@@ -89,7 +79,7 @@
 
         <div class="cell float-box">
            <a href="change" class="btn btn-positive float-left me-10">개인정보 변경</a>
-            <a href="#" class="btn btn-positive float-left">비밀번호 변경</a>
+            <a href="password" class="btn btn-positive float-left">비밀번호 변경</a>
             <a href="exit" class="btn btn-negative float-right">회원탈퇴</a>
 
         </div>

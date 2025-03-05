@@ -142,6 +142,7 @@ $(function(){
 		   
            //폼검사
            $(".form-check").submit(function(){
+			$("[name=memberPw]").trigger("blur");
                return status.ok();
            });
            

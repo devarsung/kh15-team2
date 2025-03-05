@@ -13,8 +13,8 @@
  <!-- kakao post api -->
  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
+    <script src="/js/mypage/change.js"></script>
     <!-- jQuery cdn -->
-    <script src="/js/member/change.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script type = "text/javascript">
     </script>
