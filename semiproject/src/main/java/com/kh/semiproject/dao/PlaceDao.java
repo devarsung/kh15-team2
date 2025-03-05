@@ -102,6 +102,9 @@ public class PlaceDao {
 		Object[] data = {placeFirstImage};
 		return jdbcTemplate.update(sql, data) > 0;
 	}
+	
+	
+	
 }
 
 
