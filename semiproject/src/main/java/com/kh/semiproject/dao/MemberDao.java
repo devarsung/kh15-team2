@@ -64,7 +64,15 @@ public class MemberDao {
 		List<MemberDto> list = jdbcTemplate.query(sql, memberMapper, data);
 		return list.isEmpty() ? null : list.get(0);
 	}
-
+	
+	//상세조회(회원닉네임) 메소드
+	public MemberDto selectOneByMemberNickname(String memberNickname) {
+		String sql = "select * from member where member_nickname=?";
+		Object[] data = {memberNickname};
+		List<MemberDto> list = jdbcTemplate.query(sql, memberMapper, data);
+		return list.isEmpty() ? null : list.get(0);
+	}
+	
 	// 최종 로그인 시각 갱신 메소드
 	public boolean updateMemberLogin(String memberId) {
 		String sql = "update member set member_login=systimestamp " + "where member_id=?";
