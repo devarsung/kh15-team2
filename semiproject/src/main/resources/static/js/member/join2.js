@@ -63,13 +63,13 @@ $(function(){
             var isValid = regex.test($(this).val()); 
             if(isValid){   //아이디중복
                 $.ajax({
-                    url:"/",
+                    url:"/rest/member/checkMemberId",
                     method :"post", 
                     data: {memberId :$(this).val()},
                     success: function(response){
                         $("[name=memberId]").removeClass("success fail fail2")
-                                            .addClass(response ? "fail2" : "success");
-                        status.memberId = response ? false : true;
+                                            .addClass(response ? "success" : "fail2");
+                        status.memberId = response;
                     }
                     });
                 }
@@ -113,13 +113,13 @@ $(function(){
             var isValid = regex.test($(this).val());
             if(isValid){
                 $.ajax({
-                    url:"",
+                    url:"/rest/member/checkMemberNickname",
                     method:"post",
                     data: {memberNickname :$(this).val()},
                     success : function(response){
                         $("[name=memberNickname]").removeClass("success fail fail2")
-                                                .addClass(response ? "fail2":"success");
-                        status.memberNickname = response ? false : true;
+                                                .addClass(response ? "success":"fail2");
+                        status.memberNickname = response;
                     }
                 });
             }

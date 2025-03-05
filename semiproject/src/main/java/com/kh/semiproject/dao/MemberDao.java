@@ -61,7 +61,9 @@ public class MemberDao {
 	public MemberDto selectOne(String memberId) {
 		String sql = "select * from member where member_id=?";
 		Object[] data = { memberId };
+		System.out.println("조회할 memberId: " + memberId);  // memberId 확인
 		List<MemberDto> list = jdbcTemplate.query(sql, memberMapper, data);
+		System.out.println("조회 결과 리스트 사이즈: " + list.size());  // 리스트 사이즈 확인
 		return list.isEmpty() ? null : list.get(0);
 	}
 	
