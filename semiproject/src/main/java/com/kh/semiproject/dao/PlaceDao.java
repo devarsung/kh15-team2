@@ -27,9 +27,9 @@ public class PlaceDao {
 
 	
 	public void insert(PlaceDto placeDto) {
-		String sql = "insert into place(place_title, place_overview, place_post, place_address1, place_address2, place_legion, place_writer, place_lat, place_lng, place_type) "
+		String sql = "insert into place(place_title, place_overview, place_post, place_address1, place_address2, place_region, place_writer, place_lat, place_lng, place_type) "
 				+ "valuse(?,?,?,?,?,?,?)";
-		Object[] data = {placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), placeDto.getPlacePost(), placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceLegion(), placeDto.getPlaceWriter()};
+		Object[] data = {placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), placeDto.getPlacePost(), placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceRegion(), placeDto.getPlaceWriter()};
 		jdbcTemplate.update(sql, data);
 	}
 	
@@ -42,8 +42,8 @@ public class PlaceDao {
 	}
 	
 	public boolean update(PlaceDto placeDto) {
-		String sql = "update place set place_title=?, place_content=?, place_post=? place_address1=?, place_address2=?, place_legion=? where place_no =?";
-		Object[] data = {placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), placeDto.getPlacePost(), placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceLegion(), placeDto.getPlaceNo()};
+		String sql = "update place set place_title=?, place_content=?, place_post=? place_address1=?, place_address2=?, place_region=? where place_no =?";
+		Object[] data = {placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), placeDto.getPlacePost(), placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceRegion(), placeDto.getPlaceNo()};
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 	
@@ -71,7 +71,8 @@ public class PlaceDao {
                 + "order by place_no asc"
             + ") TMP"
             + ") where rn between ? and ?";
-		return jdbcTemplate.query(sql, placeMapper);
+		Object[] data = { pageVO.getStartRownum(), pageVO.getFinishRownum()};
+		return jdbcTemplate.query(sql, placeMapper,data);
 		}
 		else{
 			sql = "select * from ("

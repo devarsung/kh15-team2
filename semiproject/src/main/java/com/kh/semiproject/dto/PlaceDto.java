@@ -19,7 +19,7 @@ public class PlaceDto {
 	private int placeReview;
 	private Timestamp placeWtime;
 	private Timestamp placeEtime;
-	private String placeLegion;
+	private String placeRegion;
 	private String placeWriter;
 	private Double placeLat;
 	private Double placeLng;
