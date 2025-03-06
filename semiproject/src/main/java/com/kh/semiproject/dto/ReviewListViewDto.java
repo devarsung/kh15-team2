@@ -19,7 +19,7 @@ public class ReviewListViewDto {
 	private Timestamp reviewEtime;
 	private String reviewWriter;
 	private String reviewPlace;
-	
+	private float reviewStar;
 	
 	
 	private String memberId;//아이디

@@ -26,7 +26,7 @@ public class PageVO {
 	}
 	
 	public int getStartBlock() {
-		return (page-1)/size * size + 1;
+		return(page - 1)/blockSize*blockSize + 1;
 	}
 	
 	public int getFinishBlock() {
