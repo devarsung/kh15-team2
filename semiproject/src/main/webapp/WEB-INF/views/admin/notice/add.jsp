@@ -2,7 +2,17 @@
     pageEncoding="UTF-8"%>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+   <style>
+        .note-editor{
+            border : 1px solid #b6b6b6 !important
+        }
+        .note-editable{
+            background-color: white !important;
+        }
+     </style>
+     <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+      <script src="/js/admin-notice-summernote.js"></script>
 <div class="container w-800">
         <div class="cell center" >
             <h1>공지사항 등록</h1>
@@ -18,10 +28,9 @@
             <textarea name="noticeContent" ></textarea>
         </div>
         <div class="cell">
-            <button type="submit" class="btn btn-positive w-100">작성하기</button>
+            <button type="submit" class="btn btn-positive w-100" style="height: 50px;">작성하기</button>
         </div>
         </form>
     </div>
-        
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>   

@@ -2,4 +2,3 @@
     pageEncoding="UTF-8"%>
 <h1>REVIEW ADD</h1>
 
-<a href = "detail?reviewNo=${reviewDto.reviewNo}">${reviewDto.reviewNo}</a>
