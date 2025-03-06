@@ -98,7 +98,7 @@ $(function(){
             integerOnly:false,//별을 정수 개수로만 선택하도록 설정
             send:{//전송옵션
                 sendable:true,//전송 가능
-                name:"reviewScore",//전송될 이름 설정
+                name:"reviewStar",//전송될 이름 설정
             },
             display:{
                 showNumber:true,
