@@ -69,7 +69,7 @@ public class AdminPlaceController {
 			placeDao.insertPlaceImage(placeNo, attachmentNo);
 		}
 		
-		return "redirect:/admin/detail?placeNo=" + placeNo;
+		return "redirect:detail?placeNo=" + placeNo;
 	}
 
 	@RequestMapping("/delete")
@@ -101,7 +101,11 @@ public class AdminPlaceController {
 		if(placeDto == null) {
 			throw new TargetNotFoundException("존재 하지 않는 여행지 입니다");
 		}
-		model.addAttribute(placeDto);
+		
+		model.addAttribute("placeDto", placeDto);
+		List<Integer> attachmentNos = placeDao.selectPlaceImagesNos(placeNo);
+		model.addAttribute("attachmentNos", attachmentNos);
+		System.out.println(attachmentNos);
 		return "/WEB-INF/views/admin/place/detail.jsp";
 	}
 
@@ -133,18 +137,9 @@ public class AdminPlaceController {
 	}
 
 	@RequestMapping("/image")
-	public String image() {
-		
+	public String image(@RequestParam int attachmentNo) {
 		return "";
 	}
-
-
-
-
-
-
-
-
 }
 
 
