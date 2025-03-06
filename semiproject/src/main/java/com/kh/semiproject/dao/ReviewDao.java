@@ -25,8 +25,6 @@ public class ReviewDao {
 	}
 
 	public void insert(ReviewDto reviewDto) {
-		int reviewNo = this.sequence();
-		reviewDto.setReviewNo(reviewNo);
 		String sql = "insert into review(review_title, review_content, review_writer, review_place)"
 				+ "values(?,?,?,?)";
 		Object[] data = { reviewDto.getReviewTitle(), reviewDto.getReviewContent(), reviewDto.getReviewWriter(),
@@ -84,4 +82,26 @@ public class ReviewDao {
 		Object[] data = { reviewNo, reviewNo };// 홀더 개수와 순서에 맞게
 		return jdbcTemplate.update(sql, data) > 0;
 	}
+	
+
+	
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

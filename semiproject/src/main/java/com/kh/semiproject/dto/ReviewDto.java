@@ -19,4 +19,5 @@ public class ReviewDto {
 	private Timestamp reviewEtime;
 	private String reviewWriter;
 	private String reviewPlace;
+	private float reviewStar;
 }

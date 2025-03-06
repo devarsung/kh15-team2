@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.semiproject.dao.PlaceDao;
 import com.kh.semiproject.dao.ReviewDao;
 import com.kh.semiproject.dao.ReviewListViewDao;
 import com.kh.semiproject.dto.ReviewDto;
@@ -34,23 +35,33 @@ public class ReviewController {
 	private ReviewDao reviewDao;
 	
 	@Autowired
+	private PlaceDao placeDao;
+	
+	@Autowired
 	private ReviewListViewDao reviewListViewDao;
 	
 	@Autowired
 	private AttachmentService attachmentService;
-	
+
 	@RequestMapping("/list")
-	public String list(@ModelAttribute("pageVO") PageVO pageVO, Model model) {
+	public String list(@ModelAttribute("pageVO") PageVO pageVO, Model model,
+			@RequestParam(required=false) Integer placeNo) {
 		int count =  reviewDao.count(pageVO);
 		pageVO.setCount(count);
-		List<ReviewListViewDto> list = reviewListViewDao.selectList(pageVO);
+		List<ReviewListViewDto> list ;
+		if(placeNo == null || placeDao.selectOne(placeNo) == null) {
+			list = reviewListViewDao.selectList(pageVO);
+		}
+		else {
+			list = reviewListViewDao.selectList(pageVO, placeNo);
+		}
 		model.addAttribute("list",list);
 		return "/WEB-INF/views/review/list.jsp";
 	}
-	
 
 	@GetMapping("/add")
-	public String add() {
+	public String add(@RequestParam int placeNo, Model model) {
+		model.addAttribute("placeDto", placeDao.selectOne(placeNo));
 		return "/WEB-INF/views/review/add.jsp";
 	}
 	
