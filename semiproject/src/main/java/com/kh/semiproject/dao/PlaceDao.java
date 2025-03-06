@@ -15,158 +15,127 @@ import com.kh.semiproject.vo.PlacePageVO;
 public class PlaceDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+
 	@Autowired
 	private PlaceMapper placeMapper;
-	
+
 	public int sequence() {
 		String sql = "select place_seq.nextval from dual";
-		return jdbcTemplate.queryForObject(sql,  int.class);
+		return jdbcTemplate.queryForObject(sql, int.class);
 	}
-		
+
 	public void insert(PlaceDto placeDto) {
 		String sql = "insert into place(place_title, place_overview, place_post, place_address1, place_address2, place_region, place_writer, place_lat, place_lng, place_type) "
 				+ "valuse(?,?,?,?,?,?,?)";
-		Object[] data = {placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), placeDto.getPlacePost(), placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceRegion(), placeDto.getPlaceWriter()};
+		Object[] data = { placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), placeDto.getPlacePost(),
+				placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceRegion(),
+				placeDto.getPlaceWriter() };
 		jdbcTemplate.update(sql, data);
 	}
-	
+
 	public boolean delete(int placeNo) {
 		String sql = "delete from place where place_no = ?";
 		// 추가 이미지 삭제
-		
-		Object[] data = {placeNo};
+
+		Object[] data = { placeNo };
 		return jdbcTemplate.update(sql, data) > 0;
 	}
-	
+
 	public boolean update(PlaceDto placeDto) {
 		String sql = "update place set place_title=?, place_content=?, place_post=? place_address1=?, place_address2=?, place_region=? where place_no =?";
-		Object[] data = {placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), placeDto.getPlacePost(), placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceRegion(), placeDto.getPlaceNo()};
+		Object[] data = { placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), placeDto.getPlacePost(),
+				placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceRegion(),
+				placeDto.getPlaceNo() };
 		return jdbcTemplate.update(sql, data) > 0;
 	}
-	
-	//목록(검색) 결과 카운트
+
+	// 목록(검색) 결과 카운트
 	public int count(PlacePageVO placePageVO) {
 		StringBuilder sql = new StringBuilder();
-	    
-		if(placePageVO.isList()) {
+
+		if (placePageVO.isList()) {
 			sql.append("select count(*) from place");
 			return jdbcTemplate.queryForObject(sql.toString(), int.class);
-		}
-		else {
+		} else {
 			List<Object> dataList = new ArrayList<>();
-			sql.append("select count(*) from place ")
-	           .append("where 1=1 ");
-	        
-	        if(placePageVO.getKeyword() != null) {
-	        	sql.append("and instr(")
-	        		.append(placePageVO.getColumn())
-	        		.append(", ?) > 0 ");
-	        	dataList.add(placePageVO.getKeyword());
-	        }
+			sql.append("select count(*) from place ").append("where 1=1 ");
 
-	        if (placePageVO.getRegion() != null) {
-	            sql.append("and place_region = ? ");
-	            dataList.add(placePageVO.getRegion());
-	        }
+			if (placePageVO.getKeyword() != null) {
+				sql.append("and instr(").append(placePageVO.getColumn()).append(", ?) > 0 ");
+				dataList.add(placePageVO.getKeyword());
+			}
 
-	        if (placePageVO.getType() != null) {
-	            sql.append("and place_type = ? ");
-	            dataList.add(placePageVO.getType());
-	        }
+			if (placePageVO.getRegion() != null) {
+				sql.append("and place_region = ? ");
+				dataList.add(placePageVO.getRegion());
+			}
 
-			return jdbcTemplate.queryForObject(sql.toString(),  int.class, dataList.toArray());
+			if (placePageVO.getType() != null) {
+				sql.append("and place_type = ? ");
+				dataList.add(placePageVO.getType());
+			}
+
+			return jdbcTemplate.queryForObject(sql.toString(), int.class, dataList.toArray());
 		}
 	}
-	
-	//여행지 목록 조회+검색
+
+	// 여행지 목록 조회+검색
 	public List<PlaceDto> selectList(PlacePageVO placePageVO) {
 		StringBuilder sql = new StringBuilder();
-	    List<Object> dataList = new ArrayList<>();
+		List<Object> dataList = new ArrayList<>();
 
-	    if (placePageVO.isList()) {
-	        sql.append("select * from (")
-	           .append("select rownum rn, TMP.* from (")
-	           .append("select * from place ")
-	           .append("order by place_no asc")
-	           .append(") TMP")
-	           .append(") where rn between ? and ?");
+		if (placePageVO.isList()) {
+			sql.append("select * from (").append("select rownum rn, TMP.* from (").append("select * from place ")
+					.append("order by place_no asc").append(") TMP").append(") where rn between ? and ?");
 
-	        dataList.add(placePageVO.getStartRownum());
-	        dataList.add(placePageVO.getFinishRownum());
-	    } else {
-	        sql.append("select * from (")
-	           .append("select rownum rn, TMP.* from (")
-	           .append("select * from place ")
-	           .append("where 1=1 ");
-	        
-	        if(placePageVO.getKeyword() != null) {
-	        	sql.append("and instr(")
-	        		.append(placePageVO.getColumn())
-	        		.append(", ?) > 0 ");
-	        	dataList.add(placePageVO.getKeyword());
-	        }
+			dataList.add(placePageVO.getStartRownum());
+			dataList.add(placePageVO.getFinishRownum());
+		} else {
+			sql.append("select * from (").append("select rownum rn, TMP.* from (").append("select * from place ")
+					.append("where 1=1 ");
 
-	        if (placePageVO.getRegion() != null) {
-	            sql.append("and place_region = ? ");
-	            dataList.add(placePageVO.getRegion());
-	        }
+			if (placePageVO.getKeyword() != null) {
+				sql.append("and instr(").append(placePageVO.getColumn()).append(", ?) > 0 ");
+				dataList.add(placePageVO.getKeyword());
+			}
 
-	        if (placePageVO.getType() != null) {
-	            sql.append("and place_type = ? ");
-	            dataList.add(placePageVO.getType());
-	        }
+			if (placePageVO.getRegion() != null) {
+				sql.append("and place_region = ? ");
+				dataList.add(placePageVO.getRegion());
+			}
 
-	        sql.append("order by place_no asc")
-	           .append(") TMP")
-	           .append(") where rn between ? and ?");
+			if (placePageVO.getType() != null) {
+				sql.append("and place_type = ? ");
+				dataList.add(placePageVO.getType());
+			}
 
-	        dataList.add(placePageVO.getStartRownum());
-	        dataList.add(placePageVO.getFinishRownum());
-	    }
+			sql.append("order by place_no asc").append(") TMP").append(") where rn between ? and ?");
 
-	    return jdbcTemplate.query(sql.toString(), placeMapper, dataList.toArray());
+			dataList.add(placePageVO.getStartRownum());
+			dataList.add(placePageVO.getFinishRownum());
+		}
+
+		return jdbcTemplate.query(sql.toString(), placeMapper, dataList.toArray());
 	}
-	
+
 	public PlaceDto selectOne(int placeNo) {
 		String sql = "select * from place where place_no = ?";
-		Object[] data = {placeNo};
-		List<PlaceDto> list = jdbcTemplate.query(sql,  placeMapper, data);
-		return list.isEmpty() ? null:list.get(0);
+		Object[] data = { placeNo };
+		List<PlaceDto> list = jdbcTemplate.query(sql, placeMapper, data);
+		return list.isEmpty() ? null : list.get(0);
 	}
 
 	public boolean findAttachment(int placeFirstImage) {
 		String sql = "select count(*) from attachment where attachment_no = ?";
-		Object[] data = {placeFirstImage};
+		Object[] data = { placeFirstImage };
 		return jdbcTemplate.update(sql, data) > 0;
 	}
-	
-	
-	
+
+	// 조회수 1 증가 메소드
+	public boolean updatePlaceRead(int placeNo) {
+		String sql = "update place " + "set place_read=place_read+1 " + "where place_no=?";
+		Object[] data = { placeNo };
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

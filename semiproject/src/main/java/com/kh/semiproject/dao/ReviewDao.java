@@ -84,4 +84,11 @@ public class ReviewDao {
 		Object[] data = { reviewNo, reviewNo };// 홀더 개수와 순서에 맞게
 		return jdbcTemplate.update(sql, data) > 0;
 	}
+
+	// 조회수 1 증가 메소드
+	public boolean updateReviewRead(int reviewNo) {
+		String sql = "update review " + "set review_read=review_read+1 " + "where review_no=?";
+		Object[] data = { reviewNo };
+		return jdbcTemplate.update(sql, data) > 0;
+	}
 }
