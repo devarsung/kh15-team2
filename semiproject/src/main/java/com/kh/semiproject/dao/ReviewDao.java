@@ -25,12 +25,11 @@ public class ReviewDao {
 	}
 
 	public void insert(ReviewDto reviewDto) {
- pjs0306(3)
-		String sql = "insert into review(review_title, review_content, review_writer, review_place)"
-				+ "values(?,?,?,?)";
+		String sql = "insert into review(review_title, review_content, review_writer, review_place, review_star)"
+				+ "values(?,?,?,?,?)";
 
 		Object[] data = { reviewDto.getReviewTitle(), reviewDto.getReviewContent(), reviewDto.getReviewWriter(),
-				reviewDto.getReviewPlace() };
+				reviewDto.getReviewPlace(), reviewDto.getReviewStar() };
 		jdbcTemplate.update(sql, data);
 	}
 
