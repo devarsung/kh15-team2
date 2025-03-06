@@ -20,6 +20,7 @@ public class NoticeMapper implements RowMapper<NoticeDto>{
 				.noticeWtime(rs.getTimestamp("notice_wtime"))
 				.noticeEtime(rs.getTimestamp("notice_etime"))
 				.noticeWriter(rs.getString("notice_writer"))
+				.noticeRead(rs.getInt("notice_read"))
 				.build();
 	}
 
