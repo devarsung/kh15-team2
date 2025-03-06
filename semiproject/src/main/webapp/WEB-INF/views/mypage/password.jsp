@@ -7,7 +7,7 @@
         <div class="cell center">
             <h1>비밀번호 변경</h1>
         </div>
-        <form class="form-check" action="login" method="post" autocomplete="off">
+        <form class="form-check" action="password" method="post" autocomplete="off">
         <div class="cell mt-30">
             <label>기존 비밀번호</label>
             <input class="field w-100" type="password" name="currentPw">
