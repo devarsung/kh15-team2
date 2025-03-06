@@ -45,11 +45,11 @@ $(function() {
 		<table class="table table-border table-hover table-ellipsis">
 			<thead>
 				<tr>
-				<c:if test="${session.userLevel=='관리자'}">
-				<th>
-				<input type="checkbox" class="check-all">
-				</th>
-				</c:if>
+				<c:if test="${sessionScope.userLevel=='관리자'}">
+					<th>
+                		<input type="checkbox" class="check-all">
+                	</th>
+					</c:if> 
 					<th>번호</th>
 					<th style="width:450px; max-width:450px;">제목</th>
 					<th>작성자</th>
