@@ -2,174 +2,424 @@
     pageEncoding="UTF-8"%>
  
    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-  
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>예시 디자인</title>
-<!--google font-->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <!--google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
 
-<!--font awesome cdn-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!--font awesome cdn-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-   
-   
+
+
     <link rel="stylesheet" type="text/css" href="./css/commons.css">
     <link rel="stylesheet" type="text/css" href="./css/text.css">
 
-   <!-- jQuery-->
+    <!-- jQuery-->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    
-    <style>
-    	
-    	
-    
-    
-        /* 🔹 후기 작성 컨테이너 */
-        .container {
-            width: 80%; 
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-        }
-
-        /* 🔹 후기 제목 스타일 */
-        .title-input {
-            width: 100%;
-            height: 45px;
-            font-size: 18px;
-        }
-
-        /* 🔹 지도 영역 스타일 */
-        .map-container {
-            width: 100%;
-            height: 400px;
-            background: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        /* 🔹 별점 스타일 */
-        .score-size {
-            font-size: 30px;
-        }
-
-        /* 🔹 이미지 업로드 스타일 */
-        .file-input {
-            display: none;
-        }
-
-        .upload-btn {
-            display: inline-block;
-            padding: 10px 15px;
-            background: #007bff;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .preview {
-            margin-top: 10px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .preview img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-
-        /* 🔹 버튼 정렬 */
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-    </style>
 
 
-   <!-- summernote cdn -->
-   <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
-   <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+
+    <!-- summernote cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
+
+
+    <!-- Kakao Map API -->
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b439f58e06531c14c23c9a255b141aa6"></script>
+
+    <!-- swiper cdn -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 
 
 
     <script type="text/javascript">
-    
+
+        $(function () {
+
+            //지도를 표시할 영역 선택
+            var container = document.querySelector("#map");//JS
+            //var container = $("#map")[0];//jQuery
+
+            //지도 표시 옵션 설정(center : 중심좌표 , level : 확대수준)
+            //- 지도의 좌표는 위도(latitude)와 경도(longitude)로 이루어져 있다.
+            //- 위도나 경도는 일반적으로 소수점 6자리까지 표기
+            //- 카카오에서는 위도경도를 합쳐서 위치정보(LatLng)로 사용
+            //- 지도는 상황에 따라 다양한 배율(level)을 가진다
+            //- 1부터 14까지 설정 가능
+            var options = {
+                center: new kakao.maps.LatLng(37.566395, 126.987778),
+                level: 3
+            };
+
+            var map = new kakao.maps.Map(container, options);
+
+            //목표 : 검색버튼 누르면 입력창의 주소를 검색하여 지도에 표시
+            $(".btn-address-search").click(function () {
+                var address = $(".address-input").val();
+                var regex = /^(?=.*?[가-힣]+).+$/;
+                if (regex.test(address) == false) return;
+
+                //주소-좌표 변환도구 생성
+                var geocoder = new kakao.maps.services.Geocoder();
+
+                //도구를 이용해서 좌표를 검색
+                //geocoder.addressSearch(주소, 콜백함수);
+                geocoder.addressSearch(address, function (result, status) {
+                    //console.log(arguments);//함수에 전달되는 모든 인자를 확인
+                    //if(status == "OK") {//검색 성공
+                    if (status === kakao.maps.services.Status.OK) {//검색 성공
+                        //console.log(result[0].x, result[0].y);//경도, 위도
+
+                        //마커 생성
+                        var location = new kakao.maps.LatLng(result[0].y, result[0].x);
+                        var marker = new kakao.maps.Marker({
+                            map: map,//지도 설정
+                            position: location,//위치 설정
+                        });
+
+                        //인포윈도우 생성
+                        var content = "<div>위도 : " + location.getLat().toFixed(6) + " <br> 경도 : " + location.getLng().toFixed(6) + "</div>";
+                        var infowindow = new kakao.maps.InfoWindow({
+                            content: content,
+                            removable: true,
+                        });
+                        infowindow.open(map, marker);
+                        //지도 이동
+                        map.setCenter(location);
+                    }
+                    // else if(status == "ZERO_RESULT") {//검색 결과 없음
+                    // }
+                });
+            });
+
+            window.addEventListener("load", function () {
+                var swiper = new Swiper('.test01', {
+                    // Optional parameters
+                    direction: 'vertical',
+                    loop: true,
+
+                    // If we need pagination
+                    pagination: {
+                        el: '.swiper-pagination',
+                    },
+
+                    // Navigation arrows
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+
+                    // And if we need scrollbar
+                    scrollbar: {
+                        el: '.swiper-scrollbar',
+                    },
+                });
+
+                var swiper2 = new Swiper(".test02", {
+                    //기본 옵션
+                    direction: 'horizontal',//수평(horizontal), 수직(vertical)
+                    loop: true,//양쪽 끝을 이어서 계속 슬라이드가 가능하도록 설정
+
+                    //현재 페이지에 대한 네비게이션 표시 영역
+                    pagination: {
+                        el: '.swiper-pagination',
+                    },
+
+                    //좌우 이동 화살표
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+
+                    //자동재생
+                    //autoplay: true,//자동재생ON
+                    autoplay: {
+                        delay: 5000,//한장당 5000ms
+                        disableOnInteraction: true,//제어중에는 자동재생 OFF
+                        pauseOnMouseEnter: true,//마우스 hover시 자동재생 OFF
+                    },
+                });
+
+                var swiper3 = new Swiper(".test03", {
+                    //기본 옵션
+                    direction: 'horizontal',//수평(horizontal), 수직(vertical)
+                    loop: true,//양쪽 끝을 이어서 계속 슬라이드가 가능하도록 설정
+
+                    //현재 페이지에 대한 네비게이션 표시 영역
+                    pagination: {
+                        el: '.swiper-pagination',
+                        hideOnClick: true,
+                        type: "bullets",// bullets, fraction, progressbar, custom
+                    },
+
+                    //좌우 이동 화살표
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                        hideOnClick: true,
+                    },
+
+                    //전환이펙트
+                    effect: "fade",//slide, fade, cube, coverflow, flip, creative, cards
+                    //fadeEffect:{},
+                    //coverflowEffect:{},
+                    //cubeEffect:{},
+                    //flipEffect:{},
+                    //creativeEffect:{},
+                    //cardEffect:{},
+                });
+            });
+         
+                $("[name=text]").on("input",function(){
+                    console.log(textarea);
+                    var textarea=$(this);
+                   
+                    var span=textarea.next().children("span:first");
+                    
+                    var text = textarea.val();
+                    var count=text.length;
+                    
+                    
+                    if (count > 300) {
+                        textarea.val(text.substring(0, 300));//마지막 한글자 자르기     
+                        count=300;
+                    }
+                    span.text(count);
+                });
+            });
+
     </script>
 
+    <style>
+        .dd {
+            font-size: 20px;
+        }
 
+        .cc {
+            width: 250px;
+            height: 250px;
+        }
 
-  <div>
-<div class="container w-800">
+        #map {
+            width: 100%;
+            height: 300px;
 
-    <div class="cell">
-        <h1>후기 상세</h1>
-    </div>
-    <div class="cell ">
-        작성자-시우|조회수 369|댓글수30|작성일2020-02-02
-    </div>
-    <div class="cell p-20 ms-10">
-        <h1>
-            당산에 이런곳이?!
-        </h1>
-        <img src="https://placehold.co/400x400">
-    </div>
-    다름아닌 요즘 가장 핫한 이레빌딩을 보기 위해서
+        }
 
-    <div class="cell my-30 p-10">
-        
-        <div class="cell">
-            <table class="table table-border table-stripe">
-                <tbody class="center">
-                    <tr>
-                        <td>1</td>
-                        <td >티티</td>
-                        <td>오 정말 좋아 보여요</td>
-                        <td>2024-02-22</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td >배고픈 사람 </td>
-                        <td>별룬디?</td>
-                        <td>2024-02-12</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td >티티</td>
-                        <td>오 정말 좋아 보여요</td>
-                        <td>2024-02-12</td>
-                    </tr>
-             
-            </tbody>
-        </table>
-    </div>
-    <div class="cell flex-box mt-50 center" >
-        &lt; 이전글
-        <a href="#" class="btn btn-neutral center">목록으로 </a>
-        다음글 &gt; <div class="cell"><a href="#" class="btn btn-negative ">삭제</a></div>
-<c:if test="${sessionScope.userId != null}">
-    <a href="#" class="btn btn-negative  >삭제</a>
-</c:if>
-  
+        .textarea {
+            width: 100%;
+            height: 14.25em;
+            border: none;
+            resize: none;
+            font-size: 20px;
+            border: 1px solid #636e72;
+        }
 
-    </div>
+        .textarea1 {
+            width: 100%;
+            height: 7.25em;
+            border: none;
+            resize: none;
+            font-size: 20px;
+            border: 1px solid #636e72;
+        }
+
     
 
-</div>
 
-</div>
-</div>
-  
+            /*글자 크기 조절 
+            font-size택스트 크기
+            display 글자 격자 처리*/
+        .ww {
+            font-size: 20px;
+            display: grid;
+        }
+        /* 글자 속성 2  */
+        .text30 {
+            font-size: 30px;
+            display: inline;
+        }
+
+        .box-text20{
+            font-size: 20px;
+            display: grid;
+        }
+
+ 
+
+        .hh {
+            width: 10px;
+
+        }
+
+        .qq {
+            display: flex;
+            flex-wrap: wrap;
+            right: 50px;
+            gap: 10px;
+        }
+
+        .text20 {
+            font-size: 20px;
+            display: grid;
+        }
+
+        .pp {
+            width: 100px;
+        }
+
+        .right-text26 {
+            font-size: 26px;
+            display: grid;
+            right: 20px;
+        }
+
+
+            /* text-decoration a 태그 밑줄 효과 제거
+            color 글자 섹상 검정색  */
+        .a {
+            text-decoration: none;
+            color: black;
+        }
+
+        
+        .test03{
+            height:400px;
+        }
+    </style>
+
+
+    <div class="container w-800">
+
+
+
+
+        <div class="cell center">
+            <h1>후기 상세</h1>
+        </div>
+
+        <div class="cell left dd my-30">
+            <span class="cc">
+                OO 여행지 후기
+            </span>
+            <br>
+            <div class="cell">
+                |조회수 369|댓글수30|작성일2020-02-02
+            </div>
+            <hr>
+        </div>
+
+
+        <div class="cell center">
+            <div id="map"></div>
+        </div>
+        <div class="cell my-30">
+
+            <div class="textarea" placeholder="">
+                🌿 고요한숲속길 – 자연 속 힐링 여행 🌿
+
+                푸른 나무가 우거진 고요한숲속길은 도심의 번잡함을 벗어나 자연과 하나가 될 수 있는 곳입니다. 부드러운 흙길을 따라 걸으면 상쾌한 피톤치드 향이 퍼지고, 맑은 시냇물이 졸졸 흐르는 소리가
+                들려옵니다. 계절마다 다른 매력을 선사하는 이곳에서, 마음의 여유를 찾고 조용한 휴식을 즐겨보세요.
+
+                ✔ 추천 포인트
+
+                울창한 숲길과 편안한 산책로
+                맑은 공기와 자연 속 힐링
+                계절마다 변하는 아름다운 풍경
+
+            </div>
+
+
+        </div>
+
+
+        <div class="cell my-30 p-10">
+
+
+
+
+       <!-- Slider main container -->
+            <!-- <div></div> -->
+            <div class="swiper test03" >
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper wwww">
+                    <!-- Slides -->
+                    <div class="swiper-slide"><img src="https://picsum.photos/id/11/300/300" width="100%" height="100%">
+                    </div>
+                    <div class="swiper-slide"><img src="https://picsum.photos/id/12/300/300" width="100%" height="100%">
+                    </div>
+                    <div class="swiper-slide"><img src="https://picsum.photos/id/13/300/300" width="100%" height="100%">
+                    </div>
+                    <div class="swiper-slide"><img src="https://picsum.photos/id/14/300/300" width="100%" height="100%">
+                    </div>
+                    <div class="swiper-slide"><img src="https://picsum.photos/id/15/300/300" width="100%" height="100%">
+                    </div>
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+
+            </div>
+        </div>
+     
+        <div class="cell center">
+
+            <a href="#" class="a">
+                &lt; 이전글
+            </a>
+
+            <a class="btn btn-neutral w-25">목록으로</a>
+            <a href="#" class="a">
+                다음글 &gt;
+            </a>
+        </div>
+
+        <div class="cell text20 textarea1">
+            또다른 계저을 만나기 위해 떠나는 해파랑길<br>
+            *경상북도 울진군 북면 부구삼거리→석호방파제→나곡해변→도화동산→갈령재(수로부인길)→강원도 삼척시 원덕읍 호산버스터미널 까지
+        </div>
+        <div class="text30  mt-40 left">댓글</div>
+        <div class="cell center">
+            <textarea type="text" name="text" class=" textarea1"></textarea>
+            <div class="cell">
+
+                <span >0</span>
+                <span >/300</span>
+
+        </div>
+        </div>
+        <button class="btn btn-positive w-25">입력</button>
+    </div>
+
+    <!--댓글 표시 창-->
+    <div class="container w-1200">
+        <div class="ww">
+            <hr>
+            <div class="text30 center">
+                1개 이상의 댓글
+                <hr>
+            </div>
+
+        </div>
+        <div class="text20"> 티티</div>
+        <div class="cell">
+            
+            <div class="text20 mt-10">좋은 곳입니다</div>
+            <div class="text20 mt-50">2024-03-06</div>
+
+            <a class="a" href="#">삭제하기</a>
+            <hr>
+        </div>
+
+    </div>
+
+
