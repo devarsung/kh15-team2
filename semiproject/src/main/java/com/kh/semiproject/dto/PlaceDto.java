@@ -25,5 +25,5 @@ public class PlaceDto {
 	private Double placeLng;
 	private String placeType;
 	private int placeFirstImage;
-	private int placeView;
+	private int placeRead;
 }
