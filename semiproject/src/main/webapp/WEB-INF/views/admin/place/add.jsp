@@ -167,8 +167,8 @@
 				<select name="placeType" class="field w-100">
 					<option value="">선택하세요</option>
 					<option>여행지</option>
-					<option>음식점</option>
-					<option>숙박</option>
+					<option>맛집</option>
+					<option>숙소</option>
 				</select>
 				<div class="fail-feedback">여행지타입을 선택해주세요</div>
 			</div>
