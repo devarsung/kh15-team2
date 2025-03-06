@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
@@ -18,7 +19,12 @@
         </form>
     </div>
     
-    <div class="cell">
+    <div class="cell mt-30">
+    
+    <c:if test="${sessionScope.userLevel=='관리자'}">
+	<button type="submit" class="btn btn-negative">채크항목 삭제</button>
+	</c:if>
+    
     	<a href="add" class="btn btn-neutral">공지등록</a>
     </div>
     
@@ -26,6 +32,11 @@
         <table class="table table-border table-hover table-stripe">
             <thead>
                 <tr>
+                	<c:if test="${sessionScope.userLevel=='관리자'}">
+					<th width="1%">
+                	<input type="checkbox" class="check-all">
+                	</th>
+					</c:if> 
                     <th width="5%">번호</th>
                     <th width="15%">작성자</th>
                     <th>제목</th>
@@ -33,31 +44,61 @@
                 </tr>
             </thead>
             <tbody class="center">
-                <tr>
+               <tr>
+                      	    <c:if test="${sessionScope.userLevel=='관리자'}">
+					<td >
+					<input type="checkbox" class="check-item" name="noticeNo" value="${noticeListViewDto.noticeNo}">
+					</td>
+				    </c:if>
+                   
                     <td>1</td>
                     <td>작성자</td>
                     <td><a href="detail?noticeNo=">제목</a></td>
                     <td>2025-01-01</td>
                 </tr>
                 <tr>
+                      	    <c:if test="${sessionScope.userLevel=='관리자'}">
+					<td >
+					<input type="checkbox" class="check-item" name="noticeNo" value="${noticeListViewDto.noticeNo}">
+					</td>
+				    </c:if>
+                   
                     <td>1</td>
                     <td>작성자</td>
                     <td><a href="detail?noticeNo=">제목</a></td>
                     <td>2025-01-01</td>
                 </tr>
                 <tr>
+                      	    <c:if test="${sessionScope.userLevel=='관리자'}">
+					<td >
+					<input type="checkbox" class="check-item" name="noticeNo" value="${noticeListViewDto.noticeNo}">
+					</td>
+				    </c:if>
+                   
                     <td>1</td>
                     <td>작성자</td>
                     <td><a href="detail?noticeNo=">제목</a></td>
                     <td>2025-01-01</td>
                 </tr>
                 <tr>
+                      	    <c:if test="${sessionScope.userLevel=='관리자'}">
+					<td >
+					<input type="checkbox" class="check-item" name="noticeNo" value="${noticeListViewDto.noticeNo}">
+					</td>
+				    </c:if>
+                   
                     <td>1</td>
                     <td>작성자</td>
                     <td><a href="detail?noticeNo=">제목</a></td>
                     <td>2025-01-01</td>
                 </tr>
                 <tr>
+                      	    <c:if test="${sessionScope.userLevel=='관리자'}">
+					<td >
+					<input type="checkbox" class="check-item" name="noticeNo" value="${noticeListViewDto.noticeNo}">
+					</td>
+				    </c:if>
+                   
                     <td>1</td>
                     <td>작성자</td>
                     <td><a href="detail?noticeNo=">제목</a></td>
@@ -67,5 +108,6 @@
         </table>
     </div>
 </div>
+
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

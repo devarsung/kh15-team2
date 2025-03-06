@@ -34,10 +34,7 @@ $(function() {
 		무분별한 비방 시 글이 삭제될 수 있습니다.
 	</div>
 	<div class="cell right">
-	<c:if test="${sessionScope.userLevel=='관리자'}">
-	<button type="submit" class="btn btn-negative">채크항목 삭제</button>
-	</c:if>
-		<a href="write" class="btn btn-neutral">글쓰기</a>
+	<a href="write" class="btn btn-neutral">글쓰기</a>
 	</div>
 	
 	<!-- 테이블 -->
@@ -45,7 +42,7 @@ $(function() {
 		<table class="table table-border table-hover table-ellipsis">
 			<thead>
 				<tr>
-				<c:if test="${sessionScope.userLevel=='관리자'}">
+				<c:if test="${session.userLevel=='관리자'}">
 					<th>
                 		<input type="checkbox" class="check-all">
                 	</th>
@@ -71,11 +68,7 @@ $(function() {
 					<tbody align="center">
 						<c:forEach var="noticeListViewDto" items="${list}">
 						<tr>
-							<c:if test="${sessionScope.userLevel=='관리자'}">
-							<td>
-								<input type="checkbox" class="check-item" name="noticeNo" value="${noticeListViewDto.noticeNo}">
-							</td>
-							</c:if>
+							
 							<td>${noticeListViewDto.noticeNo}</td>
 							<td align="left">
 								
