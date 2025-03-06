@@ -55,11 +55,24 @@
 .card-title {
     font-size: 16px;
     font-weight: bold;
-    margin: 0;
+    display: flex;
+    justify-content: space-between; /* 제목 왼쪽, 아이콘 오른쪽 정렬 */
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+.card-title .title-area {
+	margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.card-title .icon-area {
+	margin: 0;
 }
 .card-subtitle {
     font-size: 14px;
-    margin: 0;
+    margin-top: 5px;
 }
 /* 카드 하단의 조회수, 좋아요수, 댓글수 영역 */
 .card-footer {
@@ -68,7 +81,7 @@
     gap: 10px;  /* 아이콘들 간 간격을 10px로 설정 */
     font-size: 12px;
     color: #777;
-    margin-top: 10px;
+    margin-top: 8px;
 }
 /* 각 아이템의 스타일 */
 .card-footer span {
@@ -125,20 +138,41 @@
             
         </form>
     </div>
+    
+    <div class="cell" style="padding: 14px;">
+    	<a href="add" class="btn btn-neutral ms-10">여행지등록</a>
+    </div>
 	 
 	<div class="cell">
 	    <div class="card-list">
 	    	<c:forEach var="placeDto" items="${list}">
-		    	<a href="#" class="card">
+		    	<a href="detail?placeNo=${placeDto.placeNo}" class="card">
 		            <div class="card-image">
 		                <%-- <img src="/attachment/download?attachmentNo=${placeDto.placeFirstImage}" alt="Card Image"> --%>
 		                <img src="/images/defaultBack.png" alt="Card Image">
 		            </div>
 		            <div class="card-content">
-		                <h3 class="card-title">${placeDto.placeTitle}</h3>
-		                <p class="card-subtitle">${placeDto.placeRegion}</p>
+		                <div class="card-title">
+		                	<h3 class="title-area">
+		                		${placeDto.placeTitle}
+			                </h3>
+			                <h3 class="icon-area">
+			                	<c:if test="${placeDto.placeType == '여행지'}">
+			                		<i class="fa-solid fa-mountain"></i>
+			                	</c:if>
+			                	
+			                	<c:if test="${placeDto.placeType == '맛집'}">
+			                		<i class="fa-solid fa-utensils"></i>
+			                	</c:if>
+			                	
+			                	<c:if test="${placeDto.placeType == '숙소'}">
+			                		<i class="fa-solid fa-hotel"></i>
+			                	</c:if>
+		                	</h3>	
+		                </div>
+		                <div class="card-subtitle">${placeDto.placeRegion}</div>
 		                <div class="card-footer">
-		                    <!-- <span class="views"><i class="fa-solid fa-eye"></i>: </span> -->
+		                    <%-- <span class="views"><i class="fa-solid fa-eye"></i>:  ${placeDto.placeRead}</span> --%>
 		                    <span class="likes"><i class="fa-solid fa-heart"></i>: ${placeDto.placeLike}</span>
 		                    <span class="comments"><i class="fa-solid fa-comment-dots"></i>: ${placeDto.placeReview}</span>
 		                </div>

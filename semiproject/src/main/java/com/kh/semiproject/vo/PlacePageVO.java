@@ -28,8 +28,23 @@ public class PlacePageVO extends PageVO{
 			return "size=" + size;
 		}
 		else {
-			return "column=" + column + "&keyword=" + keyword + "&size=" + size 
-				+ "&region=" + region + "&type=" + type;
+			StringBuilder parameters = new StringBuilder();
+			parameters.append("&size=").append(size);
+			
+			if(keyword != null) {
+				parameters.append("&column=").append(column)
+							.append("&keyword=").append(keyword);
+			}
+			
+			if(region != null) {
+				parameters.append("&region=").append(region);
+			}
+			
+			if(type != null) {
+				parameters.append("&type=").append(type);
+			}
+			
+			return parameters.toString();
 		}
 	}
 }

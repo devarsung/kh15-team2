@@ -26,43 +26,6 @@
     }
 </style>
 
-<c:if test="${sessionScope.userId != null}">
-<script type="text/javascript">
-$(function(){
-	//좋아요
-  	//자바스크립트에서 파라미터를 읽기 위한 방법
-	var params = new URLSearchParams(location.search);
-	var placeNo = params.get("placeNo");
-	
-	//시작하자마자 좋아요 여부를 체크하여 결과를 표시
-	$.ajax({
-		url: "/rest/place/check",
-		method: "post",
-		data: {placeNo: placeNo},
-		success: function(response) {//response에는 done과 count가 있다
-			$(".fa-heart").removeClass("fa-solid fa-regular")
-				.addClass(response.done ? "fa-solid" : "fa-regular");
-			$(".heart-count").text(response.count);
-		}
-	});
-	
-	//하트를 클릭하면 좋아요 설정/해제를 구현
-	$(".fa-heart").click(function(){
-		$.ajax({
-			url: "/rest/place/action",
-			method: "post",
-			data: {placeNo: placeNo},
-			success: function(response) {//response에는 done과 count가 있다
-				$(".fa-heart").removeClass("fa-solid fa-regular")
-					.addClass(response.done ? "fa-solid" : "fa-regular");
-				$(".heart-count").text(response.count);
-			}
-		});
-	});
-});
-</script>
-</c:if>
-
 <script type="text/javascript">
 $(function() {
 	var swiper = new Swiper('.place-image-swiper', {
@@ -107,7 +70,12 @@ $(function() {
     
     <div class="cell">
     	<i class="fa-heart fa-regular red"></i>
-    	<span class="heart-count">${placeDto.placeLike}</span>
+    	<span class="heart-count">${placeDto.placeLike} 개(관리자 화면에선 그냥 보여주기만)</span>
+    </div>
+    
+    <div class="cell">
+    	<a class="btn btn-neutral" href="edit?placeNo=${placeDto.placeNo}">수정하기</a>
+    	<a class="btn btn-neutral" href="delete?placeNo=${placeDto.placeNo}">삭제하기</a>
     </div>
 
 	<!-- 이미지 스와이퍼 영역 -->

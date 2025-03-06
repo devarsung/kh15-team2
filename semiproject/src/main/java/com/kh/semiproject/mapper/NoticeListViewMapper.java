@@ -19,6 +19,7 @@ public class NoticeListViewMapper implements RowMapper<NoticeListViewDto>{
 				.noticeWtime(rs.getTimestamp("notice_wtime"))
 				.noticeEtime(rs.getTimestamp("notice_etime"))
 				.noticeWriter(rs.getString("notice_writer"))
+				.noticeRead(rs.getInt("notice_read"))
 				
 				.memberId(rs.getString("member_id"))
 				.memberPw(rs.getString("member_pw"))

@@ -30,6 +30,7 @@ public class PlaceMapper implements RowMapper<PlaceDto>{
 				.placeLng(rs.getObject("place_lng", Double.class))
 				.placeType(rs.getString("place_type"))
 				.placeFirstImage(rs.getInt("place_first_image"))
+				.placeRead(rs.getInt("place_read"))
 				.build();
 	}
 
