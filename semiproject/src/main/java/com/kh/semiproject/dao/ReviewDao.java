@@ -27,8 +27,8 @@ public class ReviewDao {
 	public void insert(ReviewDto reviewDto) {
 		int reviewNo = this.sequence();
 		reviewDto.setReviewNo(reviewNo);
-		String sql = "insert into review(review_no, review_title, review_content, review_writer, review_place)"
-				+ "values(?,?,?,?,?)";
+		String sql = "insert into review(review_title, review_content, review_writer, review_place)"
+				+ "values(?,?,?,?)";
 		Object[] data = { reviewDto.getReviewTitle(), reviewDto.getReviewContent(), reviewDto.getReviewWriter(),
 				reviewDto.getReviewPlace() };
 		jdbcTemplate.update(sql, data);
