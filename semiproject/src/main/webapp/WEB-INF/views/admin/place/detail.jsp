@@ -67,6 +67,11 @@ $(function() {
     <div class="cell center">
         <h1>${placeDto.placeTitle}</h1>
     </div>
+    
+    <div class="cell">
+    	<a href="edit?placeNo=${placeDto.placeNo}">수정하기</a>
+    	<a href="delete?placeNo=${placeDto.placeNo}">삭제하기</a>
+    </div>
 
 	<!-- 이미지 스와이퍼 영역 -->
     <div class="cell my-20">
