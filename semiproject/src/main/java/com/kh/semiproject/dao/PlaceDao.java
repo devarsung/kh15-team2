@@ -24,10 +24,27 @@ public class PlaceDao {
 		return jdbcTemplate.queryForObject(sql,  int.class);
 	}
 		
+	//여행지 등록
 	public void insert(PlaceDto placeDto) {
-		String sql = "insert into place(place_title, place_overview, place_post, place_address1, place_address2, place_region, place_writer, place_lat, place_lng, place_type) "
-				+ "valuse(?,?,?,?,?,?,?)";
-		Object[] data = {placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), placeDto.getPlacePost(), placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceRegion(), placeDto.getPlaceWriter()};
+		String sql = "insert into place("
+					+ "place_no, place_writer, place_title, place_overview, "
+					+ "place_post, place_address1, place_address2, place_region, "
+					+ "place_lat, place_lng, place_first_image, place_type)"
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?)";
+		Object[] data = {
+				placeDto.getPlaceNo(), placeDto.getPlaceWriter(), 
+				placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), placeDto.getPlacePost(), 
+				placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceRegion(), 
+				placeDto.getPlaceLat(), placeDto.getPlaceLng(), placeDto.getPlaceFirstImage(),
+				placeDto.getPlaceType()
+		};
+		jdbcTemplate.update(sql, data);
+	}
+	
+	//여행지 이미지 등록(연결테이블)
+	public void insertPlaceImage(int placeNo, int attachmentNo) {
+		String sql = "insert into place_image(place_no, attachment_no) values(?,?)";
+		Object[] data = {placeNo, attachmentNo};
 		jdbcTemplate.update(sql, data);
 	}
 	
@@ -128,6 +145,7 @@ public class PlaceDao {
 	    return jdbcTemplate.query(sql.toString(), placeMapper, dataList.toArray());
 	}
 	
+	//여행지 1개 조회
 	public PlaceDto selectOne(int placeNo) {
 		String sql = "select * from place where place_no = ?";
 		Object[] data = {placeNo};
@@ -139,6 +157,13 @@ public class PlaceDao {
 		String sql = "select count(*) from attachment where attachment_no = ?";
 		Object[] data = {placeFirstImage};
 		return jdbcTemplate.update(sql, data) > 0;
+	}
+	
+	//여행지 이미지 번호들 조회
+	public List<Integer> selectPlaceImagesNos(int placeNo) {
+		String sql = "select attachment_no from place_image where place_no=?";
+		Object[] data= {placeNo};
+		return jdbcTemplate.queryForList(sql, Integer.class, data);
 	}
 	
 	
