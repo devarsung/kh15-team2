@@ -4,6 +4,7 @@
 <!-- 페이지 네비게이터 : pageVO에 기반하여 처리하도록 구현 -->
 
 	<div class="page-navigator">
+	
 		<!-- 이전 -->
 		<c:if test="${pageVO.hasPrevBlock()}">
 			<a href="list?page=${pageVO.prevBlock}&${pageVO.parameters}">&lt;</a>

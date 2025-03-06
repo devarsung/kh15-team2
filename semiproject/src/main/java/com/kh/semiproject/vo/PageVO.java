@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class PageVO {
 	protected int page = 1;
+	
 	protected int size = 16;
 	protected int count; // 전체 rownum 수량
 	protected int blockSize = 10;
