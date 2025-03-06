@@ -153,6 +153,14 @@ public class PlaceDao {
 		Object[] data= {placeNo};
 		return jdbcTemplate.queryForList(sql, Integer.class, data);
 	}
+	
+	//상세이미지 번호만 조회
+	public List<Integer> selectDetailImagesNos(int placeNo, int firstImageNo) {
+		String sql = "select attachment_no from place_image "
+				+ "where place_no=? and attachment_no not in(?)";
+		Object[] data = {placeNo, firstImageNo};
+		return jdbcTemplate.queryForList(sql, Integer.class, data);
+	}
 
 	// 조회수 1 증가 메소드
 	public boolean updatePlaceRead(int placeNo) {

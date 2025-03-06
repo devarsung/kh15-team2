@@ -112,7 +112,9 @@ public class AdminPlaceController {
 	@GetMapping("/edit")
 	public String edit(@RequestParam int placeNo, Model model) {
 		PlaceDto placeDto = placeDao.selectOne(placeNo);
-		model.addAttribute(placeDto);
+		model.addAttribute("placeDto", placeDto);
+		List<Integer> detailImagesNos = placeDao.selectDetailImagesNos(placeNo, placeDto.getPlaceFirstImage());
+		model.addAttribute("detailImagesNos", detailImagesNos);
 		return "/WEB-INF/views/admin/place/edit.jsp";
 	}
 
