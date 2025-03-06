@@ -138,6 +138,10 @@
             
         </form>
     </div>
+    
+    <div class="cell" style="padding: 14px;">
+    	<a href="add" class="btn btn-neutral ms-10">여행지등록</a>
+    </div>
 	 
 	<div class="cell">
 	    <div class="card-list">
