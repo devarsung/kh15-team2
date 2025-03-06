@@ -26,6 +26,8 @@ public class PlaceController {
 	public String list(@ModelAttribute ("pageVO")PlacePageVO placePageVO, Model model) {
 		List<PlaceDto> list = placeDao.selectList(placePageVO);
 		model.addAttribute("list", list);
+		int count = placeDao.count(placePageVO);
+		placePageVO.setCount(count);
 		return "/WEB-INF/views/place/list.jsp";
 	}
 	
