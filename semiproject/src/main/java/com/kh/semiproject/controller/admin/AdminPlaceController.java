@@ -36,20 +36,41 @@ public class AdminPlaceController {
 	}
 
 	@PostMapping("/add")
-	public String add(@ModelAttribute PlaceDto placeDto, HttpSession session, @RequestParam MultipartFile firstImage) throws IllegalStateException, IOException {
-		// img
-		if (firstImage == null) {
-			throw new TargetNotFoundException("파일이 존재하지 않습니다");
-		}
-		int placeFirstImage = attachmentService.save(firstImage);
-		placeDto.setPlaceFirstImage(placeFirstImage);
-
+	public String add(@ModelAttribute PlaceDto placeDto, HttpSession session,
+			@RequestParam MultipartFile firstImage, @RequestParam List<MultipartFile> detailImages) 
+			throws IllegalStateException, IOException {
+		//작성자 설정
+		String userId = (String)session.getAttribute("userId");
+		placeDto.setPlaceWriter(userId);
+		
+		//placeNo 시퀀스 얻기
 		int placeNo = placeDao.sequence();
 		placeDto.setPlaceNo(placeNo);
-		placeDao.insert(placeDto);
+		
+		//대표이미지 저장 후 placeDto에 대표이미지 번호 설정
+		if(firstImage.isEmpty() == false) {
+			int firstImageNo = attachmentService.save(firstImage);
+			placeDto.setPlaceFirstImage(firstImageNo);
+			
+			//placeDto 저장, 여행 이미지 정보 등록(연결테이블)
+			placeDao.insert(placeDto);
+			placeDao.insertPlaceImage(placeNo, firstImageNo);
+		}
+		
+		//상세 이미지 처리
+		//아무것도 없어도 size는 1이기에 isEmpty로 확인한다
+		for(MultipartFile detailImage : detailImages) {
+			if(detailImage.isEmpty()) {
+				break;
+			}
+			
+			//이미지 저장, 여행지 이미지 정보 등록
+			int attachmentNo = attachmentService.save(detailImage);
+			placeDao.insertPlaceImage(placeNo, attachmentNo);
+		}
+		
 		return "redirect:/admin/detail?placeNo=" + placeNo;
 	}
-	
 
 	@RequestMapping("/delete")
 	public String delete(@RequestParam int placeNo) {
