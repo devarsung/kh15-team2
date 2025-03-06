@@ -26,6 +26,8 @@ public class PlaceController {
 	public String list(@ModelAttribute ("pageVO")PlacePageVO placePageVO, Model model) {
 		List<PlaceDto> list = placeDao.selectList(placePageVO);
 		model.addAttribute("list", list);
+		int count = placeDao.count(placePageVO);
+		placePageVO.setCount(count);
 		return "/WEB-INF/views/place/list.jsp";
 	}
 	
@@ -36,6 +38,8 @@ public class PlaceController {
 			throw new TargetNotFoundException("존재 하지 않는 여행지 입니다");
 		}
 		model.addAttribute("placeDto",placeDto);
+		List<Integer> attachmentNos = placeDao.selectPlaceImagesNos(placeNo);
+		model.addAttribute("attachmentNos", attachmentNos);
 		return "/WEB-INF/views/place/detail.jsp";
 	}
 

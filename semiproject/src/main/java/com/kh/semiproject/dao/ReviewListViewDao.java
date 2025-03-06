@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.semiproject.dto.PlaceDto;
 import com.kh.semiproject.dto.ReviewListViewDto;
 import com.kh.semiproject.mapper.ReviewListViewMapper;
 import com.kh.semiproject.vo.PageVO;
@@ -47,5 +48,43 @@ public class ReviewListViewDao {
 			return jdbcTemplate.query(sql, reviewListViewMapper, data);
 		}
 	}
+	
+	public List<ReviewListViewDto> selectList(PageVO pageVO, int placeNo){
+		String sql = "select * from ("
+				+ "select rownum rn, TMP.* from ("
+				+ "SELECT R.*, M.* "
+				+ "FROM REVIEW R "
+				+ "LEFT JOIN MEMBER M ON R.review_writer = M.member_id "
+				+ "where review_place = ? "
+				+ "ORDER BY R.review_no ASC "
+			+ ")TMP"
+		+ ") where rn between ? and ?";
+		
+		Object[] data = {placeNo, pageVO.getStartRownum(), pageVO.getFinishRownum()};
+		return jdbcTemplate.query(sql, reviewListViewMapper, data);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

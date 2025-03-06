@@ -87,7 +87,9 @@ $(function() {
                 <!-- Slides -->
                 <c:forEach var="attachmentNo" items="${attachmentNos}">
                 	<div class="swiper-slide">
-                		<img src="/attachment/download?attachmentNo=${attachmentNo}" width="100%" height="100%">
+                		<!-- 기본 이미지 처리 여기서 했는데 attachmentService load 에서 할지 말지 생각 좀 -->
+                		<img class="place-img" src="/attachment/download?attachmentNo=${attachmentNo}" width="100%" height="100%" 
+                		onerror="this.onerror=null; this.src='/images/defaultBack.png';">
                 	</div>
                 </c:forEach>
             </div>
@@ -100,7 +102,7 @@ $(function() {
         </div>
     </div>
     
-    <!-- 소개 영역 -->
+    <!-- 개요 영역 -->
     <div class="cell my-20">
         <h2><i class="fa-solid fa-hand-point-right"></i> 소개</h2>
         <div class="div-place-content">
