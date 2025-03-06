@@ -18,6 +18,10 @@
         </form>
     </div>
     
+    <div class="cell">
+    	<a href="add" class="btn btn-neutral">공지등록</a>
+    </div>
+    
     <div class="cell my-20">
         <table class="table table-border table-hover table-stripe">
             <thead>
