@@ -129,7 +129,7 @@ public class PlaceDao {
 	}
 	
 	public PlaceDto selectOne(int placeNo) {
-		String sql = "select * from where place_no = ?";
+		String sql = "select * from place where place_no = ?";
 		Object[] data = {placeNo};
 		List<PlaceDto> list = jdbcTemplate.query(sql,  placeMapper, data);
 		return list.isEmpty() ? null:list.get(0);
