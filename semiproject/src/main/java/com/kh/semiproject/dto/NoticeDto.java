@@ -15,5 +15,5 @@ public class NoticeDto {
 	private Timestamp noticeWtime;
 	private Timestamp noticeEtime;
 	private String noticeWriter;
-	
+	private int noticeRead;
 }

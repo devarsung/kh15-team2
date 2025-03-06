@@ -15,6 +15,7 @@ public class NoticeListViewDto {
 	private Timestamp noticeWtime;
 	private Timestamp noticeEtime;
 	private String noticeWriter;
+	private int noticeRead;
 	
 	private String memberId;//아이디
 	private String memberPw;//비밀번호
