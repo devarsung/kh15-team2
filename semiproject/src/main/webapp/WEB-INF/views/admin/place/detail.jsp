@@ -69,6 +69,11 @@ $(function() {
     </div>
     
     <div class="cell">
+    	<i class="fa-heart fa-regular red"></i>
+    	<span class="heart-count">${placeDto.placeLike} 개(관리자 화면에선 그냥 보여주기만)</span>
+    </div>
+    
+    <div class="cell">
     	<a class="btn btn-neutral" href="edit?placeNo=${placeDto.placeNo}">수정하기</a>
     	<a class="btn btn-neutral" href="delete?placeNo=${placeDto.placeNo}">삭제하기</a>
     </div>

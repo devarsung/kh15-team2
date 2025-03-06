@@ -20,13 +20,15 @@ public class ReviewDao {
 	private ReviewMapper reviewMapper;
 
 	public int sequence() {
-		String sql = "select review_seq.nextval from daul";
+		String sql = "select review_seq.nextval from dual";
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
 
 	public void insert(ReviewDto reviewDto) {
+ pjs0306(3)
 		String sql = "insert into review(review_title, review_content, review_writer, review_place)"
 				+ "values(?,?,?,?)";
+
 		Object[] data = { reviewDto.getReviewTitle(), reviewDto.getReviewContent(), reviewDto.getReviewWriter(),
 				reviewDto.getReviewPlace() };
 		jdbcTemplate.update(sql, data);
@@ -82,10 +84,20 @@ public class ReviewDao {
 		Object[] data = { reviewNo, reviewNo };// 홀더 개수와 순서에 맞게
 		return jdbcTemplate.update(sql, data) > 0;
 	}
+
 	
 
 	
 	
+
+
+	// 조회수 1 증가 메소드
+	public boolean updateReviewRead(int reviewNo) {
+		String sql = "update review " + "set review_read=review_read+1 " + "where review_no=?";
+		Object[] data = { reviewNo };
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+
 }
 
 

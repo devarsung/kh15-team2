@@ -18,7 +18,7 @@ $(function() {
 	};
 	
 	//섬머노트
-	$("[name=placeOverview]").summernote({
+	/*$("[name=placeOverview]").summernote({
         height: 250,//높이(px)
         minHeight: 200,//최소 높이(px)
         maxHeight: 700,//최대 높이(px)
@@ -35,7 +35,7 @@ $(function() {
         },
         disableDragAndDrop: true
 		//overview에는 이미지 전혀 추가할 수 없게 처리(대표이미지, 상세이미지가 있기때문)
-    });
+    });*/
 	
 	//주소 api
 	$("[name=placePost], [name=placeAddress1], .btn-address-search").click(function() {
@@ -205,10 +205,9 @@ $(function() {
 	});
 	
 	//설명 overview
-	$("[name=placeOverview]").on("summernote.blur", function(){
+	$("[name=placeOverview]").on("blur", function(){
 		var isValid = $(this).val().length > 0;
 		$(this).removeClass("fail").addClass(isValid ? "" : "fail");
-		$(".note-editor").css("border", isValid ? "" : "1px solid red");
 		status.placeOverview = isValid;
 	});
 	
@@ -217,10 +216,10 @@ $(function() {
 		$("[name=placeTitle]").trigger("blur");
 		$("[name=placeRegion]").trigger("input");
 		$("[name=placeType]").trigger("input");
+		$("[name=placeOverview]").trigger("blur");
 		checkAddressValid();
 		checkLatLngValid();
 		checkFirstImageValid();
-		$(".note-editable").trigger("blur");
 		return status.ok();
 	});
 	

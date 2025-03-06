@@ -40,7 +40,7 @@ public class MemberDao {
 				+ "where member_id=?";
 		Object[] data = { memberDto.getMemberNickname(), memberDto.getMemberBirth(), memberDto.getMemberGender(),
 				memberDto.getMemberContact(), memberDto.getMemberEmail(), memberDto.getMemberPost(),
-				memberDto.getMemberAddress1(), memberDto.getMemberAddress2() };
+				memberDto.getMemberAddress1(), memberDto.getMemberAddress2(), memberDto.getMemberId() };
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 

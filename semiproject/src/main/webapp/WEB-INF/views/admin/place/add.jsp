@@ -175,9 +175,9 @@
 	    </div>
 		
 	    <div class="cell">
-	        <h2><i class="fa-solid fa-grip-vertical"></i> 여행지설명</h2>
-	        <textarea name="placeOverview" class="field"></textarea>
-	        <div class="fail-feedback">설명을 작성해주세요</div>
+	        <h2><i class="fa-solid fa-grip-vertical"></i> 개요</h2>
+	        <textarea name="placeOverview" class="field w-100" rows="10"></textarea>
+	        <div class="fail-feedback">개요를 작성해주세요</div>
 	    </div>
 	
 	    <div class="cell">
