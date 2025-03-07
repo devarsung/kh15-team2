@@ -76,6 +76,44 @@
 	    <div class="cell center">
 	        <h1>여행지 등록</h1>
 	    </div>
+	    
+	    <div class="cell flex-box" style="flex-wrap: wrap;">
+	    	<div class="w-25">
+		    	<h2><i class="fa-solid fa-square-pen"></i> 지역</h2>
+		        <select name="placeRegion" class="field w-100">
+		        	<option value="">선택하세요</option>
+		            <option>서울</option>
+		            <option>인천</option>
+		            <option>대전</option>
+		            <option>대구</option>
+		            <option>광주</option>
+		            <option>부산</option>
+		            <option>울산</option>
+		            <option>경기</option>
+		            <option>강원</option>
+		            <option>충북</option>
+		            <option>충남</option>
+		            <option>경북</option>
+		            <option>경남</option>
+		            <option>전북</option>
+		            <option>전남</option>
+		            <option>제주</option>
+		            <option>세종</option>
+		        </select>
+	    		<div class="fail-feedback">지역을 선택해주세요</div>
+	    	</div>
+	    	
+	    	<div class="w-25 mx-10">
+				<h2><i class="fa-solid fa-square-pen"></i> 타입</h2>
+				<select name="placeType" class="field w-100">
+					<option value="">선택하세요</option>
+					<option>여행지</option>
+					<option>맛집</option>
+					<option>숙소</option>
+				</select>
+				<div class="fail-feedback">여행지타입을 선택해주세요</div>
+			</div>
+	    </div>
 	
 	    <div class="cell">
 	        <h2><i class="fa-solid fa-grip-vertical"></i> 여행지명</h2>
@@ -135,53 +173,43 @@
 	    <div class="cell map-area">
 	    	<div id="map"></div>
 	    </div>
-	
-	    <div class="cell flex-box" style="flex-wrap: wrap;">
-	    	<div class="w-25">
-		    	<h2><i class="fa-solid fa-square-pen"></i> 지역</h2>
-		        <select name="placeRegion" class="field w-100">
-		        	<option value="">선택하세요</option>
-		            <option>서울</option>
-		            <option>인천</option>
-		            <option>대전</option>
-		            <option>대구</option>
-		            <option>광주</option>
-		            <option>부산</option>
-		            <option>울산</option>
-		            <option>경기</option>
-		            <option>강원</option>
-		            <option>충북</option>
-		            <option>충남</option>
-		            <option>경북</option>
-		            <option>경남</option>
-		            <option>전북</option>
-		            <option>전남</option>
-		            <option>제주</option>
-		            <option>세종</option>
-		        </select>
-	    		<div class="fail-feedback">지역을 선택해주세요</div>
-	    	</div>
-	    	
-	    	<div class="w-25 mx-10">
-				<h2><i class="fa-solid fa-square-pen"></i> 타입</h2>
-				<select name="placeType" class="field w-100">
-					<option value="">선택하세요</option>
-					<option>여행지</option>
-					<option>맛집</option>
-					<option>숙소</option>
-				</select>
-				<div class="fail-feedback">여행지타입을 선택해주세요</div>
-			</div>
-	    </div>
-		
+	    
 	    <div class="cell">
 	        <h2><i class="fa-solid fa-grip-vertical"></i> 개요</h2>
 	        <textarea name="placeOverview" class="field w-100" rows="10"></textarea>
 	        <div class="fail-feedback">개요를 작성해주세요</div>
 	    </div>
+	    
+	    <div class="cell">
+	    	<h2><i class="fa-solid fa-grip-vertical"></i> 문의전화(선택)</h2>
+	        <input type="text" name="placeTel" class="field w-100">
+	        <div class="fail-feedback">미입력 or 10~11자로 입력하세요</div>
+	    </div>
+	    
+	    <div class="cell">
+	    	<h2><i class="fa-solid fa-grip-vertical"></i> 홈페이지(선택)</h2>
+	        <input type="text" name="placeWebsite" class="field w-100" maxlength="255">
+	        <div class="fail-feedback">255자 이내로 입력하세요</div>
+	    </div>
+	    
+	    <div class="cell">
+	    	<h2><i class="fa-solid fa-grip-vertical"></i> 주차가능여부(선택)</h2>
+	        <select name="placeParking" class="field w-100">
+				<option value="">선택하세요</option>
+				<option value="Y">가능</option>
+				<option value="N">불가능</option>
+			</select>
+	    </div>
+	    
+	    <div class="cell">
+	    	<h2><i class="fa-solid fa-grip-vertical"></i> 운영(선택)</h2>
+	    	<textarea name="placeOperate" class="field w-100" rows="5"
+	    	placeholder="운영일, 운영시간 관련해 200자 이내로 자유롭게 적어주세요"></textarea>
+	    	<div class="fail-feedback">200자 이내로 입력하세요</div>
+	    </div>
 	
 	    <div class="cell">
-	        <h2><i class="fa-solid fa-grip-vertical"></i> 상세이미지</h2>
+	        <h2><i class="fa-solid fa-grip-vertical"></i> 상세이미지(선택)</h2>
 	        <div class="preview-detailImages">
 	        	<!-- <div class="img-container">
 			        <img src="/images/defaultBack.png" alt="">

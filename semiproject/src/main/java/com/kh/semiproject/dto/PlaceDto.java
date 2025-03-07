@@ -26,4 +26,8 @@ public class PlaceDto {
 	private String placeType;
 	private int placeFirstImage;
 	private int placeRead;
+	private String placeTel;//문의전화
+	private String placeWebsite;//홈페이지
+	private String placeParking;//주차가능여부
+	private String placeOperate;//운영일,운영시간 등
 }

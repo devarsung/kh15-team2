@@ -11,31 +11,16 @@ $(function() {
 		placeRegion: false,
 		placeType: false,
 		placeOverview: false,
+		placeTel: true,
+		placeWebsite: true,
+		placeOperate: true,
+		placeParking: true,
 		ok: function() {
 			return this.placeTitle && this.firstImage && this.placeAddress
-				&& this.placeLatLng && this.placeRegion && this.placeType && this.placeOverview;
+				&& this.placeLatLng && this.placeRegion && this.placeType && this.placeOverview
+				&& this.placeTel && this.placeWebsite && this.placeOperate && this.placeParking;
 		}
 	};
-	
-	//섬머노트
-	/*$("[name=placeOverview]").summernote({
-        height: 250,//높이(px)
-        minHeight: 200,//최소 높이(px)
-        maxHeight: 700,//최대 높이(px)
-        toolbar: [
-            ["font", ["style", "fontname", "fontsize", "forecolor", "backcolor"]],
-            ["style", ["bold", "italic", "underline", "strikethrough"]],
-            ["tool", ["ol", "ul", "table", "hr", "fullscreen"]],
-            ["acion", ["undo", "redo"]]
-        ],
-        callback: {
-            onlmageUpload: function (files) {
-                return;
-            },
-        },
-        disableDragAndDrop: true
-		//overview에는 이미지 전혀 추가할 수 없게 처리(대표이미지, 상세이미지가 있기때문)
-    });*/
 	
 	//주소 api
 	$("[name=placePost], [name=placeAddress1], .btn-address-search").click(function() {
@@ -220,20 +205,64 @@ $(function() {
 		checkAddressValid();
 		checkLatLngValid();
 		checkFirstImageValid();
+		
+		//선택항목도 체크
+		$("[name=placeTel]").trigger("blur");
+		$("[name=placeWebsite]").trigger("blur");
+		$("[name=placeOperate]").trigger("blur");
+	
 		return status.ok();
 	});
 	
-	//폼 전송 테스트
-	/*$(".btn-submit").click(function(){
-		$("[name=placeTitle]").trigger("blur");
-		$("[name=placeRegion]").trigger("input");
-		$("[name=placeType]").trigger("input");
-		checkAddressValid();
-		checkLatLngValid();
-		checkFirstImageValid();
-		$(".note-editable").trigger("blur");
-		return false;
-	});*/
+	//선택항목 유효성 검사(전화,홈페이지,운영설명 길이 검사)
+	//전화번호는 필수는 아니지만 만약 입력한다면 길이와 형식 제한있음
+	$("[name=placeTel]").on("input",function(){
+        var current = $(this).val();
+        var convert = current.replace(/[^0-9]+/g, "");
+        $(this).val(convert);
+    });
+	
+    $("[name=placeTel]").blur(function(){
+		var empty = $(this).val().length <= 0; //아예 입력하지말거나
+		var regex = /^[0-9]{2,3}[0-9]{8}$/
+		var pass = regex.test($(this).val());//정규식을 통과했냐
+		
+		var isValid = empty || pass;
+        $(this).removeClass("fail").addClass(isValid ? "" : "fail");
+        status.placeTel = isValid;
+    });
+	
+	//웹사이트주소는 필수는 아니지만 입력한다면 길이 제한 있음
+	//바이트 문제로 한글 입력 우선 막아둠
+	//한글 제외한 문자들 기준 255자, 설정은 우선 태그에서 함(maxlength)
+	$("[name=placeWebsite]").on("input",function(){
+        var current = $(this).val();
+        var convert = current.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]+/g, "");
+        $(this).val(convert);
+    });
+	
+	$("[name=placeWebsite").blur(function(){
+		var isValid = $(this).val().length <= 255;
+        $(this).removeClass("fail").addClass(isValid ? "" : "fail");
+        status.placeWebsite = isValid;
+	});
+	
+	//운영시간 정보도 필수는 아니지만 입력한다면 길이 제한 있음(200자 제한)
+	$("[name=placeOperate").on("input", function(){
+		var origin = $(this).val();
+		var length = $(this).val().length;
+		
+		while(length > 200) {
+			$(this).val(origin.substring(0, length-1));
+			length--;
+		}
+	});
+		
+	$("[name=placeOperate").blur(function(){
+		var isValid = $(this).val().length <= 200;
+		$(this).removeClass("fail").addClass(isValid ? "" : "fail");
+        status.placeOperate = isValid;
+	});
 	
 	//대표 이미지 유효성 검사
 	function checkFirstImageValid() {

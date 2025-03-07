@@ -29,14 +29,15 @@ public class PlaceDao {
 		String sql = "insert into place("
 					+ "place_no, place_writer, place_title, place_overview, "
 					+ "place_post, place_address1, place_address2, place_region, "
-					+ "place_lat, place_lng, place_first_image, place_type)"
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ "place_lat, place_lng, place_first_image, place_type, "
+					+ "place_tel, place_website, place_parking, place_operate"
+					+ ")"
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		Object[] data = {
-				placeDto.getPlaceNo(), placeDto.getPlaceWriter(), 
-				placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), placeDto.getPlacePost(), 
-				placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceRegion(), 
-				placeDto.getPlaceLat(), placeDto.getPlaceLng(), placeDto.getPlaceFirstImage(),
-				placeDto.getPlaceType()
+				placeDto.getPlaceNo(), placeDto.getPlaceWriter(), placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), 
+				placeDto.getPlacePost(), placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceRegion(), 
+				placeDto.getPlaceLat(), placeDto.getPlaceLng(), placeDto.getPlaceFirstImage(), placeDto.getPlaceType(),
+				placeDto.getPlaceTel(), placeDto.getPlaceWebsite(), placeDto.getPlaceParking(), placeDto.getPlaceOperate()
 		};
 		jdbcTemplate.update(sql, data);
 	}
