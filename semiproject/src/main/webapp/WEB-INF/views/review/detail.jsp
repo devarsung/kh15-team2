@@ -53,7 +53,7 @@
     }
      
     .edit-btn:hover,
-    .delete-btn:hover
+    .delete-btn:hover,
     .cancel-btn:hover,
     .save-btn:hover{
      filter:brightness(1.05);
@@ -276,7 +276,7 @@
                 <button class="save-btn"  type="button">
                     <i class="fa-solid fa-floppy-disk"></i>
                 </button>
-                <button class="cancle-btn" type="button">
+                <button class="cancel-btn" type="button">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
