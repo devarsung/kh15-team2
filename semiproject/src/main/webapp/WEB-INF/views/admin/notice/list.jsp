@@ -18,7 +18,12 @@
 		});
 	});
 </script>
-
+<style>
+.a-control{
+  text-decoration: none;
+  color: black;
+		}
+</style>
 
 <div class="container w-1000">
     <div class="cell center">
@@ -82,7 +87,7 @@
 								
 							
 								<!-- 게시글 제목 -->
-								<a href="detail?noticeNo=${noticeListViewDto.noticeNo}">
+								<a class="a-control" href="detail?noticeNo=${noticeListViewDto.noticeNo}">
 									${noticeListViewDto.noticeTitle}
 								</a>
 								
