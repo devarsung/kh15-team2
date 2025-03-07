@@ -6,8 +6,8 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="/css/review-detail.css">
 
-   <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script>
    <script src="/js/review/review-detail.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script>
     <script type="text/javascript">
     </script>
 <!--댓글 목록/내글이면 수정/삭제btn-->
