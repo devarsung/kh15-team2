@@ -25,7 +25,7 @@ public class ReviewListViewMapper implements RowMapper<ReviewListViewDto>{
 				.reviewEtime(rs.getTimestamp("review_etime"))
 				.reviewWriter(rs.getString("review_writer"))
 				.reviewPlace(rs.getString("review_place"))
-				
+				.reviewStar(rs.getFloat("review_star"))
 				
 				.memberId(rs.getString("member_id"))
 				.memberPw(rs.getString("member_pw"))

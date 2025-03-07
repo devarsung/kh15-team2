@@ -74,4 +74,14 @@ public class NoticeDao {
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 
+	//공지사항 이미지 찾기
+	//-반환형이 int이기 때문에 만약 이미지가없으면 예외가 발생함
+	public int findAttachment(int noticeNo) {
+		String sql="select attachment_no from from notice_image "
+				+ "where noticeNo_no=? ";
+		Object[] data= {noticeNo};
+		return jdbcTemplate.queryForObject(sql, int.class,data);
+	}
+	
+	
 }

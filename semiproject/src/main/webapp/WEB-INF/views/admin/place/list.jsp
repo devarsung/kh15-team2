@@ -148,8 +148,8 @@
 	    	<c:forEach var="placeDto" items="${list}">
 		    	<a href="detail?placeNo=${placeDto.placeNo}" class="card">
 		            <div class="card-image">
-		                <%-- <img src="/attachment/download?attachmentNo=${placeDto.placeFirstImage}" alt="Card Image"> --%>
-		                <img src="/images/defaultBack.png" alt="Card Image">
+		                <img src="/attachment/download?attachmentNo=${placeDto.placeFirstImage}" alt="Card Image" 
+		                onerror="this.onerror=null; this.src='/images/defaultBack.png';">
 		            </div>
 		            <div class="card-content">
 		                <div class="card-title">

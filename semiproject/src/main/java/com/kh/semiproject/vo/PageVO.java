@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class PageVO {
 	protected int page = 1;
+	
 	protected int size = 16;
 	protected int count; // 전체 rownum 수량
 	protected int blockSize = 10;
@@ -26,7 +27,7 @@ public class PageVO {
 	}
 	
 	public int getStartBlock() {
-		return (page-1)/size * size + 1;
+		return(page - 1)/blockSize*blockSize + 1;
 	}
 	
 	public int getFinishBlock() {

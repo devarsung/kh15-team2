@@ -1,5 +1,5 @@
 /**
- * 여행지 등록: /admin/place/add 페이지의 자바스크립트
+ * 여행지 수정: /admin/place/edit 페이지의 자바스크립트
  */
 $(function() {
 	//상태변수
@@ -16,26 +16,6 @@ $(function() {
 				&& this.placeLatLng && this.placeRegion && this.placeType && this.placeOverview;
 		}
 	};
-	
-	//섬머노트
-	/*$("[name=placeOverview]").summernote({
-        height: 250,//높이(px)
-        minHeight: 200,//최소 높이(px)
-        maxHeight: 700,//최대 높이(px)
-        toolbar: [
-            ["font", ["style", "fontname", "fontsize", "forecolor", "backcolor"]],
-            ["style", ["bold", "italic", "underline", "strikethrough"]],
-            ["tool", ["ol", "ul", "table", "hr", "fullscreen"]],
-            ["acion", ["undo", "redo"]]
-        ],
-        callback: {
-            onlmageUpload: function (files) {
-                return;
-            },
-        },
-        disableDragAndDrop: true
-		//overview에는 이미지 전혀 추가할 수 없게 처리(대표이미지, 상세이미지가 있기때문)
-    });*/
 	
 	//주소 api
 	$("[name=placePost], [name=placeAddress1], .btn-address-search").click(function() {
@@ -287,6 +267,7 @@ $(function() {
 	
 	//상세 이미지
 	var fileListMap = new Map();
+	var deletedOldNos = [];//기존 이미지에서 지워진 녀석들
 	var fileCnt = 0;
 	
 	$(".detailImages").change(function(){
