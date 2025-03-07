@@ -30,4 +30,10 @@ public class PlaceDto {
 	private String placeWebsite;//홈페이지
 	private String placeParking;//주차가능여부
 	private String placeOperate;//운영일,운영시간 등
+	
+	//문의,홈페이지,주차가능여부,운영일 중 하나라도 있는지 없는지 확인
+	public boolean getHasInfo() {
+		return this.placeTel != null ||this.placeWebsite != null 
+				|| this.placeParking != null || this.placeOperate != null;
+	}
 }
