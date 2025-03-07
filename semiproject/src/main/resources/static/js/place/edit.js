@@ -198,6 +198,12 @@ $(function() {
 	
 	//폼 전송
 	$(".form-check").submit(function() {
+		$("[name=firstImageChange]").val(firstImageChange);
+		$("[name=deletedOldNos]").val(deletedOldNos.join(","));
+		
+		console.log($("[name=firstImageChange]").val());
+		console.log($("[name=deletedOldNos]").val());
+		
 		$("[name=placeTitle]").trigger("blur");
 		$("[name=placeRegion]").trigger("input");
 		$("[name=placeType]").trigger("input");

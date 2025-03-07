@@ -117,6 +117,11 @@ $(function() {
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
                 <!-- Slides -->
+                	<div class="swiper-slide">
+                		<!-- 기본 이미지 처리 여기서 했는데 attachmentService load 에서 할지 말지 생각 좀 -->
+                		<img class="place-img" src="/attachment/download?attachmentNo=${placeDto.placeFirstImage}" width="100%" height="100%" 
+                		onerror="this.onerror=null; this.src='/images/defaultBack.png';">
+                	</div>
                 <c:forEach var="attachmentNo" items="${attachmentNos}">
                 	<div class="swiper-slide">
                 		<!-- 기본 이미지 처리 여기서 했는데 attachmentService load 에서 할지 말지 생각 좀 -->

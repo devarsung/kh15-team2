@@ -74,12 +74,14 @@
 </script>
 
 <!-- <button type="button" class="checkcheck">확인용</button> -->
-
+${placeDto.placePost}
 <form class="form-check" action="edit" method="post" autocomplete="off" enctype="multipart/form-data">
 	<div class="container w-1000">
 	    <div class="cell center">
 	        <h1>여행지 수정</h1>
 	    </div>
+	    
+	    <input type="hidden" name="placeNo" value="${placeDto.placeNo}">
 	    
 	    <div class="cell flex-box" style="flex-wrap: wrap;">
 	    	<div class="w-25">
@@ -225,6 +227,9 @@
 	        </div>
 	        <input type="file" name="detailImages" class="detailImages" multiple>
 	    </div>
+	    
+	    <input type="hidden" name="firstImageChange">
+	    <input type="hidden" name="deletedOldNos">
 	    
 	    <div class="cell mt-50">
 			<button type="submit" class="btn btn-positive w-100 btn-submit">등록하기</button>

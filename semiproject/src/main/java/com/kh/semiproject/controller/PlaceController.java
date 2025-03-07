@@ -38,7 +38,7 @@ public class PlaceController {
 			throw new TargetNotFoundException("존재 하지 않는 여행지 입니다");
 		}
 		model.addAttribute("placeDto",placeDto);
-		List<Integer> attachmentNos = placeDao.selectPlaceImagesNos(placeNo);
+		List<Integer> attachmentNos = placeDao.selectDetailImagesNos(placeNo, placeDto.getPlaceFirstImage());
 		model.addAttribute("attachmentNos", attachmentNos);
 		return "/WEB-INF/views/place/detail.jsp";
 	}
