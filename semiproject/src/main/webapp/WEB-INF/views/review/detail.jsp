@@ -1,111 +1,125 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+<link rel="stylesheet" type="text/css" href="/css/review-detail.css">
 
-    <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script>
+   <script src="/js/review/review-detail.js"></script>
     <script type="text/javascript">
-    $(function(){
-        $(".reviewStar").score({
-            starColor: "#FFE31A",
-            editable:false,//편집 가능하도록 설정
-            integerOnly:false,//별을 정수 개수로만 선택하도록 설정
-            send:{//전송옵션
-                sendable:true,//전송 가능
-                name:"reviewStar",//전송될 이름 설정
-            },
-            display:{
-                showNumber:true,
-                placeLimit:1,
-                textColor:"#d63031",
-            },
-        });
-    });  
+    </script>
+<!--댓글 목록/내글이면 수정/삭제btn-->
+    <script type="text/template" id="reply-template"> 
+
+        <div class="cell flex-box  reply-item"> 
+            <div class="w-150 p-10 inline-flex-box" style="min-width: 150px;"> 
+                <div  class="reply-tinyfont">
+                    <span class="reply-no">댓글번호</span>
+                    <span class="reply-wtime">댓글작성일/수정일</span>
+                <h3 class="mt-10 reply-writer">닉네임</h3>
+            </div>
+            </div>
+            <div class="w-100 p-10  ">
+                <h5 class="m-0 reply-content reply-input">댓글본문</h5>
+            </div>
+            
+            <!--수정 삭제버튼임..-->
+            <div class="w-150 p-10 btns">
+                <button class="edit-btn"  type="button">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="delete-btn" type="button">
+                    <i class="fa-regular fa-trash-can"></i>
+                </button>
+            </div>
+        </div>
+
+    </script>
+     <!--댓글 수정/취소-->
+    <script type="text/template" id="reply-edit-template">
+
+        <div class="cell flex-box  reply-edit-item">
+            <div class="w-150 p-10 inline-flex-box" style="min-width: 150px;"> 
+                <div  class="reply-tinyfont">
+                    <span class="reply-no">댓글번호</span>
+                    <span class="reply-wtime">댓글작성일/수정일</span>
+                <h3 class="mt-10 reply-writer">닉네임</h3>
+            </div>
+			</div>
+            
+            <div class="p-10">
+                <textarea class="save-contentBox reply-content" "></textarea>
+            </div>
+            
+            <!--저장 취소버튼임..-->
+            <div class="felx-box btns">
+                <button class="save-btn"  type="button">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                </button>
+                <button class="cancel-btn" type="button">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
     </script>
 </head>
-<div class="container w-800">
+<div class="container w-1000">
 
     <div class="cell center">
-        <h1>시우시우 님의 후기</h1>
+        <h1>[${reviewDto.reviewWriter}]님의 후기</h1>
     </div>
     <div class="cell right">
-        <i class="fa-solid fa-heart"></i>33|<i class="fa-solid fa-eye"></i> 50|<i class="fa-solid fa-comment-dots"></i>5
+        <i class="fa-solid fa-heart"></i>${reviewDto.reviewLike}|<i class="fa-solid fa-eye"></i> ${reviewDto.reviewRead}|<span class="reply-count"><i class="fa-solid fa-comment-dots"></i>${reviewDto.reviewReply}</span>
     </div>
     <div class="cell right">
-    작성일2025-03-05|수정일2025-03-06
+    작성일(${reviewDto.reviewWtime})|수정일(${reviewDto.reviewEtime})
     </div>
     <div class="cell p-20">
         <h1>
-            타코야끼맛집
+            ${reviewDto.reviewTitle}<i class="fa-solid fa-pencil"></i>
         </h1>
     </div>
     <div class="cell reviewStar"></div>
-    <div calss="cell p-20" style="min-height:300px; border:1px solid rgb(192, 192, 192)">
-    신방화에...타코야키파는데..진짜 먹고싶다 오늘은 제발 팔아줬으면 좋겠다...계좌이체할게요.. 타코야끼에 그뭐냐 불닭 먹으면 맛있다며,,,
-    배고프다 진짜 남아서 프젝하고싶은데 맨날 배가고파서 못남겠어 신방화에...타코야키파는데..진짜 먹고싶다 오늘은 제발 팔아줬으면 좋겠다...
-    계좌이체할게요.. 타코야끼에 그뭐냐 불닭 먹으면 맛있다며,,,배고프다 진짜 남아서 프젝하고싶은데 맨날 배가고파서 못남겠어 신방화에...타코야키파는데..진짜 먹고싶다 오늘은 제발 팔아줬으면 좋겠다...계좌이체할게요.. 타코야끼에 그뭐냐 불닭 먹으면 맛있다며,,,배고프다 진짜 남아서 프젝하고싶은데 맨날 배가고파서 못남겠어 신방화에...타코야키파는데..진짜 먹고싶다 오늘은 제발 팔아줬으면 좋겠다...계좌이체할게요.. 타코야끼에 그뭐냐 불닭 먹으면 맛있다며,,,배고프다 진짜 남아서 프젝하고싶은데 맨날 배가고파서 못남겠어 신방화에...타코야키파는데..진짜 먹고싶다 오늘은 제발 팔아줬으면 좋겠다...계좌이체할게요.. 타코야끼에 그뭐냐 불닭 먹으면 맛있다며,,,배고프다 진짜 남아서 프젝하고싶은데 맨날 배가고파서 못남겠어 신방화에...타코야키파는데..진짜 먹고싶다 오늘은 제발 팔아줬으면 좋겠다...계좌이체할게요.. 타코야끼에 그뭐냐 불닭 먹으면 맛있다며,,,배고프다 진짜 남아서 프젝하고싶은데 맨날 배가고파서 못남겠어 신방화에...타코야키파는데..진짜 먹고싶다 오늘은 제발 팔아줬으면 좋겠다...계좌이체할게요.. 타코야끼에 그뭐냐 불닭 먹으면 맛있다며,,,배고프다 진짜 남아서 프젝하고싶은데 맨날 배가고파서 못남겠어 신방화에...타코야키파는데..진짜 먹고싶다 오늘은 제발 팔아줬으면 좋겠다...계좌이체할게요.. 타코야끼에 그뭐냐 불닭 먹으면 맛있다며,,,배고프다 진짜 남아서 프젝하고싶은데 맨날 배가고파서 못남겠어 신방화에...타코야키파는데..진짜 먹고싶다 오늘은 제발 팔아줬으면 좋겠다...계좌이체할게요.. 타코야끼에 그뭐냐 불닭 먹으면 맛있다며,,,배고프다 진짜 남아서 프젝하고싶은데 맨날 배가고파서 못남겠어 신방화에...타코야키파는데..진짜 먹고싶다 오늘은 제발 팔아줬으면 좋겠다...계좌이체할게요.. 타코야끼에 그뭐냐 불닭 먹으면 맛있다며,,,배고프다 진짜 남아서 프젝하고싶은데 맨날 배가고파서 못남겠어 </div>
+    <div class="cell p-20 content-box" >${reviewDto.reviewContent}</div>
     <br>
+
     <div class="cell left my-0">
         <label>댓글등록</label>
     </div>
-    <div class="flex-box">
-        <div class="cell w-100" style="border:1px solid lightgray">
-            <textarea style="min-height:100px; max-height:250px; "class="w-100" placeholder="댓글입력창"></textarea>
+   <c:choose>
+   	<c:when test="${sessionScope.userId != null}">
+    <div class="flex-box align-items"> 
+        <div class="cell w-100">
+            <textarea class="reply-writebox" placeholder="  댓글을 입력하세요"></textarea>
         </div>
-        <div class="cell right w-150 flex-vertical">
-            <button class="btn btn-neutral ">등록</button>
+        <div class="cell right inline-flex-box flex-center w-20">
+            <button type="button" class=" btn btn-neutral btn-reply-write">등록하기</button>
         </div>
     </div>
-
-    <div class="cell left my-0">
-        <label>댓글목록</label>
+ 	</c:when>
+ 	<c:otherwise>
+ 		<div class="flex-box align-items"> 
+        <div class="cell w-100">
+            <textarea class="reply-writebox2" placeholder="  로그인후에 작성 가능합니다"></textarea>
+        </div>
+        <div class="cell right inline-flex-box flex-center w-20">
+            <button type="button"  class="btn btn-neutral">등록하기</button>
+        </div>
     </div>
-    <div class="cell flex-box" style="border: 1px solid lightgray;">
-            <div class="w-150 my-0 mx-10">
-                <span class="" style="font-size:13px;color: gray;">2025-03-06</span>
-                <h3 class="">닉네임</h3>
-            </div>
-            <div class="w-100 mt-10">
-            <h5>이것은 예시로 작성된 글입니다. 텍스트의 길이는 500자 정도이며, 다양한 형태의 내용으로 구성되어 있습니다. 우리가 일상에서 자주 겪는 일들이나 생각들을 적어보면, 그만큼 글을 쓰는 것이 중요하고 재미있는 일이라는 것을 알 수 있습니다. 글을 쓰는 것은 단순히 문자를 배열하는 것이 아니라, 자신의 생각과 감정을 전달하는 중요한 수단입니다. 이처럼 우리는 글을 통해 소통하고, 다양한 아이디어와 정보를 교환할 수 있습니다. 또한, 글쓰기는 학문적인 목적뿐만 아니라 개인적인 기록을 남기거나 창작을 할 때도 매우 유용한 도구입니다. 글을 통해 세상과 소통하고, 자신의 생각을 표현하는 것은 매우 의미 있는 일이라고 할 수 있습니다. 그러므로 글쓰기를 계속해서 연습하고, 나만의 스타일을 찾는 것이 중요합니다. 이제 이 글을 끝내기 전에, 이 글이 독자에게 어떠한 메시지를 전달하고 있는지 다시 한번 생각해보는 것이 좋습니다. 글을 쓸 때는 항상 독자를 생각하며 작성하는 것이 중요합니다. 글의 목적에 맞게 정확하고 명확한 전달이 이루어지도록 노력해야 합니다.</h5>     
-        </div>
-        <div class="m-10 w-15">
-                <button class="" style="border: 1px solid rgb(218, 218, 218); background-color: rgb(224, 241, 255);"><i class="fa-solid fa-pen-to-square"></i></button>
-                <button class="" style="border: 1px solid rgb(218, 218, 218); background-color: rgb(255, 224, 224);"><i class="fa-regular fa-trash-can"></i></button>
-            </div>
+    </c:otherwise>
+    </c:choose>
 
+        <div class="cell left my-0">
+            <label>댓글목록</label>
         </div>
-    <div class="cell flex-box" style="border: 1px solid lightgray;">
-            <div class="w-150 my-0 mx-10">
-                <span class="" style="font-size:13px;color: gray;">2025-03-06</span>
-                <h3 class="">열받아</h3>
-            </div>
-            <div class="w-100 mt-10">
-            <h5>플렉스박스 패러가실 파티원구함</h5>     
-        </div>
-        <div class="m-10 w-15">
-                <button class="" style="border: 1px solid rgb(218, 218, 218); background-color: rgb(224, 241, 255);"><i class="fa-solid fa-pen-to-square"></i></button>
-                <button class="" style="border: 1px solid rgb(218, 218, 218); background-color: rgb(255, 224, 224);"><i class="fa-regular fa-trash-can"></i></button>
-            </div>
 
-        </div>
-    <div class="cell flex-box" style="border: 1px solid lightgray;">
-            <div class="w-150 my-0 mx-10">
-                <span class="" style="font-size:13px;color: gray;">2025-03-06</span>
-                <h3 class="">특근하실분</h3>
-            </div>
-            <div class="w-100 mt-10">
-            <h5>주말특근하실분 구함</h5>     
-        </div>
-        <div class="m-10 w-15">
-                <button class="" style="border: 1px solid rgb(218, 218, 218); background-color: rgb(224, 241, 255);"><i class="fa-solid fa-pen-to-square"></i></button>
-                <button class="" style="border: 1px solid rgb(218, 218, 218); background-color: rgb(255, 224, 224);"><i class="fa-regular fa-trash-can"></i></button>
-            </div>
-
-        </div>
+    <div class="reply-wrapper"></div>
 
     <div class="cell center">
-        <button class="btn btn-neutral" style="width:200px">목록으로</button>
+        <button class="btn btn-neutral mt-20" style="width:200px">목록으로</button>
     </div>
 
 </div>

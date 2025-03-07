@@ -89,7 +89,7 @@
 	</div>
 	
 	<div class="cell right">
-		<a href="write" class="btn btn-neutral">글쓰기</a>
+		<a href="add" class="btn btn-neutral">글쓰기</a>
 	</div>
 	
 	<!-- 페이지 네비게이터 -->
