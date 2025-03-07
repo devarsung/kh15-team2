@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.semiproject.dto.NoticeListViewDto;
 import com.kh.semiproject.dto.PlaceDto;
 import com.kh.semiproject.mapper.PlaceMapper;
 import com.kh.semiproject.vo.PlacePageVO;
@@ -168,4 +169,53 @@ public class PlaceDao {
 		Object[] data = { placeNo };
 		return jdbcTemplate.update(sql, data) > 0;
 	}
+	
+	
+	public List<PlaceDto> selectListOnNotice(){
+		String sql = "	SELECT * "
+				+ "FROM ("
+				+ "    SELECT rownum rn, TMP.*"
+				+ "    FROM ("
+				+ "        SELECT P.*, M.*, (P.place_like + P.place_read + P.place_star) AS total"
+				+ "        FROM place P"
+				+ "        LEFT JOIN MEMBER M ON P = M.member_id"
+				+ "        ORDER BY total_likes_and_reads DESC"
+				+ "    ) TMP"
+				+ ")"
+				+ "WHERE rn BETWEEN 1 AND 5";
+		
+		List<PlaceDto> list = jdbcTemplate.query(sql, placeMapper);
+		System.out.println(list);
+		return list;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

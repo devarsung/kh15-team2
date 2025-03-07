@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.semiproject.dao.PlaceDao;
+import com.kh.semiproject.dao.ReviewListViewDao;
 import com.kh.semiproject.dto.PlaceDto;
 import com.kh.semiproject.error.TargetNotFoundException;
 import com.kh.semiproject.service.AttachmentService;
@@ -30,6 +31,9 @@ public class AdminPlaceController {
 	@Autowired
 	private AttachmentService attachmentService;
 
+	@Autowired
+	private ReviewListViewDao reviewListViewDao;
+	
 	@GetMapping("/add")
 	public String add() {
 		return "/WEB-INF/views/admin/place/add.jsp";
@@ -106,6 +110,10 @@ public class AdminPlaceController {
 		List<Integer> attachmentNos = placeDao.selectPlaceImagesNos(placeNo);
 		model.addAttribute("attachmentNos", attachmentNos);
 		System.out.println(attachmentNos);
+		
+		// top 5 리뷰 추출
+		model.addAttribute("reviews",reviewListViewDao.selectListByPlace(placeNo));
+		
 		return "/WEB-INF/views/admin/place/detail.jsp";
 	}
 

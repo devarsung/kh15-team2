@@ -36,7 +36,6 @@ public class ReplyRestController {
 	public void write(@ModelAttribute ReplyDto replyDto, HttpSession session) {
 		String userId = (String)session.getAttribute("userId");
 		replyDto.setReplyWriter(userId);
-		
 		int replyNo = replyDao.sequence();
 		replyDto.setReplyNo(replyNo);
 		
