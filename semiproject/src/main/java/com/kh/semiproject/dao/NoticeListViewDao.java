@@ -52,19 +52,20 @@ public class NoticeListViewDao {
 
 
 	public List<NoticeListViewDto> selectListOnNotice(){
-		String sql = "	SELECT * "
-				+ "FROM ("
-				+ "    SELECT rownum rn, TMP.*"
-				+ "    FROM ("
-				+ "    "
-				+ "        ORDER BY notice_wtime DESC"
-				+ "    ) TMP"
-				+ ")"
-				+ "WHERE rn BETWEEN 1 AND 5";
+//		String sql = "	SELECT * "
+//				+ "FROM ("
+//				+ "    SELECT rownum rn, TMP.*"
+//				+ "    FROM ("
+//				+ "    "
+//				+ "        ORDER BY notice_wtime DESC"
+//				+ "    ) TMP"
+//				+ ")"
+//				+ "WHERE rn BETWEEN 1 AND 5";
 		
-		List<NoticeListViewDto> list = jdbcTemplate.query(sql, noticeListViewMapper);
-		System.out.println(list);
-		return list;
+	//	List<NoticeListViewDto> list = jdbcTemplate.query(sql, noticeListViewMapper);
+//		System.out.println(list);
+//		return list;
+		return null;
 	}
 
 
