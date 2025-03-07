@@ -83,22 +83,32 @@ public class MypageController {
 	// 개인정보 변경 매핑
 	@GetMapping("/change")
 	public String change(HttpSession session, Model model) {
-		String userId = (String) session.getAttribute("userId");// 내 아이디 추출
-		MemberDto memberDto = memberDao.selectOne(userId);// 내정보 획득
+		String userId = (String) session.getAttribute("userId"); // 내 아이디 추출
+		MemberDto memberDto = memberDao.selectOne(userId); // 내정보 획득
 		model.addAttribute("memberDto", memberDto);
-		return "/WEB-INF/views/mypage/change.jsp";
+
+		// attachmentNo 추가 (프로필 이미지 번호)
+		Integer attachmentNo = memberDao.findAttachment(userId); // 프로필 이미지 번호 조회
+		model.addAttribute("attachmentNo", attachmentNo); // JSP로 전달
+
+		return "/WEB-INF/views/mypage/change.jsp"; // 변경된 뷰 반환
 	}
 
 	@PostMapping("/change")
 	public String change(@ModelAttribute MemberDto memberDto, HttpSession session,
-			@RequestParam MultipartFile memberProfile) throws IllegalStateException, IOException {
-		String userId = (String) session.getAttribute("userId");// 내 아이디 추출
+			@RequestParam(required = false) MultipartFile memberProfile,
+			@RequestParam(required = false, defaultValue = "false") boolean deleteProfile)
+			throws IllegalStateException, IOException {
+
+		String userId = (String) session.getAttribute("userId");
 		MemberDto findDto = memberDao.selectOne(userId);
-		boolean isValid = findDto.getMemberPw().equals(memberDto.getMemberPw());
-		if (isValid == false) {// 비밀번호 불일치
-			return "redirect:change?error";// 개인정보 변경페이지로 쫒아내기
+
+		// 비밀번호 확인
+		if (!findDto.getMemberPw().equals(memberDto.getMemberPw())) {
+			return "redirect:change?error"; // 비밀번호 불일치 시 변경 페이지로 리다이렉트
 		}
-		// findDto에 원하는 항목을 교체한뒤 수정 요청
+
+		// findDto에 변경된 값 반영
 		findDto.setMemberNickname(memberDto.getMemberNickname());
 		findDto.setMemberBirth(memberDto.getMemberBirth());
 		findDto.setMemberGender(memberDto.getMemberGender());
@@ -108,21 +118,27 @@ public class MypageController {
 		findDto.setMemberAddress1(memberDto.getMemberAddress1());
 		findDto.setMemberAddress2(memberDto.getMemberAddress2());
 
-		// 회원 프로필변경 요청
-		if (memberProfile.isEmpty() == false) {// 첨부파일이 존재한다면
-			try {// 기존 이미지 삭제 처리(없으면 예외 발생)
-				int attachmentNo = memberDao.findAttachment(memberDto.getMemberId());
-				attachmentService.delete(attachmentNo);
-			} catch (Exception e) {
-				/* 아무것도 안함 */}
+		// 프로필 처리
+		Integer attachmentNo = memberDao.findAttachment(userId); // 기존 프로필 조회
 
-			// 신규 회원프로필 등록
+		if (deleteProfile) { // 프로필 삭제 요청이 있을 경우
+			if (attachmentNo != null) {
+				attachmentService.delete(attachmentNo);
+				memberDao.deleteProfile(userId);
+			}
+		} 
+		else if (memberProfile != null && !memberProfile.isEmpty()) { // 새 프로필 업로드
+			if (attachmentNo != null) { // 기존 프로필 삭제 후 새 파일 저장
+				attachmentService.delete(attachmentNo);
+			}
 			int newAttachmentNo = attachmentService.save(memberProfile);
-			memberDao.connect(memberDto.getMemberId(), newAttachmentNo);
+			memberDao.connect(userId, newAttachmentNo);
 		}
 
+		// 회원 정보 업데이트
 		memberDao.update(findDto);
-		return "redirect:/";
+
+		return "redirect:home"; // 변경 후 다시 내 정보 수정 페이지로 이동
 	}
 
 	// 회원 탈퇴 매핑
