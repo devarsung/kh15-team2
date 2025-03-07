@@ -27,7 +27,7 @@ public class NoticeDao {
 		int noticeNo = this.sequence();
 		noticeDto.setNoticeNo(noticeNo);
 		String sql = "insert into notice(notice_no, notice_title, notice_content, notice_writer) values(?,?,?,?)";
-		Object[] data = { noticeDto.getNoticeNo(),noticeDto.getNoticeTitle(), noticeDto.getNoticeContent(), noticeDto.getNoticeWriter() };
+		Object[] data = { noticeDto.getNoticeTitle(), noticeDto.getNoticeContent(), noticeDto.getNoticeWriter() };
 		jdbcTemplate.update(sql, data);
 	}
 

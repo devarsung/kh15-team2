@@ -3,28 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 
-<c:if test="${sessionScope.userLevel=='관리자'}">
-<script type="text/javascript">
-$(function() {
-	$(".form-delete").submit(function(){
-		var checkItems=$(".check-item:checked");
-		if(checkItems.length==0){
-		window.alert("항목을 먼저 선택해야 합니다");
-		return false;
-	
-		}
-		return window.confirm("정말 삭제 하시겠습니까?");
-	});
-});
-</script>
-</c:if>
-	<c:if test="${sessionScope.userLevel=='관리자'}">
-	<form class="form-delete" action="deleteAll" method="post">
-
-</c:if>
 <div class="container w-1000">
 	<div class="cell center">
 		<h1>자유 게시판</h1>
@@ -42,6 +24,8 @@ $(function() {
 		<table class="table table-border table-hover table-ellipsis">
 			<thead>
 				<tr>
+
+			
 				<c:if test="${session.userLevel=='관리자'}">
 					<th>
                 		<input type="checkbox" class="check-all">
@@ -113,14 +97,11 @@ $(function() {
 		</table>
 	</div>
 	
-	<c:if test="${sessionScope.userLevel=='관리자'}">
-	</form>
-	</c:if>
+
 	
-	
-	<div class="cell right">
+	 <div class="cell right">
 		<a href="write" class="btn btn-neutral">글쓰기</a>
-	</div>
+	</div> 
 	
 	<!-- 페이지 네비게이터 -->
 	<div class="cell center">
