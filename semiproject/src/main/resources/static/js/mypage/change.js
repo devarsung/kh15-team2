@@ -8,14 +8,73 @@ $(function() {
 		memberContact: true,
 		memberAddress: true,
 		memberPw: false,
-
 		ok: function() {
-			return this.memberNickname
-				&& this.memberEmail && this.memberBirth
-				&& this.memberContact && this.memberAddress
-				&& this.memberPw;
-		},
-	};
+					return this.memberNickname
+						&& this.memberEmail && this.memberBirth
+						&& this.memberContact && this.memberAddress
+						&& this.memberPw;
+				},
+			};
+
+
+           //readonly 설정과 해제 
+           $(".editBtn").click(function(){
+               var inputField = $(this).parent("td").find("input");
+               if (inputField.prop('readonly')) {
+                   inputField.prop('readonly', false);
+               } 
+               else {
+                   inputField.prop('readonly', true);
+               }
+           });
+           
+           //닉네임 처리 //////////////////////////닉네임url추가
+           $("[name=memberNickname]").blur(function(){
+               var regex = /^[가-힣0-9]{2,10}$/;
+               var isValid = regex.test($(this).val());
+               if(isValid){
+                       $.ajax({
+                           url:"/rest/member/checkMemberNickname",
+                           method:"post",
+                           data: {memberNickname :$(this).val()},
+                           success : function(response){
+                               $("[name=memberNickname]").removeClass("success fail fail2")
+                                                       .addClass(response ? "fail2":"success");
+                               status.memberNickname = response ? false : true;
+                           }
+                       });
+                   }
+                   
+                   else{
+                       $("[name=memberNickname]").removeClass("success fail fail2")
+                       .addClass("fail");
+                               status.memberNickname = false;
+                   }
+               });
+               
+               //이메일 처리
+               $("[name=memberEmail]").blur(function(){
+                   var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                   var isValid = regex.test($(this).val()) && $(this).val().length > 0;
+                   $(this).removeClass("success fail").addClass(isValid ? "success" : "fail");
+                   status.memberEmail = isValid ;
+               });
+               
+               //생년월일 처리
+               var picker = new Lightpick({
+                   field : document.querySelector("[name=memberBirth]"),
+                   format : "YYYY-MM-DD",
+                   firstDay: 7,
+                   maxDate : moment(),
+               });
+               $("[name=memberBirth]").blur(function(){
+                   var regex = /^(19[0-9]{2}|20[0-9]{2})-((02-(0[1-9]|1[0-9]|2[0-8]))|((0[469]|11)-(0[1-9]|1[0-9]|2[0-9]|30))|((0[13578]|1[02])-(0[1-9]|1[0-9]|2[0-9]|3[01])))$/;
+                   var isValid = $(this).val().length == 0 || regex.test($(this).val());
+                   $(this).removeClass("fail").addClass(isValid ? "" : "fail");
+                   status.memberBirth = isValid;
+               });
+
+		
 
 	//readonly 설정과 해제 
 	$(".editBtn").click(function() {

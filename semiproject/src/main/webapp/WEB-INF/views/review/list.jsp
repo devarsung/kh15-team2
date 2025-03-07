@@ -5,24 +5,79 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+ <style>
+    .selectStyle{
+	 	 padding: 5px;
+            border: 1px solid rgb(203, 234, 255);
+            border-radius: 4px;
+            outline : none;
+            color : rgb(94, 94, 94);
+            font-size: 15px;
+            background: rgb(203, 234, 255);
+            appearance: none;
+            width: 100px;
+
+		}
+    .inputStyle{
+        padding:10px;
+        border: 1px solid rgb(242, 250, 255);
+        border-radius: 5px;
+        background-color: rgb(242, 250, 255);
+    }
+    .btnStyle{
+        border-radius: 10px;
+        border : 1px, solid, rgb(165, 221, 255);
+        color : rgb(94, 94, 94);
+        background:rgb(165, 221, 255);
+        width: 100px;
+    }
+
+    .selectStyle:hover,
+    .inputStyle:hover,
+    .btnStyle:hover{
+        outline :none;
+        border: 2px solid #cbe4ff;
+    }
+    
+    .tableStyle{
+   		background:rgb(254, 255, 255);	
+    }
+ 	.table.table-hover > tbody > tr:hover{
+            background-color:#cbe4ff;
+        }
+        
+      .aStyle{
+     	 text-decoration: none;
+    	outline: none; 
+    	padding:10px;
+      }
+ </style>
 <div class="container w-1000">
 	<div class="cell center">
-		<h1>자유 게시판</h1>
+		<h1 style="color:#919191;">후기 목록</h1>
 	</div>
-	<div class="cell">
-		글은 자신의 인격입니다.<br>
-		무분별한 비방 시 글이 삭제될 수 있습니다.
-	</div>
-	<div class="cell right">
-		<a href="write" class="btn btn-neutral">글쓰기</a>
-	</div>
+	
+	<!-- 검색창 -->
+
+    <div class="cell center my-30">
+        <form action="list" method="get">
+            <select name="column" class="selectStyle center field">
+                <option value="" >선택 ▼</option>
+                <option value="review_title" ${param.column == 'review_title' ? 'selected' : ''}>제목</option>
+                <option value="review_writer" ${param.column == 'review_writer' ? 'selected' : ''}>작성자</option>
+            </select>
+            <input type="text" name="keyword" value="${param.keyword}" class="field w-50 inputStyle" placeholder="많은 후기들을 찾아보세요!">
+            <button class="btn  btnStyle">검색<i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+    </div>
+
 	
 	<!-- 테이블 -->
 	<div class="cell">
-		<table class="table table-border table-hover table-ellipsis">
+		<table class="table table-border table-hover table-ellipsis tableStyle">
 			<thead>
 				<tr>
-					<th>번호</th>
+					<th>No</th>
 					<th style="width:450px; max-width:450px;">제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
@@ -48,14 +103,14 @@
 								
 							
 								<!-- 게시글 제목 -->
-								<a href="detail?reviewNo=${reviewListViewDto.reviewNo}">
+								<a class="aStyle" href="detail?reviewNo=${reviewListViewDto.reviewNo}">
 									${reviewListViewDto.reviewTitle}
 								</a>
 								
 								<!-- 댓글 표시 -->
 								<c:if test="${reviewListViewDto.reviewReply > 0}">
 									<span class="ms-20">
-										<i class="fa-solid fa-comment-dots blue"></i>
+										<i class="fa-solid fa-comment-dots blue" ></i>
 										${reviewListViewDto.reviewReply}
 									</span>
 								</c:if>
@@ -63,7 +118,7 @@
 								<!-- 좋아요 표시 -->
 								<c:if test="${reviewListViewDto.reviewLike > 0}">
 									&nbsp;&nbsp;
-									<i class="fa-solid fa-heart red"></i>
+									<i class="fa-solid fa-heart red " ></i>
 									${reviewListViewDto.reviewLike}
 								</c:if>
 							</td>
@@ -88,26 +143,12 @@
 		</table>
 	</div>
 	
-	<div class="cell right">
-		<a href="add" class="btn btn-neutral">글쓰기</a>
-	</div>
-	
+
 	<!-- 페이지 네비게이터 -->
-	<div class="cell center">
+	<div class="cell center mt-30">
 		<jsp:include page="/WEB-INF/views/template/pagination.jsp"></jsp:include>
 	</div>
 	
-	<!-- 검색창 -->
-	<div class="cell center">
-		<form action="list" method="get">
-			<select name="column" class="field">
-				<option value="review_title" ${param.column == 'review_title' ? 'selected' : ''}>제목</option>
-				<option value="review_writer" ${param.column == 'review_writer' ? 'selected' : ''}>작성자</option>
-			</select>
-			<input type="text" name="keyword" value="${param.keyword}" class="field">
-			<button class="btn btn-positive">검색</button>
-		</form>
-	</div>
 	
 </div>
 
