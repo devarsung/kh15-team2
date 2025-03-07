@@ -105,7 +105,7 @@ $(function() {
     <!-- 개요 영역 -->
     <div class="cell my-20">
         <h2><i class="fa-solid fa-hand-point-right"></i> 개요</h2>
-        <div class="div-place-content">
+        <div class="div-place-content" style="white-space: pre-line;">
         	${placeDto.placeOverview}
         </div>
     </div>
@@ -135,7 +135,7 @@ $(function() {
 					</c:if>
 					
 					<c:if test="${placeDto.placeOperate != null}">
-						<li>운영정보 : ${placeDto.placeOperate}</li>
+						<li style="white-space: pre-line;">운영정보 : <br>${placeDto.placeOperate}</li>
 					</c:if>
 	        	</ul>
 	        </div>
