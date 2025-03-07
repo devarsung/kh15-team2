@@ -1,5 +1,5 @@
 /**
- * 여행지 수정: /admin/place/edit 페이지의 자바스크립트
+ * 여행지 수정
  */
 $(function() {
 	//상태변수
@@ -11,9 +11,14 @@ $(function() {
 		placeRegion: false,
 		placeType: false,
 		placeOverview: false,
+		placeTel: true,
+		placeWebsite: true,
+		placeOperate: true,
+		placeParking: true,
 		ok: function() {
 			return this.placeTitle && this.firstImage && this.placeAddress
-				&& this.placeLatLng && this.placeRegion && this.placeType && this.placeOverview;
+				&& this.placeLatLng && this.placeRegion && this.placeType && this.placeOverview
+				&& this.placeTel && this.placeWebsite && this.placeOperate && this.placeParking;
 		}
 	};
 	
@@ -193,6 +198,12 @@ $(function() {
 	
 	//폼 전송
 	$(".form-check").submit(function() {
+		$("[name=firstImageChange]").val(firstImageChange);
+		$("[name=deletedOldNos]").val(deletedOldNos.join(","));
+		
+		console.log($("[name=firstImageChange]").val());
+		console.log($("[name=deletedOldNos]").val());
+		
 		$("[name=placeTitle]").trigger("blur");
 		$("[name=placeRegion]").trigger("input");
 		$("[name=placeType]").trigger("input");
@@ -200,24 +211,87 @@ $(function() {
 		checkAddressValid();
 		checkLatLngValid();
 		checkFirstImageValid();
+		
+		//선택항목도 체크
+		$("[name=placeTel]").trigger("blur");
+		$("[name=placeWebsite]").trigger("blur");
+		$("[name=placeOperate]").trigger("blur");
+	
 		return status.ok();
 	});
 	
-	//폼 전송 테스트
-	/*$(".btn-submit").click(function(){
-		$("[name=placeTitle]").trigger("blur");
-		$("[name=placeRegion]").trigger("input");
-		$("[name=placeType]").trigger("input");
-		checkAddressValid();
-		checkLatLngValid();
-		checkFirstImageValid();
-		$(".note-editable").trigger("blur");
-		return false;
-	});*/
+	//선택항목 유효성 검사(전화,홈페이지,운영설명 길이 검사)
+	//전화번호는 필수는 아니지만 만약 입력한다면 길이와 형식 제한있음
+	$("[name=placeTel]").on("input",function(){
+        var current = $(this).val();
+        var convert = current.replace(/[^0-9]+/g, "");
+        $(this).val(convert);
+    });
+	
+    $("[name=placeTel]").blur(function(){
+		var empty = $(this).val().length <= 0; //아예 입력하지말거나
+		var regex = /^[0-9]{2,3}[0-9]{8}$/
+		var pass = regex.test($(this).val());//정규식을 통과했냐
+		
+		var isValid = empty || pass;
+        $(this).removeClass("fail").addClass(isValid ? "" : "fail");
+        status.placeTel = isValid;
+    });
+	
+	//웹사이트주소는 필수는 아니지만 입력한다면 길이 제한 있음
+	//바이트 문제로 한글 입력 우선 막아둠
+	//한글 제외한 문자들 기준 255자, 설정은 우선 태그에서 함(maxlength)
+	$("[name=placeWebsite]").on("input",function(){
+        var current = $(this).val();
+        var convert = current.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]+/g, "");
+        $(this).val(convert);
+    });
+	
+	$("[name=placeWebsite").blur(function(){
+		var isValid = $(this).val().length <= 255;
+        $(this).removeClass("fail").addClass(isValid ? "" : "fail");
+        status.placeWebsite = isValid;
+	});
+	
+	//운영시간 정보도 필수는 아니지만 입력한다면 길이 제한 있음(200자 제한)
+	$("[name=placeOperate").on("input", function(){
+		var origin = $(this).val();
+		var length = $(this).val().length;
+		
+		while(length > 200) {
+			$(this).val(origin.substring(0, length-1));
+			length--;
+		}
+	});
+		
+	$("[name=placeOperate").blur(function(){
+		var isValid = $(this).val().length <= 200;
+		$(this).removeClass("fail").addClass(isValid ? "" : "fail");
+        status.placeOperate = isValid;
+	});
+	
+	//대표 이미지
+	var previousFile = null;//선택했던 파일들 백업
+	var firstImageChange = false;//대표 이미지 변경여부
+	var isFirstLoad = true;//처음인지 아닌지
+	
+	$(".checkcheck").click(function(){
+		console.log("변경되었냐 : " , firstImageChange);
+		console.log("첫 화면이냐: ", isFirstLoad);
+	});
 	
 	//대표 이미지 유효성 검사
+	//- 파일 여부로 판단하기에 변경여부 조건 추가함
 	function checkFirstImageValid() {
-		var isValid = $(".firstImage")[0].files.length > 0;
+		var isValid = false;
+		
+		//대표이미지 변경여부 확인
+		if(firstImageChange == false) {
+			isValid = true;
+		}
+		else {
+			isValid = $(".firstImage")[0].files.length > 0;
+		}			
 		$(".firstImage").removeClass("fail").addClass(isValid ? "" : "fail");
 		$(".preview-firstImage").find("img").css("border", isValid ? "" : "1px solid red");
 		status.firstImage = isValid;
@@ -231,18 +305,21 @@ $(function() {
 	$(".btn-clean-first").click(function(){
 		$(".firstImage").val("");//input값 초기화
 		previousFile = null;
+		firstImageChange = true;//변경 true
+		isFirstLoad = false;//이제 처음상태 아님
 		$(".preview-firstImage").find("img").attr("src", "/images/defaultBack.png");
 		$(".first-name").text("");
 		checkFirstImageValid();
 	});
-	
-	var previousFile = null;
 	
 	$(".firstImage").change(function(){
 		var file = this.files[0];
 		
 		if(file) {
 			previousFile = file;
+			firstImageChange = true;//변경 true
+			isFirstLoad = false;//처음상태 아님
+			
 			var reader = new FileReader();
 	        reader.onload = function(e) {
 	            $(".preview-firstImage").find("img").attr("src", e.target.result);
@@ -259,16 +336,27 @@ $(function() {
 			dataTransfer.items.add(previousFile);
 			$(".firstImage")[0].files = dataTransfer.files;//input값 변경
 			//.preiew-firstImage, .first-name, status.firstImage는 그대로 유지됨. 여기서 또 설정할 필요없음
+			
+			firstImageChange = true;//변경 true
+			isFirstLoad = false;
 		}
 		else {
-			checkFirstImageValid();
+			
+			if(isFirstLoad) {//맨처음 진입하지마자 파일선택->취소 누른경우
+				firstImageChange = false;
+			}
+			else {//x버튼 누른 후 파일선택->취소 누른경우
+				firstImageChange = true;
+			}
 		}
+		
+		checkFirstImageValid();	
 	});
 	
 	//상세 이미지
-	var fileListMap = new Map();
+	var fileListMap = new Map();//새로운 이미지
 	var deletedOldNos = [];//기존 이미지에서 지워진 녀석들
-	var fileCnt = 0;
+	var fileCnt = 0;//새로추가하는 이미지를 위해
 	
 	$(".detailImages").change(function(){
 		var selectedFiles = this.files;
@@ -281,8 +369,23 @@ $(function() {
 	});
 	
 	$(document).on("click", ".btn-close", function(){
-        var index = $(this).parent().data("index");
-		fileListMap.delete(index);
+		var oldNo = $(this).prev().data("old-no");
+		var newNo = $(this).prev().data("new-no");
+		
+		//원래있던 이미지를 지우는경우
+		if(oldNo != undefined && newNo == undefined) {
+			deletedOldNos.push(oldNo);//삭제될 번호 리스트에 추가하고
+			$(this).parent().remove();//화면에서 지운다
+			console.log("db에서 지워져야하는 이미지 번호들:",deletedOldNos);
+			return;
+		}
+		
+		//새로 추가한 이미지를 지우는경우
+		if(oldNo == undefined && newNo != undefined) {
+			fileListMap.delete(newNo);//새 이미지 모아둔곳에서 지운다
+			console.log("새로추가하려다가 지운 이미지는:", newNo);
+			console.log("현재 fileMap은: ", fileListMap);
+		}
 
 		if(fileListMap.size > 0) {
 			updateDetailInput();
@@ -307,8 +410,7 @@ $(function() {
 		reader.onload = function(e){
 			var template = $("#imgTag").text();
 			var html = $.parseHTML(template);
-			$(html).find("img").attr("src", e.target.result);
-			$(html).attr("data-index", index);
+			$(html).find("img").attr("src", e.target.result).attr("data-new-no", index);
 			$(".preview-detailImages").append(html);
 		};
 		reader.readAsDataURL(file);

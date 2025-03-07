@@ -82,12 +82,12 @@ public class AdminPlaceController {
 		if(placeDto == null) {
 			throw new TargetNotFoundException("존재 하지 않는 여행지 입니다");
 		}
-		if(placeDao.findAttachment(placeDto.getPlaceFirstImage()) == true) {
-			attachmentService.delete(placeNo);
-		}
+//		if(placeDao.findFirstImageNo(placeDto.getPlaceFirstImage()) == true) {
+//			attachmentService.delete(placeNo);
+//		}
 		
-		placeDao.delete(placeNo);
-		return "redirect:/admin/list";
+		//placeDao.delete(placeNo);
+		return "redirect:/list";
 	}
 	
 	@RequestMapping("/list")
@@ -107,13 +107,12 @@ public class AdminPlaceController {
 		}
 		
 		model.addAttribute("placeDto", placeDto);
-		List<Integer> attachmentNos = placeDao.selectPlaceImagesNos(placeNo);
+		List<Integer> attachmentNos = placeDao.selectDetailImagesNos(placeNo, placeDto.getPlaceFirstImage());
 		model.addAttribute("attachmentNos", attachmentNos);
-		System.out.println(attachmentNos);
+		//System.out.println(attachmentNos);
 		
 		// top 5 리뷰 추출
 		model.addAttribute("reviews",reviewListViewDao.selectListByPlace(placeNo));
-		
 		return "/WEB-INF/views/admin/place/detail.jsp";
 	}
 
@@ -127,23 +126,77 @@ public class AdminPlaceController {
 	}
 
 	@PostMapping("/edit")
-	public String edit(@ModelAttribute PlaceDto placeDto,  @RequestParam MultipartFile firstImage) throws IllegalStateException, IOException {
-		boolean success = placeDao.update(placeDto);
-		if(placeDto == null) {
-			throw new TargetNotFoundException("존재 하지 않는 여행지 입니다");
-		}
-		if(firstImage != null) {
-			try {
-				attachmentService.delete(placeDto.getPlaceFirstImage());
+	public String edit(@ModelAttribute PlaceDto placeDto, 
+					@RequestParam boolean firstImageChange, @RequestParam MultipartFile firstImage,
+					@RequestParam List<Integer> deletedOldNos, @RequestParam List<MultipartFile> detailImages) 
+			throws IllegalStateException, IOException {
+		//원래 여행지 정보 가져오기
+		PlaceDto originDto = placeDao.selectOne(placeDto.getPlaceNo());
+		if(originDto == null) throw new TargetNotFoundException("존재하지 않는 여행지입니다");
+		
+		//교체
+		originDto.setPlaceRegion(placeDto.getPlaceRegion());
+		originDto.setPlaceType(placeDto.getPlaceType());
+		originDto.setPlaceTitle(placeDto.getPlaceTitle());
+		originDto.setPlacePost(placeDto.getPlacePost());
+		originDto.setPlaceAddress1(placeDto.getPlaceAddress1());
+		originDto.setPlaceAddress2(placeDto.getPlaceAddress2());
+		originDto.setPlaceLat(placeDto.getPlaceLat());
+		originDto.setPlaceLng(placeDto.getPlaceLng());
+		originDto.setPlaceOverview(placeDto.getPlaceOverview());
+		originDto.setPlaceTel(placeDto.getPlaceTel());
+		originDto.setPlaceWebsite(placeDto.getPlaceWebsite());
+		originDto.setPlaceParking(placeDto.getPlaceParking());
+		originDto.setPlaceOperate(placeDto.getPlaceOperate());
+		
+		//대표이미지
+		if(firstImageChange) {
+			if(firstImage.isEmpty()) {
+				//이 경우 프론트에서 막았지만 혹시 모르니 확인
+				System.out.println("실행되어서는 안되는 문장임. 짜증나게 하지마라");
 			}
-			catch(Exception e) {}
-			
-			int placeFirstImage = attachmentService.save(firstImage);
-			placeDto.setPlaceFirstImage(placeFirstImage);
+			else {
+				try {
+					//기존 이미지 지우기
+					//이미지 지워지면 연결테이블의 레코드도 지워진다(on delete cascade로 만들었으니까)
+					//System.out.println("너 왜 실행안되니?");
+					attachmentService.delete(originDto.getPlaceFirstImage());
+				}
+				catch(Exception e) {/* 아무것도 안함 */
+					//System.out.println("catch 가 실행되는건가?");
+				}
+				
+				//바꾼 이미지 등록(attachment, place_image에)
+				int newAttachmentNo = attachmentService.save(firstImage);
+				//place 테이블의 firstImage 업데이트
+				originDto.setPlaceFirstImage(newAttachmentNo);
+				placeDao.insertPlaceImage(placeDto.getPlaceNo(), newAttachmentNo);
+			}
 		}
 		
-		int placeNo = placeDto.getPlaceNo();
-		return "redirect:/admin/detail?placeNo=" + placeNo;
+		//상세 지워진 이미지들 처리
+		if(deletedOldNos.isEmpty() == false) {
+			for(int deletedNo: deletedOldNos) {
+				try {
+					attachmentService.delete(deletedNo);
+				}
+				catch(Exception e) {/* 아무것도 안함 */ }
+			}
+		}
+		
+		//상세 새로 추가된 이미지 처리
+		for(MultipartFile detailImage : detailImages) {
+			if(detailImage.isEmpty()) {
+				break;
+			}
+			
+			//이미지 저장, 여행지 이미지 정보 등록
+			int attachmentNo = attachmentService.save(detailImage);
+			placeDao.insertPlaceImage(placeDto.getPlaceNo(), attachmentNo);
+		}
+		
+		placeDao.update(originDto);
+		return "redirect:detail?placeNo=" + placeDto.getPlaceNo();
 	}
 
 	@RequestMapping("/image")

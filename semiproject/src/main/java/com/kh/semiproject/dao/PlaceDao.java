@@ -30,14 +30,15 @@ public class PlaceDao {
 		String sql = "insert into place("
 					+ "place_no, place_writer, place_title, place_overview, "
 					+ "place_post, place_address1, place_address2, place_region, "
-					+ "place_lat, place_lng, place_first_image, place_type)"
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ "place_lat, place_lng, place_first_image, place_type, "
+					+ "place_tel, place_website, place_parking, place_operate"
+					+ ")"
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		Object[] data = {
-				placeDto.getPlaceNo(), placeDto.getPlaceWriter(), 
-				placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), placeDto.getPlacePost(), 
-				placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceRegion(), 
-				placeDto.getPlaceLat(), placeDto.getPlaceLng(), placeDto.getPlaceFirstImage(),
-				placeDto.getPlaceType()
+				placeDto.getPlaceNo(), placeDto.getPlaceWriter(), placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), 
+				placeDto.getPlacePost(), placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceRegion(), 
+				placeDto.getPlaceLat(), placeDto.getPlaceLng(), placeDto.getPlaceFirstImage(), placeDto.getPlaceType(),
+				placeDto.getPlaceTel(), placeDto.getPlaceWebsite(), placeDto.getPlaceParking(), placeDto.getPlaceOperate()
 		};
 		jdbcTemplate.update(sql, data);
 	}
@@ -57,11 +58,31 @@ public class PlaceDao {
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 
-	public boolean update(PlaceDto placeDto) {
+	public boolean update2(PlaceDto placeDto) {
 		String sql = "update place set place_title=?, place_content=?, place_post=? place_address1=?, place_address2=?, place_region=? where place_no =?";
 		Object[] data = { placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), placeDto.getPlacePost(),
 				placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceRegion(),
 				placeDto.getPlaceNo() };
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+	
+	public boolean update(PlaceDto placeDto) {
+		String sql = "update place set "
+				+ "place_region=?, place_type=?, place_title=?, "
+				+ "place_post=?, place_address1=?, place_address2=?, "
+				+ "place_lat=?, place_lng=?, place_overview=?, "
+				+ "place_tel=?, place_website=?, place_parking=?, "
+				+ "place_operate=?, place_first_image=?, "
+				+ "place_etime=systimestamp "
+				+ "where place_no=?";
+		Object[] data = {
+				placeDto.getPlaceRegion(), placeDto.getPlaceType(), placeDto.getPlaceTitle(),
+				placeDto.getPlacePost(), placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(),
+				placeDto.getPlaceLat(), placeDto.getPlaceLng(), placeDto.getPlaceOverview(),
+				placeDto.getPlaceTel(), placeDto.getPlaceWebsite(), placeDto.getPlaceParking(),
+				placeDto.getPlaceOperate(), placeDto.getPlaceFirstImage(),
+				placeDto.getPlaceNo()
+		};
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 
@@ -141,14 +162,8 @@ public class PlaceDao {
 		List<PlaceDto> list = jdbcTemplate.query(sql, placeMapper, data);
 		return list.isEmpty() ? null : list.get(0);
 	}
-
-	public boolean findAttachment(int placeFirstImage) {
-		String sql = "select count(*) from attachment where attachment_no = ?";
-		Object[] data = { placeFirstImage };
-		return jdbcTemplate.update(sql, data) > 0;
-	}
 	
-	//여행지 이미지 번호들 조회
+	//여행지 이미지 번호들 조회(모두)//이 메소드 필요없을듯
 	public List<Integer> selectPlaceImagesNos(int placeNo) {
 		String sql = "select attachment_no from place_image where place_no=?";
 		Object[] data= {placeNo};

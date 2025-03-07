@@ -17,7 +17,7 @@ public class PlaceMapper implements RowMapper<PlaceDto>{
 				.placeNo(rs.getInt("place_no"))
 				.placeTitle(rs.getString("place_title"))
 				.placeOverview(rs.getString("place_overview"))
-				.placePost(rs.getString("place_title"))
+				.placePost(rs.getString("place_post"))
 				.placeAddress1(rs.getString("place_address1"))
 				.placeAddress2(rs.getString("place_address2"))
 				.placeLike(rs.getInt("place_like"))
@@ -31,6 +31,10 @@ public class PlaceMapper implements RowMapper<PlaceDto>{
 				.placeType(rs.getString("place_type"))
 				.placeFirstImage(rs.getInt("place_first_image"))
 				.placeRead(rs.getInt("place_read"))
+				.placeTel(rs.getString("place_tel"))
+				.placeWebsite(rs.getString("place_website"))
+				.placeParking(rs.getString("place_parking"))
+				.placeOperate(rs.getString("place_operate"))
 				.build();
 	}
 

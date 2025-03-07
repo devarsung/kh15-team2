@@ -85,6 +85,12 @@ $(function() {
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
                 <!-- Slides -->
+                	
+                	<div class="swiper-slide">
+                		<!-- 기본 이미지 처리 여기서 했는데 attachmentService load 에서 할지 말지 생각 좀 -->
+                		<img class="place-img" src="/attachment/download?attachmentNo=${placeDto.placeFirstImage}" width="100%" height="100%" 
+                		onerror="this.onerror=null; this.src='/images/defaultBack.png';">
+                	</div>
                 <c:forEach var="attachmentNo" items="${attachmentNos}">
                 	<div class="swiper-slide">
                 		<!-- 기본 이미지 처리 여기서 했는데 attachmentService load 에서 할지 말지 생각 좀 -->
@@ -104,8 +110,8 @@ $(function() {
     
     <!-- 개요 영역 -->
     <div class="cell my-20">
-        <h2><i class="fa-solid fa-hand-point-right"></i> 소개</h2>
-        <div class="div-place-content">
+        <h2><i class="fa-solid fa-hand-point-right"></i> 개요</h2>
+        <div class="div-place-content" style="white-space: pre-line;">
         	${placeDto.placeOverview}
         </div>
     </div>
@@ -115,7 +121,33 @@ $(function() {
     	<h2><i class="fa-solid fa-hand-point-right"></i> 지도</h2>
         <div id="map" data-lat="${placeDto.placeLat}" data-lng="${placeDto.placeLng}"></div>
     </div>
-
+    
+    <c:if test="${placeDto.hasInfo}">
+	    <!-- 기본 정보 영역 -->
+	    <div class="cell my-20">
+	        <h2><i class="fa-solid fa-hand-point-right"></i> 정보</h2>
+	        <div class="" style="background-color:#E2E2E2;">
+	        	<ul>
+					<c:if test="${placeDto.placeTel != null}">
+						<li>문의전화 : ${placeDto.placeTel}</li>
+					</c:if>
+					
+					<c:if test="${placeDto.placeWebsite != null}">
+						<li>홈페이지 : <a href="${placeDto.placeWebsite}">${placeDto.placeWebsite}</a></li>
+					</c:if>
+					
+					<c:if test="${placeDto.placeParking != null}">
+						<li>주차가능여부 : ${placeDto.placeParking == 'Y' ? '가능' : '불가능'}</li>
+					</c:if>
+					
+					<c:if test="${placeDto.placeOperate != null}">
+						<li style="white-space: pre-line;">운영정보 : <br>${placeDto.placeOperate}</li>
+					</c:if>
+	        	</ul>
+	        </div>
+	    </div>
+    </c:if>
+    
 	<!-- 리뷰 영역 -->
     <div class="cell">
     	<h2><i class="fa-solid fa-hand-point-right"></i> 리뷰</h2>
