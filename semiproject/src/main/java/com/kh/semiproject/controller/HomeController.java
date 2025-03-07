@@ -18,7 +18,7 @@ public class HomeController {
 	@RequestMapping("/")
 	public String home(Model model) {
 		model.addAttribute("reviews", reviewListViewDao.selectListOnReview());
-		model.addAttribute("notice", noticeListViewDao.selectListOnNotice());
+		//model.addAttribute("notices", noticeListViewDao.selectListOnNotice());
 		
 		return "/WEB-INF/views/home.jsp";
 	}
