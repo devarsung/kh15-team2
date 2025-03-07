@@ -47,7 +47,7 @@
 	        <a href="/admin/notice/list" class="square-btn first-pink"><i class="fa-solid fa-bullhorn"></i> 공지관리</a>
 	        <a href="/admin/place/list" class="square-btn second-pink"><i class="fa-solid fa-mountain-sun"></i> 여행지관리</a>
 	        <a href="/admin/member/list" class="square-btn first-pink"><i class="fa-solid fa-users"></i> 회원관리</a>
-	        <a href="#" class="square-btn second-pink"><i class="fa-solid fa-chart-simple"></i> 현황1</a>
+	        <a href="/admin/status/member" class="square-btn second-pink"><i class="fa-solid fa-chart-simple"></i> 현황1</a>
 	        <a href="#" class="square-btn first-pink"><i class="fa-solid fa-chart-line"></i> 현황2</a>
 	        <a href="#" class="square-btn second-pink"><i class="fa-solid fa-chart-pie"></i> 현황3</a>
     	</div>

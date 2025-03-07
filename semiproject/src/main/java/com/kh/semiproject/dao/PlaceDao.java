@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.semiproject.dto.NoticeListViewDto;
 import com.kh.semiproject.dto.PlaceDto;
 import com.kh.semiproject.mapper.PlaceMapper;
 import com.kh.semiproject.vo.PlacePageVO;
@@ -183,4 +184,45 @@ public class PlaceDao {
 		Object[] data = { placeNo };
 		return jdbcTemplate.update(sql, data) > 0;
 	}
+	
+	
+	public float star(int placeNo){
+		String sql = "select avg(review_star) from review "
+				+ "left join place on review.review_place = place.place_no "
+				+ "where place_no = ? "
+				+ "group by review_place";
+		Object[] data = {placeNo};
+		jdbcTemplate.queryForObject(sql, float.class, data);
+		return 0;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

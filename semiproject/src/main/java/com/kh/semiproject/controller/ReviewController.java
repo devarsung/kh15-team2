@@ -44,16 +44,19 @@ public class ReviewController {
 	private AttachmentService attachmentService;
 
 	@RequestMapping("/list")
-	public String list(@ModelAttribute("pageVO") PageVO pageVO, Model model,
-			@RequestParam(required=false) Integer placeNo) {
-		int count =  reviewDao.count(pageVO);
-		pageVO.setCount(count);
+	public String list(@ModelAttribute("pageVO") PageVO pageVO, Model model) {
+		
 		List<ReviewListViewDto> list ;
-		if(placeNo == null || placeDao.selectOne(placeNo) == null) {
+		
+		if(pageVO.byPlace()==false) {
+			int count =  reviewDao.count(pageVO);
+			pageVO.setCount(count);
 			list = reviewListViewDao.selectList(pageVO);
 		}
 		else {
-			list = reviewListViewDao.selectList(pageVO, placeNo);
+			int count =  reviewDao.count(pageVO);
+			pageVO.setCount(count);
+			list = reviewListViewDao.selectList(pageVO, pageVO.getPlaceNo() );
 		}
 		model.addAttribute("list",list);
 		return "/WEB-INF/views/review/list.jsp";
@@ -71,7 +74,7 @@ public class ReviewController {
 		reviewDto.setReviewWriter(userId);
 		int reviewNo = reviewDao.sequence();
 		reviewDto.setReviewNo(reviewNo);
-		
+		reviewDao.insert(reviewDto);
 		return "redirect:detail?reviewNo="+reviewNo;
 	}
 	

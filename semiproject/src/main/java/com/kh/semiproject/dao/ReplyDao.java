@@ -32,7 +32,7 @@ public class ReplyDao {
 	
 	//댓글 목록
 	public List<ReplyDto> selectList(int replyOrigin) {
-		String sql = "select * from reply " + "where reply_origin=? " + "order by reply_no asc";
+		String sql = "select * from reply where reply_origin=? order by reply_no asc";
 		Object[] data = { replyOrigin };
 		return jdbcTemplate.query(sql, replyMapper, data);
 	}

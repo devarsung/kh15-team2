@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semiproject.dto.NoticeListViewDto;
+import com.kh.semiproject.dto.ReviewListViewDto;
 import com.kh.semiproject.mapper.NoticeListViewMapper;
 import com.kh.semiproject.vo.PageVO;
 
@@ -47,4 +48,52 @@ public class NoticeListViewDao {
 			return jdbcTemplate.query(sql, noticeListViewMapper, data);
 		}
 	}
+
+
+
+	public List<NoticeListViewDto> selectListOnNotice(){
+			String sql = "	SELECT *"
+					+ "				FROM ("
+					+ "				   SELECT rownum rn, TMP.* FROM ("
+					+ "				   select * from notice "
+					+ "				        ORDER BY notice_wtime DESC"
+					+ "				   ) TMP"
+					+ "				)"
+					+ "					 WHERE rn BETWEEN 1 AND 5";
+			
+			List<NoticeListViewDto> list = jdbcTemplate.query(sql, noticeListViewMapper);
+		return list;
+	//	return null;
+	}
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

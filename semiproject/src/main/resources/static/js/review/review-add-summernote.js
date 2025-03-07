@@ -1,3 +1,5 @@
+
+
 $(function(){
     //상태 변수
     var status = {
@@ -32,7 +34,7 @@ $(function(){
                 $.ajax({
                     processData: false,
                     contentType: false,
-                    url:"",
+                    url:"/rest/review/uploads",
                     method:"post",
                     data: form,
                     success:function(response){
