@@ -12,11 +12,23 @@ public class PageVO {
 	protected String column;
 	protected String keyword;
 	
+	protected Integer placeNo;
+	protected Integer reviewNo;
+	
+	
+	
+	public boolean byPlace() { //placeNo 로 받았을때
+		return placeNo != null;
+	}
+	public boolean byReview() { // reviewNo 로 받았을때
+		return reviewNo != null;
+	}
+	
 	public boolean search() {
-		return column != null && keyword != null;
+		return column != null && keyword != null && !byPlace();
 	}
 	public boolean isList() {
-		return !search();
+		return !search() && !byPlace();
 	}
 	
 	public int getStartRownum() {
@@ -68,8 +80,11 @@ public class PageVO {
 		if(isList()) {
 			return "size="+size;
 		}
-		else {
+		else if(search()){
 			return "column="+column+"&keyword="+keyword+"&size="+size;
+		}
+		else {
+			return "placeNo="+placeNo; 
 		}
 	}
 }
