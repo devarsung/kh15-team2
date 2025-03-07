@@ -81,7 +81,7 @@ public class ReviewListViewDao {
 		return list;
 	}
 	
-	public List<ReviewListViewDto> selectListOnPlace(){
+	public List<ReviewListViewDto> selectListOnReview(){
 		String sql = "	SELECT * "
 				+ "FROM ("
 				+ "    SELECT rownum rn, TMP.*"
