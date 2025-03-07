@@ -25,9 +25,11 @@
     flex-grow: 1;
     }
 
-    .reply-list-box{
+    .reply-item,
+    .reply-edit-item{
     border: 1px solid lightgray; 
     padding: 10px;
+    
     }
     
     .reply-tinyfont{
@@ -51,10 +53,30 @@
     }
      
     .edit-btn:hover,
-    .delete-btn:hover{
+    .delete-btn:hover,
+    .cancel-btn:hover,
+    .save-btn:hover{
      filter:brightness(1.05);
      cursor: pointer;
     }
+    
+    .save-contentBox{
+      width: 700px;    
+   	 min-height: 50px;     
+   	 height: 50px;          
+    resize: none;     
+    overflow: hidden;
+        }
+        
+       .cancel-btn{
+        border: 1px solid rgb(218, 218, 218);
+        background-color : lightgray;
+        }
+
+        .save-btn{
+        border : 1px solid rgb(218, 218, 218);
+        background-color : rgb(212, 239, 255)
+        }
     </style>
 
     
@@ -141,7 +163,7 @@
 			$(html).find(".reply-writer").text(replyWriter);
 			$(html).find(".reply-content").val(replyContent);
 			$(html).find(".reply-wtime").text(replyWtime);
-			$(html).find(".btn-reply-save").attr("data-reply-no", replyNo);
+			$(html).find(".save-btn").attr("data-reply-no", replyNo);
 			
 			$(this).closest(".reply-item").after(html);
 			$(this).closest(".reply-item").hide();
@@ -180,47 +202,49 @@
         //댓글목록
         function loadList(){
         $.ajax({
-            url:"http://localhost:8080/rest/reply/list",
+            url:"/rest/reply/list",
             method:"post",
             data:{ replyOrigin : reviewNo },
             success:function(response){
+            	console.log(response);
                 $(".reply-wrapper").empty();
                 $(response).each(function(){ //댓글 어떻게 보여줄건지 정합시다..
                     var template = $("#reply-template").text();
                     var html = $.parseHTML(template);
                     var convertTime = moment(this.replyWtime).fromNow();
                     //변환
+                    $(html).find(".reply-no").text("(no."+this.replyNo+")");
                     $(html).find(".reply-writer").text(this.replyWriter);
                     $(html).find(".reply-content").text(this.replyContent);
-                    $(html).find(".reply-wtime").text(this.replyWtime);
+                    $(html).find(".reply-wtime").text(convertTime);
                     $(html).find(".delete-btn").attr("data-reply-no",this.replyNo);
                     $(html).find(".edit-btn").attr("data-reply-no",this.replyNo);
 
                     $(".reply-wrapper").append(html);
                 });
-                $(".reply-count").text(reponse.length); //댓글개수
+//                 $(".reply-count").text(reponse.length); //댓글개수 
             }
         });
     };
     });
     </script>
 <!--댓글 목록/내글이면 수정/삭제btn-->
-    <script type="text/template" id="reply-wrapper"> 
+    <script type="text/template" id="reply-template"> 
 
-        <div class="cell flex-box flex-center reply-list-box reply-item">
-            <div class="flex-box flex-vertical flex-center" style="min-width: 150px;"> 
+        <div class="cell flex-box  reply-item"> 
+            <div class="w-150 p-10 inline-flex-box" style="min-width: 150px;"> 
                 <div  class="reply-tinyfont">
                     <span class="reply-no">댓글번호</span>
                     <span class="reply-wtime">댓글작성일/수정일</span>
                 <h3 class="mt-10 reply-writer">닉네임</h3>
             </div>
-            
-            <div class="p-10">
+            </div>
+            <div class="w-100 p-10  ">
                 <h5 class="m-0 reply-content reply-input">댓글본문</h5>
             </div>
             
             <!--수정 삭제버튼임..-->
-            <div class="felx-box btns">
+            <div class="w-150 p-10 btns">
                 <button class="edit-btn"  type="button">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </button>
@@ -234,16 +258,17 @@
      <!--댓글 수정/취소-->
     <script type="text/template" id="reply-edit-template">
 
-        <div class="cell flex-box flex-center reply-list-box reply-edit-item">
-            <div class="flex-box flex-vertical flex-center" style="min-width: 150px;"> 
+        <div class="cell flex-box  reply-edit-item">
+            <div class="w-150 p-10 inline-flex-box" style="min-width: 150px;"> 
                 <div  class="reply-tinyfont">
                     <span class="reply-no">댓글번호</span>
                     <span class="reply-wtime">댓글작성일/수정일</span>
                 <h3 class="mt-10 reply-writer">닉네임</h3>
             </div>
+			</div>
             
             <div class="p-10">
-                <textarea class="m-0 reply-content"></textarea>
+                <textarea class="save-contentBox reply-content" "></textarea>
             </div>
             
             <!--저장 취소버튼임..-->
@@ -251,7 +276,7 @@
                 <button class="save-btn"  type="button">
                     <i class="fa-solid fa-floppy-disk"></i>
                 </button>
-                <button class="cancle-btn" type="button">
+                <button class="cancel-btn" type="button">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
