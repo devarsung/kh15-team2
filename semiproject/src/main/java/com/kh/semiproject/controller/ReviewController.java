@@ -74,7 +74,7 @@ public class ReviewController {
 		reviewDto.setReviewWriter(userId);
 		int reviewNo = reviewDao.sequence();
 		reviewDto.setReviewNo(reviewNo);
-		
+		reviewDao.insert(reviewDto);
 		return "redirect:detail?reviewNo="+reviewNo;
 	}
 	

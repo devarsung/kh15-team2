@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semiproject.dao.PlaceDao;
+import com.kh.semiproject.dao.ReviewListViewDao;
 import com.kh.semiproject.dto.PlaceDto;
 import com.kh.semiproject.error.TargetNotFoundException;
 import com.kh.semiproject.vo.PlacePageVO;
@@ -21,7 +22,8 @@ public class PlaceController {
 	@Autowired
 	public PlaceDao placeDao;
 	
-	
+	@Autowired
+	private ReviewListViewDao reviewListViewDao;
 	@RequestMapping("/list")
 	public String list(@ModelAttribute ("pageVO")PlacePageVO placePageVO, Model model) {
 		List<PlaceDto> list = placeDao.selectList(placePageVO);
@@ -38,8 +40,11 @@ public class PlaceController {
 			throw new TargetNotFoundException("존재 하지 않는 여행지 입니다");
 		}
 		model.addAttribute("placeDto",placeDto);
-		List<Integer> attachmentNos = placeDao.selectPlaceImagesNos(placeNo);
+		List<Integer> attachmentNos = placeDao.selectDetailImagesNos(placeNo, placeDto.getPlaceFirstImage());
 		model.addAttribute("attachmentNos", attachmentNos);
+		
+		// top 5 리뷰 추출
+		model.addAttribute("reviews",reviewListViewDao.selectListByPlace(placeNo));
 		return "/WEB-INF/views/place/detail.jsp";
 	}
 
