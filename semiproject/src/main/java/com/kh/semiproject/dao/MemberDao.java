@@ -105,11 +105,19 @@ public class MemberDao {
 		jdbcTemplate.update(sql, data);
 	}
 	
+	//회원 프로필 삭제
+	public void deleteProfile(String memberId) {
+	    String sql = "delete from member_profile where member_id = ?";
+	    jdbcTemplate.update(sql, memberId);
+	}
+	
 	//회원 이미지 찾기
-	public int findAttachment(String memberId) {
-		String sql = "select attachment_no from member_profile "
-				+ "where member_id=?";
-		Object[] data = {memberId};
-		return jdbcTemplate.queryForObject(sql, int.class, data);
+	public Integer findAttachment(String memberId) {
+	    String sql = "select attachment_no from member_profile where member_id = ?";
+	    try {
+	        return jdbcTemplate.queryForObject(sql, Integer.class, memberId);
+	    } catch (Exception e) {
+	        return null;  // 결과가 없으면 null 반환
+	    }
 	}
 }

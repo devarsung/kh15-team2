@@ -25,10 +25,9 @@ public class ReviewDao {
 	}
 
 	public void insert(ReviewDto reviewDto) {
-		String sql = "insert into review(review_title, review_content, review_writer, review_place, review_star)"
-				+ "values(?,?,?,?,?)";
-
-		Object[] data = { reviewDto.getReviewTitle(), reviewDto.getReviewContent(), reviewDto.getReviewWriter(),
+		String sql = "insert into review(review_no, review_title, review_content, review_writer, review_place, review_star) "
+				+ "values(?,?,?,?,?,?)";
+		Object[] data = {reviewDto.getReviewNo(), reviewDto.getReviewTitle(), reviewDto.getReviewContent(), reviewDto.getReviewWriter(),
 				reviewDto.getReviewPlace(), reviewDto.getReviewStar() };
 		jdbcTemplate.update(sql, data);
 	}
@@ -68,11 +67,19 @@ public class ReviewDao {
 		if (pageVO.isList()) {
 			String sql = "select count(*) from review";
 			return jdbcTemplate.queryForObject(sql, int.class);
-		} else {
+		} else if(pageVO.search()){
 			String sql = "select count(*) from reivew where instr(#1, ?) > 0";
 			sql = sql.replace("#1", pageVO.getColumn());
 			Object[] data = { pageVO.getKeyword() };
 			return jdbcTemplate.queryForObject(sql, int.class, data);
+		}
+		else if(pageVO.byPlace()) {
+			String sql = "select count(*) from review where review_place = ?";
+			Object[] data = {pageVO.getPlaceNo()};
+			return jdbcTemplate.queryForObject(sql,int.class,data );
+		}
+		else {
+			return 1;
 		}
 	}
 
