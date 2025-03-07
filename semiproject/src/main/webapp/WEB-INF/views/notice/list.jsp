@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 
@@ -15,8 +16,7 @@
 		무분별한 비방 시 글이 삭제될 수 있습니다.
 	</div>
 	<div class="cell right">
-
-		<a href="write" class="btn btn-neutral">글쓰기</a>
+	<a href="write" class="btn btn-neutral">글쓰기</a>
 	</div>
 	
 	<!-- 테이블 -->
@@ -26,6 +26,11 @@
 				<tr>
 
 			
+				<c:if test="${session.userLevel=='관리자'}">
+					<th>
+                		<input type="checkbox" class="check-all">
+                	</th>
+					</c:if> 
 					<th>번호</th>
 					<th style="width:450px; max-width:450px;">제목</th>
 					<th>작성자</th>
@@ -94,9 +99,9 @@
 	
 
 	
-	<div class="cell right">
+	 <div class="cell right">
 		<a href="write" class="btn btn-neutral">글쓰기</a>
-	</div>
+	</div> 
 	
 	<!-- 페이지 네비게이터 -->
 	<div class="cell center">
