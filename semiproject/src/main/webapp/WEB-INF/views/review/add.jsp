@@ -27,7 +27,7 @@
             <h1>후기 등록</h1>     
         </div>
         <div class="cell right">
-            <h3 class="placeTitle" >${placeDto.placeTitle}티티의집  <i class="fa-solid fa-camera"></i></h3>
+            <h3 class="placeTitle" >${placeDto.placeTitle}  <i class="fa-solid fa-camera"></i></h3>
         </div>
         <form class="form-check" action="add" method="post">
         <input type="hidden" name="placeNo" value="${placeDto.placeNo}">
