@@ -31,16 +31,7 @@
     </div>
     
     
-	<div class="cell center">
-        <form action="list" method="get">
-            <select name="column" class="field">
-                <option value="notice_title" ${param.column == '' ? 'selected' : ''}>제목</option>
-                <option value="notice_writer" ${param.column == '' ? 'selected' : ''}>작성자</option>
-            </select>
-            <input type="text" name="keyword" value="" class="field w-50">
-            <button class="btn btn-positive">검색</button>
-        </form>
-    </div>
+
 	<form class="form-delete" action="deleteAll" method="post">
     
    	<div class="cell right">
