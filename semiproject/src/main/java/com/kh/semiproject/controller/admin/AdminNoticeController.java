@@ -55,7 +55,9 @@ public class AdminNoticeController {
 	
 	
 	@RequestMapping("/list")
-	public String list(@ModelAttribute ("pageVO") PageVO pageVO, Model model) {
+	public String list(@ModelAttribute ("pageVO")PageVO pageVO, Model model) {
+		int count =  noticeDao.count(pageVO);
+		pageVO.setCount(count);
 		List<NoticeListViewDto> list = noticeListViewDao.selectList(pageVO);
 		model.addAttribute("list",list);
 		return "/WEB-INF/views/admin/notice/list.jsp";
@@ -132,7 +134,23 @@ public class AdminNoticeController {
 		noticeDao.delete(noticeNo);
 		return "redirect:/admin/list";
 	}
-}
+	
+	@PostMapping("/deleteAll")
+	public String deletAll(@RequestParam(value="noticeNo")
+	List<Integer>noiceNoList) {
+		for(int noticeNo:noiceNoList) {
+			try {
+				int attachmentNo=noticeDao.findAttachment(noticeNo);
+				attachmentService.delete(attachmentNo);
+			}
+			catch(Exception e) {}
+				noticeDao.delete(noticeNo);	
+			}
+		return"redirect:list";
+		}
+	}
+
+
 
 
 
