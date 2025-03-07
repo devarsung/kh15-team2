@@ -7,7 +7,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @Builder @NoArgsConstructor @AllArgsConstructor
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReplyDto {
 	private int replyNo;
 	private String replyWriter;
@@ -15,4 +18,12 @@ public class ReplyDto {
 	private String replyContent;
 	private Timestamp replyWtime;
 	private Timestamp replyEtime;
+
+	public String getReplyContent() {
+		return replyContent;
+	}
+
+	public void setReplyContent(String replyContent) {
+		this.replyContent = replyContent;
+	}
 }
