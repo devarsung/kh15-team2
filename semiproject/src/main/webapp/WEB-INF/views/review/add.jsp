@@ -19,7 +19,7 @@
         </style>
     
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
-    <script src="/js/review-add-summernote.js"></script>
+    <script src="/js/review/review-add-summernote.js"></script>
      <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script>
     
    <div class="container w-800">

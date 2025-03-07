@@ -34,7 +34,7 @@ $(function(){
                var isValid = regex.test($(this).val());
                if(isValid){
                        $.ajax({
-                           url:"",
+                           url:"/rest/member/checkMemberNickname",
                            method:"post",
                            data: {memberNickname :$(this).val()},
                            success : function(response){
