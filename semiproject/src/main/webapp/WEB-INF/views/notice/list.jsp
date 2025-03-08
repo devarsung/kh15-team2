@@ -113,7 +113,7 @@
 		<form action="list" method="get">
 			<select name="column" class="field">
 				<option value="notice_title" ${param.column == 'notice_title' ? 'selected' : ''}>제목</option>
-				<option value="notice_writer" ${param.column == 'notice_writer' ? 'selected' : ''}>작성자</option>
+				<option value="member_nickname" ${param.column == 'member_nickname' ? 'selected' : ''}>작성자</option>
 			</select>
 			<input type="text" name="keyword" value="${param.keyword}" class="field">
 			<button class="btn btn-positive">검색</button>

@@ -7,9 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kh.semiproject.dto.NoticeListViewDto;
 import com.kh.semiproject.dto.PlaceDto;
+import com.kh.semiproject.dto.PlaceReviewDto;
 import com.kh.semiproject.mapper.PlaceMapper;
+import com.kh.semiproject.mapper.PlaceReviewMapper;
 import com.kh.semiproject.vo.PlacePageVO;
 
 @Repository
@@ -19,6 +20,10 @@ public class PlaceDao {
 
 	@Autowired
 	private PlaceMapper placeMapper;
+	
+	@Autowired
+	private PlaceReviewMapper placeReviewMapper;
+	
 
 	public int sequence() {
 		String sql = "select place_seq.nextval from dual";
@@ -177,8 +182,35 @@ public class PlaceDao {
 				+ "where place_no = ? "
 				+ "group by review_place";
 		Object[] data = {placeNo};
-		jdbcTemplate.queryForObject(sql, float.class, data);
-		return 0;
+		
+		return jdbcTemplate.queryForObject(sql, float.class, data);
+	}
+	
+	public List<PlaceReviewDto> selectListOnPlace(){
+//	public List<PlaceReviewDto> selectListOnPlace(){
+//		 String sql ="SELECT "
+//		            + "    place.place_no, "
+//		            + "    place.place_title, "
+//		            + "    place.place_overview "
+//		            + "FROM review "
+//		            + "LEFT JOIN place ON review.review_place = place.place_no "
+//		            + "GROUP BY place.place_no, place.place_title, place.place_overview ";
+//		            //+ "ORDER BY AVG(review.review_star) DESC";
+		
+		String sql = "	SELECT * "
+				+ "FROM ("
+				+ "    SELECT rownum rn, TMP.*"
+				+ "    FROM ("
+				+ "        SELECT PR.* "
+				+ "        FROM place_review PR"
+				+ "    ) TMP"
+				+ ")"
+				+ "WHERE rn BETWEEN 1 AND 5 ";
+		
+		// System.out.println();
+		 List<PlaceReviewDto> list = jdbcTemplate.query(sql, placeReviewMapper);
+		 //List<PlaceReviewDto> list = jdbcTemplate.query(sql, placeReviewMapper);
+	    return list;
 	}
 }
 

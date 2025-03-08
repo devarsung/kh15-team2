@@ -50,12 +50,15 @@ public class AdminNoticeController {
 		noticeDto.setNoticeWriter(userId);
 		int noticeNo = noticeDao.sequence();
 		noticeDto.setNoticeNo(noticeNo);
+		noticeDao.insert(noticeDto);
 		return "redirect:/admin/detail?noticeNo="+noticeNo;
 	}
 	
 	
 	@RequestMapping("/list")
 	public String list(@ModelAttribute ("pageVO") PageVO pageVO, Model model) {
+		int count =  noticeListViewDao.count(pageVO);
+		pageVO.setCount(count);
 		List<NoticeListViewDto> list = noticeListViewDao.selectList(pageVO);
 		model.addAttribute("list",list);
 		return "/WEB-INF/views/admin/notice/list.jsp";
