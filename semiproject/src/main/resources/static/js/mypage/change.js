@@ -17,70 +17,11 @@ $(function() {
 			};
 
 
-           //readonly 설정과 해제 
-           $(".editBtn").click(function(){
-               var inputField = $(this).parent("td").find("input");
-               if (inputField.prop('readonly')) {
-                   inputField.prop('readonly', false);
-               } 
-               else {
-                   inputField.prop('readonly', true);
-               }
-           });
-           
-           //닉네임 처리 //////////////////////////닉네임url추가
-           $("[name=memberNickname]").blur(function(){
-               var regex = /^[가-힣0-9]{2,10}$/;
-               var isValid = regex.test($(this).val());
-               if(isValid){
-                       $.ajax({
-                           url:"/rest/member/checkMemberNickname",
-                           method:"post",
-                           data: {memberNickname :$(this).val()},
-                           success : function(response){
-                               $("[name=memberNickname]").removeClass("success fail fail2")
-                                                       .addClass(response ? "fail2":"success");
-                               status.memberNickname = response ? false : true;
-                           }
-                       });
-                   }
-                   
-                   else{
-                       $("[name=memberNickname]").removeClass("success fail fail2")
-                       .addClass("fail");
-                               status.memberNickname = false;
-                   }
-               });
-               
-               //이메일 처리
-               $("[name=memberEmail]").blur(function(){
-                   var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                   var isValid = regex.test($(this).val()) && $(this).val().length > 0;
-                   $(this).removeClass("success fail").addClass(isValid ? "success" : "fail");
-                   status.memberEmail = isValid ;
-               });
-               
-               //생년월일 처리
-               var picker = new Lightpick({
-                   field : document.querySelector("[name=memberBirth]"),
-                   format : "YYYY-MM-DD",
-                   firstDay: 7,
-                   maxDate : moment(),
-               });
-               $("[name=memberBirth]").blur(function(){
-                   var regex = /^(19[0-9]{2}|20[0-9]{2})-((02-(0[1-9]|1[0-9]|2[0-8]))|((0[469]|11)-(0[1-9]|1[0-9]|2[0-9]|30))|((0[13578]|1[02])-(0[1-9]|1[0-9]|2[0-9]|3[01])))$/;
-                   var isValid = $(this).val().length == 0 || regex.test($(this).val());
-                   $(this).removeClass("fail").addClass(isValid ? "" : "fail");
-                   status.memberBirth = isValid;
-               });
-
-		
-
 	//readonly 설정과 해제 
 	$(".editBtn").click(function() {
 		var inputField = $(this).parent("td").find("input");
 		if (inputField.prop('readonly')) {
-			inputField.prop('readonly', false);
+			inputField.prop('readonly', false).focus();;
 		}
 		else {
 			inputField.prop('readonly', true);
@@ -93,7 +34,7 @@ $(function() {
 		var isValid = regex.test($(this).val());
 		if (isValid) {
 			$.ajax({
-				url: "",
+				url: "/rest/member/checkMemberNickname",
 				method: "post",
 				data: { memberNickname: $(this).val() },
 				success: function(response) {
@@ -140,7 +81,7 @@ $(function() {
 		$(this).val(convert);
 	});
 	$("[name=memberContact]").blur(function() {
-		var regex = /^010[0-9]{8}$/
+		var regex = /^010[1-9][0-7]{7}$/
 		var isValid = $(this).val().length == 0 || regex.test($(this).val());
 		$(this).removeClass("fail").addClass(isValid ? "" : "fail");
 		status.memberContact = isValid;
@@ -182,15 +123,12 @@ $(function() {
 			.removeClass("fail").addClass(isValid ? "" : "fail");
 		status.memberAddress = isValid;
 	});
-	$("[name=memberAddress2]").on("input", function() {
-		displayClearButton();
-	});
+	
 	$(".btn-address-clear").click(function() {
 		$("[name=memberPost]").val("");
 		$("[name=memberAddress1]").val("");
 		$("[name=memberAddress2]").val("");
 		status.memberAddress = true;
-		displayClearButton();
 	});
 
 	$("[name=memberPw]").blur(function() {
@@ -208,7 +146,9 @@ $(function() {
 	// var beforeSrc = "/attachment/download?attachmentNo=123"; //테스트
 	// $("#myPhoto").attr("src", beforeSrc);
 
-
+	$("[name=memberProfile]").change(function() {
+	    console.log("파일 선택됨: ", this.files[0]); // 파일 선택 확인용 로그 ///////////////테스트 완료 선택됨
+	});
 	///프로필수정
 	//버튼클릭
 	$("#previewBtn").click(function() {
@@ -217,7 +157,7 @@ $(function() {
 	var backupFile = null
 	var beforeSrc = $("#myPhoto").data("before-src");   //테스트
 
-	//파일 선택시 백업
+	//파일 선택시 백업 
 	$("[name=memberProfile]").change(function() {
 		var file = this.files[0];
 		// console.log("change");
@@ -227,33 +167,36 @@ $(function() {
 			var reader = new FileReader();
 			reader.onload = function(e) {
 				$("#myPhoto").attr("src", e.target.result);
-				$("#profileUpload").val("true");
+				$("#deleteProfile").val("false"); //여기
 			}
 			reader.readAsDataURL(file);
 			return;
+			
 		}
 		//  취소를 눌렀을경우 백업파일있을경우
 		if (backupFile) {
 			var dataTransfer = new DataTransfer();
 			dataTransfer.items.add(backupFile)
 			$(".profileInput")[0].files = dataTransfer.files;
-			$("#profileUpload").val("true");
+			$("#deleteProfile").val("false");
 		}
-		//backupfile이 있는경우 true 아닐시 false
+		//backupfile이 있는경우 true 아닐시 false      //여기
 		else {
-			$("#profileUpload").val("false");
+			$("#deleteProfile").val("true");
 
 		}
 
 	});
 
 	$("#deleteBtn").click(function() {
-			var choice = window.confirm("정말 프로필을 삭제하시겠습니까?");
-			if(choice ==false) return;
-			$("#deleteProfile").val("true"); // 프로필 삭제 여부 설정
-			$("#myPhoto").attr("src", "/images/defaultProfile.png"); // 기본 이미지로 변경
+		var choice = window.confirm("삭제?");
+		if(choice ==false) return;
+		$("#myPhoto").attr("src", "/images/defaultProfile.png"); // 기본 이미지로 변경
+		$(".profileInput").val("");
+		backupFile = null
 		
-		
+		//기존 프로필 있던사람 true 없던사람 false
+		$("#deleteProfile").val(beforeSrc ? "true" : "false");  //여기
 	});
 
 

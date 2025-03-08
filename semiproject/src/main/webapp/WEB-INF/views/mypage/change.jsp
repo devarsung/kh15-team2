@@ -28,8 +28,7 @@
 		<div class="cell center">
 			<h1>내 정보 수정</h1>
 		</div>
-		<form class="form-check" action="change" method="post"
-			enctype="multipart/form-data" autocomplete="off">
+		<form class="form-check" action="change" method="post" enctype="multipart/form-data" autocomplete="off">
 			<div class="cell mt-50 center img-container">
 				<div class="cell mt-50 center img-container">
 					<c:choose>
@@ -50,11 +49,10 @@
 
 			<div class="cell center">
 				<!-- 프로필 삭제 여부를 나타내는 hidden input -->
-				<input type="hidden" name="deleteProfile" id="deleteProfile"
-					value="false">
+				<input type="hidden" name="deleteProfile" id="deleteProfile" value="false">
 			</div>
 			<div class=" cell center">
-				<input type="hidden" name="profileUpload" id="profileUpload"value="false"> 
+<!-- 				<input type="hidden" name="profileUpload" id="profileUpload"value="false">  여기 -->
 				<input type="file" name="memberProfile"class="field w-100 profileInput" accept=".png, .jpg"style="display: none;">
 				<button type="button" id="previewBtn">프로필 사진 변경</button>
 			</div>
