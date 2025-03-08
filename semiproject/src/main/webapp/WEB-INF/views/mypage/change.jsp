@@ -40,11 +40,11 @@
 							<img id="myPhoto"
 								src="/attachment/download?attachmentNo=${attachmentNo}"
 								data-before-src="/attachment/download?attachmentNo=${attachmentNo}">
+						</c:otherwise>
+					</c:choose>
 							<button type="button" id="deleteBtn">
 								<i class="fa-solid fa-xmark"></i>
 							</button>
-						</c:otherwise>
-					</c:choose>
 				</div>
 			</div>
 

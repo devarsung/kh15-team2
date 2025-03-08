@@ -248,16 +248,14 @@ $(function() {
 	});
 
 	$("#deleteBtn").click(function() {
-		if (confirm("프로필을 삭제하시겠습니까?")) {
+			var choice = window.confirm("정말 프로필을 삭제하시겠습니까?");
+			if(choice ==false) return;
 			$("#deleteProfile").val("true"); // 프로필 삭제 여부 설정
 			$("#myPhoto").attr("src", "/images/defaultProfile.png"); // 기본 이미지로 변경
-			$("#deleteBtn").hide(); // 삭제 버튼 숨기기
-		}
+		
+		
 	});
 
-	// 프로필 변경 버튼 클릭 시 파일 업로드 창 열기
-	$("#previewBtn").click(function() {
-		$(".profileInput").click();
-	});
+
 
 });
