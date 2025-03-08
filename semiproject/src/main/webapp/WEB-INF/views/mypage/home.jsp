@@ -19,7 +19,7 @@
             <h1>마이페이지</h1>
         </div>
         <div class=" cell mt-50 center">
-            <img name=memberProfile src="profile?memberId=${memberDto.memberId}" style="border-radius: 50%; width: 300px; height: 300px;">
+         <img name="memberProfile" src="profile?memberId=${memberDto.memberId}" style="border-radius: 50%; width: 300px; height: 300px;">
             </div>
             <div class="cell mt-30">
                 <table class="table table-border table-hover">
