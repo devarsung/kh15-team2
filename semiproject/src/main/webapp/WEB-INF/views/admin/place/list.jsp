@@ -173,7 +173,7 @@ $(function(){
 		    	<a href="detail?placeNo=${placeDto.placeNo}" class="card">
 		            <div class="card-image">
 		                <img src="/attachment/download?attachmentNo=${placeDto.placeFirstImage}" alt="Card Image" 
-		                onerror="this.onerror=null; this.src='/images/defaultBack.png';">
+		                onerror="this.onerror=null; this.src='/images/default-image.png';">
 		            </div>
 		            <div class="card-content">
 		                <div class="card-title">
@@ -196,7 +196,7 @@ $(function(){
 		                </div>
 		                <div class="card-subtitle">${placeDto.placeRegion}</div>
 		                <div class="card-footer">
-		                    <%-- <span class="views"><i class="fa-solid fa-eye"></i>:  ${placeDto.placeRead}</span> --%>
+		                    <span class="views"><i class="fa-solid fa-eye"></i>:  ${placeDto.placeRead}</span>
 		                    <span class="likes"><i class="fa-solid fa-heart"></i>: ${placeDto.placeLike}</span>
 		                    <span class="comments"><i class="fa-solid fa-comment-dots"></i>: ${placeDto.placeReview}</span>
 		                </div>
