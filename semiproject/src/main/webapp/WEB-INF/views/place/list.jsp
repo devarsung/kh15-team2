@@ -90,6 +90,23 @@
     gap: 5px;
 }
 </style>
+<script type="text/javascript">
+$(function(){
+	
+	$("[name=order]").change(function(){
+		$(".form-check").submit();
+	});
+	
+	$(".btn-search-clean").click(function(){
+		$("[name=region]").val("");
+		$("[name=type]").val("");
+		$("[name=column]").val("place_title");
+		$("[name=keyword]").val("");
+		$("[name=order]").val("place_wtime");
+	});
+	
+});
+</script>
 
 <div class="container w-1000">
 	<div class="cell center">
@@ -97,7 +114,7 @@
 	</div>
 	
 	<div class="cell center">
-        <form action="list" method="get">
+        <form action="list" method="get" class="form-check">
         	<div class="cell">
         		<select name="region" class="field">
 	                <option value="">선택하세요</option>
@@ -129,11 +146,21 @@
             
             <div class="cell">
             	<select name="column" class="field">
-            		<option value="place_title"  ${param.column == 'place_title' ? 'selected' : ''}>여행지명</option>
+            		<option value="place_title" ${param.column == 'place_title' ? 'selected' : ''}>여행지명</option>
             	</select>
 	            <input type="text" name="keyword" value="${param.keyword}" class="field">
-	            <button class="btn btn-positive">검색</button>	
+	            <button type="submit" class="btn btn-positive">검색</button>
+	            <button type="button" class="btn btn-neutral btn-search-clean">초기화</button>	
             </div>
+            
+            <div class="right mx-20 mt-20">
+		    	<select name="order" class="field">
+			    	<option value="place_wtime" ${param.order == 'place_wtime' ? 'selected' : ''}>최신순</option>
+		    		<option value="place_star" ${param.order == 'place_star' ? 'selected' : ''}>평점순</option>
+		    		<option value="place_like" ${param.order == 'place_like' ? 'selected' : ''}>좋아요순</option>
+		    		<option value="place_review" ${param.order == 'place_review' ? 'selected' : ''}>후기순</option>
+		    	</select>
+	    	</div>
             
         </form>
     </div>
@@ -144,7 +171,7 @@
 		    	<a href="detail?placeNo=${placeDto.placeNo}" class="card">
 		            <div class="card-image">
 		                <img src="/attachment/download?attachmentNo=${placeDto.placeFirstImage}" alt="Card Image" 
-		                onerror="this.onerror=null; this.src='/images/defaultBack.png';">
+		                onerror="this.onerror=null; this.src='/images/default-image.png';">
 		            </div>
 		            <div class="card-content">
 		                <div class="card-title">
@@ -167,7 +194,7 @@
 		                </div>
 		                <div class="card-subtitle">${placeDto.placeRegion}</div>
 		                <div class="card-footer">
-		                    <%-- <span class="views"><i class="fa-solid fa-eye"></i>:  ${placeDto.placeRead}</span> --%>
+		                    <span class="views"><i class="fa-solid fa-eye"></i>:  ${placeDto.placeRead}</span>
 		                    <span class="likes"><i class="fa-solid fa-heart"></i>: ${placeDto.placeLike}</span>
 		                    <span class="comments"><i class="fa-solid fa-comment-dots"></i>: ${placeDto.placeReview}</span>
 		                </div>

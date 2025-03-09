@@ -1,0 +1,105 @@
+/* 
+	기존 commons.css 에서 일부 덮어쓰기 
+	Written by 아란 
+*/
+@charset "UTF-8";
+
+body {
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* 메인 사진 */
+.main-photo {
+    width: 100%;
+    height: 400px;
+    background: url('../images/header-image.jpg') no-repeat bottom;
+    background-size: cover;
+    position: relative;
+}
+
+/* 
+    1차메뉴, 2차이상 메뉴 
+    메인사진 위에 반투명하게 보이게 수정
+*/
+.menu,
+.menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    padding: 15px 0;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* 1차 메뉴를 가로로 배치 */
+.menu {
+    display: flex;
+}
+
+/* 모든 메뉴 항목 폭, 패딩 지정 */
+.menu li {
+    width: 150px;
+    padding: 10px 15px;
+}
+
+.menu a {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    padding: 10px 15px;
+    color: #333333;
+}
+
+/* 호버시  */
+.menu li:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 모든 하위 메뉴를 숨김 */
+.menu ul {
+    display: none;
+}
+
+/* 마우스가 올라간 li태그 안의 ul을 표시 */
+.menu li:hover>ul {
+    display: block;
+}
+
+/* (6) */
+.menu li {
+    position: relative;
+}
+
+.menu ul {
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+
+/* (8) */
+.menu>.menu-end {
+    margin-left: auto;
+}
+
+.menu .logo {
+    width: auto;
+    padding: 0 20px;
+}
+
+.menu .logo a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.menu .logo img {
+    height: 40px;
+    display: block;
+}
