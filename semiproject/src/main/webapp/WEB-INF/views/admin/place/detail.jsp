@@ -13,6 +13,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+<!-- 별점 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
+
 <style>
     .swiper {
         width: 100%;
@@ -21,10 +24,6 @@
     #map {
   	 	width: 100%;
 		height: 500px;
-    }
-    .div-place-content {
-    	border: 1px solid gray;
-    	padding: 0.5em;
     }
     .overview-content {
     	width: 100%;
@@ -72,10 +71,32 @@
 	    color: #333333;
 	    line-height: 1.5;
 	}
+	
+	.div-title {
+		position: relative;
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	}
+	.left-btns {
+		position: absolute;
+	    left: 0;
+	    gap: 10px;
+	}
+	.reactions {
+		font-size: 30px;
+	}
+	
 </style>
 
 <script type="text/javascript">
 $(function() {
+ 	$(".review-star").score({
+        display:{
+        	showNumber:true,
+        },
+    });
+	 
 	var swiper = new Swiper('.place-image-swiper', {
         //기본 옵션
         direction: 'horizontal',
@@ -112,18 +133,19 @@ $(function() {
 </script>
 
 <div class="container w-1000">
-    <div class="cell center">
-        <h1>${placeDto.placeTitle}</h1>
+    <div class="cell div-title">
+    	<div class="left-btns">
+	    	<a class="btn btn-neutral" href="edit?placeNo=${placeDto.placeNo}">수정하기</a>
+	    	<a class="btn btn-neutral" href="delete?placeNo=${placeDto.placeNo}">삭제하기</a>
+    	</div>
+        <h1 class="m-0">${placeDto.placeTitle}</h1>
     </div>
-    
-    <div class="cell">
-    	<i class="fa-heart fa-regular red"></i>
-    	<span class="heart-count">${placeDto.placeLike} 개(관리자 화면에선 그냥 보여주기만)</span>
-    </div>
-    
-    <div class="cell">
-    	<a class="btn btn-neutral" href="edit?placeNo=${placeDto.placeNo}">수정하기</a>
-    	<a class="btn btn-neutral" href="delete?placeNo=${placeDto.placeNo}">삭제하기</a>
+
+    <div class="cell center reactions">
+    	<div class="review-star" data-max="5" data-rate="${placeStar}"></div><br>
+    	<span class="views"><i class="fa-solid fa-eye"></i> :  ${placeDto.placeRead}</span>
+    	<span class="likes"><i class="fa-solid fa-heart"></i> : ${placeDto.placeLike}</span>
+        <span class="comments"><i class="fa-solid fa-comment-dots"></i> : ${placeDto.placeReview}</span>
     </div>
 
 	<!-- 이미지 스와이퍼 영역 -->

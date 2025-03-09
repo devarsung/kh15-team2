@@ -234,6 +234,27 @@ public class PlaceDao {
 		List<PlaceListViewDto> list = jdbcTemplate.query(sql, placeListViewMapper);
 		return list;
 	}
+	
+	//1개 여행지의 리뷰 평균
+	//데이터 정상이고 외래키 잘 연결되어있다면
+	/*
+	 * select round(coalesce(avg(nvl(review_star, 0)),0),1) as review_Star from
+	 * REVIEW where review_place = 5 group by review_place
+	 * 
+	 * 이런 구문도 가능한데 현재 더미데이터라 일단 조인했음
+	 */
+	public Integer selectStarAvg(int placeNo) {
+		String sql = "select round(coalesce(sub.star_avg,0),1) as review_star "
+					+ "from place p "
+					+ "left join ( "
+						+ "select review_place, avg(nvl(review_star, 0)) as star_avg "
+						+ "from review "
+						+ "group by review_place "
+					+ ") sub on p.place_no = sub.review_place "
+					+ "where p.place_no = ?";
+		Object[] data = {placeNo};
+		return jdbcTemplate.queryForObject(sql, Integer.class, data);
+	}
 }
 
 

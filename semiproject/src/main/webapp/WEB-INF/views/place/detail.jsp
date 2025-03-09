@@ -13,6 +13,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+<!-- 별점 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
+
 <style>
     .swiper {
         width: 100%;
@@ -68,6 +71,34 @@
 	    color: #333333;
 	    line-height: 1.5;
 	}
+	
+	
+	.center-box {
+	    position: relative;
+	    display: flex;
+	    flex-direction: column;
+	    align-items: center;
+	    text-align: center;
+	}
+	.reactions-box {
+     	display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    position: relative;
+	    width: 100%;
+	    margin-top: 10px;
+	}
+	.non-heart-area {
+     	text-align: center;
+	    font-size: 30px;
+	}
+	.heart-area {
+		position: absolute;
+	    right: 0;
+	    top: 50%;
+	    transform: translateY(-50%);
+	    font-size: 50px;
+	}
 </style>
 
 <c:if test="${sessionScope.userId != null}">
@@ -109,6 +140,12 @@ $(function(){
 
 <script type="text/javascript">
 $(function() {
+	$(".review-star").score({
+        display:{
+        	showNumber:true,
+        },
+    });
+	
 	var swiper = new Swiper('.place-image-swiper', {
         //기본 옵션
         direction: 'horizontal',
@@ -145,14 +182,24 @@ $(function() {
 </script>
 
 <div class="container w-1000">
-    <div class="cell center">
-        <h1>${placeDto.placeTitle}</h1>
-    </div>
+
+    <div class="cell center-box mt-40">
+	    <h1 class="m-0">${placeDto.placeTitle}</h1>
+	    
+	    <div class="reactions-box">
+	        <div class="non-heart-area">
+	            <div class="review-star" data-max="5" data-rate="${placeStar}"></div><br>
+	            <span class="views"><i class="fa-solid fa-eye"></i> :  ${placeDto.placeRead}</span>
+	            <span class="comments"><i class="fa-solid fa-comment-dots"></i> : ${placeDto.placeReview}</span>
+	        </div>
+	        <div class="heart-area">
+	            <i class="fa-heart fa-regular red"></i>
+	            <span class="heart-count">${placeDto.placeLike}</span>
+	        </div>
+	    </div>
+	</div>
     
-    <div class="cell">
-    	<i class="fa-heart fa-regular red"></i>
-    	<span class="heart-count">${placeDto.placeLike}</span>
-    </div>
+    
 
 	<!-- 이미지 스와이퍼 영역 -->
     <div class="cell my-20">
