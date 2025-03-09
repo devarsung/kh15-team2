@@ -6,15 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.semiproject.dto.NoticeDto;
 import com.kh.semiproject.dto.NoticeListViewDto;
-import com.kh.semiproject.dto.ReviewListViewDto;
 import com.kh.semiproject.mapper.NoticeListViewMapper;
+import com.kh.semiproject.mapper.NoticeMapper;
 import com.kh.semiproject.vo.PageVO;
 
 @Repository
 public class NoticeListViewDao {
 	@Autowired
 	private NoticeListViewMapper noticeListViewMapper;
+	@Autowired
+	private NoticeMapper noticeMapper;
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -51,7 +54,7 @@ public class NoticeListViewDao {
 
 
 
-	public List<NoticeListViewDto> selectListOnNotice(){
+	public List<NoticeDto> selectListOnNotice(){
 			String sql = "	SELECT *"
 					+ "				FROM ("
 					+ "				   SELECT rownum rn, TMP.* FROM ("
@@ -61,9 +64,8 @@ public class NoticeListViewDao {
 					+ "				)"
 					+ "					 WHERE rn BETWEEN 1 AND 5";
 			
-			List<NoticeListViewDto> list = jdbcTemplate.query(sql, noticeListViewMapper);
+			List<NoticeDto> list = jdbcTemplate.query(sql, noticeMapper);
 		return list;
-	//	return null;
 	}
 
 

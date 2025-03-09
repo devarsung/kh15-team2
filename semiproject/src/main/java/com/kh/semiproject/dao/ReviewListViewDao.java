@@ -77,7 +77,7 @@ public class ReviewListViewDao {
 		Object[] data = {placeNo};
 		
 		List<ReviewListViewDto> list = jdbcTemplate.query(sql, reviewListViewMapper, data);
-		System.out.println(list);
+		//System.out.println(list);
 		return list;
 	}
 	
@@ -95,7 +95,7 @@ public class ReviewListViewDao {
 				+ "WHERE rn BETWEEN 1 AND 5";
 		
 		List<ReviewListViewDto> list = jdbcTemplate.query(sql, reviewListViewMapper);
-		System.out.println(list);
+		//System.out.println(list);
 		return list;
 	}
 	

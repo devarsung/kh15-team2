@@ -21,8 +21,8 @@ public class PlaceListViewDto {
 	private Timestamp placeEtime;
 	private String placeRegion;
 	private String placeWriter;
-	private Double placeLat;
-	private Double placeLng;
+	//private Double placeLat;
+	//private Double placeLng;
 	private String placeType;
 	private Integer placeFirstImage;
 	private int placeRead;

@@ -216,6 +216,24 @@ public class PlaceDao {
 		jdbcTemplate.queryForObject(sql, float.class, data);
 		return 0;
 	}
+	
+	//메인에서 보여줄 top5
+	public List<PlaceListViewDto> selectListOnPlace() {			
+		String sql = "select * from ("
+						+ "select rownum rn, tmp.* from ("
+								+ "select p.place_no,p.place_title,p.place_type,p.place_like,p.place_read,p.place_review,"
+								+ "round(coalesce(avg(r.review_star),0),1) as place_star, p.place_region,p.place_writer,p.place_wtime,p.place_etime,"
+								+ "(p.place_like + p.place_read + p.place_review + coalesce(avg(r.review_star),0)) as total,p.place_first_image "
+								+ "from place p left join review r on p.place_no=r.review_place "
+								+ "group by p.place_no,p.place_title,p.place_type,p.place_like,p.place_read,p.place_review,"
+								+ "p.place_region,p.place_writer,p.place_wtime,p.place_etime,p.place_first_image "
+								+ "having p.place_like>0  and p.place_review>0 and p.place_read>0 and coalesce(avg(r.review_star),0)>0 "
+								+ "order by total desc "
+							+ ")tmp "
+				+ ") where rn between 1 and 5";
+		List<PlaceListViewDto> list = jdbcTemplate.query(sql, placeListViewMapper);
+		return list;
+	}
 }
 
 

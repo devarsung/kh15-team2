@@ -22,8 +22,6 @@ public class PlaceListViewMapper implements RowMapper<PlaceListViewDto>{
 				.placeEtime(rs.getTimestamp("place_etime"))
 				.placeRegion(rs.getString("place_region"))
 				.placeWriter(rs.getString("place_writer"))
-				.placeLat(rs.getObject("place_lat", Double.class))
-				.placeLng(rs.getObject("place_lng", Double.class))
 				.placeType(rs.getString("place_type"))
 				.placeFirstImage(rs.getObject("place_first_image", Integer.class))
 				.placeRead(rs.getInt("place_read"))
