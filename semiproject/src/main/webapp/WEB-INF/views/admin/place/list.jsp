@@ -91,13 +91,32 @@
 }
 </style>
 
-<div class="container w-1000">
-	<div class="cell center">
-		<h1>관리자-여행지 목록</h1>
-	</div>
+<script type="text/javascript">
+$(function(){
 	
-	<div class="cell center">
-        <form action="list" method="get">
+	$("[name=order]").change(function(){
+		$(".form-check").submit();
+	});
+	
+	$(".btn-search-clean").click(function(){
+		$("[name=region]").val("");
+		$("[name=type]").val("");
+		$("[name=column]").val("place_title");
+		$("[name=keyword]").val("");
+		$("[name=order]").val("place_wtime");
+	});
+});
+
+</script>
+
+<div class="container w-1000">
+	<div class="cell flex-box flex-center">
+		<h1>관리자-여행지 목록</h1>
+		<a href="add" class="btn btn-neutral ms-10"><i class="fa-solid fa-plus"></i> 등록</a>
+	</div>
+
+	<form action="list" method="get" class="form-check">
+		<div class="cell center">
         	<div class="cell">
         		<select name="region" class="field">
 	                <option value="">선택하세요</option>
@@ -133,16 +152,21 @@
             		<option value="place_writer" ${param.column == 'place_writer' ? 'selected' : ''}>작성자</option>
             	</select>
 	            <input type="text" name="keyword" value="${param.keyword}" class="field">
-	            <button class="btn btn-positive">검색</button>	
+	            <button type="submit" class="btn btn-positive">검색</button>
+	            <button type="button" class="btn btn-neutral btn-search-clean">초기화</button>	
             </div>
-            
-        </form>
-    </div>
-    
-    <div class="cell" style="padding: 14px;">
-    	<a href="add" class="btn btn-neutral ms-10">여행지등록</a>
-    </div>
-	 
+   		</div>
+   		
+   		<div class="right mx-20 mt-20">
+	    	<select name="order" class="field">
+	    		<option value="place_wtime" ${param.order == 'place_wtime' ? 'selected' : ''}>최신순</option>
+	    		<option value="place_star" ${param.order == 'place_star' ? 'selected' : ''}>평점순</option>
+	    		<option value="place_like" ${param.order == 'place_like' ? 'selected' : ''}>좋아요순</option>
+	    		<option value="place_review" ${param.order == 'place_review' ? 'selected' : ''}>후기순</option>
+	    	</select>
+	    </div>
+	</form>
+   	 
 	<div class="cell">
 	    <div class="card-list">
 	    	<c:forEach var="placeDto" items="${list}">
