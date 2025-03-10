@@ -54,7 +54,7 @@ public class NoticeListViewDao {
 
 
 
-	public List<NoticeDto> selectListOnNotice(){
+	public List<NoticeListViewDto> selectListOnNotice(){
 			String sql = "	SELECT *"
 					+ "				FROM ("
 					+ "				   SELECT rownum rn, TMP.* FROM ("
@@ -65,7 +65,7 @@ public class NoticeListViewDao {
 					+ "				)"
 					+ "					 WHERE rn BETWEEN 1 AND 5";
 			
-			List<NoticeDto> list = jdbcTemplate.query(sql, noticeMapper);
+			List<NoticeListViewDto> list = jdbcTemplate.query(sql, noticeListViewMapper);
 		return list;
 	}
 
