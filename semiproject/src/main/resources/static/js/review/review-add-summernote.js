@@ -28,7 +28,7 @@ $(function(){
                 
                 var form = new FormData();//form을 대신할 도구
                 for(var i=0; i < files.length; i++) {
-                    form.append("attach", files[i]);
+                    form.append("attach", files[i]);		
                 }
                 
                 $.ajax({
