@@ -12,18 +12,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReplyDto {
-	private int replyNo;
-	private String replyWriter;
-	private int replyOrigin;
-	private String replyContent;
-	private Timestamp replyWtime;
-	private Timestamp replyEtime;
-
-	public String getReplyContent() {
-		return replyContent;
-	}
-
-	public void setReplyContent(String replyContent) {
-		this.replyContent = replyContent;
-	}
+    private int replyNo;
+    private String replyWriter; // 원래 저장된 userId
+    private String replyNickname; // 닉네임 추가 (조회용)
+    private int replyOrigin;
+    private String replyContent;
+    private Timestamp replyWtime;
+    private Timestamp replyEtime;
 }
+

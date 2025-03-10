@@ -35,32 +35,31 @@ public class ReplyRestController {
 	}
 	
 	//댓글 작성
-	@RequestMapping("/write")
+	@PostMapping("/write")
 	public void write(@RequestParam("replyContent") String replyContent,
-	                  @RequestParam("replyOrigin") int replyOrigin,HttpSession session) {
+	                  @RequestParam("replyOrigin") int replyOrigin,
+	                  HttpSession session) {
 
 	    String userId = (String) session.getAttribute("userId");
-	    String userNickname = replyListViewDao.selectNicknameById(userId);  // 닉네임 조회
+	    String userNickname = replyListViewDao.selectNicknameById(userId); // 닉네임 조회
 
 	    if (replyContent == null || replyContent.isEmpty()) {
 	        throw new IllegalArgumentException("댓글 내용이 비어 있습니다.");
 	    }
-	    
+
 	    ReplyDto replyDto = new ReplyDto();
 	    replyDto.setReplyContent(replyContent);
 	    replyDto.setReplyOrigin(replyOrigin);
-	    replyDto.setReplyWriter(userNickname);  // 닉네임 설정
+	    replyDto.setReplyWriter(userId); // userId 저장 (DB에는 닉네임 대신 userId 저장)
 
-	    // 댓글 번호 생성
 	    int replyNo = replyDao.sequence();
 	    replyDto.setReplyNo(replyNo);
-	    System.out.println("댓글 내용: " + replyContent);
-	    // 댓글 등록
+
 	    replyDao.insert(replyDto);
-	    
-	    // 댓글 수 업데이트
 	    reviewDao.updateReviewReply(replyOrigin);
 	}
+
+
 
 	// 댓글 삭제
 	@PostMapping("/delete")

@@ -30,3 +30,4 @@ public class ReplyListViewDao {
 	    return jdbcTemplate.queryForObject(sql, String.class, userId);
 	}
 }
+
