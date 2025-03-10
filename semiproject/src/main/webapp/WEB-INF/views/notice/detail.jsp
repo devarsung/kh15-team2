@@ -28,19 +28,19 @@
     <div class="cell center">
         <h1>${noticeDto.noticeTitle}</h1>
     </div>
-    	<div class="cell">
+    	<div class="cell ">
             <div class="cell">
                 <input type="hidden" name="noticeNo" value="${noticeDto.noticeNo}">
                 
             </div>
             <div class="cell right ">
            <label>           
-                수정시각( ${noticeDto.noticeEtime})
+                수정시각( ${2025-03-10})
            </label>
 
            <label>
            
-              작성시각(${noticeDto.noticeWtime})<br>
+              작성시각($2025-03-10})<br>
            </label>
               <label></label>
                Name:(${noticeDto.noticeWriter})
@@ -52,12 +52,12 @@
             </div>
     	</div>
     
-    <div class="textarea mt-20">
+    <div class="textarea mt-20 ">
         ${noticeDto.noticeContent}
     </div>
   <div class="cell">
-  <a href="/" class="btn btn-neutral">목록!</a>
-  
+  <a href="/" class="btn btn-neutral w-25 me-20">메인페이지</a>
+ <a href="/notice/list" class="btn btn-btn-neutral w-25">공지목록</a> 
 	  </div>
 </div>
 

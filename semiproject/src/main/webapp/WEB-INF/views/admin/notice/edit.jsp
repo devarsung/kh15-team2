@@ -4,7 +4,6 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
     
      <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
-
  <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
     <script src="/js/admin-notice-add-summernote.js"></script>
 
@@ -12,8 +11,8 @@
         <div class="cell center" >
             <h1>수정</h1>
         </div>
-        
-        <form class="form-check" action="edit" method="post">
+        <form class="form-check" action="edit" method="post"
+        enctype="multipart/form-data" >
   <input type="hidden" name="noticeNo" value="${noticeDto.noticeNo}">
         <div class="cell">
             <label class="p-10">제목</label>
