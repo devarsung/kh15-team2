@@ -8,9 +8,41 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
    <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script>
- <script src="/js/review/reviewStar.js"></script>
-  <script src="/js/review/reviewReply.js"></script>
     <script type="text/javascript">
+    
+    $(function(){
+		var params = new URLSearchParams(location.search);
+		var reviewNo = params.get("reviewNo");
+		
+		
+		//좋아요 여부
+		$.ajax({
+			url:"/rest/review/check",
+			method:"post",
+			data: {reviewNo : reviewNo},
+			success:function(response) {
+				$(".fa-heart").removeClass("fa-solid fa-regular")
+					.addClass(response.done ? "fa-solid" : "fa-regular");
+				$(".heart-count").text(response.count);
+			}
+		});
+		
+		//하트 클릭
+		$(".fa-heart").click(function(){
+			$.ajax({
+				url:"/rest/review/action",
+				method:"post",
+				data: {reviewNo : reviewNo},
+				success:function(response) {
+					$(".fa-heart").removeClass("fa-solid fa-regular")
+						.addClass(response.done ? "fa-solid" : "fa-regular");
+					$(".heart-count").text(response.count);
+					console.log($(".fa-heart"));
+				}
+			});
+		});
+	});
+
     $(function(){
         $(".reviewStar").score({
             starColor: "#FFE31A",
@@ -32,7 +64,7 @@
         //글번호
         var params = new URLSearchParams(location.search);
         var reviewNo = params.get("reviewNo");
-
+        console.log(reviewNo);
         loadList();
         //댓글작성
         $(".btn-reply-write").click(function(){
@@ -147,7 +179,7 @@
                     var convertTime = moment(this.replyWtime).fromNow();
                     //변환
                     $(html).find(".reply-no").text("(no."+this.replyNo+")");
-                    $(html).find(".reply-writer").text(this.replyWriter);
+                    $(html).find(".reply-writer").text(this.replyNickname);
                     $(html).find(".reply-content").text(this.replyContent);
                     $(html).find(".reply-wtime").text(convertTime);
                     $(html).find(".delete-btn").attr("data-reply-no",this.replyNo);
@@ -172,11 +204,7 @@
         });
     };
     });
-    
-    
-    
-    
-    
+ 
     </script>
     
 <!--댓글 목록/내글이면 수정/삭제btn-->
@@ -241,7 +269,7 @@
         <h1>[${reviewDto.reviewWriter}]님의 후기</h1>
     </div>
     <div class="cell right">
-        <i class="fa-solid fa-heart"></i>${reviewDto.reviewLike}|<i class="fa-solid fa-eye"></i> ${reviewDto.reviewRead}|<span class="reply-count"><i class="fa-solid fa-comment-dots"></i>${reviewDto.reviewReply}</span>
+       <i class="fa-solid fa-eye"></i> ${reviewDto.reviewRead}| <i class="fa-solid fa-heart"></i>${reviewDto.reviewLike}|</span><i class="fa-solid fa-comment-dots"></i><span class="reply-count"></span>
     </div>
     <div class="cell right">
     작성일(${reviewDto.reviewWtime})|수정일(${reviewDto.reviewEtime})
@@ -254,8 +282,11 @@
     <div class="cell reviewStar">
     ${reviewDto.reviewStar}</div>
     <div class="cell p-20 content-box" >${reviewDto.reviewContent}</div>
-    <br>
-
+    <hr>
+	<div>
+		<i class="fa-heart fa-regular red"></i>
+		조아요<span class="heart-count">${reviewDto.reviewLike}</span>
+	</div>
     <div class="cell left my-0">
         <label>댓글등록</label>
     </div>

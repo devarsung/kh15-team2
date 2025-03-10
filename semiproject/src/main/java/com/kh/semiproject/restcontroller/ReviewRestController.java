@@ -46,7 +46,7 @@ public class ReviewRestController {
 	}
 	
 	//좋아요 설정/해제 매핑 → 게시글의 좋아요 개수를 갱신
-	@PostMapping("action")
+	@PostMapping("/action")
 	public Map<String, Object> action(@RequestParam int reviewNo, HttpSession session){
 		String userId = (String)session.getAttribute("userId");
 		
