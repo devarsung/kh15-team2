@@ -8,8 +8,6 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
    <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script>
- <script src="/js/review/reviewStar.js"></script>
-  <script src="/js/review/reviewReply.js"></script>
     <script type="text/javascript">
     $(function(){
         $(".reviewStar").score({
@@ -172,11 +170,7 @@
         });
     };
     });
-    
-    
-    
-    
-    
+ 
     </script>
     
 <!--댓글 목록/내글이면 수정/삭제btn-->
