@@ -16,6 +16,10 @@ public class ReviewLikeMapper implements RowMapper<ReviewLikeDto>{
 		return ReviewLikeDto.builder()
 				.reviewNo(rs.getInt("review_no"))
 				.likeCount(rs.getInt("like_count"))
+				.reviewTitle(rs.getString("review_title"))
+				.reviewRead(rs.getInt("review_read"))
+				.reviewWtime(rs.getTimestamp("review_wtime"))
+				.reviewWriter(rs.getString("review_writer"))
 				.build();
 	}
 
