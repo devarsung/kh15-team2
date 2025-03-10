@@ -21,7 +21,7 @@ public class HomeController {
 	private PlaceDao placeDao;
 	
 	@RequestMapping("/")
-
+		public String home(Model model) {
 		model.addAttribute("reviews", reviewListViewDao.selectListOnReview());
 		model.addAttribute("notices", noticeListViewDao.selectListOnNotice());
 		model.addAttribute("places", placeDao.selectListOnPlace());

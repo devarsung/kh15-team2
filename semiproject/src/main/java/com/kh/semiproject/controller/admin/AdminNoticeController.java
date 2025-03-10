@@ -58,7 +58,7 @@ public class AdminNoticeController {
 	@RequestMapping("/list")
 
 	public String list(@ModelAttribute ("pageVO")PageVO pageVO, Model model) {
-		int count =  noticeDao.count(pageVO);
+		int count =  noticeListViewDao.count(pageVO);
 
 		pageVO.setCount(count);
 		List<NoticeListViewDto> list = noticeListViewDao.selectList(pageVO);
