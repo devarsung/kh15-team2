@@ -42,12 +42,15 @@ public class ReplyDao {
         return jdbcTemplate.query(sql, replyMapper, data);
     }
 	
-	//내가 작성한 댓글 목록
-	public List<ReplyDto> selectListByUserIdAndReviewNo(String userId, int reviewNo) {
-		String sql = "select * from reply where review_no = ? and member_id = ?"; 
-		Object[] data = {reviewNo, userId};
-		return jdbcTemplate.query(sql, replyMapper, data);
-	}
+ // 내가 작성한 댓글 목록 조회 (특정 후기)
+    public List<ReplyDto> selectListByUserIdAndReviewNo(String userId, int reviewNo) {
+        String sql = "SELECT reply_no, reply_writer, reply_content, reply_wtime " 
+        		+"FROM reply " 
+        		+"WHERE reply_writer = ? AND reply_origin = ? " 
+        		+"ORDER BY reply_wtime DESC";
+        Object[] data = { userId, reviewNo };
+        return jdbcTemplate.query(sql, replyMapper, data);
+    }
 
 	// 댓글 삭제
 	public boolean delete(int replyNo) {

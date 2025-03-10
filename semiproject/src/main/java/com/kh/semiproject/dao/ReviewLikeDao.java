@@ -51,12 +51,18 @@ public class ReviewLikeDao {
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 	
-	// 내가 좋아요한 여행지 목록 조회 메소드
+	// 내가 좋아요한 후기 목록 조회 메소드
 	public List<ReviewLikeDto> selectReviewLikeList(String memberId) {
-		String sql = "select review_no, count(*) as like_count " + "from review_like " + "where member_id = ? "
-				+ "group by review_no " + "order by like_count desc";
-		Object[] data = { memberId };
-
-		return jdbcTemplate.query(sql, reviewLikeMapper, data);
-	}
+        String sql = "SELECT r.review_no, r.review_title, m.member_nickname AS review_writer, " 
+        			+"r.review_wtime, r.review_read, COUNT(rl2.member_id) AS like_count " 
+	        		+"FROM review_like rl " 
+	        		+"JOIN review r ON rl.review_no = r.review_no " 
+	        		+"JOIN member m ON r.review_writer = m.member_id " 
+	        		+"LEFT JOIN review_like rl2 ON r.review_no = rl2.review_no " 
+	        		+"WHERE rl.member_id = ? " 
+	        		+"GROUP BY r.review_no, r.review_title, m.member_nickname, r.review_wtime, r.review_read " 
+	        		+"ORDER BY r.review_wtime DESC";
+        Object[] data = { memberId };
+        return jdbcTemplate.query(sql, reviewLikeMapper, data);
+    }
 }

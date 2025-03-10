@@ -50,12 +50,16 @@ public class ReviewDao {
 		return jdbcTemplate.query(sql, reviewMapper);
 	}
 
-	// 내가 작성한 후기 목록
-	public List<ReviewDto> selectListByUserId(String userId) {
-		String sql = "select * from review where member_id = ?";
-		Object[] data = { userId };
-		return jdbcTemplate.query(sql, reviewMapper, data);
-	}
+	 // 내가 작성한 후기 목록 조회
+    public List<ReviewDto> selectListByUserId(String memberId) {
+        String sql = "SELECT review_no, review_title, review_writer, review_wtime, " 
+        		+"review_read, review_like " 
+        		+"FROM review " 
+        		+"WHERE review_writer = ? " 
+        		+"ORDER BY review_wtime DESC";
+        Object[] data = {memberId};
+        return jdbcTemplate.query(sql, reviewMapper, data);
+    }
 
 	public ReviewDto selectOne(int reviewNo) {
 		String sql = "select * from review where review_no = ?";

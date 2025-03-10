@@ -97,15 +97,14 @@ public class MypageController {
 	@PostMapping("/change")
 	public String change(@ModelAttribute MemberDto memberDto, HttpSession session,
 			@RequestParam(required = false) MultipartFile memberProfile,
-			@RequestParam(required = false, defaultValue = "false") boolean deleteProfile)
-			throws IllegalStateException, IOException {
+			@RequestParam(required = false, defaultValue = "false") boolean deleteProfile,
+			@RequestParam String memberPw) throws IllegalStateException, IOException {
 
 		String userId = (String) session.getAttribute("userId");
 		MemberDto findDto = memberDao.selectOne(userId);
-		
 
 		// 비밀번호 확인
-		if (!findDto.getMemberPw().equals(memberDto.getMemberPw())) {
+		if (!findDto.getMemberPw().equals(memberPw)) {
 			return "redirect:change?error"; // 비밀번호 불일치 시 변경 페이지로 리다이렉트
 		}
 
@@ -128,8 +127,7 @@ public class MypageController {
 				memberDao.deleteProfile(userId);
 				System.out.println("deleteProfile 상태: " + deleteProfile);
 			}
-		} 
-		else if (memberProfile != null && !memberProfile.isEmpty()) { // 새 프로필 업로드
+		} else if (memberProfile != null && !memberProfile.isEmpty()) { // 새 프로필 업로드
 			if (attachmentNo != null) { // 기존 프로필 삭제 후 새 파일 저장
 				attachmentService.delete(attachmentNo);
 			}
@@ -142,8 +140,7 @@ public class MypageController {
 		memberDao.update(findDto);
 
 		return "redirect:home"; // 변경 후 다시 내 정보 수정 페이지로 이동
-		
-		
+
 	}
 
 	// 회원 탈퇴 매핑
@@ -175,8 +172,7 @@ public class MypageController {
 	// 내가좋아요표시한 여행지 목록 매핑
 	@RequestMapping("/myLikePlace")
 	public String myLikePlace(HttpSession session, Model model) {
-		String userId = (String) session.getAttribute("userId");// 내 아이디 추출
-		MemberDto memberDto = memberDao.selectOne(userId);// 내정보 획득
+		String userId = (String) session.getAttribute("userId"); // 내 아이디 추출
 		List<PlaceLikeDto> placeLikeList = placeLikeDao.selectPlaceLikeList(userId); // 좋아요한 여행지 목록 조회
 		model.addAttribute("placeLikeList", placeLikeList);
 		return "/WEB-INF/views/mypage/myLikePlace.jsp";
@@ -186,7 +182,6 @@ public class MypageController {
 	@RequestMapping("myLikeReview")
 	public String myLikeReview(HttpSession session, Model model) {
 		String userId = (String) session.getAttribute("userId");// 내 아이디 추출
-		MemberDto memberDto = memberDao.selectOne(userId);// 내정보 획득
 		List<ReviewLikeDto> reviewLikeList = reviewLikeDao.selectReviewLikeList(userId);// 좋아요한 후기 목록 조회
 		model.addAttribute("reviewLikeList", reviewLikeList);
 		return "/WEB-INF/views/mypage/myLikeReview.jsp";
@@ -195,22 +190,28 @@ public class MypageController {
 	// 내가 작성한 후기 목록 매핑
 	@RequestMapping("myReview")
 	public String myReview(HttpSession session, Model model) {
-		String userId = (String) session.getAttribute("userId");// 내 아이디 추출
-		MemberDto memberDto = memberDao.selectOne(userId);// 내정보 획득
-		List<ReviewDto> list = reviewDao.selectListByUserId(userId);
+		String userId = (String) session.getAttribute("userId"); // 내 아이디 추출
+		List<ReviewDto> list = reviewDao.selectListByUserId(userId); // 내가 작성한 후기 목록 조회
 		model.addAttribute("list", list);
 		return "/WEB-INF/views/mypage/myReview.jsp";
 	}
 
 	// 내가 작성한 댓글 목록 매핑
 	@RequestMapping("myReply")
-	public String myReply(HttpSession session, Model model, int reviewNo) {
-		String userId = (String) session.getAttribute("userId");// 내 아이디 추출
-		MemberDto memberDto = memberDao.selectOne(userId);// 내정보 획득
-		List<ReplyDto> list = replyDao.selectListByUserIdAndReviewNo(userId, reviewNo);
-		model.addAttribute("list", list);
-		return "/WEB-INF/views/mypage/myReply.jsp";
+	public String myReply(HttpSession session, Model model, 
+			@RequestParam(required = false) Integer reviewNo) {
+	    String userId = (String) session.getAttribute("userId"); // 내 아이디 추출
+
+	    if (reviewNo == null) {
+	        model.addAttribute("error", "리뷰 번호가 없습니다.");
+	        return "/WEB-INF/views/mypage/myReply.jsp";
+	    }
+
+	    List<ReplyDto> list = replyDao.selectListByUserIdAndReviewNo(userId, reviewNo);
+	    model.addAttribute("list", list);
+	    return "/WEB-INF/views/mypage/myReply.jsp";
 	}
+
 
 	// 회원아이디로 이미지 주소를 반환하는 매핑
 	@RequestMapping("/profile")

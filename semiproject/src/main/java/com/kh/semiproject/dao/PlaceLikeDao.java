@@ -50,13 +50,18 @@ public class PlaceLikeDao {
 		Object[] data = { count, placeNo };
 		return jdbcTemplate.update(sql, data) > 0;
 	}
-	
+
 	// 내가 좋아요한 여행지 목록 조회 메소드
 	public List<PlaceLikeDto> selectPlaceLikeList(String memberId) {
-		String sql = "select place_no, count(*) as like_count " + "from place_like " + "where member_id = ? "
-				+ "group by place_no " + "order by like_count desc";
+		String sql = "SELECT p.place_no, p.place_title, p.place_type, p.place_region, p.place_first_image, "
+				+ "COUNT(pl.member_id) AS like_count " 
+				+ "FROM place_like pl "
+				+ "JOIN place p ON pl.place_no = p.place_no " 
+				+ "WHERE pl.member_id = ? "
+				+ "GROUP BY p.place_no, p.place_title, p.place_type, p.place_region, p.place_first_image "
+				+ "ORDER BY like_count DESC";
 		Object[] data = { memberId };
-		
 		return jdbcTemplate.query(sql, placeLikeMapper, data);
 	}
+
 }
