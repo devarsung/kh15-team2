@@ -229,32 +229,6 @@ public class PlaceDao {
 		return jdbcTemplate.queryForObject(sql, float.class, data);
 	}
 	
-	public List<PlaceReviewDto> selectListOnPlace(){
-//	public List<PlaceReviewDto> selectListOnPlace(){
-//		 String sql ="SELECT "
-//		            + "    place.place_no, "
-//		            + "    place.place_title, "
-//		            + "    place.place_overview "
-//		            + "FROM review "
-//		            + "LEFT JOIN place ON review.review_place = place.place_no "
-//		            + "GROUP BY place.place_no, place.place_title, place.place_overview ";
-//		            //+ "ORDER BY AVG(review.review_star) DESC";
-		
-		String sql = "	SELECT * "
-				+ "FROM ("
-				+ "    SELECT rownum rn, TMP.*"
-				+ "    FROM ("
-				+ "        SELECT PR.* "
-				+ "        FROM place_review PR"
-				+ "    ) TMP"
-				+ ")"
-				+ "WHERE rn BETWEEN 1 AND 5 ";
-		
-		// System.out.println();
-		 List<PlaceReviewDto> list = jdbcTemplate.query(sql, placeReviewMapper);
-		 //List<PlaceReviewDto> list = jdbcTemplate.query(sql, placeReviewMapper);
-	    return list;
-	}
 	
 	//메인에서 보여줄 top5
 	public List<PlaceListViewDto> selectListOnPlace() {			
