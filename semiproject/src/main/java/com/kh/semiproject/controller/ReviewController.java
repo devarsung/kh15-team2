@@ -110,17 +110,15 @@ public class ReviewController {
 		Document beforeDocument = Jsoup.parse(originDto.getReviewContent());
 		Elements beforeElements = beforeDocument.select(".summernote-img");
 		for(Element element : beforeElements) {
-			int attachmentNo = Integer.parseInt(element.attr(".data-attachment-no"));
+			int attachmentNo = Integer.parseInt(element.attr("data-attachment-no"));
 			before.add(attachmentNo);
 		}
-		System.out.println(before);
 		
 		// 수정후
 		Set<Integer> after = new HashSet<>();
 		Document afterDocument = Jsoup.parse(reviewDto.getReviewContent());
-		Elements afterElements = afterDocument.select(".summernote-img");
-		for(Element element : afterElements) {
-			int attachmentNo = Integer.parseInt(element.attr(".data-attachment-no"));
+		for(Element element : afterDocument.select(".summernote-img")) {
+			int attachmentNo = Integer.parseInt(element.attr("data-attachment-no"));
 			after.add(attachmentNo);
 		}
 		
