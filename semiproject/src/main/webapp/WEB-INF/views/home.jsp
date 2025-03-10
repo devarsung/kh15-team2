@@ -181,7 +181,6 @@ $(function () {
         window.location.href = url;
     });
     
-    swiper.update();
     $(".review-star").score({
         display:{
         	showNumber:true,
