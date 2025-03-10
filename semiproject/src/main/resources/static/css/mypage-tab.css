@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+/* 마이페이지 상단 탭 디자인 */
+
+.mypage-tab {
+	display: flex;
+	list-style: none;
+	justify-content: center;
+	width: fit-content;
+	z-index: 10;
+	border-bottom: 2px solid #D3DDE5;  
+    padding: 0;
+    margin: 0 auto;
+    gap: 0;
+}
+.mypage-tab li {
+	font-size: 16px;
+    width: 150px;
+    padding: 10px 15px;
+}
+
+.mypage-tab a {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    padding: 10px 15px;
+}
+
+/* 호버시  */
+.mypage-tab .active, 
+.mypage-tab li:hover {
+ 	box-shadow: inset 0 -2px 0 #D3DDE5, 0 3px 0 #D3DDE5;
+}
+.mypage-tab .active > a,
+.mypage-tab li:hover > a {
+	color: #D3DDE5;
+    font-weight: bold;
+}
