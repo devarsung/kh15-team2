@@ -35,7 +35,7 @@
 	<form class="form-delete" action="deleteAll" method="post">
     
    	<div class="cell right">
-	<a href="write" class="btn btn-neutral">글쓰기</a>
+	<a href="add" class="btn btn-neutral">글쓰기</a>
 	<button type="submit" class="btn btn-negative">체크항목 삭제</button>
 	</div>
 	

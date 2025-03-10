@@ -15,6 +15,10 @@ public class PlaceLikeMapper implements RowMapper<PlaceLikeDto>{
 	public PlaceLikeDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		return PlaceLikeDto.builder()
 				.placeNo(rs.getInt("place_no"))
+				.placeTitle(rs.getString("place_title"))
+				.placeRegion(rs.getString("place_region"))
+				.placeType(rs.getString("place_type"))
+				.placeFirstImage(rs.getInt("place_first_image"))
 				.likeCount(rs.getInt("like_count"))
 				.build();
 	}
