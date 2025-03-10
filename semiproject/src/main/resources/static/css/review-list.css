@@ -1,0 +1,62 @@
+ .selectStyle{
+	 	 padding: 5px;
+            border: 1px solid lightgrey;
+            border-radius: 4px;
+            outline : none;
+            font-size: 15px;
+            appearance: none;
+            width: 100px;
+
+		}
+    .inputStyle{
+        padding:10px;
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+    }
+    .btnStyle{
+        border-radius: 5px;
+        border : 1px, solid #F6F5F2;
+        background:#F6F5F2;
+        width: 100px;
+    }
+
+    .selectStyle:hover,
+    .inputStyle:hover,
+    .btnStyle:hover{
+        outline :none;
+        border: 2px solid #F0EBE3;
+    }
+
+  .tableStyle {
+    background: #fdfdfb; 
+   	border-collapse: separate; 
+    border-spacing: 0;
+    border-radius: 10px; 
+    overflow: hidden; 
+    border: 1px solid #ddd!important;
+}
+
+		.tableStyle th, 
+		.tableStyle td {
+		    border: 1px solid #F6F5F2!important;
+		}
+
+		.table.table-hover > tbody > tr:hover {
+		    background-color: #F0EBE3; /* 마우스 오버 시 부드러운 오렌지 톤 */
+		}
+
+      th,
+      td{
+      height: 50px;
+      }
+
+      .aStyle{
+     	 text-decoration: none;
+    	outline: none; 
+    	padding:10px;
+    	color : black;
+    	font-weight : bold;
+      }
+      .aStyle:visited{
+      	color:gray;
+      }
