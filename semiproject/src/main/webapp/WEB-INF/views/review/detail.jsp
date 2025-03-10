@@ -48,11 +48,7 @@
             starColor: "#FFE31A",
             editable:false,//편집 가능하도록 설정
             
-            send:{//전송옵션
-                sendable:true,//전송 가능
-                name:"reviewStar",//전송될 이름 설정
-            },
-            display:{
+           display:{
                 placeLimit:1,
                 textColor:"#d63031",
             },
@@ -202,6 +198,14 @@
             }
         });
     };
+    
+    
+//     $(".deletemessage").click(function(){
+//         var choice = window.confirm("정말 게시글을 삭제하시겠습니까?");
+//         if(choice == false) return;
+//     });
+
+		
     });
  
     </script>
@@ -286,6 +290,7 @@
 		<i class="fa-heart fa-regular red"></i>
 		조아요<span class="heart-count">${reviewDto.reviewLike}</span>
 	</div>
+	<br>
     <div class="cell left my-0">
         <label>댓글등록</label>
     </div>
@@ -312,12 +317,30 @@
     </c:otherwise>
     </c:choose>
 
+<c:choose>
+	<c:when test="${not empty replyCount}">
         <div class="cell left my-0 reply-list">
             <label>댓글목록</label>
         </div>
+    </c:when>
+    <c:otherwise>
+    	<div class="cell cetner" >    
+    			댓글이 없습니다
+    	</div>
+    </c:otherwise>
+</c:choose>
 
     <div class="reply-wrapper"></div>
 
+
+    <div class="cell right">
+    <c:if test="${sessionScope.userId != null}">
+	<c:if test="${sessionScope.userId ==reviewDto.reviewWriter}">
+    <a href="/review/edit?reviewNo=${reviewDto.reviewNo}"class="btn btn-positive mt-20"   style="width:100px">수정하기</a>
+    <a href="/review/delete?reviewNo=${reviewDto.reviewNo}" class="btn btn-negative mt-20 deletemessage " style="width:100px">삭제하기</a>
+  	</c:if>
+  	</c:if>
+    </div>
     <div class="cell center">
         <a href="/review/list" class="btn btn-neutral mt-20" style="width:200px">목록으로</a>
     </div>
