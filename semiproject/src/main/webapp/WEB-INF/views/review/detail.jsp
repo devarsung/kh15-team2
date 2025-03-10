@@ -217,7 +217,6 @@
         <div class="cell flex-box  reply-item"> 
             <div class="w-150 p-10 inline-flex-box" style="min-width: 150px;"> 
                 <div  class="reply-tinyfont">
-                    <span class="reply-no">댓글번호</span>
                     <span class="reply-wtime">댓글작성일/수정일</span>
                 <h3 class="mt-10 reply-writer">닉네임</h3>
             </div>
@@ -244,7 +243,6 @@
         <div class="cell flex-box  reply-edit-item">
             <div class="w-150 p-10 inline-flex-box" style="min-width: 150px;"> 
                 <div  class="reply-tinyfont">
-                    <span class="reply-no">댓글번호</span>
                     <span class="reply-wtime">댓글작성일/수정일</span>
                 <h3 class="mt-10 reply-writer">닉네임</h3>
             </div>
@@ -270,8 +268,9 @@
 <div class="container w-1000">
 
     <div class="cell center">
-        <h1>[${reviewDto.reviewWriter}]님의 후기</h1>
+        <h2>[${reviewDto.reviewWriter}]님의 후기</h2>
     </div>
+    <hr>
     <div class="cell right">
        <i class="fa-solid fa-eye"></i> ${reviewDto.reviewRead}| <i class="fa-solid fa-heart"></i>${reviewDto.reviewLike}|</span><i class="fa-solid fa-comment-dots"></i><span class="reply-count"></span>
     </div>
@@ -283,13 +282,14 @@
             ${reviewDto.reviewTitle}<i class="fa-solid fa-pencil"></i>
         </h1>
     </div>
+    <hr>
     <div class="cell reviewStar" data-rate="${reviewDto.reviewStar}" ></div>
     <span class="red">${reviewDto.reviewStar}</span>
     <div class="cell p-20 content-box" >${reviewDto.reviewContent}</div>
     <hr>
 	<div>
-		<i class="fa-heart fa-regular red"></i>
-		조아요<span class="heart-count">${reviewDto.reviewLike}</span>
+		조와요  <i class="fa-heart fa-regular red"></i>
+		<span class="heart-count">${reviewDto.reviewLike}</span>
 	</div>
 	<br>
     <div class="cell left my-0">
