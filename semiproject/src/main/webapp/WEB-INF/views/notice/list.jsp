@@ -84,7 +84,7 @@
 									</c:otherwise>
 								</c:choose>
 							</td>
-							<td>${noticeListViewDto.noticeWtime}</td>
+							<td>${noticeListViewDto.getWtimeString()}</td>
 							<td>${noticeListViewDto.noticeRead}</td>
 						</tr>
 						</c:forEach>

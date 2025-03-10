@@ -1,6 +1,9 @@
 package com.kh.semiproject.dto;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,5 +33,29 @@ public class NoticeListViewDto {
 	private String memberLevel;//회원등급
 	private Timestamp memberJoin;//회원가입일
 	private Timestamp memberLogin;//최종로그인일
-	private Timestamp memberChange;//비밀번호변경일
+	private Timestamp memberChange;//비밀번호변경일  
+	
+	public String getWtimeString() {
+		LocalDate today = LocalDate.now();
+		LocalDateTime wtime = noticeWtime.toLocalDateTime();
+		LocalDate wdate = wtime.toLocalDate();
+		if(wdate.isBefore(today)) {
+			return wdate.toString();
+		}
+		else {
+			return wtime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
