@@ -94,6 +94,7 @@ $(function() {
 		$(this).val(convert);
 	});
 	$("[name=memberPost], [name=memberAddress1], .btn-address-search").click(function() {
+		if (!$("[name=memberPost]").prop('readonly') && !$("[name=memberAddress1]").prop('readonly')) {
 		new daum.Postcode({
 			oncomplete: function(data) {
 				// daum api
@@ -110,6 +111,7 @@ $(function() {
 				document.querySelector("[name=memberAddress2]").focus();
 			}
 		}).open();
+		}
 	});
 	$("[name=memberAddress2]").blur(function() {
 		var memberPost = $("[name=memberPost]").val();
