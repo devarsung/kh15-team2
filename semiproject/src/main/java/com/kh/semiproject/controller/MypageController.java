@@ -97,7 +97,8 @@ public class MypageController {
 	@PostMapping("/change")
 	public String change(@ModelAttribute MemberDto memberDto, HttpSession session,
 			@RequestParam(required = false) MultipartFile memberProfile,
-			@RequestParam(required = false, defaultValue = "false") boolean deleteProfile)
+			@RequestParam(required = false, defaultValue = "false") boolean deleteProfile,
+			@RequestParam String memberPw)
 			throws IllegalStateException, IOException {
 
 		String userId = (String) session.getAttribute("userId");
@@ -105,7 +106,7 @@ public class MypageController {
 		
 
 		// 비밀번호 확인
-		if (!findDto.getMemberPw().equals(memberDto.getMemberPw())) {
+		if (!findDto.getMemberPw().equals(memberPw)) {
 			return "redirect:change?error"; // 비밀번호 불일치 시 변경 페이지로 리다이렉트
 		}
 
@@ -175,18 +176,17 @@ public class MypageController {
 	// 내가좋아요표시한 여행지 목록 매핑
 	@RequestMapping("/myLikePlace")
 	public String myLikePlace(HttpSession session, Model model) {
-		String userId = (String) session.getAttribute("userId");// 내 아이디 추출
-		MemberDto memberDto = memberDao.selectOne(userId);// 내정보 획득
-		List<PlaceLikeDto> placeLikeList = placeLikeDao.selectPlaceLikeList(userId); // 좋아요한 여행지 목록 조회
-		model.addAttribute("placeLikeList", placeLikeList);
-		return "/WEB-INF/views/mypage/myLikePlace.jsp";
+	    String userId = (String) session.getAttribute("userId"); // 내 아이디 추출
+	    List<PlaceLikeDto> placeLikeList = placeLikeDao.selectPlaceLikeList(userId); // 좋아요한 여행지 목록 조회
+	    model.addAttribute("placeLikeList", placeLikeList);
+	    return "/WEB-INF/views/mypage/myLikePlace.jsp";
 	}
+
 
 	// 내가좋아요표시한 후기 목록 매핑
 	@RequestMapping("myLikeReview")
 	public String myLikeReview(HttpSession session, Model model) {
 		String userId = (String) session.getAttribute("userId");// 내 아이디 추출
-		MemberDto memberDto = memberDao.selectOne(userId);// 내정보 획득
 		List<ReviewLikeDto> reviewLikeList = reviewLikeDao.selectReviewLikeList(userId);// 좋아요한 후기 목록 조회
 		model.addAttribute("reviewLikeList", reviewLikeList);
 		return "/WEB-INF/views/mypage/myLikeReview.jsp";
