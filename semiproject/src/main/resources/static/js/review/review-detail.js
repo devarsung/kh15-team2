@@ -22,26 +22,39 @@
 
        loadList();
        //댓글작성
-       $(".btn-reply-write").click(function(){
-           var replyContent = $(".reply-writebox").val();
+	   $(".btn-reply-write").click(function(){
+	       var replyContent = $(".reply-writebox").val();
+	       var replyOrigin = reviewNo; // 원본 글 번호 가져오기
 
-           if(replyContent.length==0){
-               window.alert("내용을 작성하세요");
-               return;
-           }
-           $.ajax({
-               url:"/rest/reply/write",
-               method:"post",
-               data:{
-                   replyOrigin : reviewNo,
-                   replyContent : replyContent
-               },
-               success:function(response){
-                   $(".reply-writebox").val("");//입력값제거
-                   loadList();
-               }
-           });
-       });
+	       if(replyContent.length == 0){
+	           window.alert("내용을 작성하세요");
+	           return;
+	       }
+
+	       // 전송 전에 콘솔에서 확인하기
+	       console.log("전송할 데이터:", {
+	           replyOrigin: replyOrigin,
+	           replyContent: replyContent
+	       });
+
+	       $.ajax({
+	           url:"/rest/reply/write",
+	           method:"post",
+	           data:{
+	               replyOrigin : replyOrigin,
+	               replyContent : replyContent
+	           },
+	           success:function(response){
+	               console.log("댓글 등록 성공!", response);
+	               $(".reply-writebox").val(""); // 입력값 제거
+	               loadList();
+	           },
+	           error:function(xhr, status, error){
+	               console.log("에러 발생:", xhr.responseText);
+	           }
+	       });
+	   });
+
 
        //댓글삭제
        $(document).on("click",".delete-btn",function(){
@@ -130,7 +143,7 @@
                    var convertTime = moment(this.replyWtime).fromNow();
                    //변환
                    $(html).find(".reply-no").text("(no."+this.replyNo+")");
-                   $(html).find(".reply-writer").text(this.replyWriter);
+                   $(html).find(".reply-writer").text(this.replyNickname); // 닉네임 표시!
                    $(html).find(".reply-content").text(this.replyContent);
                    $(html).find(".reply-wtime").text(convertTime);
                    $(html).find(".delete-btn").attr("data-reply-no",this.replyNo);

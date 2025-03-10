@@ -30,12 +30,17 @@ public class ReplyDao {
 		jdbcTemplate.update(sql, data);
 	}
 	
-	//댓글 목록
-	public List<ReplyDto> selectList(int replyOrigin) {
-		String sql = "select * from reply where reply_origin=? order by reply_no asc";
-		Object[] data = { replyOrigin };
-		return jdbcTemplate.query(sql, replyMapper, data);
-	}
+	 // 댓글 목록 조회 (닉네임 포함)
+    public List<ReplyDto>selectList(int replyOrigin) {
+        String sql = "select r.reply_no, r.reply_writer, m.member_nickname, " +
+                     "r.reply_origin, r.reply_content, r.reply_wtime, r.reply_etime " +
+                     "from reply r " +
+                     "join member m on r.reply_writer = m.member_id " + // 닉네임 가져오기
+                     "where r.reply_origin = ? " +
+                     "order by r.reply_wtime asc";
+        Object[] data = { replyOrigin};
+        return jdbcTemplate.query(sql, replyMapper, data);
+    }
 	
 	//내가 작성한 댓글 목록
 	public List<ReplyDto> selectListByUserIdAndReviewNo(String userId, int reviewNo) {
