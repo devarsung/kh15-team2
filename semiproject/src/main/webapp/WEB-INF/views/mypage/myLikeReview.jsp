@@ -29,7 +29,7 @@
             </thead>
             <tbody>
                 <c:choose>
-                    <c:when test="${empty reviewLikeList}">
+                    <c:when test="${reviewLikeList.isEmpty()}">
                         <tr>
                             <td colspan="6" align="center">좋아요한 후기가 없습니다.</td>
                         </tr>

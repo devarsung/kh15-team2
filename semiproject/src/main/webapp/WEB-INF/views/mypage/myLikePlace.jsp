@@ -3,7 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
+<jsp:include page="/WEB-INF/views/template/mypage-tab.jsp">
+  	<jsp:param name="menu" value="myLikePlace"/>
+</jsp:include>
 <style>
 /* 카드 리스트 전체 스타일 */
 .card-list {
@@ -98,7 +100,7 @@
     <div class="cell">
         <div class="card-list">
             <c:choose>
-                <c:when test="${empty placeLikeList}">
+                <c:when test="${placeLikeList.isEmpty()}">
                     <p style="text-align: center; width: 100%;">좋아요한 여행지가 없습니다.</p>
                 </c:when>
                 <c:otherwise>
