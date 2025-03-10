@@ -150,7 +150,7 @@
                    
                    $(".reply-wrapper").append(html);
                });
-//               $(".reply-count").text(reponse.length); //댓글개수 
+               $(".reply-count").text(reponse.length); //댓글개수 
            }
        });
    };

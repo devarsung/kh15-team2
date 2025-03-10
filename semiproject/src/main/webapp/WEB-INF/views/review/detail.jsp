@@ -119,7 +119,7 @@
     <div class="reply-wrapper"></div>
 
     <div class="cell center">
-        <button class="btn btn-neutral mt-20" style="width:200px">목록으로</button>
+        <a href="/review/list" class="btn btn-neutral mt-20" style="width:200px">목록으로</a>
     </div>
 
 </div>
