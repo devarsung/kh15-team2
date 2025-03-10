@@ -253,7 +253,7 @@ $(function () {
 	                        <div class="review-title">"${review.reviewTitle}"</div>
 	                        <div class="review-footer">
 	                            <span class="review-likes red"><i class="fa-solid fa-heart"></i> ${review.reviewLike}</span>
-	                            <span class="review-date">${review.reviewWtime}</span>
+	                            <span class="review-date">${review.wtimeString}</span>
 	                        </div>
 	                    </a>
                 	</c:forEach>
@@ -274,7 +274,7 @@ $(function () {
 	                	<a href="/notice/detail?noticeNo=${notice.noticeNo}" class="notice-item">
 	                        <span class="notice-icon"><i class="fa-solid fa-bullhorn"></i></span>
 	                        <span class="notice-title">"${notice.noticeTitle}"</span>
-	                        <span class="notice-date">${notice.noticeWtime}</span>
+	                        <span class="notice-date">${notice.wtimeString}</span>
 	                    </a>
                 	</c:forEach>
                 </div>

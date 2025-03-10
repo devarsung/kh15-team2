@@ -16,7 +16,7 @@ public class AdminStatusController {
 	@RequestMapping("member")
 	public String member(Model model) {
 		model.addAttribute("memberGenderList", statusDao.memberGenderGroup());
-		
+		model.addAttribute("memberAgeList", statusDao.memberAgeGroup());
 		return "/WEB-INF/views/admin/status/member.jsp";
 	}
 }
