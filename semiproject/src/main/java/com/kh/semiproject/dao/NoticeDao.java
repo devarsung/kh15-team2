@@ -92,7 +92,7 @@ public class NoticeDao {
 	//-반환형이 int이기 때문에 만약 이미지가없으면 예외가 발생함
 	public int findAttachment(int noticeNo) {
 		String sql="select attachment_no from ontice_list "
-				+ "where noticeNo_no=? ";
+				+ "where noticeNo=? ";
 		Object[] data= {noticeNo};
 		return jdbcTemplate.queryForObject(sql, int.class,data);
 	}
