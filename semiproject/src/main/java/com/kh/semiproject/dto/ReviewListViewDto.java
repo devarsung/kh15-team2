@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class ReviewListViewDto {
 	private int reviewNo;
 	private String reviewTitle;
-	private String reviewContent;
+//	private String reviewContent;
 	private int reviewLike;
 	private int reviewRead;
 	private int reviewReply;

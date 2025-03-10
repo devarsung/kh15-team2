@@ -17,7 +17,7 @@ public class ReviewListViewMapper implements RowMapper<ReviewListViewDto>{
 		return ReviewListViewDto.builder()
 				.reviewNo(rs.getInt("review_no"))
 				.reviewTitle(rs.getString("review_title"))
-				.reviewContent(rs.getString("review_content"))				
+//				.reviewContent(rs.getString("review_content"))				
 				.reviewLike(rs.getInt("review_like"))
 				.reviewRead(rs.getInt("review_read"))
 				.reviewReply(rs.getInt("review_reply"))

@@ -8,9 +8,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semiproject.dto.PlaceDto;
+
+import com.kh.semiproject.dto.PlaceReviewDto;
+
 import com.kh.semiproject.dto.PlaceListViewDto;
 import com.kh.semiproject.mapper.PlaceListViewMapper;
+
 import com.kh.semiproject.mapper.PlaceMapper;
+import com.kh.semiproject.mapper.PlaceReviewMapper;
 import com.kh.semiproject.vo.PlacePageVO;
 
 @Repository
@@ -20,8 +25,15 @@ public class PlaceDao {
 
 	@Autowired
 	private PlaceMapper placeMapper;
+
+	
+	@Autowired
+	private PlaceReviewMapper placeReviewMapper;
+	
+
 	@Autowired
 	private PlaceListViewMapper placeListViewMapper;
+
 
 	public int sequence() {
 		String sql = "select place_seq.nextval from dual";
@@ -213,9 +225,10 @@ public class PlaceDao {
 				+ "where place_no = ? "
 				+ "group by review_place";
 		Object[] data = {placeNo};
-		jdbcTemplate.queryForObject(sql, float.class, data);
-		return 0;
+		
+		return jdbcTemplate.queryForObject(sql, float.class, data);
 	}
+	
 	
 	//메인에서 보여줄 top5
 	public List<PlaceListViewDto> selectListOnPlace() {			
@@ -233,6 +246,27 @@ public class PlaceDao {
 				+ ") where rn between 1 and 5";
 		List<PlaceListViewDto> list = jdbcTemplate.query(sql, placeListViewMapper);
 		return list;
+	}
+	
+	//1개 여행지의 리뷰 평균
+	//데이터 정상이고 외래키 잘 연결되어있다면
+	/*
+	 * select round(coalesce(avg(nvl(review_star, 0)),0),1) as review_Star from
+	 * REVIEW where review_place = 5 group by review_place
+	 * 
+	 * 이런 구문도 가능한데 현재 더미데이터라 일단 조인했음
+	 */
+	public Integer selectStarAvg(int placeNo) {
+		String sql = "select round(coalesce(sub.star_avg,0),1) as review_star "
+					+ "from place p "
+					+ "left join ( "
+						+ "select review_place, avg(nvl(review_star, 0)) as star_avg "
+						+ "from review "
+						+ "group by review_place "
+					+ ") sub on p.place_no = sub.review_place "
+					+ "where p.place_no = ?";
+		Object[] data = {placeNo};
+		return jdbcTemplate.queryForObject(sql, Integer.class, data);
 	}
 }
 
