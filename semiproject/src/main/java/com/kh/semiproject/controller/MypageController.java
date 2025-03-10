@@ -187,32 +187,24 @@ public class MypageController {
 		return "/WEB-INF/views/mypage/myLikeReview.jsp";
 	}
 
-	// 내가 작성한 후기 목록 매핑
-	@RequestMapping("myReview")
-	public String myReview(HttpSession session, Model model) {
-		String userId = (String) session.getAttribute("userId"); // 내 아이디 추출
-		List<ReviewDto> list = reviewDao.selectListByUserId(userId); // 내가 작성한 후기 목록 조회
-		model.addAttribute("list", list);
-		return "/WEB-INF/views/mypage/myReview.jsp";
-	}
-
-	// 내가 작성한 댓글 목록 매핑
-	@RequestMapping("myReply")
-	public String myReply(HttpSession session, Model model, 
-			@RequestParam(required = false) Integer reviewNo) {
-	    String userId = (String) session.getAttribute("userId"); // 내 아이디 추출
-
-	    if (reviewNo == null) {
-	        model.addAttribute("error", "리뷰 번호가 없습니다.");
-	        return "/WEB-INF/views/mypage/myReply.jsp";
-	    }
-
-	    List<ReplyDto> list = replyDao.selectListByUserIdAndReviewNo(userId, reviewNo);
-	    model.addAttribute("list", list);
-	    return "/WEB-INF/views/mypage/myReply.jsp";
-	}
-
-
+//	// 내가 작성한 후기 목록 매핑
+//	@RequestMapping("myReview")
+//	public String myReview(HttpSession session, Model model) {
+//		String userId = (String) session.getAttribute("userId"); // 내 아이디 추출
+//		List<ReviewDto> list = reviewDao.selectListByUserId(userId); // 내가 작성한 후기 목록 조회
+//		model.addAttribute("list", list);
+//		return "/WEB-INF/views/mypage/myReview.jsp";
+//	}
+//
+//	// 내가 작성한 댓글 목록 매핑
+//	@RequestMapping("myReply")
+//	public String myReply(HttpSession session, Model model, @RequestParam int replyOrigin) { 
+//	    String userId = (String) session.getAttribute("userId");
+//	    List<ReplyDto> list = replyDao.selectListByUserIdAndReviewNo(userId, replyOrigin);
+//	    model.addAttribute("list", list);
+//	    return "/WEB-INF/views/mypage/myReply.jsp";
+//	}
+	
 	// 회원아이디로 이미지 주소를 반환하는 매핑
 	@RequestMapping("/profile")
 	public String image(@RequestParam String memberId) {
