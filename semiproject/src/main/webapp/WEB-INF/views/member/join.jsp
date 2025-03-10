@@ -86,7 +86,7 @@
                 <div class="fail-feedback red"><i class="fa-solid fa-check"></i>올바른 형식의 이메일이 아닙니다</div>
             </div>
             <div class="cell">
-                <label>생년월일</label>
+                <label>생년월일<i class="fa-solid fa-asterisk red"></i></label>
                 <input type="text" name="memberBirth" class="field w-100">
                 <div class="fail-feedback red"><i class="fa-solid fa-check"></i>정확한 생년월일을 입력해주세요(ex)2000-02-20</div>
             </div>

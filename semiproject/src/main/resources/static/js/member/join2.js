@@ -5,7 +5,7 @@ $(function(){
             memberPw : false,
             memberPwReinput : false,
             memberNickname : false,
-            memberBirth : true,
+            memberBirth : false,
             memberGender : false,
             memberContact: true,
             memberEmail : false,
@@ -155,7 +155,8 @@ $(function(){
         });
         $("[name=memberBirth]").blur(function(){
             var regex = /^(19[0-9]{2}|20[0-9]{2})-((02-(0[1-9]|1[0-9]|2[0-8]))|((0[469]|11)-(0[1-9]|1[0-9]|2[0-9]|30))|((0[13578]|1[02])-(0[1-9]|1[0-9]|2[0-9]|3[01])))$/;
-            var isValid = $(this).val().length == 0 || regex.test($(this).val());
+            var isValid = $(this).val().length > 0 && regex.test($(this).val()) &&moment($(this).val()).isBefore(picker.maxDate);
+			//오늘 태어난 사람도 되긴해..
             $(this).removeClass("fail").addClass(isValid ? "" : "fail");
             status.memberBirth = isValid;
             });
