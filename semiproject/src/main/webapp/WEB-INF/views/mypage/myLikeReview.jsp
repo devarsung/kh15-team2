@@ -9,4 +9,6 @@
   	<jsp:param name="menu" value="myLikeReview"/>
 </jsp:include>
 
+${reviewLikeList}
+
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
