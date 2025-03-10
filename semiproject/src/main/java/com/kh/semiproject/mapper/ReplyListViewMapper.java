@@ -6,26 +6,21 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import com.kh.semiproject.dto.ReviewListViewDto;
+import com.kh.semiproject.dto.ReplyListViewDto;
 
 @Component
-public class ReviewListViewMapper implements RowMapper<ReviewListViewDto>{
+public class ReplyListViewMapper implements RowMapper<ReplyListViewDto>{
 
 	@Override
-	public ReviewListViewDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+	public ReplyListViewDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
-		return ReviewListViewDto.builder()
-				.reviewNo(rs.getInt("review_no"))
-				.reviewTitle(rs.getString("review_title"))
-//				.reviewContent(rs.getString("review_content"))				
-				.reviewLike(rs.getInt("review_like"))
-				.reviewRead(rs.getInt("review_read"))
-				.reviewReply(rs.getInt("review_reply"))
-				.reviewWtime(rs.getTimestamp("review_wtime"))
-				.reviewEtime(rs.getTimestamp("review_etime"))
-				.reviewWriter(rs.getString("review_writer"))
-				.reviewPlace(rs.getString("review_place"))
-				.reviewStar(rs.getFloat("review_star"))
+		return ReplyListViewDto.builder()
+				.replyNo(rs.getInt("reply_no"))
+				.replyWriter(rs.getString("reply_writer"))
+				.replyOrigin(rs.getInt("reply_origin"))
+				.replyContent(rs.getString("reply_content"))
+				.replyWtime(rs.getTimestamp("reply_wtime"))
+				.replyEtime(rs.getTimestamp("reply_etime"))
 				
 				.memberId(rs.getString("member_id"))
 				.memberPw(rs.getString("member_pw"))
@@ -43,5 +38,5 @@ public class ReviewListViewMapper implements RowMapper<ReviewListViewDto>{
 				.memberChange(rs.getTimestamp("member_change"))
 				.build();
 	}
-
+	
 }

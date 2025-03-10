@@ -35,12 +35,13 @@ public class NoticeController {
 	
 	@RequestMapping("/list")
 	public String list(@ModelAttribute ("pageVO")PageVO pageVO, Model model) {
-		int count =  noticeDao.count(pageVO);
+		int count =  noticeListViewDao.count(pageVO);
 		pageVO.setCount(count);
 		List<NoticeListViewDto> list = noticeListViewDao.selectList(pageVO);
 		model.addAttribute("list",list);
 		return "/WEB-INF/views/notice/list.jsp";
 	}
+	
 	@RequestMapping("/detail")
 	public String detail(@RequestParam int noticeNo, Model model) {
 		NoticeDto noticeDto = noticeDao.selectOne(noticeNo);
@@ -50,21 +51,4 @@ public class NoticeController {
 		model.addAttribute("noticeDto",noticeDto);
 		return "/WEB-INF/views/notice/detail.jsp";
 	}
-	
-	@PostMapping("/deleteAll")
-	public String deletAll(@RequestParam(value="noticeNo")
-	List<Integer>noiceNoList) {
-		for(int noticeNo:noiceNoList) {
-			try {
-				int attachmentNo=noticeDao.findAttachment(noticeNo);
-				attachmentService.delete(attachmentNo);
-				
-				
-			}
-			catch(Exception e) {}
-				noticeDao.delete(noticeNo);	
-				
-			}
-		return"redirect:list";
-		}
-	}
+}

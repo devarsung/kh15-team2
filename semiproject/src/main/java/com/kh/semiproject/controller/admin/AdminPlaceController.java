@@ -122,6 +122,9 @@ public class AdminPlaceController {
 		
 		// top 5 리뷰 추출
 		model.addAttribute("reviews",reviewListViewDao.selectListByPlace(placeNo));
+		
+		//별점 추출
+		model.addAttribute("placeStar", placeDao.selectStarAvg(placeNo));
 		return "/WEB-INF/views/admin/place/detail.jsp";
 	}
 

@@ -120,4 +120,14 @@ public class MemberDao {
 	        return null;  // 결과가 없으면 null 반환
 	    }
 	}
+	
+	 // userId로 닉네임을 조회하는 메서드
+    public String selectNicknameById(String userId) {
+        String sql = "SELECT member_nickname FROM member WHERE member_id = ?";
+        try {
+            return jdbcTemplate.queryForObject(sql, String.class, userId);
+        } catch (Exception e) {
+            return "기본닉네임";  // 기본 닉네임 반환 (필요시 변경)
+        }
+    }
 }

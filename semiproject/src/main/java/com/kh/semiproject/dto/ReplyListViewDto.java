@@ -8,14 +8,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
-public class NoticeListViewDto {
-	private int noticeNo;
-	private String noticeTitle;
-//	private String noticeContent;
-	private Timestamp noticeWtime;
-	private Timestamp noticeEtime;
-	private String noticeWriter;
-	private int noticeRead;
+public class ReplyListViewDto {
+	private int replyNo;
+	private String replyWriter;
+	private int replyOrigin;
+	private String replyContent;
+	private Timestamp replyWtime;
+	private Timestamp replyEtime;
 	
 	private String memberId;//아이디
 	private String memberPw;//비밀번호

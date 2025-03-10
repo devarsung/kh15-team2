@@ -13,6 +13,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
+<!-- 별점 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
+
 <style>
     .swiper {
         width: 100%;
@@ -22,10 +25,80 @@
   	 	width: 100%;
 		height: 500px;
     }
-    .div-place-content {
+    .overview-content {
+    	width: 100%;
+    	overflow: auto;
     	border: 1px solid gray;
-    	padding: 0.5em;
+    	padding: 10px;
     }
+    .overview-text {
+   	 	white-space: pre-wrap; 
+	  	word-wrap: break-word;
+	  	width: 100%;
+	  	height: auto;
+	  	overflow-wrap: break-word;
+    }
+    
+    .info-container {
+	    background-color: #E2E2E2;
+	    padding: 20px;
+	}
+	.info-item {
+	    display: flex;
+	    align-items: center;
+	    margin-bottom: 10px;
+	    padding: 10px 0;
+	    border-bottom: 1px solid #cccccc;
+	}
+	.info-title {
+		margin-left: 30px;
+		width: 30%;
+		font-weight: bold;
+	}
+	.info-title i {
+	    margin-right: 5px;
+	}
+	.info-detail a {
+	    color: #0066cc;
+	    text-decoration: none;
+	}
+	.info-detail a:hover {
+	    text-decoration: underline;
+	}
+	.textarea-content {
+	    white-space: pre-wrap;
+	    word-wrap: break-word;
+	    color: #333333;
+	    line-height: 1.5;
+	}
+	
+	
+	.center-box {
+	    position: relative;
+	    display: flex;
+	    flex-direction: column;
+	    align-items: center;
+	    text-align: center;
+	}
+	.reactions-box {
+     	display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    position: relative;
+	    width: 100%;
+	    margin-top: 10px;
+	}
+	.non-heart-area {
+     	text-align: center;
+	    font-size: 30px;
+	}
+	.heart-area {
+		position: absolute;
+	    right: 0;
+	    top: 50%;
+	    transform: translateY(-50%);
+	    font-size: 50px;
+	}
 </style>
 
 <c:if test="${sessionScope.userId != null}">
@@ -67,6 +140,12 @@ $(function(){
 
 <script type="text/javascript">
 $(function() {
+	$(".review-star").score({
+        display:{
+        	showNumber:true,
+        },
+    });
+	
 	var swiper = new Swiper('.place-image-swiper', {
         //기본 옵션
         direction: 'horizontal',
@@ -103,32 +182,42 @@ $(function() {
 </script>
 
 <div class="container w-1000">
-    <div class="cell center">
-        <h1>${placeDto.placeTitle}</h1>
-    </div>
+
+    <div class="cell center-box mt-40">
+	    <h1 class="m-0">${placeDto.placeTitle}</h1>
+	    
+	    <div class="reactions-box">
+	        <div class="non-heart-area">
+	            <div class="review-star" data-max="5" data-rate="${placeStar}"></div><br>
+	            <span class="views"><i class="fa-solid fa-eye"></i> :  ${placeDto.placeRead}</span>
+	            <span class="comments"><i class="fa-solid fa-comment-dots"></i> : ${placeDto.placeReview}</span>
+	        </div>
+	        <div class="heart-area">
+	            <i class="fa-heart fa-regular red"></i>
+	            <span class="heart-count">${placeDto.placeLike}</span>
+	        </div>
+	    </div>
+	</div>
     
-    <div class="cell">
-    	<i class="fa-heart fa-regular red"></i>
-    	<span class="heart-count">${placeDto.placeLike}</span>
-    </div>
+    
 
 	<!-- 이미지 스와이퍼 영역 -->
     <div class="cell my-20">
         <!-- Slider main container -->
-        <div class="swiper place-image-swiper">
+        <div class="swiper place-image-swiper" style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff">
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
                 <!-- Slides -->
                 	<div class="swiper-slide">
                 		<!-- 기본 이미지 처리 여기서 했는데 attachmentService load 에서 할지 말지 생각 좀 -->
                 		<img class="place-img" src="/attachment/download?attachmentNo=${placeDto.placeFirstImage}" width="100%" height="100%" 
-                		onerror="this.onerror=null; this.src='/images/defaultBack.png';">
+                		onerror="this.onerror=null; this.src='/images/default-image.png';">
                 	</div>
                 <c:forEach var="attachmentNo" items="${attachmentNos}">
                 	<div class="swiper-slide">
                 		<!-- 기본 이미지 처리 여기서 했는데 attachmentService load 에서 할지 말지 생각 좀 -->
                 		<img class="place-img" src="/attachment/download?attachmentNo=${attachmentNo}" width="100%" height="100%" 
-                		onerror="this.onerror=null; this.src='/images/defaultBack.png';">
+                		onerror="this.onerror=null; this.src='/images/default-image.png';">
                 	</div>
                 </c:forEach>
             </div>
@@ -144,8 +233,8 @@ $(function() {
     <!-- 개요 영역 -->
     <div class="cell my-20">
         <h2><i class="fa-solid fa-hand-point-right"></i> 개요</h2>
-        <div class="div-place-content">
-        	<pre>${placeDto.placeOverview}</pre>     	
+        <div class="overview-content">
+        	<div class="overview-text">${placeDto.placeOverview}</div>
         </div>
     </div>
     
@@ -155,31 +244,52 @@ $(function() {
         <div id="map" data-lat="${placeDto.placeLat}" data-lng="${placeDto.placeLng}"></div>
     </div>
     
-    <c:if test="${placeDto.hasInfo}">
-	    <!-- 기본 정보 영역 -->
-	    <div class="cell my-20">
-	        <h2><i class="fa-solid fa-hand-point-right"></i> 정보</h2>
-	        <div class="" style="background-color:#E2E2E2;">
-	        	<ul>
-					<c:if test="${placeDto.placeTel != null}">
-						<li>문의전화 : ${placeDto.placeTel}</li>
-					</c:if>
-					
-					<c:if test="${placeDto.placeWebsite != null}">
-						<li>홈페이지 : <a href="${placeDto.placeWebsite}">${placeDto.placeWebsite}</a></li>
-					</c:if>
-					
-					<c:if test="${placeDto.placeParking != null}">
-						<li>주차가능여부 : ${placeDto.placeParking == 'Y' ? '가능' : '불가능'}</li>
-					</c:if>
-					
-					<c:if test="${placeDto.placeOperate != null}">
-						<li style="white-space: pre-line;">운영정보 : <br>${placeDto.placeOperate}</li>
-					</c:if>
-	        	</ul>
+    
+    <!-- 기본 정보 영역 -->
+    <div class="cell my-20">
+	    <h2><i class="fa-solid fa-hand-point-right"></i> 정보</h2>
+	    <div class="info-container">
+	        <div class="info-content">
+	            <div class="info-item">
+	                <div class="info-title"><i class="fa-solid fa-location-pin"></i> 주소</div>
+	                <div class="info-detail">
+	                	${placeDto.placePost}<br>
+	                	${placeDto.placeAddress1}, ${placeDto.placeAddress2}
+                	</div>
+	            </div>
+	
+	            <c:if test="${placeDto.placeTel != null}">
+	                <div class="info-item">
+	                    <div class="info-title"><i class="fa-solid fa-phone-alt"></i> 문의전화</div>
+	                    <div class="info-detail">${placeDto.placeTel}</div>
+	                </div>
+	            </c:if>
+	            
+	            <c:if test="${placeDto.placeWebsite != null}">
+	                <div class="info-item">
+	                    <div class="info-title"><i class="fa-solid fa-link"></i> 홈페이지</div>
+	                    <div class="info-detail"><a href="${placeDto.placeWebsite}" target="_blank">${placeDto.placeWebsite}</a></div>
+	                </div>
+	            </c:if>
+	            
+	            <c:if test="${placeDto.placeParking != null}">
+	                <div class="info-item">
+	                    <div class="info-title"><i class="fa-solid fa-parking"></i> 주차가능여부</div>
+	                    <div class="info-detail">${placeDto.placeParking == 'Y' ? '가능' : '불가능'}</div>
+	                </div>
+	            </c:if>
+	            
+	            <c:if test="${placeDto.placeOperate != null}">
+	                <div class="info-item">
+	                    <div class="info-title"><i class="fa-solid fa-cogs"></i>운영정보</div>
+	                    <div class="info-detail">
+	                    	<span class="textarea-content">${placeDto.placeOperate}</span>
+                    	</div>
+	                </div>
+	            </c:if>
 	        </div>
 	    </div>
-    </c:if>
+	</div>
 
 	<!-- 리뷰 영역 (있으면 보여주기) -->
 	<c:if test="${fn:length(reviews) > 0}">
