@@ -102,6 +102,7 @@ public class MypageController {
 
 		String userId = (String) session.getAttribute("userId");
 		MemberDto findDto = memberDao.selectOne(userId);
+		
 
 		// 비밀번호 확인
 		if (!findDto.getMemberPw().equals(memberDto.getMemberPw())) {
@@ -125,6 +126,7 @@ public class MypageController {
 			if (attachmentNo != null) {
 				attachmentService.delete(attachmentNo);
 				memberDao.deleteProfile(userId);
+				System.out.println("deleteProfile 상태: " + deleteProfile);
 			}
 		} 
 		else if (memberProfile != null && !memberProfile.isEmpty()) { // 새 프로필 업로드
@@ -133,12 +135,15 @@ public class MypageController {
 			}
 			int newAttachmentNo = attachmentService.save(memberProfile);
 			memberDao.connect(userId, newAttachmentNo);
+			System.out.println("상태: " + deleteProfile);
 		}
 
 		// 회원 정보 업데이트
 		memberDao.update(findDto);
 
 		return "redirect:home"; // 변경 후 다시 내 정보 수정 페이지로 이동
+		
+		
 	}
 
 	// 회원 탈퇴 매핑

@@ -25,7 +25,7 @@ public class PlacePageVO extends PageVO{
 	@Override
 	public String getParameters() {
 		if(isList()) {
-			return "size=" + size;
+			return "size=" + size + "&order=" + order;
 		}
 		else {
 			StringBuilder parameters = new StringBuilder();
@@ -44,6 +44,7 @@ public class PlacePageVO extends PageVO{
 				parameters.append("&type=").append(type);
 			}
 			
+			parameters.append("&order=").append(order);
 			return parameters.toString();
 		}
 	}

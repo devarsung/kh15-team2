@@ -25,7 +25,9 @@ public class NoticeDao {
 
 	public void insert(NoticeDto noticeDto) {
 		String sql = "insert into notice(notice_no, notice_title, notice_content, notice_writer) values(?,?,?,?)";
-		Object[] data = { noticeDto.getNoticeNo(), noticeDto.getNoticeTitle(), noticeDto.getNoticeContent(), noticeDto.getNoticeWriter() };
+
+		Object[] data = { noticeDto.getNoticeNo(),noticeDto.getNoticeTitle(), noticeDto.getNoticeContent(), noticeDto.getNoticeWriter() };
+
 		jdbcTemplate.update(sql, data);
 	}
 
@@ -89,7 +91,7 @@ public class NoticeDao {
 	//공지사항 이미지 찾기
 	//-반환형이 int이기 때문에 만약 이미지가없으면 예외가 발생함
 	public int findAttachment(int noticeNo) {
-		String sql="select attachment_no from from notice_image "
+		String sql="select attachment_no from ontice_list "
 				+ "where noticeNo_no=? ";
 		Object[] data= {noticeNo};
 		return jdbcTemplate.queryForObject(sql, int.class,data);

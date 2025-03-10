@@ -8,7 +8,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semiproject.dto.PlaceDto;
+
 import com.kh.semiproject.dto.PlaceReviewDto;
+
+import com.kh.semiproject.dto.PlaceListViewDto;
+import com.kh.semiproject.mapper.PlaceListViewMapper;
+
 import com.kh.semiproject.mapper.PlaceMapper;
 import com.kh.semiproject.mapper.PlaceReviewMapper;
 import com.kh.semiproject.vo.PlacePageVO;
@@ -20,10 +25,15 @@ public class PlaceDao {
 
 	@Autowired
 	private PlaceMapper placeMapper;
+
 	
 	@Autowired
 	private PlaceReviewMapper placeReviewMapper;
 	
+
+	@Autowired
+	private PlaceListViewMapper placeListViewMapper;
+
 
 	public int sequence() {
 		String sql = "select place_seq.nextval from dual";
@@ -35,14 +45,15 @@ public class PlaceDao {
 		String sql = "insert into place("
 					+ "place_no, place_writer, place_title, place_overview, "
 					+ "place_post, place_address1, place_address2, place_region, "
-					+ "place_lat, place_lng, place_first_image, place_type)"
-					+ "values(?,?,?,?,?,?,?,?,?,?,?,?)";
+					+ "place_lat, place_lng, place_first_image, place_type, "
+					+ "place_tel, place_website, place_parking, place_operate"
+					+ ")"
+					+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		Object[] data = {
-				placeDto.getPlaceNo(), placeDto.getPlaceWriter(), 
-				placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), placeDto.getPlacePost(), 
-				placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceRegion(), 
-				placeDto.getPlaceLat(), placeDto.getPlaceLng(), placeDto.getPlaceFirstImage(),
-				placeDto.getPlaceType()
+				placeDto.getPlaceNo(), placeDto.getPlaceWriter(), placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), 
+				placeDto.getPlacePost(), placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceRegion(), 
+				placeDto.getPlaceLat(), placeDto.getPlaceLng(), placeDto.getPlaceFirstImage(), placeDto.getPlaceType(),
+				placeDto.getPlaceTel(), placeDto.getPlaceWebsite(), placeDto.getPlaceParking(), placeDto.getPlaceOperate()
 		};
 		jdbcTemplate.update(sql, data);
 	}
@@ -62,11 +73,31 @@ public class PlaceDao {
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 
-	public boolean update(PlaceDto placeDto) {
+	public boolean update2(PlaceDto placeDto) {
 		String sql = "update place set place_title=?, place_content=?, place_post=? place_address1=?, place_address2=?, place_region=? where place_no =?";
 		Object[] data = { placeDto.getPlaceTitle(), placeDto.getPlaceOverview(), placeDto.getPlacePost(),
 				placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(), placeDto.getPlaceRegion(),
 				placeDto.getPlaceNo() };
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+	
+	public boolean update(PlaceDto placeDto) {
+		String sql = "update place set "
+				+ "place_region=?, place_type=?, place_title=?, "
+				+ "place_post=?, place_address1=?, place_address2=?, "
+				+ "place_lat=?, place_lng=?, place_overview=?, "
+				+ "place_tel=?, place_website=?, place_parking=?, "
+				+ "place_operate=?, place_first_image=?, "
+				+ "place_etime=systimestamp "
+				+ "where place_no=?";
+		Object[] data = {
+				placeDto.getPlaceRegion(), placeDto.getPlaceType(), placeDto.getPlaceTitle(),
+				placeDto.getPlacePost(), placeDto.getPlaceAddress1(), placeDto.getPlaceAddress2(),
+				placeDto.getPlaceLat(), placeDto.getPlaceLng(), placeDto.getPlaceOverview(),
+				placeDto.getPlaceTel(), placeDto.getPlaceWebsite(), placeDto.getPlaceParking(),
+				placeDto.getPlaceOperate(), placeDto.getPlaceFirstImage(),
+				placeDto.getPlaceNo()
+		};
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 
@@ -101,42 +132,60 @@ public class PlaceDao {
 	}
 
 	// 여행지 목록 조회+검색
-	public List<PlaceDto> selectList(PlacePageVO placePageVO) {
+	public List<PlaceListViewDto> selectList(PlacePageVO placePageVO) {
 		StringBuilder sql = new StringBuilder();
 		List<Object> dataList = new ArrayList<>();
 
 		if (placePageVO.isList()) {
-			sql.append("select * from (").append("select rownum rn, TMP.* from (").append("select * from place ")
-					.append("order by place_no asc").append(") TMP").append(") where rn between ? and ?");
-
+			sql.append("select * from( ")
+				.append("select rownum rn, tmp.* from( ")
+					.append("select p.*, COALESCE(sub.star_avg,0) as place_star from place p ")
+						.append("left join  (")
+							.append("select review_place, avg(nvl(review_star,0)) as star_avg ")
+							.append("from review ")
+							.append("group by review_place ")
+							.append(") sub on p.place_no = sub.review_place ")
+						.append("order by ").append(placePageVO.getOrder()).append(" desc, place_no asc ")
+					.append(") tmp ")
+			.append(") where rn between ? and ?");
+	
 			dataList.add(placePageVO.getStartRownum());
 			dataList.add(placePageVO.getFinishRownum());
 		} else {
-			sql.append("select * from (").append("select rownum rn, TMP.* from (").append("select * from place ")
-					.append("where 1=1 ");
-
+			sql.append("select * from( ")
+					.append("select rownum rn, tmp.* from( ")
+						.append("select p.*, COALESCE(sub.star_avg,0) as place_star from place p ")
+							.append("left join  (")
+								.append("select review_place, avg(nvl(review_star,0)) as star_avg ")
+								.append("from review ")
+								.append("group by review_place ")
+								.append(") sub on p.place_no = sub.review_place ")
+							.append("where 1=1 ");
+							
 			if (placePageVO.getKeyword() != null) {
 				sql.append("and instr(").append(placePageVO.getColumn()).append(", ?) > 0 ");
 				dataList.add(placePageVO.getKeyword());
 			}
-
+	
 			if (placePageVO.getRegion() != null) {
 				sql.append("and place_region = ? ");
 				dataList.add(placePageVO.getRegion());
 			}
-
+	
 			if (placePageVO.getType() != null) {
 				sql.append("and place_type = ? ");
 				dataList.add(placePageVO.getType());
 			}
-
-			sql.append("order by place_no asc").append(") TMP").append(") where rn between ? and ?");
-
+							
+			sql.append("order by ").append(placePageVO.getOrder()).append(" desc, place_no asc ")
+				.append(") tmp ")
+			.append(") where rn between ? and ?");
+			
 			dataList.add(placePageVO.getStartRownum());
 			dataList.add(placePageVO.getFinishRownum());
 		}
 
-		return jdbcTemplate.query(sql.toString(), placeMapper, dataList.toArray());
+		return jdbcTemplate.query(sql.toString(), placeListViewMapper, dataList.toArray());
 	}
 	
 	//여행지 1개 조회
@@ -146,14 +195,8 @@ public class PlaceDao {
 		List<PlaceDto> list = jdbcTemplate.query(sql, placeMapper, data);
 		return list.isEmpty() ? null : list.get(0);
 	}
-
-	public boolean findAttachment(int placeFirstImage) {
-		String sql = "select count(*) from attachment where attachment_no = ?";
-		Object[] data = { placeFirstImage };
-		return jdbcTemplate.update(sql, data) > 0;
-	}
 	
-	//여행지 이미지 번호들 조회
+	//여행지 이미지 번호들 조회(모두)//이 메소드 필요없을듯
 	public List<Integer> selectPlaceImagesNos(int placeNo) {
 		String sql = "select attachment_no from place_image where place_no=?";
 		Object[] data= {placeNo};
@@ -211,6 +254,45 @@ public class PlaceDao {
 		 List<PlaceReviewDto> list = jdbcTemplate.query(sql, placeReviewMapper);
 		 //List<PlaceReviewDto> list = jdbcTemplate.query(sql, placeReviewMapper);
 	    return list;
+	}
+	
+	//메인에서 보여줄 top5
+	public List<PlaceListViewDto> selectListOnPlace() {			
+		String sql = "select * from ("
+						+ "select rownum rn, tmp.* from ("
+								+ "select p.place_no,p.place_title,p.place_type,p.place_like,p.place_read,p.place_review,"
+								+ "round(coalesce(avg(r.review_star),0),1) as place_star, p.place_region,p.place_writer,p.place_wtime,p.place_etime,"
+								+ "(p.place_like + p.place_read + p.place_review + coalesce(avg(r.review_star),0)) as total,p.place_first_image "
+								+ "from place p left join review r on p.place_no=r.review_place "
+								+ "group by p.place_no,p.place_title,p.place_type,p.place_like,p.place_read,p.place_review,"
+								+ "p.place_region,p.place_writer,p.place_wtime,p.place_etime,p.place_first_image "
+								+ "having p.place_like>0  and p.place_review>0 and p.place_read>0 and coalesce(avg(r.review_star),0)>0 "
+								+ "order by total desc "
+							+ ")tmp "
+				+ ") where rn between 1 and 5";
+		List<PlaceListViewDto> list = jdbcTemplate.query(sql, placeListViewMapper);
+		return list;
+	}
+	
+	//1개 여행지의 리뷰 평균
+	//데이터 정상이고 외래키 잘 연결되어있다면
+	/*
+	 * select round(coalesce(avg(nvl(review_star, 0)),0),1) as review_Star from
+	 * REVIEW where review_place = 5 group by review_place
+	 * 
+	 * 이런 구문도 가능한데 현재 더미데이터라 일단 조인했음
+	 */
+	public Integer selectStarAvg(int placeNo) {
+		String sql = "select round(coalesce(sub.star_avg,0),1) as review_star "
+					+ "from place p "
+					+ "left join ( "
+						+ "select review_place, avg(nvl(review_star, 0)) as star_avg "
+						+ "from review "
+						+ "group by review_place "
+					+ ") sub on p.place_no = sub.review_place "
+					+ "where p.place_no = ?";
+		Object[] data = {placeNo};
+		return jdbcTemplate.queryForObject(sql, Integer.class, data);
 	}
 }
 

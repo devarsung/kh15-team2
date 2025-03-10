@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 
 <!-- kakaomap cdn -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bb3ee3a13bf05ba14dafda342aa87cd1"></script>
@@ -10,6 +12,9 @@
 <!-- swiper cdn -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- 별점 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
 
 <style>
     .swiper {
@@ -20,14 +25,78 @@
   	 	width: 100%;
 		height: 500px;
     }
-    .div-place-content {
+    .overview-content {
+    	width: 100%;
+    	overflow: auto;
     	border: 1px solid gray;
-    	padding: 0.5em;
+    	padding: 10px;
     }
+    .overview-text {
+   	 	white-space: pre-wrap; 
+	  	word-wrap: break-word;
+	  	width: 100%;
+	  	height: auto;
+	  	overflow-wrap: break-word;
+    }
+    
+    .info-container {
+	    background-color: #E2E2E2;
+	    padding: 20px;
+	}
+	.info-item {
+	    display: flex;
+	    align-items: center;
+	    margin-bottom: 10px;
+	    padding: 10px 0;
+	    border-bottom: 1px solid #cccccc;
+	}
+	.info-title {
+		margin-left: 30px;
+		width: 30%;
+		font-weight: bold;
+	}
+	.info-title i {
+	    margin-right: 5px;
+	}
+	.info-detail a {
+	    color: #0066cc;
+	    text-decoration: none;
+	}
+	.info-detail a:hover {
+	    text-decoration: underline;
+	}
+	.textarea-content {
+	    white-space: pre-wrap;
+	    word-wrap: break-word;
+	    color: #333333;
+	    line-height: 1.5;
+	}
+	
+	.div-title {
+		position: relative;
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	}
+	.left-btns {
+		position: absolute;
+	    left: 0;
+	    gap: 10px;
+	}
+	.reactions {
+		font-size: 30px;
+	}
+	
 </style>
 
 <script type="text/javascript">
 $(function() {
+ 	$(".review-star").score({
+        display:{
+        	showNumber:true,
+        },
+    });
+	 
 	var swiper = new Swiper('.place-image-swiper', {
         //기본 옵션
         direction: 'horizontal',
@@ -64,32 +133,39 @@ $(function() {
 </script>
 
 <div class="container w-1000">
-    <div class="cell center">
-        <h1>${placeDto.placeTitle}</h1>
+    <div class="cell div-title">
+    	<div class="left-btns">
+	    	<a class="btn btn-neutral" href="edit?placeNo=${placeDto.placeNo}">수정하기</a>
+	    	<a class="btn btn-neutral" href="delete?placeNo=${placeDto.placeNo}">삭제하기</a>
+    	</div>
+        <h1 class="m-0">${placeDto.placeTitle}</h1>
     </div>
-    
-    <div class="cell">
-    	<i class="fa-heart fa-regular red"></i>
-    	<span class="heart-count">${placeDto.placeLike} 개(관리자 화면에선 그냥 보여주기만)</span>
-    </div>
-    
-    <div class="cell">
-    	<a class="btn btn-neutral" href="edit?placeNo=${placeDto.placeNo}">수정하기</a>
-    	<a class="btn btn-neutral" href="delete?placeNo=${placeDto.placeNo}">삭제하기</a>
+
+    <div class="cell center reactions">
+    	<div class="review-star" data-max="5" data-rate="${placeStar}"></div><br>
+    	<span class="views"><i class="fa-solid fa-eye"></i> :  ${placeDto.placeRead}</span>
+    	<span class="likes"><i class="fa-solid fa-heart"></i> : ${placeDto.placeLike}</span>
+        <span class="comments"><i class="fa-solid fa-comment-dots"></i> : ${placeDto.placeReview}</span>
     </div>
 
 	<!-- 이미지 스와이퍼 영역 -->
     <div class="cell my-20">
         <!-- Slider main container -->
-        <div class="swiper place-image-swiper">
+        <div class="swiper place-image-swiper" style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff">
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
                 <!-- Slides -->
+                	
+                	<div class="swiper-slide">
+                		<!-- 기본 이미지 처리 여기서 했는데 attachmentService load 에서 할지 말지 생각 좀 -->
+                		<img class="place-img" src="/attachment/download?attachmentNo=${placeDto.placeFirstImage}" width="100%" height="100%" 
+                		onerror="this.onerror=null; this.src='/images/default-image.png';">
+                	</div>
                 <c:forEach var="attachmentNo" items="${attachmentNos}">
                 	<div class="swiper-slide">
                 		<!-- 기본 이미지 처리 여기서 했는데 attachmentService load 에서 할지 말지 생각 좀 -->
                 		<img class="place-img" src="/attachment/download?attachmentNo=${attachmentNo}" width="100%" height="100%" 
-                		onerror="this.onerror=null; this.src='/images/defaultBack.png';">
+                		onerror="this.onerror=null; this.src='/images/default-image.png';">
                 	</div>
                 </c:forEach>
             </div>
@@ -104,9 +180,9 @@ $(function() {
     
     <!-- 개요 영역 -->
     <div class="cell my-20">
-        <h2><i class="fa-solid fa-hand-point-right"></i> 소개</h2>
-        <div class="div-place-content">
-        	${placeDto.placeOverview}
+        <h2><i class="fa-solid fa-hand-point-right"></i> 개요</h2>
+        <div class="overview-content">
+        	<div class="overview-text">${placeDto.placeOverview}</div>
         </div>
     </div>
     
@@ -115,45 +191,81 @@ $(function() {
     	<h2><i class="fa-solid fa-hand-point-right"></i> 지도</h2>
         <div id="map" data-lat="${placeDto.placeLat}" data-lng="${placeDto.placeLng}"></div>
     </div>
-
-	<!-- 리뷰 영역 -->
-    <div class="cell">
-    	<h2><i class="fa-solid fa-hand-point-right"></i> 리뷰</h2>
-        <table class="table table-border table-stripe">
-            <thead></thead>
-            <tbody class="center">
-                <tr>
-                    <td>여행자A</td>
-                    <td><a href="/review/detail?reviewNo=">낭만적인 곳입니다!</a></td>
-                    <td>2025-02-23</td>
-                </tr>
-                <tr>
-                    <td>여행자B</td>
-                    <td><a href="/review/detail?reviewNo=">야경이 멋져요!</a></td>
-                    <td>2025-02-23</td>
-                </tr>
-                <tr>
-                    <td>여행자B</td>
-                    <td><a href="/review/detail?reviewNo=">야경이 멋져요!</a></td>
-                    <td>2025-02-23</td>
-                </tr>
-                <tr>
-                    <td>여행자B</td>
-                    <td><a href="/review/detail?reviewNo=">야경이 멋져요!</a></td>
-                    <td>2025-02-23</td>
-                </tr>
-                <tr>
-                    <td>여행자B</td>
-                    <td><a href="/review/detail?reviewNo=">야경이 멋져요!</a></td>
-                    <td>2025-02-23</td>
-                </tr>
-            </tbody>
-        </table>
-    	
-    	<div class="cell right">
-	       <a href="/review/list?placeNo=" class="btn btn-neutral end">후기 더보기</a>
-	   </div>
-    </div>
+    
+    
+    <!-- 기본 정보 영역 -->
+    <div class="cell my-20">
+	    <h2><i class="fa-solid fa-hand-point-right"></i> 정보</h2>
+	    <div class="info-container">
+	        <div class="info-content">
+	            <div class="info-item">
+	                <div class="info-title"><i class="fa-solid fa-location-pin"></i> 주소</div>
+	                <div class="info-detail">
+	                	${placeDto.placePost}<br>
+	                	${placeDto.placeAddress1}, ${placeDto.placeAddress2}
+                	</div>
+	            </div>
+	
+	            <c:if test="${placeDto.placeTel != null}">
+	                <div class="info-item">
+	                    <div class="info-title"><i class="fa-solid fa-phone-alt"></i> 문의전화</div>
+	                    <div class="info-detail">${placeDto.placeTel}</div>
+	                </div>
+	            </c:if>
+	            
+	            <c:if test="${placeDto.placeWebsite != null}">
+	                <div class="info-item">
+	                    <div class="info-title"><i class="fa-solid fa-link"></i> 홈페이지</div>
+	                    <div class="info-detail"><a href="${placeDto.placeWebsite}" target="_blank">${placeDto.placeWebsite}</a></div>
+	                </div>
+	            </c:if>
+	            
+	            <c:if test="${placeDto.placeParking != null}">
+	                <div class="info-item">
+	                    <div class="info-title"><i class="fa-solid fa-parking"></i> 주차가능여부</div>
+	                    <div class="info-detail">${placeDto.placeParking == 'Y' ? '가능' : '불가능'}</div>
+	                </div>
+	            </c:if>
+	            
+	            <c:if test="${placeDto.placeOperate != null}">
+	                <div class="info-item">
+	                    <div class="info-title"><i class="fa-solid fa-cogs"></i>운영정보</div>
+	                    <div class="info-detail">
+	                    	<span class="textarea-content">${placeDto.placeOperate}</span>
+                    	</div>
+	                </div>
+	            </c:if>
+	        </div>
+	    </div>
+	</div>
+    
+	<!-- 리뷰 영역 (있으면 보여주기) -->
+	<c:if test="${fn:length(reviews) > 0}">
+	    <div class="cell">
+	    	<h2><i class="fa-solid fa-hand-point-right"></i> 베스트 리뷰</h2>
+	        <table class="table table-border table-stripe">
+	            <thead></thead>
+	            <tbody class="center">
+	            	<c:forEach var="review" items="${reviews}">
+	            		<tr>
+	            			<td>
+			            		<c:choose>
+									<c:when test="${review.memberNickname == null }">(탈퇴한 사용자)</c:when>
+									<c:otherwise>${review.memberNickname}</c:otherwise>
+								</c:choose>
+							</td>
+		                    <td><a href="/review/detail?reviewNo=${review.reviewNo}">${review.reviewTitle}</a></td>
+		                    <td>${review.reviewWtime}</td>
+	                	</tr>
+	            	</c:forEach>
+	            </tbody>
+	        </table>
+	    	
+	    	<div class="cell right">
+		       <a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-neutral end">이 여행지의 후기 더보기</a>
+		   </div>
+	    </div>
+    </c:if>
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>   
