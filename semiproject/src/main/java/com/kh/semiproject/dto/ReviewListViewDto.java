@@ -51,6 +51,18 @@ public class ReviewListViewDto {
 			return wtime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
 		}
 	}	
+	
+	public String getEtimeString() {
+		LocalDate today = LocalDate.now();
+		LocalDateTime wtime = reviewWtime.toLocalDateTime();
+		LocalDate wdate = wtime.toLocalDate();
+		if(wdate.isBefore(today)) {
+			return wdate.toString();
+		}
+		else {
+			return wtime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+		}
+	}	
 }
 
 
