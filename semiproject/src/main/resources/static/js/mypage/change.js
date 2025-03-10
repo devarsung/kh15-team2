@@ -81,7 +81,7 @@ $(function() {
 		$(this).val(convert);
 	});
 	$("[name=memberContact]").blur(function() {
-		var regex = /^010[1-9][0-7]{7}$/
+		var regex = /^010[1-9][0-9]{7}$/ 
 		var isValid = $(this).val().length == 0 || regex.test($(this).val());
 		$(this).removeClass("fail").addClass(isValid ? "" : "fail");
 		status.memberContact = isValid;

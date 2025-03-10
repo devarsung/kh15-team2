@@ -178,7 +178,7 @@ $(function(){
         $(this).val(convert);
     });
     $("[name=memberContact]").blur(function(){
-        var regex = /^010[0-9]{8}$/;
+        var regex =/^010[1-9][0-9]{7}$/;
         //(주의) 필수항목이 아니기 때문에 미입력도 통과로 간주
         var isValid = $(this).val().length == 0 || regex.test($(this).val());
         $(this).removeClass("success fail").addClass(isValid ? "success" : "fail");
