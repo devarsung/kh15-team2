@@ -9,6 +9,38 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
    <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script>
     <script type="text/javascript">
+    
+    $(function(){
+		var params = new URLSearchParams(location.search);
+		var reivewNo = params.get("reivewNo");
+		
+		//좋아요 여부
+		$.ajax({
+			url:"??",
+			method:"post",
+			data: {reivewNo : reivewNo},
+			success:function(response) {
+				$(".fa-heart").removeClass("fa-solid fa-regular")
+					.addClass(response.done ? "fa-solid" : "fa-regular");
+				$(".heart-count").text(response.count);
+			}
+		});
+		
+		//하트 클릭
+		$(".fa-heart").click(function(){
+			$.ajax({
+				url:"??",
+				method:"post",
+				data: {reivewNo : reivewNo},
+				success:function(response) {
+					$(".fa-heart").removeClass("fa-solid fa-regular")
+						.addClass(response.done ? "fa-solid" : "fa-regular");
+					$(".heart-count").text(response.count);
+				}
+			});
+		});
+	});
+
     $(function(){
         $(".reviewStar").score({
             starColor: "#FFE31A",
@@ -145,7 +177,7 @@
                     var convertTime = moment(this.replyWtime).fromNow();
                     //변환
                     $(html).find(".reply-no").text("(no."+this.replyNo+")");
-                    $(html).find(".reply-writer").text(this.replyWriter);
+                    $(html).find(".reply-writer").text(this.replyNickname);
                     $(html).find(".reply-content").text(this.replyContent);
                     $(html).find(".reply-wtime").text(convertTime);
                     $(html).find(".delete-btn").attr("data-reply-no",this.replyNo);
