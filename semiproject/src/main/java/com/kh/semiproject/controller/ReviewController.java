@@ -113,6 +113,7 @@ public class ReviewController {
 			int attachmentNo = Integer.parseInt(element.attr(".data-attachment-no"));
 			before.add(attachmentNo);
 		}
+		System.out.println(before);
 		
 		// 수정후
 		Set<Integer> after = new HashSet<>();
