@@ -10,7 +10,7 @@ $(function(){
             },
         };
     $("[name=reviewContent]").summernote({
-        height:300,//높이(px)
+        height:500,//높이(px)
         minHeight:200, //최소높이(px)
         maxHeight:600, //최대높이(px)
         placeholder:"리뷰 내용을 작성해주세요",
