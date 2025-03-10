@@ -63,11 +63,15 @@ public class ReplyRestController {
 
 	// 댓글 삭제
 	@PostMapping("/delete")
-	public void delete(@RequestParam int replyNo) {
-		ReplyDto replyDto = replyDao.selectOne(replyNo);
-		replyDao.delete(replyNo);// 댓글 삭제
-		reviewDao.updateReviewReply(replyDto.getReplyOrigin());// 댓글개수 갱신
+	public void delete(@RequestParam("replyNo") int replyNo) {
+	    // 값 검증
+	    if (replyNo == 0) {
+	        throw new IllegalArgumentException("삭제할 댓글 번호가 올바르지 않습니다.");
+	    }
+
+	    replyDao.delete(replyNo);
 	}
+
 
 	// 댓글 수정
 	@PostMapping("/edit")
