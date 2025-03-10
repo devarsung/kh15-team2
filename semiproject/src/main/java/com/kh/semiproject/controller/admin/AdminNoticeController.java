@@ -93,18 +93,18 @@ public class AdminNoticeController {
 		
 		Set<Integer> before = new HashSet<>();
 		Document beforeDocument = Jsoup.parse(originDto.getNoticeContent());
-		Elements beforeElements = beforeDocument.select(".somnething");
+		Elements beforeElements = beforeDocument.select(".summernote-img");
 		for(Element element:beforeElements) {
-			int attachmentNo = Integer.parseInt(element.attr(".attach"));
+			int attachmentNo = Integer.parseInt(element.attr(".data-attachment-no"));
 			before.add(attachmentNo);
 		}
 		
 		
 		Set<Integer> after = new HashSet<>();
 		Document afterDocument = Jsoup.parse(noticeDto.getNoticeContent());
-		Elements afterElements = afterDocument.select(".something");
+		Elements afterElements = afterDocument.select(".summernote-img");
 		for(Element element:afterElements) {
-			int attachmentNo = Integer.parseInt(element.attr(".attach"));
+			int attachmentNo = Integer.parseInt(element.attr(".data-attachment-no"));
 			after.add(attachmentNo);
 		}
 		
@@ -126,10 +126,10 @@ public class AdminNoticeController {
 		}
 		String content = noticeDto.getNoticeContent();
 		Document document = Jsoup.parse(content);
-		Elements elements = document.select(".ddd");
+		Elements elements = document.select(".summernote-img");
 		
 		for(Element element : elements) {
-			String data = element.attr("data-set");
+			String data = element.attr("data-attachment-no");
 			int attachmentNo = Integer.parseInt(data);
 			attachmentService.delete(attachmentNo);
 		}

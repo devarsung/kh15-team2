@@ -108,18 +108,18 @@ public class ReviewController {
 		// 수정전
 		Set<Integer> before = new HashSet<>();
 		Document beforeDocument = Jsoup.parse(originDto.getReviewContent());
-		Elements beforeElements = beforeDocument.select(".before");
+		Elements beforeElements = beforeDocument.select(".summernote-img");
 		for(Element element : beforeElements) {
-			int attachmentNo = Integer.parseInt(element.attr(".attachment"));
+			int attachmentNo = Integer.parseInt(element.attr(".data-attachment-no"));
 			before.add(attachmentNo);
 		}
 		
 		// 수정후
 		Set<Integer> after = new HashSet<>();
 		Document afterDocument = Jsoup.parse(reviewDto.getReviewContent());
-		Elements afterElements = afterDocument.select(".after");
+		Elements afterElements = afterDocument.select(".summernote-img");
 		for(Element element : afterElements) {
-			int attachmentNo = Integer.parseInt(element.attr(".attachment"));
+			int attachmentNo = Integer.parseInt(element.attr(".data-attachment-no"));
 			after.add(attachmentNo);
 		}
 		
@@ -143,7 +143,7 @@ public class ReviewController {
 		
 		String content = reviewDto.getReviewContent();
 		Document document = Jsoup.parse(content);
-		Elements elements = document.select(".sunmmer");
+		Elements elements = document.select(".summernote-img");
 		
 		for(Element element : elements) {
 			String dataset = element.attr("data-attachment-no");
