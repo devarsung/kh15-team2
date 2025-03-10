@@ -4,11 +4,16 @@
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<!-- 별점 라이브러리 -->
+<script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
+
 <style>
 /* 카드 리스트 전체 스타일 */
 .card-list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);  /* 한 줄에 5개 카드 */
+    grid-template-columns: repeat(4, 1fr);
     padding: 10px;
     place-items: center;
     margin: 0 auto;
@@ -21,22 +26,22 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    width: 200px;  /* 카드의 최소 너비 설정 */
-    height: 250px;  /* 카드의 고정 높이 설정 */
-    text-decoration: none;  /* 링크 기본 스타일 제거 */
-    color: inherit;  /* 텍스트 색상 유지 */
+    width: 200px;
+    height: 250px;
+    text-decoration: none;
+    color: inherit;
 }
 .card a {
     display: block;
-    text-decoration: none;  /* 링크 기본 스타일 제거 */
-    color: inherit;  /* 텍스트 색상 유지 */
+    text-decoration: none;
+    color: inherit;
 }
 /* 카드 이미지 영역 */
 .card-image {
     width: 100%;
-    height: 65%;  /* 이미지 영역 고정 높이 설정 */
+    height: 65%;
     position: relative;
-    overflow: hidden;  /* 이미지가 영역 밖으로 넘치지 않게 함 */
+    overflow: hidden;
 }
 .card-image img {
     width: 100%;
@@ -49,7 +54,7 @@
     flex-grow: 1;  /* 남은 공간을 차지하도록 설정 */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;  /* 내용과 하단 정보 배치 */
+    justify-content: space-between;
 }
 /* 카드 제목 스타일 */
 .card-title {
@@ -72,7 +77,6 @@
 }
 .card-subtitle {
     font-size: 14px;
-    margin-top: 5px;
 }
 /* 카드 하단의 조회수, 좋아요수, 댓글수 영역 */
 .card-footer {
@@ -81,7 +85,7 @@
     gap: 10px;  /* 아이콘들 간 간격을 10px로 설정 */
     font-size: 12px;
     color: #777;
-    margin-top: 8px;
+    margin-top: 1px;
 }
 /* 각 아이템의 스타일 */
 .card-footer span {
@@ -93,6 +97,11 @@
 
 <script type="text/javascript">
 $(function(){
+	$(".review-star").score({
+        display:{
+        	showNumber:true,
+        },
+    });
 	
 	$("[name=order]").change(function(){
 		$(".form-check").submit();
@@ -194,6 +203,8 @@ $(function(){
 			                	</c:if>
 		                	</h3>	
 		                </div>
+		                <fmt:parseNumber var="placeStar" value="${placeDto.placeStar}"/>
+		                <div class="review-star" data-max="5" data-rate="${placeStar}"></div>
 		                <div class="card-subtitle">${placeDto.placeRegion}</div>
 		                <div class="card-footer">
 		                    <span class="views"><i class="fa-solid fa-eye"></i>:  ${placeDto.placeRead}</span>
