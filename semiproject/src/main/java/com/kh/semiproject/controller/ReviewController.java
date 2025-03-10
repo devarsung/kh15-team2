@@ -49,12 +49,12 @@ public class ReviewController {
 		List<ReviewListViewDto> list ;
 		
 		if(pageVO.byPlace()==false) {
-			int count =  reviewDao.count(pageVO);
+			int count =  reviewListViewDao.count(pageVO);
 			pageVO.setCount(count);
 			list = reviewListViewDao.selectList(pageVO);
 		}
 		else {
-			int count =  reviewDao.count(pageVO);
+			int count =  reviewListViewDao.count(pageVO);
 			pageVO.setCount(count);
 			list = reviewListViewDao.selectList(pageVO, pageVO.getPlaceNo() );
 		}

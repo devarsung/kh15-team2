@@ -8,9 +8,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semiproject.dto.PlaceDto;
+
+import com.kh.semiproject.dto.PlaceReviewDto;
+
 import com.kh.semiproject.dto.PlaceListViewDto;
 import com.kh.semiproject.mapper.PlaceListViewMapper;
+
 import com.kh.semiproject.mapper.PlaceMapper;
+import com.kh.semiproject.mapper.PlaceReviewMapper;
 import com.kh.semiproject.vo.PlacePageVO;
 
 @Repository
@@ -20,8 +25,15 @@ public class PlaceDao {
 
 	@Autowired
 	private PlaceMapper placeMapper;
+
+	
+	@Autowired
+	private PlaceReviewMapper placeReviewMapper;
+	
+
 	@Autowired
 	private PlaceListViewMapper placeListViewMapper;
+
 
 	public int sequence() {
 		String sql = "select place_seq.nextval from dual";
@@ -213,9 +225,10 @@ public class PlaceDao {
 				+ "where place_no = ? "
 				+ "group by review_place";
 		Object[] data = {placeNo};
-		jdbcTemplate.queryForObject(sql, float.class, data);
-		return 0;
+		
+		return jdbcTemplate.queryForObject(sql, float.class, data);
 	}
+	
 	
 	//메인에서 보여줄 top5
 	public List<PlaceListViewDto> selectListOnPlace() {			

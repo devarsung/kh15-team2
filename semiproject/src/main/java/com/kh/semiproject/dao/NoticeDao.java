@@ -24,10 +24,10 @@ public class NoticeDao {
 	}
 
 	public void insert(NoticeDto noticeDto) {
-		int noticeNo = this.sequence();
-		noticeDto.setNoticeNo(noticeNo);
 		String sql = "insert into notice(notice_no, notice_title, notice_content, notice_writer) values(?,?,?,?)";
+
 		Object[] data = { noticeDto.getNoticeNo(),noticeDto.getNoticeTitle(), noticeDto.getNoticeContent(), noticeDto.getNoticeWriter() };
+
 		jdbcTemplate.update(sql, data);
 	}
 
@@ -55,17 +55,31 @@ public class NoticeDao {
 		return list.isEmpty() ? null : list.get(0);
 	}
 
-	public int count(PageVO pageVO) {
-		if (pageVO.isList()) {
-			String sql = "select count(*) from notice";
-			return jdbcTemplate.queryForObject(sql, int.class);
-		} else {
-			String sql = "select count(*) from notice where instr(#1, ?) > 0";
-			sql = sql.replace("#1", pageVO.getColumn());
-			Object[] data = { pageVO.getKeyword() };
-			return jdbcTemplate.queryForObject(sql, int.class, data);
-		}
-	}
+//	public int count(PageVO pageVO) {
+//	    if (pageVO.isList()) {
+//	        String sql = "select count(*) from notice"; 
+//	        return jdbcTemplate.queryForObject(sql, int.class);
+//	    } 
+//	    else if (pageVO.search()) {
+//	        String sql = "select count(*) from ("
+//	                + "     select N.*, M.* from notice N" 
+//	                + "     left join member M on N.notice_writer = M.member_id" 
+//	                + "     where instr(#1,?) > 0 "
+//	                + "     )";
+//	        sql = sql.replace("#1", pageVO.getColumn());
+//	        Object[] data = { pageVO.getKeyword() };
+//	        return jdbcTemplate.queryForObject(sql, int.class, data);
+//	    }
+//	    else if (pageVO.byPlace()) {
+//	        String sql = "select count(*) from notice where notice_place = ?"; 
+//	        Object[] data = { pageVO.getPlaceNo() };
+//	        return jdbcTemplate.queryForObject(sql, int.class, data);
+//	    }
+//	    else {
+//	        return 1;
+//	    }
+//	}
+
 
 	// 조회수 1 증가 메소드
 	public boolean updateNoticeRead(int noticeNo) {
