@@ -26,11 +26,8 @@
 				<tr>
 
 			
-				<c:if test="${session.userLevel=='관리자'}">
-					<th>
-                		<input type="checkbox" class="check-all">
-                	</th>
-					</c:if> 
+				
+					
 					<th>번호</th>
 					<th style="width:450px; max-width:450px;">제목</th>
 					<th>작성자</th>
@@ -99,9 +96,7 @@
 	
 
 	
-	 <div class="cell right">
-		<a href="write" class="btn btn-neutral">글쓰기</a>
-	</div> 
+	
 	
 	<!-- 페이지 네비게이터 -->
 	<div class="cell center">

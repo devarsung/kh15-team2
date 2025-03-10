@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.semiproject.dao.PlaceDao;
 import com.kh.semiproject.dao.ReviewListViewDao;
 import com.kh.semiproject.dto.PlaceDto;
+import com.kh.semiproject.dto.PlaceListViewDto;
 import com.kh.semiproject.error.TargetNotFoundException;
 import com.kh.semiproject.service.AttachmentService;
 import com.kh.semiproject.vo.PlacePageVO;
@@ -92,7 +93,15 @@ public class AdminPlaceController {
 	
 	@RequestMapping("/list")
 	public String list(@ModelAttribute("pageVO") PlacePageVO placePageVO, Model model) {
-		List<PlaceDto> list = placeDao.selectList(placePageVO);
+		if(placePageVO.getOrder() == null || placePageVO.getOrder().isEmpty()) {
+			placePageVO.setOrder("place_wtime");
+		}
+		
+		if(placePageVO.getColumn() == null || placePageVO.getColumn().isEmpty()) {
+			placePageVO.setColumn("place_title");
+		}
+		
+		List<PlaceListViewDto> list = placeDao.selectList(placePageVO);
 		model.addAttribute("list", list);
 		int count = placeDao.count(placePageVO);
 		placePageVO.setCount(count);

@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link rel="stylesheet" type="text/css" href="/css/commons.css">
+    <link rel="stylesheet" type="text/css" href="/css/overwrite.css">
     <!-- <link rel="stylesheet" type="text/css" href="/css/test.css"> -->
     
     <style>
@@ -37,29 +38,19 @@
 <body>
     
     <!-- 화면 영역 -->
-    <div class="container w-1200">
-        <!-- 헤더 영역 -->
-        <div class="flex-box p-10">
-            <div class="w-25 flex-box flex-center">
-                 <a href="/">
-                 	<img src="/images/kh.png" width="200">
-                 </a>
-            </div>
-            <div class="w-50 center">
-                <h1>KH관광공사</h1>
-            </div>
-            <div class="w-25 right">
-
-            </div>
-        </div>
-        
-        <!-- 신규 메뉴 영역 -->
-        <div>
+    <div class="container w-100">
+    	
+    	<!-- 메뉴 -->
+    	<div>
         	<ul class="menu">
+        		<li class="logo">
+                    <a href="/">
+                        <img src="/images/header-logo.png" alt="로고">
+                    </a>
+                </li>
+                <li><a href="/"><i class="fa-solid fa-house fa-2xl"></i></a></li>
         		<li><a href="/place/list">여행지</a></li>
-        		
         		<li><a href="/review/list">후기</a></li>
-        		
         		<li><a href="/notice/list">공지사항</a></li>
         		
         		<!-- 백엔드 개발 전 확인을 위해 임시로 빼둠(삭제예정) -->
@@ -68,28 +59,38 @@
         		<!-- 회원관련 메뉴는 우측에 -->
         		<!-- 비로그인 시 -->
         		<c:if test="${sessionScope.userId == null}">
-        		<li class="menu-end">
-        			<a href="/member/login">로그인</a>
-        			<ul>
-        				<li><a href="/member/join">회원가입</a></li>
-        			</ul>
-        		</li>
+	        		<li class="menu-end">
+	        			<a href="/member/login">로그인</a>
+	        			<ul>
+	        				<li><a href="/member/join">회원가입</a></li>
+	        			</ul>
+	        		</li>
         		</c:if>
         		
         		<!-- 로그인 시 -->
         		<c:if test="${sessionScope.userId != null}">
-        		<li class="menu-end">
-        			<a href="/mypage/home">${sessionScope.userId}</a>
-        			<ul>
-	        			<c:if test="${sessionScope.userLevel == '관리자'}">
-    	    			<li><a href="/admin/home">관리자메뉴</a></li>
-        				</c:if>
-        				<li><a href="/member/logout">로그아웃</a></li>
-        			</ul>
-        		</li>
+	        		<li class="menu-end">
+	        			<a href="/mypage/home">${sessionScope.userId}</a>
+	        			<ul>
+		        			<c:if test="${sessionScope.userLevel == '관리자'}">
+	    	    			<li><a href="/admin/home">관리자메뉴</a></li>
+	        				</c:if>
+	        				<li><a href="/member/logout">로그아웃</a></li>
+	        			</ul>
+	        		</li>
         		</c:if>
         	</ul>
         </div>
+    
+    
+    
+        <!-- 헤더 영역 -->
+        <div class="">
+            <div class="main-photo"></div>
+        </div>
+        
+        
+        
 
         <!-- 컨텐츠 영역 -->
         <div class="flex-box">

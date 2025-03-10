@@ -11,7 +11,7 @@ public class PageVO {
 	protected int blockSize = 10;
 	protected String column;
 	protected String keyword;
-	
+	protected String order;
 	protected Integer placeNo;
 	protected Integer reviewNo;
 	
