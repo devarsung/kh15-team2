@@ -14,6 +14,7 @@
 		var params = new URLSearchParams(location.search);
 		var reviewNo = params.get("reviewNo");
 		
+		
 		//좋아요 여부
 		$.ajax({
 			url:"/rest/review/check",
@@ -63,7 +64,7 @@
         //글번호
         var params = new URLSearchParams(location.search);
         var reviewNo = params.get("reviewNo");
-
+        console.log(reviewNo);
         loadList();
         //댓글작성
         $(".btn-reply-write").click(function(){
@@ -284,7 +285,7 @@
     <hr>
 	<div>
 		<i class="fa-heart fa-regular red"></i>
-		조아요<span calss="heart-count">${reviewDto.reviewLike}</span>
+		조아요<span class="heart-count">${reviewDto.reviewLike}</span>
 	</div>
     <div class="cell left my-0">
         <label>댓글등록</label>
