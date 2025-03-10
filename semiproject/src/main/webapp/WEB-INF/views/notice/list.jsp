@@ -13,22 +13,13 @@
 </style>
 <div class="container w-1000">
 	<div class="cell center">
-		<h1>자유 게시판</h1>
-	</div>
-	<div class="cell my-30">
-		글은 자신의 인격입니다.<br>
-		무분별한 비방 시 글이 삭제될 수 있습니다.
+		<h1>공지사항</h1>
 	</div>
 	
-	<!-- 테이블 -->
 	<div class="cell">
 		<table class="table table-border table-hover table-ellipsis">
 			<thead>
 				<tr>
-
-			
-				
-					
 					<th>번호</th>
 					<th style="width:450px; max-width:450px;">제목</th>
 					<th>작성자</th>
@@ -50,30 +41,13 @@
 					<tbody align="center">
 						<c:forEach var="noticeListViewDto" items="${list}">
 						<tr>
-							
 							<td>${noticeListViewDto.noticeNo}</td>
 							<td align="left">
-								
-							
 								<!-- 게시글 제목 -->
 								<a class="a-control" href="detail?noticeNo=${noticeListViewDto.noticeNo}">
 									${noticeListViewDto.noticeTitle}
 								</a>
 								
-								<%-- <!-- 댓글 표시 -->
-								<c:if test="${noticeListViewDto.noticeReply > 0}">
-									<span class="ms-20">
-										<i class="fa-solid fa-comment-dots blue"></i>
-										${noticeListViewDto.noticeReply}
-									</span>
-								</c:if> --%>
-								
-								<!-- 좋아요 표시 -->
-								<%-- <c:if test="${noticeListViewDto.noticeLike > 0}">
-									&nbsp;&nbsp;
-									<i class="fa-solid fa-heart red"></i>
-									${noticeListViewDto.noticeLike}
-								</c:if> --%>
 							</td>
 							<td>
 								<c:choose>
@@ -95,11 +69,6 @@
 		</table>
 	</div>
 	
-
-	
-	
-	
-	<!-- 페이지 네비게이터 -->
 	<div class="cell center">
 		<jsp:include page="/WEB-INF/views/template/pagination.jsp"></jsp:include>
 	</div>
@@ -115,7 +84,6 @@
 			<button class="btn btn-positive">검색</button>
 		</form>
 	</div>
-	
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
