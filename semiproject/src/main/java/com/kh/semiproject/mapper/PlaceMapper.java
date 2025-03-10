@@ -11,6 +11,7 @@ import com.kh.semiproject.dto.PlaceDto;
 @Component
 public class PlaceMapper implements RowMapper<PlaceDto>{
 
+	
 	@Override
 	public PlaceDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		return PlaceDto.builder()

@@ -5,18 +5,19 @@
 
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
-
+<style>
+.a-control{
+  text-decoration: none;
+  color: black;
+		}
+</style>
 <div class="container w-1000">
 	<div class="cell center">
 		<h1>자유 게시판</h1>
 	</div>
-	<div class="cell">
+	<div class="cell my-30">
 		글은 자신의 인격입니다.<br>
 		무분별한 비방 시 글이 삭제될 수 있습니다.
-	</div>
-	<div class="cell right">
-	<a href="write" class="btn btn-neutral">글쓰기</a>
 	</div>
 	
 	<!-- 테이블 -->
@@ -55,7 +56,7 @@
 								
 							
 								<!-- 게시글 제목 -->
-								<a href="detail?noticeNo=${noticeListViewDto.noticeNo}">
+								<a class="a-control" href="detail?noticeNo=${noticeListViewDto.noticeNo}">
 									${noticeListViewDto.noticeTitle}
 								</a>
 								

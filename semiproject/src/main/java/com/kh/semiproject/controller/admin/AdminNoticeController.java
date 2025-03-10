@@ -51,7 +51,7 @@ public class AdminNoticeController {
 		int noticeNo = noticeDao.sequence();
 		noticeDto.setNoticeNo(noticeNo);
 		noticeDao.insert(noticeDto);
-		return "redirect:/admin/detail?noticeNo="+noticeNo;
+		return "redirect:/admin/notice/detail?noticeNo="+noticeNo;
 	}
 	
 	
@@ -115,7 +115,7 @@ public class AdminNoticeController {
 			attachmentService.delete(attachmentNo);
 		}
 		noticeDao.update(noticeDto);
-		return "redirect:/admin/detail?noticeNo="+noticeNo;
+		return "redirect:/admin/notice/detail?noticeNo="+noticeNo;
 	}
 	
 	@RequestMapping("/delete")
