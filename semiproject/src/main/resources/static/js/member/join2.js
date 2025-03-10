@@ -132,7 +132,7 @@ $(function(){
 
         
         //성별 처리
-        $("[name=memberGender]").on("change",function(){
+        $("[name=memberGender]").on("blur",function(){
             var isValid = $(this).val().length != 0;
             $(this).removeClass("success fail")
             .addClass(isValid? "success" : "fail");
