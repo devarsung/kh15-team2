@@ -30,7 +30,7 @@ public class NoticeListViewDao {
 					+ "SELECT N.*, M.* "
 					+ "FROM Notice N "
 					+ "LEFT JOIN MEMBER M ON N.notice_writer = M.member_id "
-					+ "ORDER BY N.notice_no ASC "
+					+ "ORDER BY N.notice_no desc "
 				+ ")TMP"
 			+ ") where rn between ? and ?";
 			Object[] data = {pageVO.getStartRownum(), pageVO.getFinishRownum()};
@@ -43,7 +43,7 @@ public class NoticeListViewDao {
 					+ "FROM Notice N "
 					+ "LEFT JOIN MEMBER M ON N.notice_writer = M.member_id "
 					+ "where instr(#1, ?) > 0 "
-					+ "ORDER BY N.notice_no ASC "
+					+ "ORDER BY N.notice_no desc "
 				+ ")TMP"
 			+ ") where rn between ? and ?";
 			sql = sql.replace("#1", pageVO.getColumn());
@@ -58,7 +58,8 @@ public class NoticeListViewDao {
 			String sql = "	SELECT *"
 					+ "				FROM ("
 					+ "				   SELECT rownum rn, TMP.* FROM ("
-					+ "				   select * from notice "
+					+ "				   select N.*, M.* from notice N "
+					+ "						LEFT JOIN MEMBER M on N.notice_writer = M.member_id "
 					+ "				        ORDER BY notice_wtime DESC"
 					+ "				   ) TMP"
 					+ "				)"
@@ -69,7 +70,30 @@ public class NoticeListViewDao {
 	}
 
 
-
+	public int count(PageVO pageVO) {
+	    if (pageVO.isList()) {
+	        String sql = "select count(*) from notice"; 
+	        return jdbcTemplate.queryForObject(sql, int.class);
+	    } 
+	    else if (pageVO.search()) {
+	        String sql = "select count(*) from ("
+	                + "     select N.*, M.* from notice N" 
+	                + "     left join member M on N.notice_writer = M.member_id" 
+	                + "     where instr(#1,?) > 0 "
+	                + "     )";
+	        sql = sql.replace("#1", pageVO.getColumn());
+	        Object[] data = { pageVO.getKeyword() };
+	        return jdbcTemplate.queryForObject(sql, int.class, data);
+	    }
+	    else if (pageVO.byPlace()) {
+	        String sql = "select count(*) from notice where notice_place = ?"; 
+	        Object[] data = { pageVO.getPlaceNo() };
+	        return jdbcTemplate.queryForObject(sql, int.class, data);
+	    }
+	    else {
+	        return 1;
+	    }
+	}
 
 
 

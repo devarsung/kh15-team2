@@ -26,7 +26,7 @@ public class ReviewListViewDao {
 					+ "SELECT R.*, M.* "
 					+ "FROM REVIEW R "
 					+ "LEFT JOIN MEMBER M ON R.review_writer = M.member_id "
-					+ "ORDER BY R.review_no ASC "
+					+ "ORDER BY R.review_no desc "
 				+ ")TMP"
 			+ ") where rn between ? and ?";
 			Object[] data = {pageVO.getStartRownum(), pageVO.getFinishRownum()};
@@ -39,7 +39,7 @@ public class ReviewListViewDao {
 						+ "FROM REVIEW R "
 						+ "LEFT JOIN MEMBER M ON R.review_writer = M.member_id "
 						+ "where instr(#1, ?) > 0 "
-						+ "ORDER BY R.review_no ASC "
+						+ "ORDER BY R.review_no desc "
 					+ ")TMP"
 				+ ") where rn between ? and ?";
 			sql = sql.replace("#1", pageVO.getColumn());
@@ -55,7 +55,7 @@ public class ReviewListViewDao {
 				+ "FROM REVIEW R "
 				+ "LEFT JOIN MEMBER M ON R.review_writer = M.member_id "
 				+ "where review_place = ? "
-				+ "ORDER BY R.review_no ASC "
+				+ "ORDER BY R.review_no desc "
 			+ ")TMP"
 		+ ") where rn between ? and ?";
 		
@@ -77,7 +77,7 @@ public class ReviewListViewDao {
 		Object[] data = {placeNo};
 		
 		List<ReviewListViewDto> list = jdbcTemplate.query(sql, reviewListViewMapper, data);
-		//System.out.println(list);
+
 		return list;
 	}
 	
@@ -95,11 +95,35 @@ public class ReviewListViewDao {
 				+ "WHERE rn BETWEEN 1 AND 5";
 		
 		List<ReviewListViewDto> list = jdbcTemplate.query(sql, reviewListViewMapper);
-		//System.out.println(list);
+
 		return list;
 	}
 	
-	
+	public int count(PageVO pageVO) {
+		if (pageVO.isList()) {
+			String sql = "select count(*) from review";
+			return jdbcTemplate.queryForObject(sql, int.class);
+		} 
+		else if(pageVO.search()){
+			String sql = "select count(*) from ("
+					+ "	 select R.*, M.* from review R"
+					+ "		left join member M on R.review_writer = M.member_id"
+					+ "		where instr(#1,?) > 0 "
+					+ "		)";
+			sql = sql.replace("#1", pageVO.getColumn());
+			Object[] data = { pageVO.getKeyword() };
+			return jdbcTemplate.queryForObject(sql, int.class, data);
+		}
+		else if(pageVO.byPlace()) {
+			String sql = "select count(*) from review where review_place = ?";
+			Object[] data = {pageVO.getPlaceNo()};
+			return jdbcTemplate.queryForObject(sql,int.class,data );
+		}
+		else {
+			return 1;
+		}
+	}
+
 	
 	
 	

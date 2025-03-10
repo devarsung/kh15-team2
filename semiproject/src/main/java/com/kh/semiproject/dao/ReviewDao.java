@@ -63,25 +63,25 @@ public class ReviewDao {
 		return list.isEmpty() ? null : list.get(0);
 	}
 
-	public int count(PageVO pageVO) {
-		if (pageVO.isList()) {
-			String sql = "select count(*) from review";
-			return jdbcTemplate.queryForObject(sql, int.class);
-		} else if(pageVO.search()){
-			String sql = "select count(*) from reivew where instr(#1, ?) > 0";
-			sql = sql.replace("#1", pageVO.getColumn());
-			Object[] data = { pageVO.getKeyword() };
-			return jdbcTemplate.queryForObject(sql, int.class, data);
-		}
-		else if(pageVO.byPlace()) {
-			String sql = "select count(*) from review where review_place = ?";
-			Object[] data = {pageVO.getPlaceNo()};
-			return jdbcTemplate.queryForObject(sql,int.class,data );
-		}
-		else {
-			return 1;
-		}
-	}
+//	public int count(PageVO pageVO) {
+//		if (pageVO.isList()) {
+//			String sql = "select count(*) from review";
+//			return jdbcTemplate.queryForObject(sql, int.class);
+//		} else if(pageVO.search()){
+//			String sql = "select count(*) from review where instr(#1, ?) > 0";
+//			sql = sql.replace("#1", pageVO.getColumn());
+//			Object[] data = { pageVO.getKeyword() };
+//			return jdbcTemplate.queryForObject(sql, int.class, data);
+//		}
+//		else if(pageVO.byPlace()) {
+//			String sql = "select count(*) from review where review_place = ?";
+//			Object[] data = {pageVO.getPlaceNo()};
+//			return jdbcTemplate.queryForObject(sql,int.class,data );
+//		}
+//		else {
+//			return 1;
+//		}
+//	}
 
 	// 댓글 수 갱신 메소드
 	public boolean updateReviewReply(int reviewNo) {
