@@ -189,7 +189,7 @@ $(function() {
 	});
 
 	$("#deleteBtn").click(function() {
-		var choice = window.confirm("삭제?");
+		var choice = window.confirm("프로필을 삭제하시겠습니까?");
 		if(choice ==false) return;
 		$("#myPhoto").attr("src", "/images/defaultProfile.png"); // 기본 이미지로 변경
 		$(".profileInput").val("");
