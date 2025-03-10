@@ -49,6 +49,7 @@
             editable:false,//편집 가능하도록 설정
             
            display:{
+  
                 placeLimit:1,
                 textColor:"#d63031",
             },
@@ -282,7 +283,7 @@
             ${reviewDto.reviewTitle}<i class="fa-solid fa-pencil"></i>
         </h1>
     </div>
-    <div class="cell reviewStar"></div>
+    <div class="cell reviewStar" data-rate="${reviewDto.reviewStar}" ></div>
     <span class="red">${reviewDto.reviewStar}</span>
     <div class="cell p-20 content-box" >${reviewDto.reviewContent}</div>
     <hr>
