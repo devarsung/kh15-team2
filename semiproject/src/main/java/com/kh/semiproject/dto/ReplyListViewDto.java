@@ -31,3 +31,4 @@ public class ReplyListViewDto {
 	private Timestamp memberLogin;//최종로그인일
 	private Timestamp memberChange;//비밀번호변경일
 }
+

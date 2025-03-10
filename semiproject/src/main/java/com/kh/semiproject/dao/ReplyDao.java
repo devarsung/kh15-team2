@@ -37,7 +37,7 @@ public class ReplyDao {
                      "from reply r " +
                      "join member m on r.reply_writer = m.member_id " + // 닉네임 가져오기
                      "where r.reply_origin = ? " +
-                     "order by r.reply_wtime asc";
+                     "order by r.reply_wtime desc";
         Object[] data = { replyOrigin};
         return jdbcTemplate.query(sql, replyMapper, data);
     }
