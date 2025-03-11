@@ -111,23 +111,30 @@
   	align-items : center;
   	font-size: 20px;
 }
+.aStyle{
+   	text-decoration: none;
+   	outline: none; 
+   	padding:10px;
+   	color : black;
+   	font-weight : bold;
+}
 </style>
 
 <script type="text/javascript">
 $(function(){
 	
 	var currentPage = 1;
-	var size = 16;
+	var size = 4;//테스트 위해 임시로 줄여둠
 	
 	//목록 불러오기
 	function loadList() {
 		$.ajax({
-			url: "/rest",
+			url: "/rest/page/myLikePlace",
 			method: "post",
-			data: {page: currentPage++, size: 16},
+			data: {page: currentPage, size: size},
 			success: function(response) {
 				if(response.length === 0) {
-					if(currentPage === 0) {
+					if(currentPage === 1) {
 						//좋아요 목록이 아예 없는 경우
 						$(".no-list").show();
 						$(".card-list").hide();
@@ -144,16 +151,21 @@ $(function(){
 				$(".no-list").hide();
 				$(".card-list").show();
 				$(".btn-more").show();
+				currentPage++;
 				
 				$(response).each(function(){
 					var template = $("#place-template").text();
 					var html = $.parseHTML(template);
 					
-					$(html).find(".place-link").attr("href", "/place/detail?placeNo=" + this.placeNo);
+					var url = "/place/detail?placeNo=" + this.placeNo;
+					console.log($(html).find(".card-subtitle"));
+					console.log($(html).filter(".place-link"));
+					
+					$(html).filter(".place-link").attr("href", url);
 					$(html).find(".first-image").attr("src", "/attachment/download?attachmentNo=" + this.placeFirstImage);
 					$(html).find(".first-image").attr("alt", this.placeTitle + " 대표이미지");
 					$(html).find(".title-area").text(this.placeTitle);
-					$(html).find(".heart-btn").data("no", this.placeNo);
+					$(html).find(".heart-btn").attr("data-no", this.placeNo);
 					$(html).find(".card-subtitle").text(this.placeRegion);
 					
 					var iconHtml = "";
@@ -172,9 +184,13 @@ $(function(){
 		});
 	}
 	
+	$(".btn-more").click(function(event){
+		event.preventDefault();
+		loadList();
+	});
+	
 	//하트버튼
-	//작동 안되면 document에 걸어야함
-	$(".heart-btn").click(function(){
+	$(document).on("click", ".heart-btn", function(){
 		var me = $(this);
 		var placeNo = $(this).data("no");
 		
@@ -194,11 +210,13 @@ $(function(){
 		/* e.stopPropagation(); */
 		return false;
 	});
+	
+	loadList();
 });
 </script>
 
 <script type="text/template" id="place-template">
-<a href="#" class="card place-link">
+<a class="place-link card" href="#">
 	<div class="card-image">
         <img class="first-image" src="" alt="Card Image"
              onerror="this.onerror=null; this.src='/images/default-image.png';">
@@ -208,12 +226,12 @@ $(function(){
 	</div>
 	<div class="card-content">
 		<div class="card-title">
-			<h3 class="title-area">${place.placeTitle}</h3>
+			<h3 class="title-area"></h3>
 			<h3 class="icon-area">
             	
             </h3>
         </div>
-        <div class="card-subtitle">${place.placeRegion}</div>
+        <div class="card-subtitle"></div>
 		<div class="card-footer">
 			
 		</div>
@@ -231,56 +249,17 @@ $(function(){
 	</jsp:include>
     
     <div class="cell mt-50">
-   		<!-- <div class="cell no-list">
+   		<div class="cell no-list" style="display:none;">
    			<i class="fa-solid fa-fish"></i>
        		<span>목록이 없습니다</span>
-       	</div> -->
-        <div class="card-list">
-        
-            <c:choose>
-                <c:when test="${placeLikeList.isEmpty()}">
-                    <p style="text-align: center; width: 100%;">좋아요한 여행지가 없습니다.</p>
-                </c:when>
-                <c:otherwise>
-                    <c:forEach var="place" items="${placeLikeList}">
-                        <a href="/place/detail?placeNo=${place.placeNo}" class="card">
-                            <div class="card-image">
-                                <img src="/attachment/download?attachmentNo=${place.placeFirstImage}" alt="Card Image"
-                                    onerror="this.onerror=null; this.src='/images/default-image.png';">
-                                    <button type="button" class="heart-btn" data-no="${place.placeNo}">
-                                    	<i class="fa-solid fa-heart red"></i>
-                                   	</button>
-                            </div>
-                            <div class="card-content">
-                                <div class="card-title">
-                                    <h3 class="title-area">${place.placeTitle}</h3>
-                                    <h3 class="icon-area">
-                                        <c:if test="${place.placeType == '여행지'}">
-                                            <i class="fa-solid fa-mountain"></i>
-                                        </c:if>
-                                        <c:if test="${place.placeType == '맛집'}">
-                                            <i class="fa-solid fa-utensils"></i>
-                                        </c:if>
-                                        <c:if test="${place.placeType == '숙소'}">
-                                            <i class="fa-solid fa-hotel"></i>
-                                        </c:if>
-                                    </h3>
-                                </div>
-                                <div class="card-subtitle">${place.placeRegion}</div>
-                                <div class="card-footer">
-                                
-                                </div>
-                            </div>
-                        </a>
-                    </c:forEach>
-                </c:otherwise>
-            </c:choose>
+       	</div>
+        <div class="card-list" style="display:none;">
+			            
         </div>
-        
-        <div class="cell">
-        	<button type="button" style="display:none;" class="btn btn-neutral w-100 btn-more">더 보기</button>
+        <div class="cell center mt-50">
+        	<a href="#" class="aStyle btn-more">더보기+</a>
+        	
         </div>
-        
     </div>
 </div>
 
