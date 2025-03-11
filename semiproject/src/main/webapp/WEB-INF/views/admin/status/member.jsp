@@ -7,9 +7,45 @@
 <!-- Chart JS cdn -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!--jQuery cdn-->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="/js/chart.js"></script>
+<script type="text/javascript">
+$(function(){
+	var gender = {
+		keys: [],
+		values: []
+	};
+	
+	var age = {
+		keys: [],
+		values: []
+	};
+	
+	findData(".gender-table", gender);
+	findData(".age-table", age);
+	
+	function findData(table, object) {
+		var keyElements = $(table).find(".chart-key");
+		$(keyElements).each(function(){
+			var key = $(this).text();
+			object.keys.push(key);	
+		});
+		
+		var valueElements = $(table).find(".chart-value");
+		$(valueElements).each(function(){
+			var value = $(this).text();
+			object.values.push(value);
+		});
+	}
+	
+	function createGenderChart() {
+		
+	}
+	
+	function createAgeChart() {
+		
+	}
+	
+});
+</script>
 
 <div class="container w-800">
 	<div class="cell center">
@@ -19,7 +55,7 @@
 		<div class="w-50">
 			<div class="cell">회원 성별 현황</div>
 			<div class="cell">
-				<table class="table table-border table-stripe">
+				<table class="table table-border table-stripe gender-table">
 					<thead>
 						<tr>
 							<th>성별</th>
@@ -29,8 +65,8 @@
 					<tbody class="center">
 						<c:forEach var="statusVO" items="${memberGenderList}">
 							<tr>
-								<td>${statusVO.key}</td>
-								<td>${statusVO.value}</td>
+								<td class="chart-key">${statusVO.key}</td>
+								<td class="chart-value">${statusVO.value}</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -42,7 +78,7 @@
 		<div class="w-50">
 			<div class="cell">회원 연령대별 현황</div>
 			<div class="cell">
-				<table class="table table-border table-stripe">
+				<table class="table table-border table-stripe age-table">
 					<thead>
 						<tr>
 							<th>연령대</th>
@@ -52,8 +88,8 @@
 					<tbody class="center">
 						<c:forEach var="statusVO" items="${memberAgeList}">
 							<tr>
-								<td>${statusVO.key}</td>
-								<td>${statusVO.value}</td>
+								<td class="chart-key">${statusVO.key}</td>
+								<td class="chart-value">${statusVO.value}</td>
 							</tr>
 						</c:forEach>
 					</tbody>
