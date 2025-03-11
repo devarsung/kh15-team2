@@ -48,7 +48,9 @@
     .edit-btn:hover,
     .delete-btn:hover,
     .cancel-btn:hover,
-    .save-btn:hover{
+    .save-btn:hover,
+    .changebtn:hover,
+	.deletemessage:hover{
      filter:brightness(1.05);
      cursor: pointer;
     }
@@ -68,5 +70,35 @@
 
         .save-btn{
         border : 1px solid rgb(218, 218, 218);
-        background-color : rgb(212, 239, 255)
+        background-color : rgb(212, 239, 255);
         }
+        
+        
+        
+.changebtn,
+.deletemessage {
+    font-size: 16px;
+    padding: 0.5em 0.75em;
+    color: #2d3436;
+    border: 1px solid #2d3436;
+    border-radius: 0.1em;
+    cursor: pointer;
+    /* a태그를 위한 추가 디자인 */
+    text-decoration: none;
+    background-color: #dfe6e9;
+    display: inline-block;
+    text-align: center;
+    width: 100px;
+}
+
+.deletemessage {
+    border-color: #d63031;
+    background-color: #d63031;
+    color: white;
+}
+
+.changebtn{
+	border-color: #578FCA;
+	background-color : #578FCA;
+	color: white;
+}

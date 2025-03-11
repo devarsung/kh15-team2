@@ -25,7 +25,7 @@
     
  <div class="container w-800">
         <div class="cell center" >
-            <h1>후기 등록</h1>
+            <h1>후기 수정</h1>
         </div>
         <div class="cell right">
             <h3 class="placeTitle" >${placeDto.placeTitle}  <i class="fa-solid fa-camera"></i></h3>
@@ -35,12 +35,12 @@
         <input type="hidden" name="reviewNo" value="${reviewDto.reviewNo}">
         <div class="cell">
             <label class="p-10 ">제목</label>
-           <input class="field w-100" type="text" name="reviewTitle" value="reviewTitle" placeholder="제목 입력">
+           <input class="field w-100" type="text" name="reviewTitle" value="${reviewDto.reviewTitle}" placeholder="제목 입력">
            <div class="fail-feedback">&nbsp;&nbsp;제목을 작성해주세요</div>
         </div>
         <div class="cell">
             <p>"${placeDto.placeTitle}"의 평점을 남겨주세요</p>
-           <div class="reviewStar"  data-max="5" data-rate="${reviewDto.reviewStar}" ></div>
+           <div class="reviewStar"  data-max="5"  ></div>
         </div>
         <div class="cell my-40">
             <label class="p-10">본문</label>

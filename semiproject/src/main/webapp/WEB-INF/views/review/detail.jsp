@@ -43,6 +43,7 @@ $(function(){
     $(".reviewStar").score({
         starColor: "#FFE31A",
         editable:false,
+        
         display:{
             placeLimit:1,
             textColor:"#d63031",
@@ -62,7 +63,7 @@ $(function(){
         var replyContent = $(".reply-writebox").val();
 
         if(replyContent.length==0){
-            window.alert("댓글을 삭제하시겠습니까?");
+            window.alert("댓글을 입력하세요");
             return;
         }
         $.ajax({
@@ -236,10 +237,11 @@ $(function(){
 </script>
 
 </head>
-<div class="container w-1000">
+<div class="container w-1200">
     <div class="cell center">
         <h2>[${reviewDto.reviewWriter}]님의 후기</h2>
     </div>
+    <hr style=" box-shadow: 0 0 10px rgba(0,0,0,0.1);">
     <div class="cell right">
         <i class="fa-solid fa-eye"></i> ${reviewDto.reviewRead}| 
         <i class="fa-solid fa-heart"></i>${reviewDto.reviewLike}|
@@ -250,21 +252,18 @@ $(function(){
     </div>
     <div class="cell p-20">
         <h1>
-            ${reviewDto.reviewTitle}<i class="fa-solid fa-pencil"></i>
+            ${reviewDto.reviewTitle}  <i class="fa-solid fa-pencil"></i>
         </h1>
     </div>
     <hr>
     <div class="cell reviewStar" data-rate="${reviewDto.reviewStar}"></div>
-    <span class="red"></span>
+    <span class="red">${reviewStar.reviewStar}</span>
     <div class="cell p-20 content-box">${reviewDto.reviewContent}</div>
-    <hr>
+  
     <div>
         <i class="fa-heart fa-regular red"></i>좋아요<span class="heart-count">${reviewDto.reviewLike}</span>
     </div>
     <br>
-    <div class="cell left my-0">
-        <label>댓글목록</label>
-    </div>
     <c:choose>
         <c:when test="${sessionScope.userId != null}">
             <div class="flex-box align-items"> 
@@ -287,26 +286,26 @@ $(function(){
             </div>
         </c:otherwise>
     </c:choose>
-
+<hr class="my-30" style=" box-shadow: 0 0 10px rgba(0,0,0,0.1);">
     <c:choose>
-        <c:when test="${not empty replyCount}">
-            <div class="cell left my-0 reply-list">
-                <label>댓글목록</label>
-            </div>
-            <div class="reply-wrapper"></div>
-        </c:when>
-        <c:otherwise>
+        <c:when test="${reviewDto.reviewReply == null}">
             <div class="cell center">    
                 댓글이 없습니다
             </div>
+        </c:when>
+        <c:otherwise>
+            <div class="cell left my-0 reply-list">
+                <label>댓글목록</label>
+            </div>
+
         </c:otherwise>
     </c:choose>
-
+  <div class="reply-wrapper"></div>
     <div class="cell right">
         <c:if test="${sessionScope.userId != null}">
             <c:if test="${sessionScope.userId == reviewDto.reviewWriter}">
-                <a href="/review/edit?reviewNo=${reviewDto.reviewNo}" class="btn btn-positive mt-20" style="width:100px">수정</a>
-                <a href="/review/delete?reviewNo=${reviewDto.reviewNo}" class="btn btn-negative mt-20 deletemessage" style="width:100px">삭제</a>
+                <a href="/review/edit?reviewNo=${reviewDto.reviewNo}" class="changebtn mt-20" >수정</a>
+                <a href="/review/delete?reviewNo=${reviewDto.reviewNo}" class="deletemessage">삭제</a>
             </c:if>
         </c:if>
     </div>
