@@ -14,7 +14,7 @@ import com.kh.semiproject.vo.StatusVO;
 @CrossOrigin
 @RestController
 @RequestMapping("/rest/status")
-public class StatusRestController {
+public class StatusrestController {
 	@Autowired
 	private StatusDao statusDao;
 	
