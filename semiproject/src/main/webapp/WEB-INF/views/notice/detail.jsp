@@ -35,12 +35,12 @@
             </div>
             <div class="cell right ">
            <label>           
-                수정시각( ${noticeDto.noticeEtime})
+                수정시각( ${noticeDto.getEtimeString()})
            </label>
 
            <label>
            
-              작성시각(${noticeDto.noticeWtime})<br>
+              작성시각(${noticeDto.getWtimeString()})<br>
            </label>
               <label></label>
                Name:(${noticeDto.noticeWriter})
