@@ -43,6 +43,7 @@ $(function(){
     $(".reviewStar").score({
         starColor: "#FFE31A",
         editable:false,
+        
         display:{
             placeLimit:1,
             textColor:"#d63031",
@@ -62,7 +63,7 @@ $(function(){
         var replyContent = $(".reply-writebox").val();
 
         if(replyContent.length==0){
-            window.alert("댓글을 삭제하시겠습니까?");
+            window.alert("댓글을 입력하세요");
             return;
         }
         $.ajax({
@@ -255,7 +256,7 @@ $(function(){
     </div>
     <hr>
     <div class="cell reviewStar" data-rate="${reviewDto.reviewStar}"></div>
-    <span class="red"></span>
+    <span class="red">${reviewStar.reviewStar}</span>
     <div class="cell p-20 content-box">${reviewDto.reviewContent}</div>
     <hr>
     <div>
@@ -290,15 +291,15 @@ $(function(){
 
     <c:choose>
         <c:when test="${not empty replyCount}">
+            <div class="cell center">    
+                댓글이 없습니다
+            </div>
+        </c:when>
+        <c:otherwise>
             <div class="cell left my-0 reply-list">
                 <label>댓글목록</label>
             </div>
             <div class="reply-wrapper"></div>
-        </c:when>
-        <c:otherwise>
-            <div class="cell center">    
-                댓글이 없습니다
-            </div>
         </c:otherwise>
     </c:choose>
 
