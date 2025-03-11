@@ -7,6 +7,50 @@
 
  <link rel="stylesheet" type="text/css" href="/css/review-list.css">
  <style>
+    .selectStyle{
+	 	 padding: 5px;
+            border: 1px solid rgb(203, 234, 255);
+            border-radius: 4px;
+            outline : none;
+            color : rgb(94, 94, 94);
+            font-size: 15px;
+            background: rgb(203, 234, 255);
+            appearance: none;
+            width: 100px;
+		}
+    .inputStyle{
+        padding:10px;
+        border: 1px solid rgb(242, 250, 255);
+        border-radius: 5px;
+        background-color: rgb(242, 250, 255);
+    }
+    .btnStyle{
+        border-radius: 10px;
+        border : 1px, solid, rgb(165, 221, 255);
+        color : rgb(94, 94, 94);
+        background:rgb(165, 221, 255);
+        width: 100px;
+    }
+
+    .selectStyle:hover,
+    .inputStyle:hover,
+    .btnStyle:hover{
+        outline :none;
+        border: 2px solid #cbe4ff;
+    }
+    
+    .tableStyle{
+   		background:rgb(254, 255, 255);	
+    }
+ 	.table.table-hover > tbody > tr:hover{
+            background-color:#cbe4ff;
+        }
+        
+      .aStyle{
+     	 text-decoration: none;
+    	outline: none; 
+    	padding:10px;
+      }
  </style>
 
 <div class="container w-1000">

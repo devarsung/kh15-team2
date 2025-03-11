@@ -6,7 +6,7 @@
 
 
 <h1>${message}</h1>
-<p>다시 확인해주세요</p>
+<p>확인후 다시 실행해주세요</p>
 
  <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
     

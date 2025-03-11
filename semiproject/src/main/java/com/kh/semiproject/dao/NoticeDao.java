@@ -7,17 +7,23 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semiproject.dto.NoticeDto;
+import com.kh.semiproject.mapper.NoticeListViewMapper;
 import com.kh.semiproject.mapper.NoticeMapper;
 import com.kh.semiproject.vo.PageVO;
 
 @Repository
 public class NoticeDao {
+	
+	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-
+	
 	@Autowired
 	private NoticeMapper noticeMapper;
 
+	@Autowired
+	private NoticeListViewMapper noticeListViewMapper;
+	
 	public int sequence() {
 		String sql = "select notice_seq.nextval from dual";
 		return jdbcTemplate.queryForObject(sql, int.class);
@@ -57,12 +63,12 @@ public class NoticeDao {
 	}
 
 	public NoticeDto selectOne(int noticeNo) {
-		String sql = "select * from notice where notice_no =?";
-		Object[] data = { noticeNo };
+		String sql = "select * from notice where notice_no=? ";
+		Object[] data = {noticeNo};
 		List<NoticeDto> list = jdbcTemplate.query(sql, noticeMapper, data);
-		return list.isEmpty() ? null : list.get(0);
+		return list.isEmpty() ? null :list.get(0);
 	}
-
+	
 //	public int count(PageVO pageVO) {
 //	    if (pageVO.isList()) {
 //	        String sql = "select count(*) from notice"; 

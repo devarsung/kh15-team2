@@ -79,18 +79,17 @@ public class AdminNoticeController {
 	@GetMapping("/edit")
 	public String edit(@RequestParam int noticeNo, Model model) {
 		NoticeDto noticeDto = noticeDao.selectOne(noticeNo);
-		if(noticeDto == null) {
-			throw new TargetNotFoundException("존재 하지 않는 공지 사항 입니다");
-		}
+
 		model.addAttribute("noticeDto",noticeDto);
 		return "/WEB-INF/views/admin/notice/edit.jsp";
 	}
 	
 	@PostMapping("/edit")
 	public String edit(@ModelAttribute NoticeDto noticeDto ) {
-		int noticeNo = noticeDto.getNoticeNo();
-		NoticeDto originDto = noticeDao.selectOne(noticeNo);
-		
+		NoticeDto originDto = noticeDao.selectOne(noticeDto.getNoticeNo());
+		if(noticeDto == null) {
+			throw new TargetNotFoundException("존재 하지 않는 공지 사항 입니다");
+		}
 		Set<Integer> before = new HashSet<>();
 		Document beforeDocument = Jsoup.parse(originDto.getNoticeContent());
 		Elements beforeElements = beforeDocument.select(".summernote-img");
@@ -98,6 +97,8 @@ public class AdminNoticeController {
 			int attachmentNo = Integer.parseInt(element.attr(".data-attachment-no"));
 			before.add(attachmentNo);
 		}
+		
+		
 		
 		
 		Set<Integer> after = new HashSet<>();
@@ -115,7 +116,7 @@ public class AdminNoticeController {
 			attachmentService.delete(attachmentNo);
 		}
 		noticeDao.update(noticeDto);
-		return "redirect:/admin/notice/detail?noticeNo="+noticeNo;
+		return "redirect:detail?noticeNo="+noticeDto.getNoticeNo();
 	}
 	
 	@RequestMapping("/delete")
