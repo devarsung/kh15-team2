@@ -18,16 +18,17 @@
         }
         </style>
     
+
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
-    <script src="/js/review-add-summernote.js"></script>
+    <script src="/js/review/review-add-summernote.js"></script>
      <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script>
     
-   <div class="container w-800">
+ <div class="container w-800">
         <div class="cell center" >
             <h1>후기 등록</h1>
         </div>
         <div class="cell right">
-            <h3 class="placeTitle" >${placeDto.placeTitle}티티의집  <i class="fa-solid fa-camera"></i></h3>
+            <h3 class="placeTitle" >${placeDto.placeTitle}  <i class="fa-solid fa-camera"></i></h3>
         </div>
         
         <form class="form-check" action="edit" method="post">
@@ -39,7 +40,7 @@
         </div>
         <div class="cell">
             <p>"${placeDto.placeTitle}"의 평점을 남겨주세요</p>
-            <div class="reviewStar" name="reviewStar" value="reviewStar" data-max="5" data-rate="5"></div>
+           <div class="reviewStar"  data-max="5" data-rate="${reviewDto.reviewStar}" ></div>
         </div>
         <div class="cell my-40">
             <label class="p-10">본문</label>
