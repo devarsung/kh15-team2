@@ -40,7 +40,7 @@
         </div>
         <div class="cell">
             <p>"${placeDto.placeTitle}"의 평점을 남겨주세요</p>
-           <div class="reviewStar"  data-max="5" data-rate="${reviewDto.reviewStar}" ></div>
+           <div class="reviewStar"  data-max="5"  ></div>
         </div>
         <div class="cell my-40">
             <label class="p-10">본문</label>
