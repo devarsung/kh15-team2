@@ -66,9 +66,7 @@ public class PlaceDao {
 	}
 
 	public boolean delete(int placeNo) {
-		String sql = "delete from place where place_no = ?";
-		// 추가 이미지 삭제
-
+		String sql = "delete place where place_no = ?";
 		Object[] data = { placeNo };
 		return jdbcTemplate.update(sql, data) > 0;
 	}
@@ -196,7 +194,7 @@ public class PlaceDao {
 		return list.isEmpty() ? null : list.get(0);
 	}
 	
-	//여행지 이미지 번호들 조회(모두)//이 메소드 필요없을듯
+	//여행지 이미지 번호들 조회(모두)//이 메소드 필요없을듯->여행지 삭제시 쓰면 될듯 
 	public List<Integer> selectPlaceImagesNos(int placeNo) {
 		String sql = "select attachment_no from place_image where place_no=?";
 		Object[] data= {placeNo};
