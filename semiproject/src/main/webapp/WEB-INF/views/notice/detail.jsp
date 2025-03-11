@@ -5,13 +5,13 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <style>
-    .textarea {
+   .textarea {
         width: 100%;
         height: 12.25em;
         border: none;
         resize: none;
         font-size: 34px;      
-     	display: grid;
+     	display:inline-block;
     	font-weight:500;
     }
       .textarea1 {
