@@ -330,19 +330,20 @@
     </c:choose>
     
     <c:choose>
-	<c:when test="${not empty replyCount}">
-        <div class="cell left my-0 reply-list">
-            <label>댓글 없음</label>
-        </div>
-    </c:when>
-    <c:otherwise>
-
-    </c:otherwise>
-</c:choose>
+	<c:when test="${not empty reviewReply}">
         <div class="cell left my-0 reply-list">
             <label>댓글목록</label>
         </div>
-    <div class="reply-wrapper"></div>
+        
+    <div class="reply-wrapper"></div> 
+  
+    </c:when>
+    <c:otherwise>
+	    <div class="cell left my-0 reply-list">
+            <label>댓글 없음</label>
+        </div>
+    </c:otherwise>
+</c:choose>
     
 
      <div class="cell right">
