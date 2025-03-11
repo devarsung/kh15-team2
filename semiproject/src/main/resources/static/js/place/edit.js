@@ -131,6 +131,9 @@ $(function() {
 	var map;
 	var marker;
 	
+	//drawMap 1회 호출
+	drawMap($("[name=placeLat]").val(), $("[name=placeLng]").val());
+	
 	//지도 그리기
 	function drawMap(lat, lng) {
 		var container = $('#map')[0];
@@ -357,6 +360,10 @@ $(function() {
 	var fileListMap = new Map();//새로운 이미지
 	var deletedOldNos = [];//기존 이미지에서 지워진 녀석들
 	var fileCnt = 0;//새로추가하는 이미지를 위해
+	
+	$(".btn-add-detail").click(function(){
+		$(".detailImages").click();
+	});
 	
 	$(".detailImages").change(function(){
 		var selectedFiles = this.files;
