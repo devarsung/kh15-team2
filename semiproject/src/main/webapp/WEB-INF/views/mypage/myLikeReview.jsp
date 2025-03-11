@@ -5,17 +5,16 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<jsp:include page="/WEB-INF/views/template/mypage-tab.jsp">
-  	<jsp:param name="menu" value="myLikeReview"/>
-</jsp:include>
-
-
 <div class="container w-1000">
     <div class="cell center">
-        <h1>내가 좋아요한 후기 목록</h1>
+        <h1>내가 좋아요한 후기</h1>
     </div>
+    
+    <jsp:include page="/WEB-INF/views/template/mypage-tab.jsp">
+	  	<jsp:param name="menu" value="myLikeReview"/>
+	</jsp:include>
 
-    <div class="cell">
+    <div class="cell mt-50">
         <table class="table table-border table-hover">
             <thead>
                 <tr>
