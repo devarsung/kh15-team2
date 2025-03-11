@@ -89,7 +89,7 @@
 									</c:otherwise>
 								</c:choose>
 							</td>
-							<td>${reviewListViewDto.reviewWtime}</td>
+							<td>${reviewListViewDto.getWtimeString()}</td>
 							<td>${reviewListViewDto.reviewRead}</td>
 						</tr>
 						</c:forEach>
