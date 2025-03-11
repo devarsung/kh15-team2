@@ -43,6 +43,18 @@
     height: 100%;
     object-fit: cover;
 }
+.heart-btn {
+	position: absolute;
+	top: 5px;
+	right: 0px;
+	text-align: center;
+	border: none;
+	background: none;
+	cursor: pointer;
+}
+.heart-btn i {
+	font-size: 30px;
+}
 /* 카드 내용 영역 */
 .card-content {
     padding: 10px;
@@ -90,6 +102,18 @@
 }
 </style>
 
+<script>
+	$(function(){
+		$(".heart-btn").click(function(e){
+			
+			
+			
+			/* console.log("하트클릭"); */
+			/* e.stopPropagation(); */
+			return false;
+		});	
+	});
+</script>
 <div class="container w-1000">
     <div class="cell center">
         <h1>내가 좋아요한 여행지</h1>
@@ -111,6 +135,7 @@
                             <div class="card-image">
                                 <img src="/attachment/download?attachmentNo=${place.placeFirstImage}" alt="Card Image"
                                     onerror="this.onerror=null; this.src='/images/default-image.png';">
+                                    <button type="button" class="heart-btn"><i class="fa-solid fa-heart"></i></button>
                             </div>
                             <div class="card-content">
                                 <div class="card-title">
