@@ -134,6 +134,7 @@ $(function(){
         //성별 처리
         $("[name=memberGender]").on("blur",function(){
             var isValid = $(this).val() != "";
+			 refs/remotes/origin/main
             $(this).removeClass("success fail")
             .addClass(isValid? "success" : "fail");
             status.memberGender = isValid;
