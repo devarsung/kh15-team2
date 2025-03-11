@@ -83,12 +83,17 @@ public class AdminPlaceController {
 		if(placeDto == null) {
 			throw new TargetNotFoundException("존재 하지 않는 여행지 입니다");
 		}
-//		if(placeDao.findFirstImageNo(placeDto.getPlaceFirstImage()) == true) {
-//			attachmentService.delete(placeNo);
-//		}
 		
-		//placeDao.delete(placeNo);
-		return "redirect:/list";
+		List<Integer> imageNos = placeDao.selectPlaceImagesNos(placeNo);
+		for(int imageNo : imageNos) {
+			try {
+				attachmentService.delete(imageNo);
+			}
+			catch(Exception e) {}
+		}
+		
+		placeDao.delete(placeNo);
+		return "redirect:list";
 	}
 	
 	@RequestMapping("/list")

@@ -25,7 +25,7 @@ public class PageVO {
 	}
 	
 	public boolean search() {
-		return column != null && keyword != null && !byPlace();
+		return (column != null || keyword != null) && !byPlace();
 	}
 	public boolean isList() {
 		return !search() && !byPlace();

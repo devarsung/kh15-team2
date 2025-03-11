@@ -22,35 +22,30 @@ public class ReplyDao {
 		String sql = "select reply_seq.nextval from dual";
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
+
 	public void insert(ReplyDto replyDto) {
-		String sql = "insert into reply( " + "reply_no, reply_writer, " + "reply_origin, reply_content " + ") "
-				+ "values(?, ?, ?, ?)";
-		Object[] data = { replyDto.getReplyNo(), replyDto.getReplyWriter(), replyDto.getReplyOrigin(),
-				replyDto.getReplyContent() };
+		String sql = "INSERT INTO reply (reply_no, reply_writer, reply_origin, reply_content, reply_wtime) "
+				+ "VALUES (reply_seq.NEXTVAL, ?, ?, ?, SYSTIMESTAMP)";
+
+		Object[] data = { replyDto.getReplyWriter(), // 작성자 ID (member_id)
+				replyDto.getReplyOrigin(), // 댓글이 달린 게시글 번호
+				replyDto.getReplyContent() // 댓글 내용
+		};
+
 		jdbcTemplate.update(sql, data);
 	}
-	
-	 // 댓글 목록 조회 (닉네임 포함)
-    public List<ReplyDto>selectList(int replyOrigin) {
-        String sql = "select r.reply_no, r.reply_writer, m.member_nickname, " +
-                     "r.reply_origin, r.reply_content, r.reply_wtime, r.reply_etime " +
-                     "from reply r " +
-                     "join member m on r.reply_writer = m.member_id " + // 닉네임 가져오기
-                     "where r.reply_origin = ? " +
-                     "order by r.reply_wtime desc";
-        Object[] data = { replyOrigin};
-        return jdbcTemplate.query(sql, replyMapper, data);
-    }
-	
- // 내가 작성한 댓글 목록 조회 (특정 후기)
-    public List<ReplyDto> selectListByUserIdAndReviewNo(String userId, int reviewNo) {
-        String sql = "SELECT reply_no, reply_writer, reply_content, reply_wtime " 
-        		+"FROM reply " 
-        		+"WHERE reply_writer = ? AND reply_origin = ? " 
-        		+"ORDER BY reply_wtime DESC";
-        Object[] data = { userId, reviewNo };
-        return jdbcTemplate.query(sql, replyMapper, data);
-    }
+
+	// 댓글 목록 조회 (닉네임 포함)
+	public List<ReplyDto> selectList(int replyOrigin) {
+	    String sql = "SELECT r.reply_no, r.reply_origin, m.member_nickname, " +
+	                 "r.reply_content, r.reply_wtime, r.reply_etime " +
+	                 "FROM reply r " +
+	                 "LEFT JOIN member m ON r.reply_writer = m.member_id " +
+	                 "WHERE r.reply_origin = ? " +
+	                 "ORDER BY r.reply_wtime ASC";
+	    Object[] data = {replyOrigin};
+	    return jdbcTemplate.query(sql, replyMapper, data);
+	}
 
 	// 댓글 삭제
 	public boolean delete(int replyNo) {
@@ -58,15 +53,15 @@ public class ReplyDao {
 		Object[] data = { replyNo };
 		return jdbcTemplate.update(sql, data) > 0;
 	}
-	
+
 	public ReplyDto selectOne(int replyNo) {
 		String sql = "select * from reply where reply_no = ?";
 		Object[] data = { replyNo };
 		List<ReplyDto> list = jdbcTemplate.query(sql, replyMapper, data);
 		return list.isEmpty() ? null : list.get(0);
 	}
-	
-	//댓글 수정
+
+	// 댓글 수정
 	public boolean update(ReplyDto replyDto) {
 		String sql = "update reply " + "set reply_content=?, reply_etime=systimestamp " + "where reply_no=?";
 		Object[] data = { replyDto.getReplyContent(), replyDto.getReplyNo() };

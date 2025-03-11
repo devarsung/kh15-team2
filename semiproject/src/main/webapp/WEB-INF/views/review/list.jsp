@@ -5,6 +5,7 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+ <link rel="stylesheet" type="text/css" href="/css/review-list.css">
  <style>
     .selectStyle{
 	 	 padding: 5px;
@@ -51,9 +52,10 @@
     	padding:10px;
       }
  </style>
+
 <div class="container w-1000">
 	<div class="cell center">
-		<h1 style="color:#919191;">후기 목록</h1>
+		<h1>후기 목록</h1>
 	</div>
 	
 	<!-- 검색창 -->
@@ -76,7 +78,7 @@
 		<table class="table table-border table-hover table-ellipsis tableStyle">
 			<thead>
 				<tr>
-					<th>No</th>
+					<th class="w-10">No</th>
 					<th style="width:450px; max-width:450px;">제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
@@ -97,7 +99,7 @@
 					<tbody align="center">
 						<c:forEach var="reviewListViewDto" items="${list}">
 						<tr>
-							<td>${reviewListViewDto.reviewNo}</td>
+							<td style="color:rgb(27, 27, 27);">${reviewListViewDto.reviewNo}</td>
 							<td align="left">
 								
 							
@@ -109,7 +111,7 @@
 								<!-- 댓글 표시 -->
 								<c:if test="${reviewListViewDto.reviewReply > 0}">
 									<span class="ms-20">
-										<i class="fa-solid fa-comment-dots blue" ></i>
+										<i class="fa-solid fa-comment-dots" style="color:#F3D0D7;" ></i>
 										${reviewListViewDto.reviewReply}
 									</span>
 								</c:if>
@@ -117,7 +119,7 @@
 								<!-- 좋아요 표시 -->
 								<c:if test="${reviewListViewDto.reviewLike > 0}">
 									&nbsp;&nbsp;
-									<i class="fa-solid fa-heart red " ></i>
+									<i class="fa-solid fa-heart " style="color:#eea5b3;"></i>
 									${reviewListViewDto.reviewLike}
 								</c:if>
 							</td>
@@ -130,10 +132,10 @@
 										${reviewListViewDto.memberNickname}
 									</c:otherwise>
 								</c:choose>
-										${reviewListViewDto.memberNickname}
 							</td>
-							<td>${reviewListViewDto.reviewWtime}</td>
+							<td>${reviewListViewDto.getWtimeString()}</td>
 							<td>${reviewListViewDto.reviewRead}</td>
+							<td>${reviewListViewDto.placeTitle}</td>
 						</tr>
 						</c:forEach>
 					</tbody>

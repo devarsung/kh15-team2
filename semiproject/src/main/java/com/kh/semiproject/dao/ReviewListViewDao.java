@@ -7,13 +7,17 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semiproject.dto.ReviewListViewDto;
+import com.kh.semiproject.dto.ReviewPlaceMemberListViewDto;
 import com.kh.semiproject.mapper.ReviewListViewMapper;
+import com.kh.semiproject.mapper.ReviewPlaceMemberListViewMapper;
 import com.kh.semiproject.vo.PageVO;
 
 @Repository
 public class ReviewListViewDao {
 	@Autowired
 	private ReviewListViewMapper reviewListViewMapper;
+	@Autowired
+	private ReviewPlaceMemberListViewMapper reviewPlaceMemberListViewMapper;
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -23,9 +27,10 @@ public class ReviewListViewDao {
 		if(pageVO.isList()) {
 			sql = "select * from ("
 				+ "select rownum rn, TMP.* from ("
-					+ "SELECT R.*, M.* "
+					+ "SELECT R.*, M.*, P.place_no, P.place_title "
 					+ "FROM REVIEW R "
 					+ "LEFT JOIN MEMBER M ON R.review_writer = M.member_id "
+					+ "LEFT JOIN place P on R.review_place = P.place_no "
 					+ "ORDER BY R.review_no desc "
 				+ ")TMP"
 			+ ") where rn between ? and ?";
@@ -81,23 +86,8 @@ public class ReviewListViewDao {
 		return list;
 	}
 	
-	public List<ReviewListViewDto> selectListOnReview(){
-		String sql = "	SELECT * "
-				+ "FROM ("
-				+ "    SELECT rownum rn, TMP.*"
-				+ "    FROM ("
-				+ "        SELECT R.*, M.*, (R.review_like + R.review_read) AS total_likes_and_reads"
-				+ "        FROM review R"
-				+ "        LEFT JOIN MEMBER M ON R.review_writer = M.member_id"
-				+ "        ORDER BY total_likes_and_reads DESC"
-				+ "    ) TMP"
-				+ ")"
-				+ "WHERE rn BETWEEN 1 AND 5";
-		
-		List<ReviewListViewDto> list = jdbcTemplate.query(sql, reviewListViewMapper);
 
-		return list;
-	}
+
 	
 	public int count(PageVO pageVO) {
 		if (pageVO.isList()) {

@@ -36,11 +36,13 @@
             <div class="cell right ">
            <label>           
                 수정시각( ${2025-03-10})
+                수정시각( ${noticeDto.getEtimeString()})
            </label>
 
            <label>
            
               작성시각($2025-03-10})<br>
+              작성시각(${noticeDto.getWtimeString()})<br>
            </label>
               <label></label>
                Name:(${noticeDto.noticeWriter})

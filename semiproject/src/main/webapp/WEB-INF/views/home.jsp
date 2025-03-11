@@ -4,31 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<!-- 
-<c:forEach var="review" items="${reviews}">
-	<p>${review.memberNickname }</p>
-	<c:if test="${review.memberNickname==null}">
-	<p>null</p>
-	</c:if>
-</c:forEach>
-		
-		
-<br>
-<c:forEach var="notice" items="${notices}">
-	<p>${notice.noticeWriter }</p>
-	<c:if test="${notice.memberNickname==null}">
-	<p>null</p>
-	</c:if>
-</c:forEach> -->
-<br>
-<%-- <c:forEach var="place" items="${places}">
-	<p>${place.placeNo}</p>
-	<p>${place.placeTitle}</p>
-	<p>${place.placeFirstImage}</p>
-	<p>${place.placeOverview}</p>
-	
-</c:forEach> --%>
-
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 
@@ -224,8 +199,6 @@ $(function () {
         <div class="cell flex-box flex-center">
             <div class="swiper" style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff">
                 <div class="swiper-wrapper">
-                	<c:out value="${reviews}" />
-                	
                 	<c:forEach var="place" items="${places}">
 	               		<div class="swiper-slide" data-url="/place/detail?placeNo=${place.placeNo}">
 	               			<img src="/attachment/download?attachment_no=${place.placeFirstImage}"
@@ -302,7 +275,7 @@ $(function () {
 	                	<a href="/notice/detail?noticeNo=${notice.noticeNo}" class="notice-item">
 	                        <span class="notice-icon"><i class="fa-solid fa-bullhorn"></i></span>
 	                        <span class="notice-title">"${notice.noticeTitle}"</span>
-	                        <span class="notice-date">${notice.noticeWtime}</span>
+	                        <span class="notice-date">${notice.wtimeString}</span>
 	                    </a>
                 	</c:forEach>
                 </div>

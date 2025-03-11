@@ -132,8 +132,9 @@ $(function(){
 
         
         //성별 처리
-        $("[name=memberGender]").on("change",function(){
-            var isValid = $(this).val().length != 0;
+        $("[name=memberGender]").on("blur",function(){
+            var isValid = $(this).val() != "";
+			 refs/remotes/origin/main
             $(this).removeClass("success fail")
             .addClass(isValid? "success" : "fail");
             status.memberGender = isValid;
@@ -247,9 +248,6 @@ $(function(){
         //폼검사
             $(".form-check").submit(function(){
                 $("[name],#pw-reinput").trigger("blur");
-				if($("[name=memberGender]").val() == ""){
-						$("[name=memberGender]").css("color","#d63031");
-					}
                 return status.ok();
 				
             });

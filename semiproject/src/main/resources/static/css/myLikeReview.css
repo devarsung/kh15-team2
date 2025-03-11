@@ -1,0 +1,43 @@
+
+  .tableStyle {
+    background: #fdfdfb; 
+   	border-collapse: separate; 
+    border-spacing: 0;
+    border-radius: 10px; 
+    overflow: hidden; 
+     border: 1px solid #ddd!important;
+     width : 1000px;
+}
+
+.tableStyle th, 
+.tableStyle td {
+    border: 1px solid #F6F5F2 !important; 
+    height: 50px;
+}
+
+
+.tableStyle.tableStyle:hover > tbody > tr:hover {
+	 background-color: #F0EBE3; 
+	}
+
+      .aStyle{
+     	 text-decoration: none;
+    	outline: none; 
+    	padding:10px;
+    	color : black;
+    	font-weight : bold;
+      }
+      .aStyle:visited{
+      	color:gray;
+      }
+      
+      .titleStyle{
+      	 text-decoration: none;
+    	outline: none; 
+    	padding:10px;
+    	color : #4C585B;
+      }
+      
+    .titleStyle:visited{
+      	color:white; 
+      }

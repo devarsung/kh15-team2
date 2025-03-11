@@ -39,8 +39,8 @@ public class ReviewDao {
 	}
 
 	public boolean update(ReviewDto reviewDto) {
-		String sql = "update review set review_title = ?, review_content = ?, review_etime = systimestamp where review_no =?";
-		Object[] data = { reviewDto.getReviewTitle(), reviewDto.getReviewContent(), reviewDto.getReviewNo() };
+		String sql = "update review set review_title = ?, review_content = ?, review_etime = systimestamp, review_star = ? where review_no =?";
+		Object[] data = { reviewDto.getReviewTitle(), reviewDto.getReviewContent(),reviewDto.getReviewStar(), reviewDto.getReviewNo() };
 		System.out.println(reviewDto.getReviewContent());
 		return jdbcTemplate.update(sql, data) > 0;
 	}
@@ -49,17 +49,6 @@ public class ReviewDao {
 		String sql = "select * from review";
 		return jdbcTemplate.query(sql, reviewMapper);
 	}
-
-	 // 내가 작성한 후기 목록 조회
-    public List<ReviewDto> selectListByUserId(String memberId) {
-        String sql = "SELECT review_no, review_title, review_writer, review_wtime, " 
-        		+"review_read, review_like " 
-        		+"FROM review " 
-        		+"WHERE review_writer = ? " 
-        		+"ORDER BY review_wtime DESC";
-        Object[] data = {memberId};
-        return jdbcTemplate.query(sql, reviewMapper, data);
-    }
 
 	public ReviewDto selectOne(int reviewNo) {
 		String sql = "select * from review where review_no = ?";

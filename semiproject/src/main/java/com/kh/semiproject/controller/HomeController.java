@@ -22,7 +22,7 @@ public class HomeController {
 	
 	@RequestMapping("/")
 		public String home(Model model) {
-	//	model.addAttribute("reviews", reviewPlaceMemberListViewDao.selectListOnReview());
+		model.addAttribute("reviews", reviewPlaceMemberListViewDao.selectListOnReview());
 		model.addAttribute("notices", noticeListViewDao.selectListOnNotice());
 		model.addAttribute("places", placeDao.selectListOnPlace());
 

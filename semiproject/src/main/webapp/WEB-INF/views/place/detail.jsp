@@ -314,7 +314,8 @@ $(function() {
 	        </table>
 	    	
 	    	<div class="cell right">
-		       <a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-neutral end">이 여행지의 후기 더보기</a>
+	    		<a href="/review/add?placeNo=${placeDto.placeNo}" class="btn btn-neutral end">후기 작성</a>
+		       	<a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-neutral end">후기 더보기</a>
 		   </div>
 	    </div>
     </c:if>

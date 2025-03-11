@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.semiproject.dao.PlaceDao;
 import com.kh.semiproject.dao.ReviewDao;
 import com.kh.semiproject.dao.ReviewListViewDao;
+import com.kh.semiproject.dao.ReviewPlaceMemberListViewDao;
 import com.kh.semiproject.dto.ReviewDto;
 import com.kh.semiproject.dto.ReviewListViewDto;
+import com.kh.semiproject.dto.ReviewPlaceMemberListViewDto;
 import com.kh.semiproject.error.TargetNotFoundException;
 import com.kh.semiproject.service.AttachmentService;
 import com.kh.semiproject.vo.PageVO;
@@ -43,6 +45,9 @@ public class ReviewController {
 	@Autowired
 	private AttachmentService attachmentService;
 
+	@Autowired
+	private ReviewPlaceMemberListViewDao reviewListDao;
+	
 	@RequestMapping("/list")
 	public String list(@ModelAttribute("pageVO") PageVO pageVO, Model model) {
 		
@@ -81,11 +86,11 @@ public class ReviewController {
 	
 	@RequestMapping("/detail")
 	public String detail(@RequestParam int reviewNo, Model model) {
-		ReviewDto reviewDto = reviewDao.selectOne(reviewNo);
-		if(reviewDto == null) {
+		ReviewPlaceMemberListViewDto reviewListDto = reviewListDao.selectOne(reviewNo);
+		if(reviewListDto == null) {
 			throw new TargetNotFoundException("존재 하지 않는 후기 입니다");
 		}
-		model.addAttribute("reviewDto", reviewDto);
+		model.addAttribute("reviewDto", reviewListDto);
 		return "/WEB-INF/views/review/detail.jsp";
 	}
 	

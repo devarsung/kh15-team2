@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.semiproject.dto.PlaceLikeDto;
 import com.kh.semiproject.mapper.PlaceLikeMapper;
+import com.kh.semiproject.vo.RestPageVO;
 
 @Repository
 public class PlaceLikeDao {
@@ -63,5 +64,59 @@ public class PlaceLikeDao {
 		Object[] data = { memberId };
 		return jdbcTemplate.query(sql, placeLikeMapper, data);
 	}
+	
+	// 내가 좋아요한 여행지 갯수
+	public int count(RestPageVO restPageVO) {
+		String sql = "select count(*) from place_like where member_id = ?";
+		Object[] data = {restPageVO.getMemberId()};
+		return jdbcTemplate.queryForObject(sql, int.class, data);
+	}
 
+	public List<PlaceLikeDto> selectListRest(RestPageVO restPageVO) {
+		String sql = "SELECT * FROM ("
+				+ "				    SELECT rownum rn, TMP.*"
+				+ "				    FROM ("
+				+  "SELECT p.place_no, p.place_title, p.place_type, p.place_region, p.place_first_image, pl.place_like_time,"
+					+ "COUNT(pl.member_id) AS like_count " 
+					+ "FROM place_like pl "
+					+ "JOIN place p ON pl.place_no = p.place_no " 
+					+ "WHERE pl.member_id = ? "
+					+ "GROUP BY p.place_no, p.place_title, p.place_type, p.place_region, p.place_first_image, pl.place_like_time "			
+					+ "ORDER BY pl.place_like_time DESC"
+					+ "				    ) TMP"
+				+ "				)"
+				+ "				WHERE rn BETWEEN ? AND ?";
+		Object[] data = { restPageVO.getMemberId(), restPageVO.getStartRownum(), restPageVO.getFinishRownum() };
+		return jdbcTemplate.query(sql, placeLikeMapper, data);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

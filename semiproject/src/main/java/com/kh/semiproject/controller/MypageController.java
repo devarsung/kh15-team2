@@ -3,8 +3,6 @@ package com.kh.semiproject.controller;
 import java.io.IOException;
 import java.util.List;
 
-import javax.naming.NoPermissionException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,16 +14,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.semiproject.dao.MemberDao;
+import com.kh.semiproject.dao.MyReplyDao;
+import com.kh.semiproject.dao.MyReviewDao;
 import com.kh.semiproject.dao.PlaceLikeDao;
-import com.kh.semiproject.dao.ReplyDao;
-import com.kh.semiproject.dao.ReviewDao;
 import com.kh.semiproject.dao.ReviewLikeDao;
 import com.kh.semiproject.dto.MemberDto;
+import com.kh.semiproject.dto.MyReplyDto;
+import com.kh.semiproject.dto.MyReviewDto;
 import com.kh.semiproject.dto.PlaceLikeDto;
-import com.kh.semiproject.dto.ReplyDto;
-import com.kh.semiproject.dto.ReviewDto;
 import com.kh.semiproject.dto.ReviewLikeDto;
 import com.kh.semiproject.service.AttachmentService;
+import com.kh.semiproject.vo.RestPageVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -39,9 +38,9 @@ public class MypageController {
 	@Autowired
 	private ReviewLikeDao reviewLikeDao;
 	@Autowired
-	private ReplyDao replyDao;
+	private MyReplyDao myReplyDao;
 	@Autowired
-	private ReviewDao reviewDao;
+	private MyReviewDao myReviewDao;
 	@Autowired
 	private AttachmentService attachmentService;
 
@@ -171,9 +170,12 @@ public class MypageController {
 
 	// 내가좋아요표시한 여행지 목록 매핑
 	@RequestMapping("/myLikePlace")
-	public String myLikePlace(HttpSession session, Model model) {
+	public String myLikePlace(HttpSession session, Model model, RestPageVO restPageVO) {
 		String userId = (String) session.getAttribute("userId"); // 내 아이디 추출
-		List<PlaceLikeDto> placeLikeList = placeLikeDao.selectPlaceLikeList(userId); // 좋아요한 여행지 목록 조회
+		restPageVO.setMemberId(userId);
+		int count = placeLikeDao.count(restPageVO);
+		restPageVO.setCount(count);
+		List<PlaceLikeDto> placeLikeList = placeLikeDao.selectListRest(restPageVO); // 좋아요한 여행지 목록 조회
 		model.addAttribute("placeLikeList", placeLikeList);
 		return "/WEB-INF/views/mypage/myLikePlace.jsp";
 	}
@@ -188,31 +190,32 @@ public class MypageController {
 	}
 
 	// 내가 작성한 후기 목록 매핑
-	@RequestMapping("myReview")
-	public String myReview(HttpSession session, Model model) {
-		String userId = (String) session.getAttribute("userId"); // 내 아이디 추출
-		List<ReviewDto> list = reviewDao.selectListByUserId(userId); // 내가 작성한 후기 목록 조회
-		model.addAttribute("list", list);
-		return "/WEB-INF/views/mypage/myReview.jsp";
-	}
+	@RequestMapping("/myReview")
+	public String myReviewList(HttpSession session, Model model) {
+		 String userId = (String) session.getAttribute("userId");
+
+        List<MyReviewDto> myReviewList = myReviewDao.selectMyReviewList(userId);
+        model.addAttribute("myReviewList", myReviewList);
+
+        return "/WEB-INF/views/mypage/myReview.jsp";
+    }
 
 	// 내가 작성한 댓글 목록 매핑
-	@RequestMapping("myReply")
-	public String myReply(HttpSession session, Model model, 
-			@RequestParam(required = false) Integer reviewNo) {
-	    String userId = (String) session.getAttribute("userId"); // 내 아이디 추출
+	@RequestMapping("/myReply")
+	public String myReply(HttpSession session, Model model) {
+	    // 세션에서 로그인한 사용자 ID 가져오기
+	    String userId = (String) session.getAttribute("userId");
 
-	    if (reviewNo == null) {
-	        model.addAttribute("error", "리뷰 번호가 없습니다.");
-	        return "/WEB-INF/views/mypage/myReply.jsp";
-	    }
+	    // 댓글 목록 조회
+	    List<MyReplyDto> myReplyList = myReplyDao.selectMyReplyList(userId);
 
-	    List<ReplyDto> list = replyDao.selectListByUserIdAndReviewNo(userId, reviewNo);
-	    model.addAttribute("list", list);
-	    return "/WEB-INF/views/mypage/myReply.jsp";
+	    // 모델에 데이터 추가
+	    model.addAttribute("myReplyList", myReplyList);
+	    return "/WEB-INF/views/mypage/myReply.jsp"; // JSP 페이지 반환
 	}
 
 
+	
 	// 회원아이디로 이미지 주소를 반환하는 매핑
 	@RequestMapping("/profile")
 	public String image(@RequestParam String memberId) {
