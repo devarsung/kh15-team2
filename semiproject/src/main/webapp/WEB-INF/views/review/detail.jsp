@@ -319,13 +319,13 @@
     </c:choose>
 
 <c:choose>
-	<c:when test="${not empty replyCount}">
+	<c:when test=" ${reviewDto.reviewReply == null}">
         <div class="cell left my-0 reply-list">
             <label>댓글목록</label>
         </div>
     </c:when>
     <c:otherwise>
-    	<div class="cell cetner" >    
+    	<div class="cell" >    
     			댓글이 없습니다
     	</div>
     </c:otherwise>
