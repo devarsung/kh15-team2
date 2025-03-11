@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
@@ -43,14 +42,13 @@
 			});
 		});
 	});
-
-    //리뷰스타
-    $(function(){
+//리뷰스타
+  $(function(){
         $(".reviewStar").score({
             starColor: "#FFE31A",
-            editable:false,
-            
+            editable:false,
            display:{
+  
                 placeLimit:1,
                 textColor:"#d63031",
             },
@@ -68,7 +66,7 @@
             var replyContent = $(".reply-writebox").val();
 
             if(replyContent.length==0){
-                window.alert("ë´ì©ì ìì±íì¸ì");
+                window.alert("댓글을 삭제하시겠습니까?");
                 return;
             }
             $.ajax({
@@ -99,8 +97,7 @@
                     loadList();
                 }
             });
-        });
-       
+        });
     		$(document).on("click", ".edit-btn", function(){
  		
  		
@@ -131,7 +128,7 @@
  		var replyNo = $(this).data("reply-no");
  		var replyContent = $(this).closest(".reply-edit-item").find(".reply-content").val();
  		if(replyContent.length == 0) {
- 			window.alert("ë´ì©ì íììëë¤");
+ 			window.alert("수정 하시겠습니까?");
  			return;
  		}
 
@@ -187,13 +184,10 @@
  					$(html).find(".edit-btn").remove();
  					$(html).find(".delete-btn").remove();
  				}
- 				
  				if(this.replyWriter == null ||  reviewWriter.length == 0 
  													|| this.replyWriter !=  reviewWriter) {
  					$(html).find(".owner-badge").remove();
- 				}
-       
-                    
+ 				} 
                     $(".reply-wrapper").append(html);
                 });
                 $(".reply-count").text(response.length);
@@ -289,8 +283,7 @@
     <div class="cell p-20 content-box" >${reviewDto.reviewContent}</div>
     <hr>
 	<div>
-		<i class="fa-heart fa-regular red"></i>
-		좋아요<span class="heart-count">${reviewDto.reviewLike}</span>
+		<i class="fa-heart fa-regular red"></i>좋아요<span class="heart-count">${reviewDto.reviewLike}</span>
 	</div>
 	<br>
     <div class="cell left my-0">
@@ -300,7 +293,7 @@
    	<c:when test="${sessionScope.userId != null}">
     <div class="flex-box align-items"> 
         <div class="cell w-100">
-            <textarea class="reply-writebox" placeholder="댓글을 남겨주세요"></textarea>
+            <textarea class="reply-writebox" placeholder="댓글을 남겨주세요"></textarea>
         </div>
         <div class="cell right inline-flex-box flex-center w-20">
             <button type="button" class=" btn btn-neutral btn-reply-write">등록하기</button>
