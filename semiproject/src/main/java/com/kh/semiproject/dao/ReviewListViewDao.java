@@ -27,9 +27,10 @@ public class ReviewListViewDao {
 		if(pageVO.isList()) {
 			sql = "select * from ("
 				+ "select rownum rn, TMP.* from ("
-					+ "SELECT R.*, M.* "
+					+ "SELECT R.*, M.*, P.place_no, P.place_title "
 					+ "FROM REVIEW R "
 					+ "LEFT JOIN MEMBER M ON R.review_writer = M.member_id "
+					+ "LEFT JOIN place P on R.review_place = P.place_no "
 					+ "ORDER BY R.review_no desc "
 				+ ")TMP"
 			+ ") where rn between ? and ?";

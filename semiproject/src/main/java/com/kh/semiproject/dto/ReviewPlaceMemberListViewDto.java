@@ -15,13 +15,15 @@ public class ReviewPlaceMemberListViewDto {
 	
 	private int reviewNo;
 	private String reviewTitle;
+	private String reviewContent;
 	private int reviewLike;
 	private int reviewRead;
 	private int reviewStar;
 	private Timestamp reviewWtime;
 	private String reviewWriter;
 	private int reviewPlace;
-
+	private int reviewReply;
+	
 	private String memberId;
 	private String memberNickname;
 //	

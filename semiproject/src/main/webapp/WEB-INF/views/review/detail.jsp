@@ -153,6 +153,7 @@ $(function(){
 
     // 댓글 목록
     function loadList(){
+
         $.ajax({
             url:"/rest/reply/list",
             method:"post",
@@ -239,7 +240,7 @@ $(function(){
 </head>
 <div class="container w-1200">
     <div class="cell center">
-        <h2>[${reviewDto.reviewWriter}]님의 후기</h2>
+        <h2>[${reviewDto.memberNickname}]님의 후기</h2>
     </div>
     <hr style=" box-shadow: 0 0 10px rgba(0,0,0,0.1);">
     <div class="cell right">
