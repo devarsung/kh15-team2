@@ -64,6 +64,48 @@ public class ReviewPlaceMemberListViewDao {
 		return list;
 	}
 	
+	public ReviewPlaceMemberListViewDto selectOne(int reviewNo) {
+		String sql = "select R.review_no, R.review_title, R.review_content, R.review_like, R.review_read, "
+				+"            R.review_star, R.review_wtime, R.review_writer,  R.review_place, R.review_reply, "
+				+"            M.member_id, M.member_nickname, "
+				+ "            P.place_no, P.place_title from review R"
+				+ "        LEFT JOIN MEMBER M ON R.review_writer = M.member_id"
+				+ "        LEFT JOIN place P ON R.review_place = P.place_no"
+				+ "		where review_no = ?";
+		Object[] data  = {reviewNo};
+		List<ReviewPlaceMemberListViewDto> list = jdbcTemplate.query(sql, reviewPlaceMemberListViewMapper, data);
+		return list.isEmpty() ? null:list.get(0);
+	}
+	
+	
+	
+	
 	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

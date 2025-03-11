@@ -40,6 +40,9 @@ public class ReviewListViewDto {
 	private Timestamp memberLogin;//최종로그인일
 	private Timestamp memberChange;//비밀번호변경일
 	
+	private int placeNo;
+	private String placeTitle;
+	
 	public String getWtimeString() {
 		LocalDate today = LocalDate.now();
 		LocalDateTime wtime = reviewWtime.toLocalDateTime();

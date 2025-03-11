@@ -22,10 +22,9 @@ import com.kh.semiproject.dao.ReviewDao;
 import com.kh.semiproject.dao.ReviewLikeDao;
 import com.kh.semiproject.dto.MemberDto;
 import com.kh.semiproject.dto.PlaceLikeDto;
-import com.kh.semiproject.dto.ReplyDto;
-import com.kh.semiproject.dto.ReviewDto;
 import com.kh.semiproject.dto.ReviewLikeDto;
 import com.kh.semiproject.service.AttachmentService;
+import com.kh.semiproject.vo.RestPageVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -171,9 +170,12 @@ public class MypageController {
 
 	// 내가좋아요표시한 여행지 목록 매핑
 	@RequestMapping("/myLikePlace")
-	public String myLikePlace(HttpSession session, Model model) {
+	public String myLikePlace(HttpSession session, Model model, RestPageVO restPageVO) {
 		String userId = (String) session.getAttribute("userId"); // 내 아이디 추출
-		List<PlaceLikeDto> placeLikeList = placeLikeDao.selectPlaceLikeList(userId); // 좋아요한 여행지 목록 조회
+		restPageVO.setMemberId(userId);
+		int count = placeLikeDao.count(restPageVO);
+		restPageVO.setCount(count);
+		List<PlaceLikeDto> placeLikeList = placeLikeDao.selectListRest(restPageVO); // 좋아요한 여행지 목록 조회
 		model.addAttribute("placeLikeList", placeLikeList);
 		return "/WEB-INF/views/mypage/myLikePlace.jsp";
 	}

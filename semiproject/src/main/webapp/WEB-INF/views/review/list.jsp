@@ -91,6 +91,7 @@
 							</td>
 							<td>${reviewListViewDto.getWtimeString()}</td>
 							<td>${reviewListViewDto.reviewRead}</td>
+							<td>${reviewListViewDto.placeTitle}</td>
 						</tr>
 						</c:forEach>
 					</tbody>

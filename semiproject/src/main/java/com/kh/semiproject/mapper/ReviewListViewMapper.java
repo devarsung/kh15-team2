@@ -41,6 +41,9 @@ public class ReviewListViewMapper implements RowMapper<ReviewListViewDto>{
 				.memberJoin(rs.getTimestamp("member_join"))
 				.memberLogin(rs.getTimestamp("member_login"))
 				.memberChange(rs.getTimestamp("member_change"))
+				
+				.placeNo(rs.getInt("place_no"))
+				.placeTitle(rs.getString("place_title"))
 				.build();
 	}
 

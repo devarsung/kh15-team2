@@ -131,7 +131,7 @@
  	
         //세션
         var userId = "${sessionScope.userId}";
-        var reviewWriter = "${memberDto.memberNickname}";
+        var reviewWriter = "${reviewDto.memberNickname}";
         //댓글목록
         function loadList(){
         $.ajax({
@@ -236,7 +236,7 @@
 <div class="container w-1000">
 
     <div class="cell center">
-        <h2>[${reviewDto.reviewWriter}]님의 후기</h2>
+        <h2>[${reviewDto.memberNickname}]님의 후기</h2>
     </div>
     <hr>
     <div class="cell right">
