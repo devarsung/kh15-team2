@@ -243,7 +243,7 @@
         <i class="fa-solid fa-heart"></i>${reviewDto.reviewLike}|<i class="fa-solid fa-eye"></i> ${reviewDto.reviewRead}|<span class="reply-count"><i class="fa-solid fa-comment-dots"></i>${reviewDto.reviewReply}</span>
     </div>
     <div class="cell right">
-    작성일(${reviewDto.reviewWtime})|수정일(${reviewDto.reviewEtime})
+    작성일(${reviewDto.getWtimeString()})|수정일(${reviewDto.getEtimeString()})
     </div>
     <div class="cell p-20">
         <h1>
