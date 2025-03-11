@@ -18,6 +18,7 @@
         }
         </style>
     
+
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
     <script src="/js/review/review-add-summernote.js"></script>
      <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script>
@@ -39,7 +40,7 @@
         </div>
         <div class="cell">
             <p>"${placeDto.placeTitle}"의 평점을 남겨주세요</p>
-            <div class="reviewStar" name="reviewStar" value="reviewStar" data-max="5" data-rate="5"></div>
+           <div class="reviewStar"  data-max="5" data-rate="${reviewDto.reviewStar}" ></div>
         </div>
         <div class="cell my-40">
             <label class="p-10">본문</label>

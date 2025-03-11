@@ -88,7 +88,6 @@
 										${reviewListViewDto.memberNickname}
 									</c:otherwise>
 								</c:choose>
-										${reviewListViewDto.memberNickname}
 							</td>
 							<td>${reviewListViewDto.reviewWtime}</td>
 							<td>${reviewListViewDto.reviewRead}</td>

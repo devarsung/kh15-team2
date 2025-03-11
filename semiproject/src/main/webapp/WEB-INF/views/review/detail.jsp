@@ -8,9 +8,14 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
    <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script>
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'ssw-20250311' of https://github.com/devarsung/kh15-team2.git
     <script type="text/javascript">
+    
     $(function(){
+<<<<<<< HEAD
     	var params = new URLSearchParams(location.search);
     	var reviewNo = params.get("reviewNo");
 
@@ -43,30 +48,71 @@
     });
     
     $(function(){
+=======
+		var params = new URLSearchParams(location.search);
+		var reviewNo = params.get("reviewNo");
+		
+		
+		//좋아요
+		$.ajax({
+			url:"/rest/review/check",
+			method:"post",
+			data: {reviewNo : reviewNo},
+			success:function(response) {
+				$(".fa-heart").removeClass("fa-solid fa-regular")
+					.addClass(response.done ? "fa-solid" : "fa-regular");
+				$(".heart-count").text(response.count);
+			}
+		});
+		
+	
+		$(".fa-heart").click(function(){
+			$.ajax({
+				url:"/rest/review/action",
+				method:"post",
+				data: {reviewNo : reviewNo},
+				success:function(response) {
+					$(".fa-heart").removeClass("fa-solid fa-regular")
+						.addClass(response.done ? "fa-solid" : "fa-regular");
+					$(".heart-count").text(response.count);
+					console.log($(".fa-heart"));
+				}
+			});
+		});
+	});
+//리뷰스타
+  $(function(){
+>>>>>>> branch 'ssw-20250311' of https://github.com/devarsung/kh15-team2.git
         $(".reviewStar").score({
             starColor: "#FFE31A",
+<<<<<<< HEAD
             editable:false,//편집 가능하도록 설정
             
             display:{
                 showNumber:true,
+=======
+            editable:false,
+           display:{
+  
+>>>>>>> branch 'ssw-20250311' of https://github.com/devarsung/kh15-team2.git
                 placeLimit:1,
                 textColor:"#d63031",
             },
         });
     });  
-    //댓글목록 스크립트
+  	//댓글
     $(function(){
-        //글번호
+       
         var params = new URLSearchParams(location.search);
         var reviewNo = params.get("reviewNo");
-
+        console.log(reviewNo);
         loadList();
-        //댓글작성
+      //댓글작성
         $(".btn-reply-write").click(function(){
             var replyContent = $(".reply-writebox").val();
 
             if(replyContent.length==0){
-                window.alert("내용을 작성하세요");
+                window.alert("댓글을 삭제하시겠습니까?");
                 return;
             }
             $.ajax({
@@ -77,16 +123,16 @@
                     replyContent : replyContent
                 },
                 success:function(response){
-                    $(".reply-writebox").val("");//입력값제거
+                    $(".reply-writebox").val("");
                     loadList();
                 }
             });
         });
 
 
-        //댓글삭제
+        //댓글삭제
         $(document).on("click",".delete-btn",function(){
-            var choice = window.confirm("정말 댓글을 삭제하겠습니까?");
+            var choice = window.confirm("정말 댓글을 삭제하시겠습니까?");
             if(choice ==false) return;
             var replyNo = $(this).data("reply-no");
             $.ajax({
@@ -97,15 +143,14 @@
                     loadList();
                 }
             });
-        });
-        //댓글수정
+        });
     		$(document).on("click", ".edit-btn", function(){
  		
- 		//기존에 열려있는 모든 수정화면을 제거
+ 		
  		$(".reply-edit-item").prev(".reply-item").show();
  		$(".reply-edit-item").remove();
  		
- 		//원본은 놔두고 원본 뒤에다 추가
+ 		
  		var template = $("#reply-edit-template").text();
  		var html = $.parseHTML(template);
  		
@@ -124,12 +169,12 @@
  		$(this).closest(".reply-item").after(html);
  		$(this).closest(".reply-item").hide();
  	});
-        //수정 저장
+        //댓글수정
  	$(document).on("click", ".save-btn", function(){
  		var replyNo = $(this).data("reply-no");
  		var replyContent = $(this).closest(".reply-edit-item").find(".reply-content").val();
  		if(replyContent.length == 0) {
- 			window.alert("내용은 필수입니다");
+ 			window.alert("수정 하시겠습니까?");
  			return;
  		}
 
@@ -146,8 +191,8 @@
  		});
  	});
  	$(document).on("click", ".cancel-btn", function(){
- 		//취소를 누르면 현재 수정 영역을 제거하고 앞의 표시 영역을 출력
- 		var choice = window.confirm("댓글 수정을 취소하시겠습니까?");
+ 	
+ 		var choice = window.confirm("취소 하시겠습니까?");
  		if(choice == false) return;
  		
  		$(this).closest(".reply-edit-item").prev(".reply-item").show();
@@ -156,10 +201,10 @@
  	});
 
  	
-        //세션
+       
         var userId = "${sessionScope.userId}";
         var reviewWriter = "${memberDto.memberNickname}";
-        //댓글목록
+    //댓글목록
         function loadList(){
         $.ajax({
             url:"/rest/reply/list",
@@ -168,11 +213,11 @@
             success:function(response){
             	console.log(response);
                 $(".reply-wrapper").empty();
-                $(response).each(function(){ //댓글 어떻게 보여줄건지 정합시다..
+                $(response).each(function(){
                     var template = $("#reply-template").text();
                     var html = $.parseHTML(template);
                     var convertTime = moment(this.replyWtime).fromNow();
-                    //변환
+                    //ë³í
                     $(html).find(".reply-no").text("(no."+this.replyNo+")");
                     $(html).find(".reply-writer").text(this.replyNickname);
                     $(html).find(".reply-content").text(this.replyContent);
@@ -185,25 +230,26 @@
  					$(html).find(".edit-btn").remove();
  					$(html).find(".delete-btn").remove();
  				}
- 				
  				if(this.replyWriter == null ||  reviewWriter.length == 0 
  													|| this.replyWriter !=  reviewWriter) {
  					$(html).find(".owner-badge").remove();
- 				}
-       
-                    
+ 				} 
                     $(".reply-wrapper").append(html);
                 });
-                $(".reply-count").text(response.length); //댓글개수 
+                $(".reply-count").text(response.length);
             }
         });
     };
+    
+    
+//     $(".deletemessage").click(function(){
+//         var choice = window.confirm("글삭제?");
+//         if(choice == false) return;
+//     });
+
+		
     });
-    
-    
-    
-    
-    
+ 
     </script>
     
 <!--댓글 목록/내글이면 수정/삭제btn-->
@@ -259,24 +305,26 @@
         </div>
 
     </script>
+
+
 </head>
 <div class="container w-1000">
 
     <div class="cell center">
         <h2>[${reviewDto.reviewWriter}]님의 후기</h2>
     </div>
-    <hr>
     <div class="cell right">
-        <i class="fa-solid fa-heart"></i>${reviewDto.reviewLike}|<i class="fa-solid fa-eye"></i> ${reviewDto.reviewRead}|<span class="reply-count"><i class="fa-solid fa-comment-dots"></i>${reviewDto.reviewReply}</span>
+       <i class="fa-solid fa-eye"></i> ${reviewDto.reviewRead}| <i class="fa-solid fa-heart"></i>${reviewDto.reviewLike}|</span><i class="fa-solid fa-comment-dots"></i><span class="reply-count"></span>
     </div>
     <div class="cell right">
-    작성일(${reviewDto.reviewWtime})|수정일(${reviewDto.reviewEtime})
+   작성일(${reviewDto.reviewWtime})|수정일(${reviewDto.reviewEtime})
     </div>
     <div class="cell p-20">
         <h1>
             ${reviewDto.reviewTitle}<i class="fa-solid fa-pencil"></i>
         </h1>
     </div>
+<<<<<<< HEAD
 
     <hr>
     <div class="cell reviewStar" data-rate="${reviewDto.reviewStar}" ></div>
@@ -284,26 +332,24 @@
 
  
 
+=======
+    <div class="cell reviewStar"></div>
+    <span class="red">${reviewDto.reviewStar}</span>
+>>>>>>> branch 'ssw-20250311' of https://github.com/devarsung/kh15-team2.git
     <div class="cell p-20 content-box" >${reviewDto.reviewContent}</div>
-
     <hr>
 	<div>
-		조와요  <i class="fa-heart fa-regular red"></i>
-		<span class="heart-count">${reviewDto.reviewLike}</span>
+		<i class="fa-heart fa-regular red"></i>좋아요<span class="heart-count">${reviewDto.reviewLike}</span>
 	</div>
 	<br>
-
-    <br>
-
-
     <div class="cell left my-0">
-        <label>댓글등록</label>
+        <label>댓글목록</label>
     </div>
    <c:choose>
    	<c:when test="${sessionScope.userId != null}">
     <div class="flex-box align-items"> 
         <div class="cell w-100">
-            <textarea class="reply-writebox" placeholder="  댓글을 입력하세요"></textarea>
+            <textarea class="reply-writebox" placeholder="댓글을 남겨주세요"></textarea>
         </div>
         <div class="cell right inline-flex-box flex-center w-20">
             <button type="button" class=" btn btn-neutral btn-reply-write">등록하기</button>
@@ -313,7 +359,7 @@
  	<c:otherwise>
  		<div class="flex-box align-items"> 
         <div class="cell w-100">
-            <textarea class="reply-writebox2" placeholder="  로그인후에 작성 가능합니다"></textarea>
+            <textarea class="reply-writebox2" placeholder="로그인후 이용가능합니다"></textarea>
         </div>
         <div class="cell right inline-flex-box flex-center w-20">
             <button type="button"  class="btn btn-neutral">등록하기</button>
@@ -323,18 +369,20 @@
     </c:choose>
 
 <c:choose>
-	<c:when test ="${not empty reviewReply}">
-		<div class="cell left my-0 reply-list">
-			<label>댓글이 없습니다</label>
-		</div>
-	</c:when>
-	<c:otherwise>
+	<c:when test="${not empty replyCount}">
         <div class="cell left my-0 reply-list">
-            <label>댓글목록</label>
+            <label>댓글목록</label>
         </div>
-    <div class="reply-wrapper"></div>
-	</c:otherwise>
+    	<div class="reply-wrapper"></div>
+
+    </c:when>
+    <c:otherwise>
+    	<div class="cell cetner" >    
+    			댓글이 없습니다
+    	</div>
+    </c:otherwise>
 </c:choose>
+
 
 	<div class="cell right">
 		<c:if test="${sessionScope.userId != null}">
@@ -345,8 +393,17 @@
 		</c:if>
 	</div>
 
+
+    <div class="cell right">
+    <c:if test="${sessionScope.userId != null}">
+	<c:if test="${sessionScope.userId ==reviewDto.reviewWriter}">
+    <a href="/review/edit?reviewNo=${reviewDto.reviewNo}"class="btn btn-positive mt-20"   style="width:100px">수정</a>
+    <a href="/review/delete?reviewNo=${reviewDto.reviewNo}" class="btn btn-negative mt-20 deletemessage " style="width:100px">삭제</a>
+  	</c:if>
+  	</c:if>
+    </div>
     <div class="cell center">
-        <a href="/review/list" class="btn btn-neutral mt-20" style="width:200px">목록으로</a>
+        <a href="/review/list" class="btn btn-neutral mt-20" style="width:200px">목록으로</a>
     </div>
 
 </div>
@@ -354,3 +411,4 @@
 
 </html>
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>   
+
