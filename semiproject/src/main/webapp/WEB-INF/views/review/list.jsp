@@ -16,7 +16,6 @@
             background: rgb(203, 234, 255);
             appearance: none;
             width: 100px;
-
 		}
     .inputStyle{
         padding:10px;

@@ -10,7 +10,7 @@
         border: none;
         resize: none;
         font-size: 34px;      
-     	display: grid;
+     	display:inline-block;
     	font-weight:500;
     }
       .textarea1 {

@@ -2,8 +2,6 @@
     pageEncoding="UTF-8"%>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-     <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
- <style>
    <style>
         .note-editor{
             border : 1px solid #b6b6b6 !important
@@ -16,9 +14,10 @@
              border : 1px solid #b6b6b6;
         }
      </style>
-         <script src="/js/summernote-custom.js"></script>
+     
+    <script src="/js/notice/add.js"></script>
+     <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
-    <script src="/js/admin-notice-add-summernote.js"></script>
       <div class="container w-800">
         <div class="cell center" >
             <h1>공지사항 작성</h1>

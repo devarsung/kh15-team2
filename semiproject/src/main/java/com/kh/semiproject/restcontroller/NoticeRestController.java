@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,11 +15,16 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.semiproject.error.TargetNotFoundException;
 import com.kh.semiproject.service.AttachmentService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/rest/notice")
 public class NoticeRestController {
+	
+	
 	@Autowired
 	private AttachmentService attachmentService;
+	
+	
 	
 	@PostMapping("/upload")
 	public int upload(@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
@@ -31,6 +37,7 @@ public class NoticeRestController {
 		}
 		return attachmentNo;
 	}
+	
 	
 	@PostMapping("/uploads")
 	public List<Integer> uploads(@RequestParam (value="attach") List<MultipartFile> attaches) throws IllegalStateException, IOException{
