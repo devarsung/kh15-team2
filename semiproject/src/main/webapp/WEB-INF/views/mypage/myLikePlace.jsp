@@ -268,7 +268,7 @@ $(function(){
                                 </div>
                                 <div class="card-subtitle">${place.placeRegion}</div>
                                 <div class="card-footer">
-                                    <span class="likes"><i class="fa-solid fa-heart"></i> ${place.likeCount}</span>
+                                
                                 </div>
                             </div>
                         </a>
