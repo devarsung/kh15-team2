@@ -91,60 +91,92 @@ $(function(){
 });
 </script>
 
-<div class="container w-800">
+<style>
+.status-container {
+	display: flex;
+	gap: 20px;
+}
+.status-item {
+	flex: 1;
+	background: white;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.status-table {
+	width: 90%;
+	border-collapse: collapse;
+}
+.status-table th,
+.status-table td {
+	border: 1px solid #dddddd;
+	padding: 10px;
+	text-align: center;
+}
+.status-table th {
+    background-color: #f8f9fd;
+    font-weight: bold;
+}
+</style>
+
+<div class="container w-1000">
 	<div class="cell center">
 		<h1>홈페이지 데이터현황</h1>
 	</div>
-	<div class="cell flex-box">
-		<div class="">
+	
+	<div class="cell mt-50">
+		<h3>회원 성별 현황</h3>
+	</div>
+	<div class="cell status-container">
+		<div class="status-item chart-area">
 			<canvas id="gender-chart"></canvas>
 		</div>
-		<div class="w-50">
-			<div class="cell">회원 성별 현황</div>
-			<div class="cell">
-				<table class="table table-border table-stripe gender-table">
-					<thead>
+		<div class="status-item table-area">
+			<table class="status-table gender-table">
+				<thead>
+					<tr>
+						<th>성별</th>
+						<th>회원수</th>
+					</tr>
+				</thead>
+				<tbody class="center">
+					<c:forEach var="statusVO" items="${memberGenderList}">
 						<tr>
-							<th>성별</th>
-							<th>회원수</th>
+							<td class="chart-key">${statusVO.key}</td>
+							<td class="chart-value">${statusVO.value}</td>
 						</tr>
-					</thead>
-					<tbody class="center">
-						<c:forEach var="statusVO" items="${memberGenderList}">
-							<tr>
-								<td class="chart-key">${statusVO.key}</td>
-								<td class="chart-value">${statusVO.value}</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
+					</c:forEach>
+				</tbody>
+			</table>
 		</div>
 	</div>
-	<div class="cell flex-box">
-		<div class="">
+	
+	
+	<div class="cell mt-50">
+		<h3>회원 연령대별 현황</h3>
+	</div>
+	<div class="cell status-container">
+		<div class="status-item chart-area">
 			<canvas id="age-chart"></canvas>
 		</div>
-		<div class="w-50">
-			<div class="cell">회원 연령대별 현황</div>
-			<div class="cell">
-				<table class="table table-border table-stripe age-table">
-					<thead>
+		<div class="status-item table-area">
+			<table class="status-table age-table">
+				<thead>
+					<tr>
+						<th>연령대</th>
+						<th>회원수</th>
+					</tr>
+				</thead>
+				<tbody class="center">
+					<c:forEach var="statusVO" items="${memberAgeList}">
 						<tr>
-							<th>연령대</th>
-							<th>회원수</th>
+							<td class="chart-key">${statusVO.key}</td>
+							<td class="chart-value">${statusVO.value}</td>
 						</tr>
-					</thead>
-					<tbody class="center">
-						<c:forEach var="statusVO" items="${memberAgeList}">
-							<tr>
-								<td class="chart-key">${statusVO.key}</td>
-								<td class="chart-value">${statusVO.value}</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
+					</c:forEach>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
