@@ -8,18 +8,45 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
    <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script>
- <script src="/js/review/reviewStar.js"></script>
-  <script src="/js/review/reviewReply.js"></script>
+
     <script type="text/javascript">
+    $(function(){
+    	var params = new URLSearchParams(location.search);
+    	var reviewNo = params.get("reviewNo");
+
+    
+    //좋아요
+    	$.ajax({
+    		url:"/rest/review/check",
+    		method:"post",
+    		data: {reviewNo : reviewNo},
+    		success:function(response){
+    			$(".fa-heart").removeClass("fa-solid fa-regular")
+    				.addClass(response.done ? "fa-solid" : "fa-regular");
+    			$(".heart-count").text(response.count);
+    		}
+    	})
+    
+    	$(".fa-heart").click(function(){
+    		$.ajax({
+    			url:"/rest/review/action",
+    			method:"post",
+    			data:{reviewNo : reviewNo},
+    			success:function(response){
+    				$(".fa-heart").removeClass("fa-solid fa-regular")
+    				.addClass(response.done ? "fa-solid" : "fa-regular");
+    				$(".heart-count").text(response.count);
+    				console.log($(".fa-heart"));
+    			}
+    		})
+    	});
+    });
+    
     $(function(){
         $(".reviewStar").score({
             starColor: "#FFE31A",
             editable:false,//편집 가능하도록 설정
-            integerOnly:false,//별을 정수 개수로만 선택하도록 설정
-            send:{//전송옵션
-                sendable:true,//전송 가능
-                name:"reviewStar",//전송될 이름 설정
-            },
+            
             display:{
                 showNumber:true,
                 placeLimit:1,
@@ -147,7 +174,7 @@
                     var convertTime = moment(this.replyWtime).fromNow();
                     //변환
                     $(html).find(".reply-no").text("(no."+this.replyNo+")");
-                    $(html).find(".reply-writer").text(this.replyWriter);
+                    $(html).find(".reply-writer").text(this.replyNickname);
                     $(html).find(".reply-content").text(this.replyContent);
                     $(html).find(".reply-wtime").text(convertTime);
                     $(html).find(".delete-btn").attr("data-reply-no",this.replyNo);
@@ -253,10 +280,9 @@
 
     <hr>
     <div class="cell reviewStar" data-rate="${reviewDto.reviewStar}" ></div>
-    <span class="red">${reviewDto.reviewStar}</span>
+    <span class="red"></span>
 
-    <div class="cell reviewStar">
-    ${reviewDto.reviewStar}</div>
+ 
 
     <div class="cell p-20 content-box" >${reviewDto.reviewContent}</div>
 
@@ -296,11 +322,28 @@
     </c:otherwise>
     </c:choose>
 
+<c:choose>
+	<c:when test ="${not empty reviewReply}">
+		<div class="cell left my-0 reply-list">
+			<label>댓글이 없습니다</label>
+		</div>
+	</c:when>
+	<c:otherwise>
         <div class="cell left my-0 reply-list">
             <label>댓글목록</label>
         </div>
-
     <div class="reply-wrapper"></div>
+	</c:otherwise>
+</c:choose>
+
+	<div class="cell right">
+		<c:if test="${sessionScope.userId != null}">
+		<c:if test="${sessionScope.userId == reviewDto.reviewWriter}">
+		<a href="/review/edit?reviewNo=${reviewDto.reviewNo}" class="btn btn-positive mt-20" style="width:100px">수정</a>
+		<a href="/review/delete?reviewNo=${reviewDto.reviewNo}" class="btn btn-negative mt-20 deletemessage" style="width:100px">삭제</a>
+		</c:if>
+		</c:if>
+	</div>
 
     <div class="cell center">
         <a href="/review/list" class="btn btn-neutral mt-20" style="width:200px">목록으로</a>
