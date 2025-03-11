@@ -12,6 +12,39 @@
   <script src="/js/review/reviewReply.js"></script>
     <script type="text/javascript">
     $(function(){
+		var params = new URLSearchParams(location.search);
+		var reviewNo = params.get("reviewNo");
+		
+		
+	//좋아요
+		$.ajax({
+			url:"/rest/review/check",
+			method:"post",
+			data: {reviewNo : reviewNo},
+			success:function(response) {
+				$(".fa-heart").removeClass("fa-solid fa-regular")
+					.addClass(response.done ? "fa-solid" : "fa-regular");
+				$(".heart-count").text(response.count);
+			}
+		});
+		
+
+		$(".fa-heart").click(function(){
+			$.ajax({
+				url:"/rest/review/action",
+				method:"post",
+				data: {reviewNo : reviewNo},
+				success:function(response) {
+					$(".fa-heart").removeClass("fa-solid fa-regular")
+						.addClass(response.done ? "fa-solid" : "fa-regular");
+					$(".heart-count").text(response.count);
+					console.log($(".fa-heart"));
+				}
+			});
+		});
+	});
+    
+    $(function(){
         $(".reviewStar").score({
             starColor: "#FFE31A",
             editable:false,//편집 가능하도록 설정
@@ -295,12 +328,31 @@
     </div>
     </c:otherwise>
     </c:choose>
+    
+    <c:choose>
+	<c:when test="${not empty replyCount}">
+        <div class="cell left my-0 reply-list">
+            <label>댓글 없음</label>
+        </div>
+    </c:when>
+    <c:otherwise>
 
+    </c:otherwise>
+</c:choose>
         <div class="cell left my-0 reply-list">
             <label>댓글목록</label>
         </div>
-
     <div class="reply-wrapper"></div>
+    
+
+     <div class="cell right">
+    <c:if test="${sessionScope.userId != null}">
+	<c:if test="${sessionScope.userId ==reviewDto.reviewWriter}">
+    <a href="/review/edit?reviewNo=${reviewDto.reviewNo}"class="btn btn-positive mt-20"   style="width:100px">수정</a>
+    <a href="/review/delete?reviewNo=${reviewDto.reviewNo}" class="btn btn-negative mt-20 deletemessage " style="width:100px">삭제</a>
+  	</c:if>
+  	</c:if>
+    </div>
 
     <div class="cell center">
         <a href="/review/list" class="btn btn-neutral mt-20" style="width:200px">목록으로</a>
