@@ -237,10 +237,11 @@ $(function(){
 </script>
 
 </head>
-<div class="container w-1000">
+<div class="container w-1200">
     <div class="cell center">
         <h2>[${reviewDto.reviewWriter}]님의 후기</h2>
     </div>
+    <hr>
     <div class="cell right">
         <i class="fa-solid fa-eye"></i> ${reviewDto.reviewRead}| 
         <i class="fa-solid fa-heart"></i>${reviewDto.reviewLike}|
@@ -263,9 +264,6 @@ $(function(){
         <i class="fa-heart fa-regular red"></i>좋아요<span class="heart-count">${reviewDto.reviewLike}</span>
     </div>
     <br>
-    <div class="cell left my-0">
-        <label>댓글목록</label>
-    </div>
     <c:choose>
         <c:when test="${sessionScope.userId != null}">
             <div class="flex-box align-items"> 
@@ -290,7 +288,7 @@ $(function(){
     </c:choose>
 
     <c:choose>
-        <c:when test="${not empty replyCount}">
+        <c:when test="${reviewDto.reviewReply == null}">
             <div class="cell center">    
                 댓글이 없습니다
             </div>
@@ -299,10 +297,10 @@ $(function(){
             <div class="cell left my-0 reply-list">
                 <label>댓글목록</label>
             </div>
-            <div class="reply-wrapper"></div>
+
         </c:otherwise>
     </c:choose>
-
+  <div class="reply-wrapper"></div>
     <div class="cell right">
         <c:if test="${sessionScope.userId != null}">
             <c:if test="${sessionScope.userId == reviewDto.reviewWriter}">
