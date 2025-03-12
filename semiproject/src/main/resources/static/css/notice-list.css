@@ -4,7 +4,6 @@
 /* 공지 리스트 */
 .notice-list {
     width: 100%;
-    max-width: 600px;
     margin: 20px auto;
 }
 .notice-item {
