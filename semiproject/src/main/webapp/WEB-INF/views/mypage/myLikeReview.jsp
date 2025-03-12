@@ -42,11 +42,11 @@ $(function(){
 		            var reviewHtml = `
 		                <tr>
 		                    <td class="center reviewNumber"></td>
-		                    <td><a href="/review/detail?reviewNo=${review.reviewNo}" class="titleStyle reviewTitle">${review.reviewTitle}</a></td>
-		                    <td class="center reviewWriter">${review.reviewWriter}</td>
-		                    <td class="center reviewWtime">${review.reviewWtime}</td>
-		                    <td class="center reviewRead">${review.reviewRead}</td>
-		                    <td class="center reviewCount">${review.likeCount}</td>
+		                    <td><a href="/review/detail?reviewNo=${review.reviewNo}" class="titleStyle reviewTitle"></a></td>
+		                    <td class="center reviewWriter"></td>
+		                    <td class="center reviewWtime"></td>
+		                    <td class="center reviewRead"></td>
+		                    <td class="center reviewCount"></td>
 		                </tr>
 		            `;
 
@@ -103,7 +103,7 @@ $(function(){
         </table>
     </div>
     <div class="cell center">
-    	<button class="btn-more">버튼</button>
+    	<button class="btn-more">더보기+</button>
     </div>
 </div>
 
