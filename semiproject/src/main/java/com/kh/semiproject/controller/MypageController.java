@@ -182,19 +182,26 @@ public class MypageController {
 
 	// 내가좋아요표시한 후기 목록 매핑
 	@RequestMapping("myLikeReview")
-	public String myLikeReview(HttpSession session, Model model) {
+	public String myLikeReview(RestPageVO restPageVO, HttpSession session, Model model) {
 		String userId = (String) session.getAttribute("userId");// 내 아이디 추출
-		List<ReviewLikeDto> reviewLikeList = reviewLikeDao.selectReviewLikeList(userId);// 좋아요한 후기 목록 조회
+		restPageVO.setMemberId(userId);
+		//List<ReviewLikeDto> reviewLikeList = reviewLikeDao.selectReviewLikeList(userId);// 좋아요한 후기 목록 조회
+		List<ReviewLikeDto> reviewLikeList = reviewLikeDao.selectListRest(restPageVO);// 좋아요한 후기 목록 조회
+		int count = reviewLikeDao.count(restPageVO);
+		restPageVO.setCount(count);
 		model.addAttribute("reviewLikeList", reviewLikeList);
 		return "/WEB-INF/views/mypage/myLikeReview.jsp";
 	}
 
 	// 내가 작성한 후기 목록 매핑
 	@RequestMapping("/myReview")
-	public String myReviewList(HttpSession session, Model model) {
+	public String myReviewList(HttpSession session, Model model, RestPageVO restPageVO) {
 		 String userId = (String) session.getAttribute("userId");
-
-        List<MyReviewDto> myReviewList = myReviewDao.selectMyReviewList(userId);
+		 restPageVO.setMemberId(userId);
+		 int count = myReviewDao.count(restPageVO);
+		 restPageVO.setCount(count);
+       // List<MyReviewDto> myReviewList = myReviewDao.selectMyReviewList(userId);
+        List<MyReviewDto> myReviewList = myReviewDao.selectListRest(restPageVO);
         model.addAttribute("myReviewList", myReviewList);
 
         return "/WEB-INF/views/mypage/myReview.jsp";
@@ -202,16 +209,16 @@ public class MypageController {
 
 	// 내가 작성한 댓글 목록 매핑
 	@RequestMapping("/myReply")
-	public String myReply(HttpSession session, Model model) {
-	    // 세션에서 로그인한 사용자 ID 가져오기
+	public String myReply(HttpSession session, Model model, RestPageVO restPageVO) {
 	    String userId = (String) session.getAttribute("userId");
+	    restPageVO.setMemberId(userId);
+	    int count = myReplyDao.count(restPageVO);
+	    restPageVO.setCount(count);
+	 //   List<MyReplyDto> myReplyList = myReplyDao.selectMyReplyList(userId);
+	    List<MyReplyDto> myReplyList = myReplyDao.selectListRest(restPageVO);
 
-	    // 댓글 목록 조회
-	    List<MyReplyDto> myReplyList = myReplyDao.selectMyReplyList(userId);
-
-	    // 모델에 데이터 추가
 	    model.addAttribute("myReplyList", myReplyList);
-	    return "/WEB-INF/views/mypage/myReply.jsp"; // JSP 페이지 반환
+	    return "/WEB-INF/views/mypage/myReply.jsp";
 	}
 
 
