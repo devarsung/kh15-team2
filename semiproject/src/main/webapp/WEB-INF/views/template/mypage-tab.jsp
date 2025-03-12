@@ -7,9 +7,15 @@
 
 <div class="">
 	<ul class="mypage-tab">
-		<li class="${param.menu eq 'home' ? 'active' : ''}"><a href="/mypage/home">내정보</a></li>
-		<li><a href="/mypage/myReview">나의 리뷰</a></li>
-		<li><a href="/mypage/myReply">나의 댓글</a></li>
+		<li class="${param.menu eq 'home' ? 'active' : ''}">
+			<a href="/mypage/home">내정보</a>
+		</li>
+		<li class="${param.menu eq 'myReview' ? 'active' : ''}">
+			<a href="/mypage/myReview">나의 리뷰</a>
+		</li>
+		<li class="${param.menu eq 'myReply' ? 'active' : ''}">
+			<a href="/mypage/myReply">나의 댓글</a>
+		</li>
 		<li class="${param.menu eq 'myLikePlace' ? 'active' : ''}">
 			<a href="/mypage/myLikePlace"><i class="fa-heart red fa-regular"></i> 여행지</a>
 		</li>

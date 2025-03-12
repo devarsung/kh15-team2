@@ -260,7 +260,6 @@ $(function(){
         </div>
         <div class="cell center mt-50">
         	<a href="#" class="aStyle btn-more">더보기+</a>
-        	
         </div>
     </div>
 </div>
