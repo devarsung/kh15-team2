@@ -20,13 +20,13 @@
         padding: 10px;
         place-items: center;
         margin: 0 auto;
-        gap: 20px;
+        gap: 15px;
 	}
     .img-container {
         position: relative;
         display: inline-block;
-        width: 200px;
-        height: 200px;
+        width: 150px;
+        height: 150px;
     }
     .img-container img {
         width: 100%;
@@ -61,6 +61,35 @@
     .btn-submit {
     	height: 3.5em;
     }
+    
+    .first-image-area {
+    	position: relative;
+	    display: flex;
+	    flex-direction: column;
+	    align-items: center;
+    }
+    .btn-group {
+	    position: absolute;
+	    bottom: -45px;
+	    right: 43px;
+	    display: flex;
+	    gap: 5px;
+	}
+	
+	.coord-container {
+		display: flex;
+	    align-items: center;
+	    justify-content: space-between;
+	    gap: 5px;
+	    width: 100%;
+	}
+	.coord-input {
+		flex: 1;
+		flex-direction: column;
+	}
+	.coord-btn {
+		flex-direction: column;
+	}
 </style>
 
 <script type="text/javascript" src="/js/place/add.js"></script>
@@ -72,13 +101,13 @@
     </div>
 </script>
 <form class="form-check" action="add" method="post" autocomplete="off" enctype="multipart/form-data">
-	<div class="container w-1000">
+	<div class="container w-800">
 	    <div class="cell center">
 	        <h1>여행지 등록</h1>
 	    </div>
 	    
-	    <div class="cell flex-box" style="flex-wrap: wrap;">
-	    	<div class="w-25">
+	    <div class="cell flex-box" style="flex-wrap: nowrap;">
+	    	<div class="w-50">
 		    	<h2><i class="fa-solid fa-square-pen"></i> 지역</h2>
 		        <select name="placeRegion" class="field w-100">
 		        	<option value="">선택하세요</option>
@@ -103,7 +132,7 @@
 	    		<div class="fail-feedback">지역을 선택해주세요</div>
 	    	</div>
 	    	
-	    	<div class="w-25 mx-10">
+	    	<div class="w-50 ms-10">
 				<h2><i class="fa-solid fa-square-pen"></i> 타입</h2>
 				<select name="placeType" class="field w-100">
 					<option value="">선택하세요</option>
@@ -123,17 +152,24 @@
 	
 	    <div class="cell">
 	        <h2><i class="fa-solid fa-grip-vertical"></i> 대표이미지</h2>
-	        <div class="preview-firstImage">
-	            <img src="/images/defaultBack.png" width="500px;" height="300px;">
-	            <span class="first-name"></span>
+	        <div class="flex-box flex-vertical">
+	        	<div class="first-image-area">
+			        <div class="preview-firstImage flex-box flex-center">
+			            <img src="/images/defaultBack.png" width="100%" height="400px;">
+			        </div>
+			        <div class="btn-group">
+				        <button type="button" class="btn btn-neutral btn-add-first">사진선택</button>
+			       		<button type="button" class="btn btn-neutral btn-clean-first">&times;</button>
+			        </div>
+	        	</div>
+		        
+		        <input type="file" name="firstImage" class="firstImage field" style="display:none;">
+		        <div class="fail-feedback center">대표이미지를 선택해주세요</div>
+		        <span class="first-name center"></span>
 	        </div>
-	        <input type="file" name="firstImage" class="firstImage field" style="display:none;">
-	        <button type="button" class="btn btn-neutral btn-add-first">사진선택</button>
-	        <button type="button" class="btn btn-neutral btn-clean-first">&times;</button>
-	        <div class="fail-feedback">대표이미지를 선택해주세요</div>
 	    </div>
 	
-	    <div class="cell">
+	    <div class="cell mt-50">
 	        <h2><i class="fa-regular fa-pen-to-square"></i> 주소</h2>
 	    </div>
 	    <div class="cell">
@@ -154,17 +190,17 @@
 	        <input type="text" name="placeAddress2" class="field w-100" placeholder="상세주소(선택)">
 	    </div>
 	    
-	    <div class="cell flex-box" style="flex-wrap: wrap;">
-	    	<div class="w-25">
+	    <div class="cell coord-container">
+	    	<div class="coord-input">
 	    		<h2><i class="fa-solid fa-square-pen"></i> 위도/경도</h2>
 	    		<input type="text" name="placeLat" class="field w-100" placeholder="위도" readonly>
-	    		<div class="fail-feedback">위도/경도 정보를 설정해주세요</div>
+	    		<div class="fail-feedback" style="height: 0;">위도/경도 정보를 설정해주세요</div>
     		</div>
-	    	<div class="w-25 mx-10">
+	    	<div class="coord-input">
 	    		<h2>&nbsp;</h2>
 	    		<input type="text" name="placeLng" class="field w-100" placeholder="경도" readonly>
 	    	</div>
-	    	<div class="w-25">
+	    	<div class="coord-btn">
 	    		<h2>&nbsp;</h2>
 	    		<button type="button" class="btn btn-neutral btn-search-xy">구하기</button>
     		</div>
@@ -174,7 +210,7 @@
 	    	<div id="map"></div>
 	    </div>
 	    
-	    <div class="cell">
+	    <div class="cell mt-40">
 	        <h2><i class="fa-solid fa-grip-vertical"></i> 개요</h2>
 	        <textarea name="placeOverview" class="field w-100" rows="10"></textarea>
 	        <div class="fail-feedback">개요를 작성해주세요</div>
@@ -216,7 +252,8 @@
 			        <button class="btn-close">&times;</button>
 			    </div> -->
 	        </div>
-	        <input type="file" name="detailImages" class="detailImages" multiple>
+	        <button type="button" class="btn btn-neutral btn-add-detail mt-20">사진선택</button>
+	        <input type="file" name="detailImages" class="detailImages" multiple style="display:none;">
 	    </div>
 	    
 	    <div class="cell mt-50">

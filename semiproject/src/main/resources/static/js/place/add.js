@@ -318,6 +318,10 @@ $(function() {
 	var fileListMap = new Map();
 	var fileCnt = 0;
 	
+	$(".btn-add-detail").click(function(){
+		$(".detailImages").click();
+	});
+	
 	$(".detailImages").change(function(){
 		var selectedFiles = this.files;
 		for(var i=0; i<selectedFiles.length; i++) {
