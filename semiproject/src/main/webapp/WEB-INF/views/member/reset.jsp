@@ -5,6 +5,8 @@
  
  <form action="reset" method="post">
  	<input type="hidden" name="memberId" value="${memberId}">
+ 	<input type="hidden" name="certEmail" value="${certEmail}">
+ 	<input type="hidden" name="certNumber" value="${certNumber}">
  	
  	<div class="container w-500">
  		<div class="cell center">

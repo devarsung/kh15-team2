@@ -9,10 +9,10 @@
  		<p>변경된 비밀번호로 로그인 해주세요</p>
  	</div>
  	<div class="cell">
- 		<button class="btn btn-positive w-100">
+ 		<a class="btn btn-positive w-100" href="login">
  			<i class="fa-solid fa-right-to-bracket"></i>
  			<span>로그인하러 가기</span>
- 		</button>
+ 		</a>
  	</div>
  </div>
  
