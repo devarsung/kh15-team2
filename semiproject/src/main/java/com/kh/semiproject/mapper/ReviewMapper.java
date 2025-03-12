@@ -23,7 +23,7 @@ public class ReviewMapper implements RowMapper<ReviewDto>{
 				.reviewWtime(rs.getTimestamp("review_wtime"))
 				.reviewEtime(rs.getTimestamp("review_etime"))
 				.reviewWriter(rs.getString("review_writer"))
-				.reviewPlace(rs.getString("review_place"))
+				.reviewPlace(rs.getInt("review_place"))
 				.reviewStar(rs.getFloat("review_star"))
 				.build();
 	}
