@@ -25,6 +25,7 @@ $(function(){
 		data:{page : page, size : size},
 		 success: function(response) { 
 		        console.log(response);
+		        var nocnt
 		        if (response == 0) {
 		        	var reviewHtml = `
 		        		<tr>
@@ -35,14 +36,13 @@ $(function(){
 		            $(".btn-more").hide();
 		            return;
 		        }
+		       
 		        $(response).each(function(index, review) {
-		        	var myLikeReveiwNo = (currentPage - 1) * size + index + 1; 
-		        	
-		            // 백틱 리터럴괜히써서
+		        	var myLikeReviewNo = (currentPage - 1) * size + index + 1; 
 		            var reviewHtml = `
 		                <tr>
 		                    <td class="center reviewNumber"></td>
-		                    <td><a href="/review/detail?reviewNo=${review.reviewNo}" class="titleStyle reviewTitle"></a></td>
+		                    <td><a href="/review/detail?reviewNo=" class="titleStyle reviewTitle"></a></td>
 		                    <td class="center reviewWriter"></td>
 		                    <td class="center reviewWtime"></td>
 		                    <td class="center reviewRead"></td>
@@ -54,7 +54,7 @@ $(function(){
 		            var $reviewHtml = $(reviewHtml);
 
 		           
-		            $reviewHtml.find(".reviewNumber").text(myLikeReveiwNo);
+		            $reviewHtml.find(".reviewNumber").text(myLikeReviewNo);
 		            $reviewHtml.find(".reviewTitle").text(review.reviewTitle).attr("href", "/review/detail?reviewNo="+ this.reviewNo);
 		            $reviewHtml.find(".reviewWriter").text(review.reviewWriter);
 		            $reviewHtml.find(".reviewWtime").text(review.reviewWtime);
@@ -64,6 +64,7 @@ $(function(){
 
 		            $("#reviewList").append($reviewHtml);
 		        });
+		        
 		}
 	});
  }	
