@@ -5,6 +5,8 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<link rel="stylesheet" type="text/css" href="/css/review-detail.css">
+
 <style>
 .no-list {
 	width: 100%;
@@ -38,24 +40,69 @@ $(function(){
 			data: {page: currentPage, size: size},
 			success: function(response) {
 				if(response.length === 0) {
-					$(".no-list").show();
-					$(".reply-list").hide();
-					$(".btn-more").hide();
-					return;
+					if(currentPage === 1) {
+						$(".no-list").show();
+						$(".reply-list").hide();
+						$(".btn-more").hide();
+						return;	
+					}
 				}
+				
+				$(".btn-more").css("display", response.isLastPage ? "none" : "block");
+				$(".no-list").hide();
+				$(".reply-list").show();
+				$(".reply-count").show().text(response.totalCount + "개");
+				
+				currentPage++;
+				
+				console.log(response.list);
+				
+				$(response.list).each(function(){
+					var template = $("#reply-template").text();
+					var html = $.parseHTML(template);
+					$(html).find(".reply-wtime").text(this.replyWtime);
+					$(html).find(".reply-writer").text(this.replyNickname);
+					$(html).find(".reply-content").text(this.replyContent);
+					
+					$(".reply-list").append(html);
+					
+					//원글, 수정삭제 관련 배치 필요(후기 상세의 디자인과는 달라야함)
+				});
 			}
 		});
 	}
+	
+	$(".btn-more").click(function(event){
+		event.preventDefault();
+		loadList();
+	});
 	
 	loadList();
 	
 	
 });
-
 </script>
-<script type="text/template" id="reply-template">
-	
-	
+
+<script type="text/template" id="reply-template"> 
+    <div class="cell flex-box reply-item"> 
+        <div class="w-150 p-10 inline-flex-box" style="min-width: 150px;"> 
+            <div class="reply-tinyfont">
+                <span class="reply-wtime">댓글작성일/수정일</span>
+                <h3 class="mt-10 reply-writer">닉네임</h3>
+            </div>
+        </div>
+        <div class="w-100 p-10">
+            <h5 class="m-0 reply-content reply-input">댓글본문</h5>
+        </div>
+        <div class="w-150 p-10 btns">
+            <button class="edit-btn"  type="button">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="delete-btn" type="button">
+                <i class="fa-regular fa-trash-can"></i>
+            </button>
+        </div>
+    </div>
 </script>
 
 <div class="container w-1000">
