@@ -88,6 +88,9 @@ public class StatusDao {
 				+ "				order by review_read desc";
 		return jdbcTemplate.query(sql,  statusMapper);
 	}
+	
+	// 리뷰 가장 많이 쓴 사람
+	// 여행지 지역별, 타입별
 }
 
 
