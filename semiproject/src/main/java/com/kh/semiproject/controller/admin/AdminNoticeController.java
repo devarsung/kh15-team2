@@ -94,7 +94,7 @@ public class AdminNoticeController {
 		Document beforeDocument = Jsoup.parse(originDto.getNoticeContent());
 		Elements beforeElements = beforeDocument.select(".summernote-img");
 		for(Element element:beforeElements) {
-			int attachmentNo = Integer.parseInt(element.attr(".data-attachment-no"));
+			int attachmentNo = Integer.parseInt(element.attr("data-attachment-no"));
 			before.add(attachmentNo);
 		}
 		
@@ -105,7 +105,7 @@ public class AdminNoticeController {
 		Document afterDocument = Jsoup.parse(noticeDto.getNoticeContent());
 		Elements afterElements = afterDocument.select(".summernote-img");
 		for(Element element:afterElements) {
-			int attachmentNo = Integer.parseInt(element.attr(".data-attachment-no"));
+			int attachmentNo = Integer.parseInt(element.attr("data-attachment-no"));
 			after.add(attachmentNo);
 		}
 		

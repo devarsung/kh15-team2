@@ -11,16 +11,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
-public class ReviewPlaceMemberListViewDto {
+public class ReviewDetailEditDto {
 	
 	private int reviewNo;
 	private String reviewTitle;
+	private String reviewContent;
 	private int reviewLike;
 	private int reviewRead;
 	private int reviewStar;
 	private Timestamp reviewWtime;
 	private String reviewWriter;
 	private int reviewPlace;
+	private int reviewReply;
 	
 	private String memberId;
 	private String memberNickname;
@@ -28,7 +30,9 @@ public class ReviewPlaceMemberListViewDto {
 	private int placeNo;
 	private String placeTitle;
 	
-	//private int totalLikesAndReads;
+	
+	
+	
 	public String getWtimeString() {
 		LocalDate today = LocalDate.now();
 		LocalDateTime wtime = reviewWtime.toLocalDateTime();

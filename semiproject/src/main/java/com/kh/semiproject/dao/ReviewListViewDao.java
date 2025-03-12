@@ -40,11 +40,12 @@ public class ReviewListViewDao {
 		else {
 			sql = "select * from ("
 					+ "select rownum rn, TMP.* from ("
-						+ "SELECT R.*, M.* "
-						+ "FROM REVIEW R "
-						+ "LEFT JOIN MEMBER M ON R.review_writer = M.member_id "
-						+ "where instr(#1, ?) > 0 "
-						+ "ORDER BY R.review_no desc "
+					+ "SELECT R.*, M.*, P.place_no, P.place_title "
+					+ "FROM REVIEW R "
+					+ "LEFT JOIN MEMBER M ON R.review_writer = M.member_id "
+					+ "LEFT JOIN place P on R.review_place = P.place_no "
+					+ "where instr(#1, ?) > 0 "
+					+ "ORDER BY R.review_no desc "
 					+ ")TMP"
 				+ ") where rn between ? and ?";
 			sql = sql.replace("#1", pageVO.getColumn());
@@ -56,9 +57,10 @@ public class ReviewListViewDao {
 	public List<ReviewListViewDto> selectList(PageVO pageVO, int placeNo){
 		String sql = "select * from ("
 				+ "select rownum rn, TMP.* from ("
-				+ "SELECT R.*, M.* "
+				+ "SELECT R.*, M.*, P.place_no, P.place_title "
 				+ "FROM REVIEW R "
 				+ "LEFT JOIN MEMBER M ON R.review_writer = M.member_id "
+				+ "LEFT JOIN place P on R.review_place = P.place_no "
 				+ "where review_place = ? "
 				+ "ORDER BY R.review_no desc "
 			+ ")TMP"
@@ -67,7 +69,6 @@ public class ReviewListViewDao {
 		Object[] data = {placeNo, pageVO.getStartRownum(), pageVO.getFinishRownum()};
 		return jdbcTemplate.query(sql, reviewListViewMapper, data);
 	}
-	
 	
 	public List<ReviewListViewDto> selectListByPlace(int placeNo){
 		String sql = "select * from("

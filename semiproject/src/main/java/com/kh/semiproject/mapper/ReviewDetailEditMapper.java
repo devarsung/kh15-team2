@@ -6,22 +6,25 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import com.kh.semiproject.dto.ReviewPlaceMemberListViewDto;
+import com.kh.semiproject.dto.ReviewDetailEditDto;
 
 @Component
-public class ReviewPlaceMemberListViewMapper implements RowMapper<ReviewPlaceMemberListViewDto>{
+public class ReviewDetailEditMapper implements RowMapper<ReviewDetailEditDto>{
 
 	@Override
-	public ReviewPlaceMemberListViewDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-		return ReviewPlaceMemberListViewDto.builder()
+	public ReviewDetailEditDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+		return ReviewDetailEditDto.builder()
+				
 				.reviewNo(rs.getInt("review_no"))
 				.reviewTitle(rs.getString("review_title"))
+				.reviewContent(rs.getString("review_content"))
 				.reviewLike(rs.getInt("review_like"))
 				.reviewRead(rs.getInt("review_read"))
 				.reviewStar(rs.getInt("review_star"))
 				.reviewWtime(rs.getTimestamp("review_wtime"))
 				.reviewWriter(rs.getString("review_writer"))
 				.reviewPlace(rs.getInt("review_place"))
+				.reviewReply(rs.getInt("review_reply"))
 				
 				.memberId(rs.getString("member_id"))
 				.memberNickname(rs.getString("member_nickname"))
