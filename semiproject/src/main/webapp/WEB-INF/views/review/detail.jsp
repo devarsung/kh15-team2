@@ -149,7 +149,7 @@ $(function(){
     });
 
     var userId = "${sessionScope.userId}";
-    var reviewWriter = "${memberDto.memberNickname}";
+    var reviewWriter = "${reviewDto.memberNickname}";
 
     // 댓글 목록
     function loadList(){
