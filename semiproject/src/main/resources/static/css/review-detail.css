@@ -1,13 +1,21 @@
 .content-box{
         min-height:300px; 
-        border:1px solid rgb(192, 192, 192);
+        border-top: 2px solid #ccc; 
+   		border-right: none;
+    	border-bottom: none;
+   		border-left: none;
     }
 
+	/*댓글보드*/
+    .reply-item,
+    .reply-edit-item{
+    border: 1px solid lightgray; 
+    padding: 10px;
+    
+    }
     /*댓글입력창*/
     .reply-writebox,
-    .reply-writebox2,
-    .reply-editbox{
-    width: 100%;
+    .reply-writebox2{
     height: 70px;
     min-height:70px;
     resize: none; 
@@ -18,34 +26,66 @@
     outline: none;
     flex-grow: 1;
     }
-
-    .reply-item,
-    .reply-edit-item{
-    border: 1px solid lightgray; 
-    padding: 10px;
     
-    }
-    
+    /*얘가 수정창 ;;기믹..*/
+    .reply-content{
+     width: 900px;    
+ 	 min-height: 100px;
+ 	 height: 100px;     
+ 	 resize: none;     
+ 	 overflow: hidden;
+  	border: 1px solid lightgray;
+  	padding: 10px;
+        }
+	
+    /*댓글 작은폰트*/
     .reply-tinyfont{
     font-size:13px;
     color: gray;
     }
-
+ /*버튼들*/
     .btns{
      gap:5px; 
      margin-left: auto;
     }
 
     .edit-btn{
-     border: 1px solid rgb(218, 218, 218); 
+     border: none;
      background-color: rgb(224, 241, 255);
     }
 
     .delete-btn{
-     border: 1px solid rgb(218, 218, 218); 
+     border: none;
      background-color: rgb(255, 224, 224);
     }
      
+        
+   .cancel-btn{
+    border: none;
+    background-color : lightgray;
+    }
+
+    .save-btn{
+    border : none;
+    background-color : rgb(212, 239, 255);
+    }
+    
+    .edit-btn,
+    .delete-btn,
+    .cancel-btn,
+    .save-btn{
+    	  width: 45px;
+   		 height: 45px;
+   		 display: flex;
+   		 align-items: center;
+   		 justify-content: center;
+   		 border-radius: 8px;
+   		 display:flex;
+   		 font-size: 18px;
+   		 
+    }
+    
+    
     .edit-btn:hover,
     .delete-btn:hover,
     .cancel-btn:hover,
@@ -56,24 +96,7 @@
      cursor: pointer;
     }
     
-    .save-contentBox{
-      width: 700px;    
-   	 min-height: 50px;     
-   	 height: 50px;          
-    resize: none;     
-    overflow: hidden;
-        }
-        
-       .cancel-btn{
-        border: 1px solid rgb(218, 218, 218);
-        background-color : lightgray;
-        }
-
-        .save-btn{
-        border : 1px solid rgb(218, 218, 218);
-        background-color : rgb(212, 239, 255);
-        }
-        
+    
         
         
 .changebtn,
@@ -84,7 +107,6 @@
     border: 1px solid #2d3436;
     border-radius: 0.1em;
     cursor: pointer;
-    /* a태그를 위한 추가 디자인 */
     text-decoration: none;
     background-color: #dfe6e9;
     display: inline-block;
@@ -96,10 +118,33 @@
     border-color: #d63031;
     background-color: #d63031;
     color: white;
+    border-radius : 10px;
 }
 
 .changebtn{
 	border-color: #578FCA;
 	background-color : #578FCA;
 	color: white;
+	border-radius : 10px;
 }
+
+.left-section {
+    align-items: flex-start;
+}
+
+.right-section {
+    align-items: flex-end;
+    text-align: right;
+    font-size: 14px;
+    color: #555;
+    gap: 5px;
+}
+
+.reply-btns {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    gap: 8px; /* 버튼 간 간격 */
+    min-width: 120px; /* 최소 너비 지정 */
+}
+

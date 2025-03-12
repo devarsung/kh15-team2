@@ -207,7 +207,7 @@ $(function(){
         <div class="w-100 p-10">
             <h5 class="m-0 reply-content reply-input">댓글본문</h5>
         </div>
-        <div class="w-150 p-10 btns">
+        <div class="felx-box btns">
             <button class="edit-btn"  type="button">
                 <i class="fa-solid fa-pen-to-square"></i>
             </button>
@@ -243,70 +243,38 @@ $(function(){
 
 </head>
 <div class="container w-1200">
-    <div class="cell center">
-        <h2>[${reviewDto.memberNickname}]님의 후기</h2>
-    </div>
-    <hr style=" box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-    <div class="cell right">
-        <i class="fa-solid fa-eye"></i> ${reviewDto.reviewRead}| 
-        <i class="fa-solid fa-heart"></i>${reviewDto.reviewLike}|
-        <i class="fa-solid fa-comment-dots"></i><span class="reply-count"></span>
-    </div>
-    <div class="cell right">
-        작성일(${reviewDto.getWtimeString()})|수정일(${reviewDto.getEtimeString()})
-    </div>
-    <div class="cell p-20">
-        <h1>
-            ${reviewDto.reviewTitle}  <i class="fa-solid fa-pencil"></i>
-        </h1>
+    <div class="cell center my-30">
+        <h2 style="color:#1A1A1D">[${reviewDto.memberNickname}]님의 후기</h2>
     </div>
     <hr>
-    <div class="cell reviewStar" data-rate="${reviewDto.reviewStar}"></div>
-    <span class="red">${reviewStar.reviewStar}</span>
-    <div class="cell p-20 content-box">${reviewDto.reviewContent}</div>
-  
-    <div>
-        <i class="fa-heart fa-regular red"></i>좋아요<span class="heart-count">${reviewDto.reviewLike}</span>
+    
+    
+    
+  <div class="cell flex-box">
+    <div class="cell flex-box flex-vertical flex-fill left-section">
+        <h3 style="color:#1A1A1D" class="my-0">[${reviewDto.reviewPlace}]</h3>
+        <h2 style="color:#1A1A1D">
+            ${reviewDto.reviewTitle}
+        </h2>
+        <div>
+        <span class="cell reviewStar my-0 p-10" data-rate="${reviewDto.reviewStar}"></span> 
+        <span class="red">${reviewDto.reviewStar}</span></div>
     </div>
-    <br>
-    <c:choose>
-        <c:when test="${sessionScope.userId != null}">
-            <div class="flex-box align-items"> 
-                <div class="cell w-100">
-                    <textarea class="reply-writebox" placeholder="댓글을 남겨주세요"></textarea>
-                </div>
-                <div class="cell right inline-flex-box flex-center w-20">
-                    <button type="button" class=" btn btn-neutral btn-reply-write">등록하기</button>
-                </div>
-            </div>
-        </c:when>
-        <c:otherwise>
-            <div class="flex-box align-items"> 
-                <div class="cell w-100">
-                    <textarea class="reply-writebox2" placeholder="로그인후 이용가능합니다"></textarea>
-                </div>
-                <div class="cell right inline-flex-box flex-center w-20">
-                    <button type="button"  class="btn btn-neutral">등록하기</button>
-                </div>
-            </div>
-        </c:otherwise>
-    </c:choose>
-<hr class="my-30" style=" box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-    <c:choose>
-        <c:when test="${reviewDto.reviewReply == null}">
-            <div class="cell center">    
-                댓글이 없습니다
-            </div>
-        </c:when>
-        <c:otherwise>
-            <div class="cell left my-0 reply-list">
-                <label>댓글목록</label>
-            </div>
 
-        </c:otherwise>
-    </c:choose>
-  <div class="reply-wrapper"></div>
-    <div class="cell right">
+    <div class="cell flex-box flex-vertical right-section">
+        <div>
+            <i class="fa-solid fa-eye"></i> ${reviewDto.reviewRead} | 
+            <i class="fa-solid fa-heart"></i> ${reviewDto.reviewLike} | 
+            <i class="fa-solid fa-comment-dots"></i> <span class="reply-count"></span>
+        </div>
+        <div>
+            작성일(${reviewDto.getWtimeString()}) | 수정일(${reviewDto.getEtimeString()})
+        </div>
+    </div>
+</div>
+    
+    <div class="cell p-20 content-box">${reviewDto.reviewContent}</div>
+      <div class="cell right">
         <c:if test="${sessionScope.userId != null}">
             <c:if test="${sessionScope.userId == reviewDto.reviewWriter}">
                 <a href="/review/edit?reviewNo=${reviewDto.reviewNo}" class="changebtn mt-20" >수정</a>
@@ -314,9 +282,49 @@ $(function(){
             </c:if>
         </c:if>
     </div>
+    <div>
+        <i class="fa-heart fa-regular red"></i>좋아요<span class="heart-count">${reviewDto.reviewLike}</span>
+    </div>
+    <br>
+    <c:choose>
+        <c:when test="${sessionScope.userId != null}">
+                <div class="cell w-100">
+                    <textarea class="reply-writebox w-100" placeholder="댓글을 남겨주세요"></textarea>
+                </div>
+                <div class="cell right">
+                    <button type="button" class=" btn btn-neutral btn-reply-write">등록하기</button>
+                </div>
+         
+        </c:when>
+        <c:otherwise>
+            <div class="flex-box align-items"> 
+                <div class="cell w-100">
+                    <textarea class="reply-writebox2 w-100" placeholder="로그인후 이용가능합니다"></textarea>
+                </div>
+                <div class="cell right inline-flex-box flex-center w-20">
+                    <button type="button"  class="btn btn-neutral">등록하기</button>
+                </div>
+            </div>
+        </c:otherwise>
+    </c:choose>
+<hr class="my-30" >
+    <c:choose>
+        <c:when test="${empty reviewDto.reviewReply  or reviewDto.reviewReply == 0}">
+            <div class="cell left w-100"  >
+                .댓글이 없습니다
+            </div>
+        </c:when>
+        <c:otherwise>
+            <div class="cell left my-0 reply-list">
+                <label>댓글목록</label>
+  				<div class="reply-wrapper"></div>
+            </div>
+        </c:otherwise>
+    </c:choose>
+
 
     <div class="cell center">
-        <a href="/review/list" class="btn btn-neutral mt-20" style="width:200px">목록으로</a>
+        <a href="/review/list" class="btn btn-neutral mt-30" style="width:200px">목록으로</a>
     </div>
 </div>
 
