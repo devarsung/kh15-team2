@@ -20,10 +20,10 @@
 	 background-color: #F0EBE3; 
 	}
 
-      .aStyle{
-     	 text-decoration: none;
-    	outline: none; 
-    	padding:10px;
+      .btn-more{
+     	border : none;
+     	background-color : white;
+     	cursor : pointer;
     	color : black;
     	font-weight : bold;
       }
@@ -39,5 +39,5 @@
       }
       
     .titleStyle:visited{
-      	color:white; 
+      	color:lightgry; 
       }

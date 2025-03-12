@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kh.semiproject.dto.ReviewListViewDto;
+import com.kh.semiproject.dto.ReviewDetailEditDto;
 import com.kh.semiproject.dto.ReviewPlaceMemberListViewDto;
+import com.kh.semiproject.mapper.ReviewDetailEditMapper;
 import com.kh.semiproject.mapper.ReviewPlaceMemberListViewMapper;
 
 @Repository
@@ -16,7 +17,8 @@ public class ReviewPlaceMemberListViewDao {
 	private ReviewPlaceMemberListViewMapper reviewPlaceMemberListViewMapper;
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+	@Autowired
+	private ReviewDetailEditMapper reviewDetailEditMapper;
 	
 	// top 5
 //	public List<ReviewPlaceMemberListViewDto> selectListOnReview(){
@@ -64,8 +66,8 @@ public class ReviewPlaceMemberListViewDao {
 		return list;
 	}
 	
-	public ReviewPlaceMemberListViewDto selectOne(int reviewNo) {
-		String sql = "select R.review_no, R.review_title, R.review_content, R.review_like, R.review_read, "
+	public ReviewDetailEditDto selectOne(int reviewNo) {
+		String sql = "select R.review_no, R.review_title, R.review_content,  R.review_like, R.review_read, "
 				+"            R.review_star, R.review_wtime, R.review_writer,  R.review_place, R.review_reply, "
 				+"            M.member_id, M.member_nickname, "
 				+ "            P.place_no, P.place_title from review R"
@@ -73,7 +75,7 @@ public class ReviewPlaceMemberListViewDao {
 				+ "        LEFT JOIN place P ON R.review_place = P.place_no"
 				+ "		where review_no = ?";
 		Object[] data  = {reviewNo};
-		List<ReviewPlaceMemberListViewDto> list = jdbcTemplate.query(sql, reviewPlaceMemberListViewMapper, data);
+		List<ReviewDetailEditDto> list = jdbcTemplate.query(sql, reviewDetailEditMapper, data);
 		return list.isEmpty() ? null:list.get(0);
 	}
 	

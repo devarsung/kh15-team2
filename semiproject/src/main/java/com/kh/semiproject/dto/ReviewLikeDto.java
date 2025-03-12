@@ -16,4 +16,5 @@ public class ReviewLikeDto {
 	private String reviewWriter;
 	private Timestamp reviewWtime;
 	private int reviewRead;
+	//private Timestamp reviewLikeTime;
 }

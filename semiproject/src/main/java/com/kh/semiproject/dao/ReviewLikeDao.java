@@ -7,7 +7,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semiproject.dto.ReviewLikeDto;
+import com.kh.semiproject.dto.ReviewPlaceMemberListViewDto;
 import com.kh.semiproject.mapper.ReviewLikeMapper;
+import com.kh.semiproject.mapper.ReviewPlaceMemberListViewMapper;
 import com.kh.semiproject.vo.RestPageVO;
 
 @Repository
@@ -16,7 +18,8 @@ public class ReviewLikeDao {
 	private JdbcTemplate jdbcTemplate;
 	@Autowired
 	private ReviewLikeMapper reviewLikeMapper;
-
+	@Autowired
+	private ReviewPlaceMemberListViewMapper reviewPlaceMemberListViewMapper;
 	// 좋아요 설정
 	public void insertReviewLike(String memberId, int reviewNo) {
 		String sql = "insert into review_like(member_id, review_no) values(?, ?)";
@@ -55,6 +58,7 @@ public class ReviewLikeDao {
 	// 내가 좋아요한 후기 목록 조회 메소드
 	public List<ReviewLikeDto> selectReviewLikeList(String memberId) {
         String sql = "SELECT r.review_no, r.review_title, m.member_nickname AS review_writer, " 
+        //			+"r.review_wtime, r.review_read " 
         			+"r.review_wtime, r.review_read, COUNT(rl2.member_id) AS like_count " 
 	        		+"FROM review_like rl " 
 	        		+"JOIN review r ON rl.review_no = r.review_no " 
@@ -68,27 +72,27 @@ public class ReviewLikeDao {
     }
 	
 	public int count(RestPageVO restPageVO) {
-		String sql = "select count(*) from review_like where = ?";
+		String sql = "select count(*) from review_like where member_id = ?";
 		Object[] data = {restPageVO.getMemberId()};
 		return jdbcTemplate.queryForObject(sql, int.class, data);
 	}
 	
 	public List<ReviewLikeDto> selectListRest(RestPageVO restPageVO){
 		String sql =  "SELECT * FROM ("
-				+ "				    SELECT rownum rn, TMP.*"
-				+ "				    FROM ("
-				+  "SELECT r.review_no, r.review_title, m.member_nickname AS review_writer, " 
-     			+"r.review_wtime, r.review_read, COUNT(rl2.member_id) AS like_count " 
-	        		+"FROM review_like rl " 
-	        		+"JOIN review r ON rl.review_no = r.review_no " 
-	        		+"JOIN member m ON r.review_writer = m.member_id " 
-	        		+"LEFT JOIN review_like rl2 ON r.review_no = rl2.review_no " 
-	        		+"WHERE rl.member_id = ? " 
-	        		+"GROUP BY r.review_no, r.review_title, m.member_nickname, r.review_wtime, r.review_read " 
-	        		+"ORDER BY r.review_wtime DESC"
-					+ "				    ) TMP"
-				+ "				)"
-				+ "				WHERE rn BETWEEN ? AND ?";
+				+ "								    SELECT rownum rn, TMP.*"
+				+ "								    FROM ("
+								 +"SELECT r.review_no, r.review_title, m.member_nickname as review_writer, "
+				        			+"r.review_wtime, r.review_read,  COUNT(rl2.member_id) AS like_count, rl.review_like_time "
+					        		+"FROM review_like rl "
+					        		+"JOIN review r ON rl.review_no = r.review_no "
+					        		+"JOIN member m ON r.review_writer = m.member_id "
+					        		+"LEFT JOIN review_like rl2 ON r.review_no = rl2.review_no "
+					        		+"WHERE rl.member_id = ? "
+					        		+"GROUP BY r.review_no, r.review_title, m.member_nickname, r.review_wtime, r.review_read, rl.review_like_time "
+					        		+"ORDER BY rl.review_like_time DESC"
+				+ "									    ) TMP"
+				+ "								)"
+				+ "								WHERE rn BETWEEN ? AND ?";
 		Object[] data = { restPageVO.getMemberId(), restPageVO.getStartRownum(), restPageVO.getFinishRownum() };
 		return jdbcTemplate.query(sql, reviewLikeMapper, data);
 	}
