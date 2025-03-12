@@ -142,24 +142,25 @@ $(function(){
 						return;
 					}
 					else {
+						//마지막 페이지면 더보기 버튼 안보이게 처리하니
+						//애초에 여기는 실행 되지 않음
 						//더 이상의 없는 경우
 						$(".btn-more").hide();
 						return;
 					}
 				}
-				
+				$(".btn-more").css("display", response.isLastPage ? "none" : "block");
 				$(".no-list").hide();
 				$(".card-list").show();
-				$(".btn-more").show();
+				$(".card-count").show().text(response.totalCount + "개");
+				
 				currentPage++;
 				
-				$(response).each(function(){
+				$(response.list).each(function(){
 					var template = $("#place-template").text();
 					var html = $.parseHTML(template);
 					
 					var url = "/place/detail?placeNo=" + this.placeNo;
-					console.log($(html).find(".card-subtitle"));
-					console.log($(html).filter(".place-link"));
 					
 					$(html).filter(".place-link").attr("href", url);
 					$(html).find(".first-image").attr("src", "/attachment/download?attachmentNo=" + this.placeFirstImage);
@@ -195,14 +196,13 @@ $(function(){
 		var placeNo = $(this).data("no");
 		
 		$.ajax({
-			url: "/rest/place/action",
+			url: "/rest/page/action",
 			method: "post",
 			data: {placeNo : placeNo},
 			success: function(response) {
-				console.log(response);
-				
 				$(me).find("i").removeClass("fa-solid fa-regular")
 					.addClass(response.done ? "fa-solid" : "fa-regular");
+				$(".card-count").text(response.myCount + "개");
 			}
 		});
 		
@@ -253,8 +253,10 @@ $(function(){
    			<i class="fa-solid fa-fish"></i>
        		<span>목록이 없습니다</span>
        	</div>
+       	
+       	<h3 class="right me-10 my-0 card-count" style="display:none;"></h3>
         <div class="card-list" style="display:none;">
-			            
+			         
         </div>
         <div class="cell center mt-50">
         	<a href="#" class="aStyle btn-more">더보기+</a>
