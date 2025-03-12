@@ -82,7 +82,7 @@ public class ReviewListViewDao {
 				+ "from review R "
 				+ "LEFT JOIN MEMBER M ON R.review_writer = M.member_id "
 				+ "where review_place = ? "
-				+ "order by R.review_read desc "
+				+ "order by (R.review_read + R.review_like) desc "
 				+ ")TMP"
 				+ ") where rn between 1 and 5";
 		
@@ -98,8 +98,6 @@ public class ReviewListViewDao {
 		Object[] data = {placeNo};
 		
 		List<ReviewListViewDto2> list = jdbcTemplate.query(sql, reviewListViewMapper2, data);
-	System.out.println("placeNo = "+placeNo);
-	System.out.println("list = " + list);
 	return list;
 	}
 	

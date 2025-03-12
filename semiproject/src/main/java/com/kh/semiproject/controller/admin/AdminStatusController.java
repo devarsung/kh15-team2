@@ -32,6 +32,9 @@ public class AdminStatusController {
 		model.addAttribute("placeReadList", statusDao.placeReadGroup()); // 여행지 조회수
 		model.addAttribute("reviewLikeList", statusDao.reviewLikeGroup());// 후기 좋아요
 		model.addAttribute("reviewReadList", statusDao.reviewReadGroup());// 후기 조회수
+		model.addAttribute("placeTypeList", statusDao.placeTypeGroup());// 여행지 타입
+		model.addAttribute("placeRegionList", statusDao.placeRegionGroup());// 여행지 지역
+		model.addAttribute("reviewUserList", statusDao.reviewUserGroup());// 후기 유저수
 		return "/WEB-INF/views/admin/status/review.jsp";
 	}
 	
