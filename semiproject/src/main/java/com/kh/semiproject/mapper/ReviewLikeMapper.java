@@ -20,6 +20,7 @@ public class ReviewLikeMapper implements RowMapper<ReviewLikeDto>{
 				.reviewRead(rs.getInt("review_read"))
 				.reviewWtime(rs.getTimestamp("review_wtime"))
 				.reviewWriter(rs.getString("review_writer"))
+			//	.reviewLikeTime(rs.getTimestamp("review_like_time"))
 				.build();
 	}
 
