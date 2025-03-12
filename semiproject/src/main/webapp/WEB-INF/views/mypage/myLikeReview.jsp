@@ -25,7 +25,6 @@ $(function(){
 		data:{page : page, size : size},
 		 success: function(response) { 
 		        console.log(response);
-		        var nocnt
 		        if (response == 0) {
 		        	var reviewHtml = `
 		        		<tr>
