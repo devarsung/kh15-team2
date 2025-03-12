@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
@@ -14,49 +13,15 @@
 <!-- 별점 라이브러리 -->
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
 
+<!-- 공지 디자인 -->
+<link rel="stylesheet" type="text/css" href="/css/notice-list.css">
+
 <style>
-/* 공지 리스트 */
+/* 공지 리스트 max-width 덮어쓰기 */
 .notice-list {
-    width: 100%;
     max-width: 600px;
-    margin: 20px auto;
 }
-.notice-item {
-    display: flex;
-    align-items: center;
-    min-height: 120px;
-    max-height: 120px;
-    padding: 16px;
-    margin-bottom: 8px;
-    border-radius: 8px;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-    text-decoration: none;
-    overflow: hidden;
-    font-size: 20px;
-}
-.notice-item:hover {
-    background: #f5f5f5;
-}
-.notice-icon {
-    font-weight: bold;
-    color: #333333;
-    flex: 0;
-}
-.notice-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-left: 30px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #222222;
-    flex: 2;
-}
-.notice-date {
-    flex: 1;
-    text-align: right;
-    color: #888888;
-}
+
 /* 리뷰 리스트 */
 .review-list {
     width: 100%;

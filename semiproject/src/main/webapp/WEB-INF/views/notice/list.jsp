@@ -3,21 +3,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<style>
-.a-control{
-  text-decoration: none;
-  color: black;
-		}
-</style>
-<div class="container w-1000">
+
+<link rel="stylesheet" type="text/css" href="/css/notice-list.css">
+
+<div class="container w-800">
 	<div class="cell center">
 		<h1>공지사항</h1>
 	</div>
 	
-	<div class="cell">
-		<table class="table table-border table-hover table-ellipsis">
+	<div class="cell mt-50">
+		<div class="notice-list">
+			<c:choose>
+				<c:when test="${list.isEmpty()}">
+					등록된 게시글이 없습니다.
+				</c:when>
+				<c:otherwise>
+					<c:forEach var="noticeListViewDto" items="${list}">
+			           	<a href="/notice/detail?noticeNo=${noticeListViewDto.noticeNo}" class="notice-item">
+		                   <span class="notice-icon"><i class="fa-solid fa-bullhorn"></i></span>
+		                   <span class="notice-title">"${noticeListViewDto.noticeTitle}"</span>
+		                   <span class="notice-date">${noticeListViewDto.wtimeString}</span>
+		              	</a>
+		          	</c:forEach>
+				</c:otherwise>
+			</c:choose>
+         </div>
+	
+		<%-- <table class="table table-border table-hover table-ellipsis">
 			<thead>
 				<tr>
 					<th>번호</th>
@@ -66,7 +79,7 @@
 					</tbody>
 				</c:otherwise>
 			</c:choose>
-		</table>
+		</table> --%>
 	</div>
 	
 	<div class="cell center">

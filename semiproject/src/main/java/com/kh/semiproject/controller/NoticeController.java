@@ -37,6 +37,7 @@ public class NoticeController {
 	public String list(@ModelAttribute ("pageVO")PageVO pageVO, Model model) {
 		int count =  noticeListViewDao.count(pageVO);
 		pageVO.setCount(count);
+		pageVO.setSize(10);
 		List<NoticeListViewDto> list = noticeListViewDao.selectList(pageVO);
 		model.addAttribute("list",list);
 		return "/WEB-INF/views/notice/list.jsp";
