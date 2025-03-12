@@ -10,35 +10,54 @@ $(function(){
 	var currentPage =1; 
 	var size = 10; //10개씩?
 	
-	//더보기 클릭 페이지증가
-	$(".btn-more").click(function() {
-        loadLikedReviews(currentPage++, size);
-    });
-	
 	 loadLikedReviews(currentPage, size);
 	
-	 
-	 function loadLikedReviews(page, size) {
+
+ 	$(".btn-more").click(function() {
+         loadLikedReviews(currentPage++, size);
+     });
+
+	 function loadLikedReviews() {
 	$.ajax({
 		url:"/rest/page/myLikeReview",
 		method:"post",
-		data:{page : page, size : size},
+		data:{page : currentPage, size : size},
 		 success: function(response) { 
+			 	
+		        var totalcount= $(response.totalCount); 
+		        var totalcount = totalcount[0];  //리뷰개수
+			 	var lastPage = response.isLastPage;
 		        console.log(response);
-		        if (response == 0) {
-		        	var reviewHtml = `
+		        console.log("현재페이지: "+ currentPage);
+		        console.log("개수: "+ response.length);
+		        console.log("총 리뷰 개수 :"+totalcount);//총개수..이렇게쓰는거맞니..?
+		       	console.log("마지막페이지인가:"+response.isLastPage);
+		        console.log("현재 조회목록 수 :" + response.length);
+		        console.log("조회목록 : " + response.list);
+		        
+		        $(".totalLikeReviews").show().text(totalcount);
+		        if (response.length == 0) { //조회목록이 0개고
+		        	if(currentPage==1) { //1페이지라면
+		        	var reviewNone = `
 		        		<tr>
                         <td colspan="6" align="center">좋아요한 후기가 없습니다.</td>
                     	</tr>
 		        	`;
-		        	$("#reviewList").append(reviewHtml);
-		            $(".btn-more").hide();
-		            return;
+		        	$("#reviewList").append(reviewNone); //얘추가하고
+		            $(".btn-more").hide(); //버튼숨기고
+		            return;	
+		        	}   
 		        }
-		       
-		        $(response).each(function(index, review) {
-		        	var myLikeReviewNo = (currentPage - 1) * size + index + 1; 
-		            var reviewHtml = `
+        	if(lastPage){
+        		$(".btn-more").hide();
+        		}
+        	else{
+        		$(".btn-more").show();
+        	}
+		        $(response.list).each(function(index, review) { 
+		        	var myLikeReviewNo = (currentPage - 1) * size + index + 1; //페이지게이
+		           //백팁실패한 테블릿 그리고 제발 주석추가하지마 오류
+		        	var reviewHtml = `
 		                <tr>
 		                    <td class="center reviewNumber"></td>
 		                    <td><a href="/review/detail?reviewNo=" class="titleStyle reviewTitle"></a></td>
@@ -54,13 +73,13 @@ $(function(){
 		            $reviewHtml.find(".reviewNumber").text(myLikeReviewNo);
 		            $reviewHtml.find(".reviewTitle").text(review.reviewTitle).attr("href", "/review/detail?reviewNo="+ this.reviewNo);
 		            $reviewHtml.find(".reviewWriter").text(review.reviewWriter);
-		            ///으포매팅 data 
 		            $reviewHtml.find(".reviewWtime").text(review.reviewWtime);
 		            $reviewHtml.find(".reviewRead").text(review.reviewRead); 
 		            $reviewHtml.find(".reviewCount").text(review.likeCount); 
+	
 
-
-		            $("#reviewList").append($reviewHtml);
+		            $("#reviewList").append($reviewHtml);	//변환후추가
+		      
 		        });
 		        
 		}
@@ -82,9 +101,10 @@ $(function(){
 	  	<jsp:param name="menu" value="myLikeReview"/>
 	</jsp:include>
 
-
-
     <div class="cell mt-50">
+<div class="cell my-0 p-10">
+<span>TOTAL<i class="fa-solid fa-heart red"></i> <span class="totalLikeReviews">3</span></span>
+</div>
         <table class=" tableStyle">
             <thead>
                 <tr>
