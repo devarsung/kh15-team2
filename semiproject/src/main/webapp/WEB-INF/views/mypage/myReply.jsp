@@ -5,7 +5,7 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
-<link rel="stylesheet" type="text/css" href="/css/review-detail.css">
+<link rel="stylesheet" type="text/css" href="/css/myReply.css">
 
 <style>
 .no-list {

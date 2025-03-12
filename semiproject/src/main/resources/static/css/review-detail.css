@@ -6,6 +6,13 @@
    		border-left: none;
     }
 
+	/*댓글보드*/
+    .reply-item,
+    .reply-edit-item{
+    border: 1px solid lightgray; 
+    padding: 10px;
+    
+    }
     /*댓글입력창*/
     .reply-writebox,
     .reply-writebox2{
@@ -20,8 +27,9 @@
     flex-grow: 1;
     }
     
-    .save-contentBox{
-        width: 700px;    
+    /*얘가 수정창 ;;기믹..*/
+    .reply-content{
+     width: 900px;    
  	 min-height: 100px;
  	 height: 100px;     
  	 resize: none;     
@@ -29,19 +37,13 @@
   	border: 1px solid lightgray;
   	padding: 10px;
         }
-
-    .reply-item,
-    .reply-edit-item{
-    border: 1px solid lightgray; 
-    padding: 10px;
-    
-    }
-    
+	
+    /*댓글 작은폰트*/
     .reply-tinyfont{
     font-size:13px;
     color: gray;
     }
-
+ /*버튼들*/
     .btns{
      gap:5px; 
      margin-left: auto;

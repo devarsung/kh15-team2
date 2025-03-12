@@ -1,0 +1,76 @@
+	/*댓글보드*/
+    .reply-item,
+    .reply-edit-item{
+    border: 1px solid lightgray; 
+    padding: 10px;
+    
+    }
+ 
+    
+    /*얘가 수정창 ;;기믹..*/
+    .reply-content{
+     width: 700px;    
+ 	 min-height: 100px;
+ 	 height: 100px;     
+ 	 resize: none;     
+ 	 overflow: hidden;
+  	border: 1px solid lightgray;
+  	padding: 10px;
+        }
+	
+    /*댓글 작은폰트*/
+    .reply-tinyfont{
+    font-size:13px;
+    color: gray;
+    }
+ /*버튼들*/
+    .btns{
+     gap:5px; 
+     margin-left: auto;
+    }
+
+    .edit-btn{
+     border: none;
+     background-color: rgb(224, 241, 255);
+    }
+
+    .delete-btn{
+     border: none;
+     background-color: rgb(255, 224, 224);
+    }
+     
+        
+   .cancel-btn{
+    border: none;
+    background-color : lightgray;
+    }
+
+    .save-btn{
+    border : none;
+    background-color : rgb(212, 239, 255);
+    }
+    
+    .edit-btn,
+    .delete-btn,
+    .cancel-btn,
+    .save-btn{
+    	  width: 45px;
+   		 height: 45px;
+   		 display: flex;
+   		 align-items: center;
+   		 justify-content: center;
+   		 border-radius: 8px;
+   		 display:flex;
+   		 font-size: 18px;
+   		 
+    }
+    
+    
+    .edit-btn:hover,
+    .delete-btn:hover,
+    .cancel-btn:hover,
+    .save-btn:hover{
+     filter:brightness(1.05);
+     cursor: pointer;
+    }
+    
