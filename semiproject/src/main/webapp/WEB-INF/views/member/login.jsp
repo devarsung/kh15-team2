@@ -47,7 +47,7 @@
             <input class="field w-100" type="password" name="memberPw" placeholder="PW입력">
             <div class="fail-feedback red">비밀번호를 입력해주세요</div>
         </div>
-        <a href="#" style="">비밀번호를 잊으셨나요?</a>
+        <a href="findPw" style="">비밀번호를 잊으셨나요?</a>
         <button class="btn btn-positive w-100 mt-20">로그인하기</button>
     </form>
     	<c:if test="${param.error != null}">

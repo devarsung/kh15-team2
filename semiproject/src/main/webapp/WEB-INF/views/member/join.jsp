@@ -80,8 +80,21 @@
                 <div class="fail-feedback red"><i class="fa-solid fa-check"></i>성별을 선택해주세요</div>
             </div>
             <div class="cell">
-                <label>e-mail <i class="fa-solid fa-asterisk red"></i></label>
-                <input type="email" inputmode="email" name="memberEmail" class="field w-100">
+                <label style="display:block;">이메일 <i class="fa-solid fa-asterisk red"></i></label>
+ 	        	<input type="email" inputmode="email" name="memberEmail" class="field">
+ 	        	<button type="button" class="btn btn-neutral btn-send-cert">
+ 	        	<i class="fa-solid fa-paper-plane"></i>
+ 	        	<span>인증메일 발송</span>
+ 	        	</button>
+ 	        <div class="fail-feedback">이메일은 필수 항목입니다</div>
+ 	    </div>
+ 	    <div class="cell cert-input-wrapper" style="display:none;">
+ 	    	<input type="text" inputmode="numeric" class="field"
+ 	    				name="certNumber" placeholder="인증번호 입력">
+ 	    	<button type="button" class="btn btn-positive btn-confirm-cert">
+ 	    		<i class="fa-solid fa-check"></i>
+ 	    		<span>인증 확인</span>
+ 	    	</button>
                 <div class="success-feedback"><i class="fa-regular fa-circle"></i>올바른 이메일 형식입니다</div>
                 <div class="fail-feedback red"><i class="fa-solid fa-check"></i>올바른 형식의 이메일이 아닙니다</div>
             </div>
