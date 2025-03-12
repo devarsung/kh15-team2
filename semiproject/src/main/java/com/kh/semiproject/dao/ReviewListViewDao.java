@@ -7,13 +7,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semiproject.dto.ReviewListViewDto;
-import com.kh.semiproject.dto.ReviewPlaceMemberListViewDto;
+import com.kh.semiproject.dto.ReviewListViewDto2;
 import com.kh.semiproject.mapper.ReviewListViewMapper;
+import com.kh.semiproject.mapper.ReviewListViewMapper2;
 import com.kh.semiproject.mapper.ReviewPlaceMemberListViewMapper;
 import com.kh.semiproject.vo.PageVO;
 
 @Repository
 public class ReviewListViewDao {
+	@Autowired
+	private ReviewListViewMapper2 reviewListViewMapper2;
 	@Autowired
 	private ReviewListViewMapper reviewListViewMapper;
 	@Autowired
@@ -70,21 +73,34 @@ public class ReviewListViewDao {
 		return jdbcTemplate.query(sql, reviewListViewMapper, data);
 	}
 	
-	public List<ReviewListViewDto> selectListByPlace(int placeNo){
+	public List<ReviewListViewDto2> selectListByPlace(int placeNo){
 		String sql = "select * from("
 				+ "select rownum rn, TMP.* from("
-				+ "select R.*, M.* "
+				+ "select R.review_no, R.review_Title, R.review_reply, "
+				+ "R.review_wtime, "
+				+ " M.member_nickname "
 				+ "from review R "
 				+ "LEFT JOIN MEMBER M ON R.review_writer = M.member_id "
 				+ "where review_place = ? "
-				+ "order by review_read desc "
+				+ "order by R.review_read desc "
 				+ ")TMP"
 				+ ") where rn between 1 and 5";
+		
+//		String sql = "select R.review_no, R.review_Title, "
+//				+ "R.review_wtime, R.review_writer, M.member_nickname "
+//				+ "from review R "
+//				+ "LEFT JOIN MEMBER M ON R.review_writer = M.member_id "
+//				+ "where review_place = ? "
+//				+ "group by R.review_wtime, R.review_writer, "
+//				+ "R.review_no, R.review_Title, M.member_nickname "
+//				+ "order by R.review_no desc ";
+	//	String sql = "select * from review_list_view";
 		Object[] data = {placeNo};
 		
-		List<ReviewListViewDto> list = jdbcTemplate.query(sql, reviewListViewMapper, data);
-
-		return list;
+		List<ReviewListViewDto2> list = jdbcTemplate.query(sql, reviewListViewMapper2, data);
+	System.out.println("placeNo = "+placeNo);
+	System.out.println("list = " + list);
+	return list;
 	}
 	
 

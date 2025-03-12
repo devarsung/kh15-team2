@@ -158,6 +158,15 @@ public class ReviewController {
 		reviewDao.delete(reviewNo);
 		return "redirect:list";
 	}
+	
+//	@RequestMapping("/test")
+//	public String test(@RequestParam int placeNo, Model model) {
+//		System.out.println("placeNo = " + placeNo);
+//		System.out.println(reviewListViewDao.selectListByPlace(placeNo));
+//		model.addAttribute("reviews", reviewListViewDao.selectListByPlace(placeNo));
+//		return "/WEB-INF/views/place/detail2.jsp";
+//	}
+	
 }
 
 
