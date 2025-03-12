@@ -40,7 +40,7 @@ public class MyReplyDao {
 		String sql = "SELECT * FROM ("
 				+ "				    SELECT rownum rn, TMP.*"
 				+ "				    FROM ("
-				+ "SELECT r.reply_no, r.reply_origin, rv.review_title, "
+				+ "SELECT r.reply_no, r.reply_origin, rv.review_title, r.reply_writer,"
 				+ "					m.member_nickname, r.reply_content, r.reply_wtime, r.reply_etime "
 				+ "					FROM reply r "
 				+ "					LEFT JOIN member m ON r.reply_writer = m.member_id "
