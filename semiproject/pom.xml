@@ -111,10 +111,9 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>com.kh</groupId>
-			<artifactId>spring11email</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
 	</dependencies>
 
 	<build>
