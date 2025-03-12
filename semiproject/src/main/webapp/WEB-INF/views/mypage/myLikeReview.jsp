@@ -52,11 +52,10 @@ $(function(){
 
 					//제이쿼리 객체로 변환하는방법 DOM으로취급^^
 		            var $reviewHtml = $(reviewHtml);
-
-		           
 		            $reviewHtml.find(".reviewNumber").text(myLikeReviewNo);
 		            $reviewHtml.find(".reviewTitle").text(review.reviewTitle).attr("href", "/review/detail?reviewNo="+ this.reviewNo);
 		            $reviewHtml.find(".reviewWriter").text(review.reviewWriter);
+		            ///으포매팅 data 
 		            $reviewHtml.find(".reviewWtime").text(review.reviewWtime);
 		            $reviewHtml.find(".reviewRead").text(review.reviewRead); 
 		            $reviewHtml.find(".reviewCount").text(review.likeCount); 
