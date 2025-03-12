@@ -199,6 +199,7 @@ public class MypageController {
 		 String userId = (String) session.getAttribute("userId");
 		 restPageVO.setMemberId(userId);
 		 int count = myReviewDao.count(restPageVO);
+		 System.out.println("count = " + count);
 		 restPageVO.setCount(count);
        // List<MyReviewDto> myReviewList = myReviewDao.selectMyReviewList(userId);
         List<MyReviewDto> myReviewList = myReviewDao.selectListRest(restPageVO);

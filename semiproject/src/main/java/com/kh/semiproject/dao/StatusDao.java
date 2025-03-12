@@ -49,8 +49,48 @@ public class StatusDao {
 		return jdbcTemplate.query(sql, statusMapper);
 	}
 
+	public List<StatusVO> placeReviewGroup(){
+		String sql = "select  place_title key, place_review value from place \r\n"
+				+ "				group by place_review, PLACE_TITLE \r\n"
+				+ "				order by place_review desc";
+		return jdbcTemplate.query(sql,  statusMapper);
+	}
+	public List<StatusVO> reviewReplyGroup(){
+		String sql = "select review_title key, review_reply value from REVIEW \r\n"
+				+ "				group by review_title, REVIEW_REPLY 	\r\n"
+				+ "				order by COALESCE(review_reply, 0) desc";
+		return jdbcTemplate.query(sql, statusMapper);
+	}
 
+	public List<StatusVO> placeLikeGroup(){
+		String sql = "select  place_title key, place_like value from place \r\n"
+				+ "				group by place_like, PLACE_TITLE \r\n"
+				+ "				order by place_like desc";
+		return jdbcTemplate.query(sql,  statusMapper);
+	}
+	
+	public List<StatusVO> placeReadGroup(){
+		String sql = "select  place_title key, place_read value from place \r\n"
+				+ "				group by place_read, PLACE_TITLE \r\n"
+				+ "				order by place_read desc";
+		return jdbcTemplate.query(sql,  statusMapper);
+	}
 
+	public List<StatusVO> reviewLikeGroup(){
+		String sql = "select  review_title key, review_like value from review \r\n"
+				+ "				group by review_title, review_like \r\n"
+				+ "				order by review_like desc";
+		return jdbcTemplate.query(sql,  statusMapper);
+	}
+	public List<StatusVO> reviewReadGroup(){
+		String sql = "select  review_title key, review_read value from review \r\n"
+				+ "				group by review_title, review_read \r\n"
+				+ "				order by review_read desc";
+		return jdbcTemplate.query(sql,  statusMapper);
+	}
+	
+	// 리뷰 가장 많이 쓴 사람
+	// 여행지 지역별, 타입별
 }
 
 
