@@ -9,40 +9,57 @@
 		var currentPage = 1;
 		var size = 10;
 			
-			
-		
-		
+	
 		loadMyReviews(currentPage,size);
 		
-		function loadMyReviews(page,size){
+		$(".btn-more").click(function() {
+	         loadMyReviews(currentPage++, size);
+	     });
+		
+		function loadMyReviews(){
 			$.ajax({
 				url:"/rest/page/myReview",
 				method:"post",
-				data:{page : page, size : size},
+				data:{page : currentPage, size : size},
 				success:function(response){
-					console.log(response);
-					if (response.length == 0) {
-			        	var reviewHtml = `
-			        		<tr>
-	                        <td colspan="6" align="center">작성한 후기가 없습니다.</td>
-	                    	</tr>
-			        	`;
-			        	$("#reviewList").append(reviewHtml);
-			            $(".btn-more").hide();
-			            return;
-			        }
 					
-					$(".btn-more").click(function() {
-				        loadMyReviews(currentPage++, size);
-				    });
+					    var totalcount= $(response.totalCount)[0]
+					 	var lastPage = response.isLastPage;
+				        console.log(response);
+				        console.log("현재페이지: "+ currentPage);
+				        console.log("개수: "+ response.length);
+				        console.log("총 리뷰 개수 :"+totalcount);//총개수..이렇게쓰는거맞니..?
+				       	console.log("마지막페이지인가:"+response.isLastPage);
+				        console.log("현재 조회목록 수 :" + response.length);
+				        console.log("조회목록 : " + response.list);
 					
-			        $(response).each(function(index, review) {
-			        	
-			        	var myReviewNo = (currentPage - 1) * size + index + 1; 
+					
+				        $(".totalCount").text(totalcount);
+				        if (response.length == 0) { //조회목록이 0개고
+				        	if(currentPage==1) { //1페이지라면
+				        	var reviewNone = `
+				        		<tr>
+		                        <td colspan="6" align="center">좋아요한 후기가 없습니다.</td>
+		                    	</tr>
+				        	`;
+				        	$("#reviewList").append(reviewNone); //얘추가하고
+				            $(".btn-more").hide(); //버튼숨기고
+				            return;	
+				        	}   
+				        }
+				    	if(lastPage){
+			        		$(".btn-more").hide();
+			        		}
+			        	else{
+			        		$(".btn-more").show();
+			        	}
+					
+			        $(response.list).each(function(index, review) {	
+			        	var myReviewNo = ((currentPage - 1) * size) + index + 1;
 			            var reviewHtml = `
 			                <tr>
-				            	<td class="reviewNo"></td>
-	                            <td class="reviewTitle"></td>
+				            	<td class="reviewNumber"></td>
+	                            <td><a href="/review/detail?reviewNo="  class="reviewTitle titleStyle" style="aStyle"></a></td>
 	                            <td class="reviewRead"></td>
 	                            <td class="reviewLike"></td>
 	                            <td class="reviewReply"></td>
@@ -50,13 +67,14 @@
 			                </tr>
 			            `;
 						var $reviewHtml = $(reviewHtml);
-						$reviewHtml.find(".reviewNo").text(myReviewNo);
-						$reviewHtml.find(".reviewTitle").text(review.reviwTitle)//attr추가;
+						$reviewHtml.find(".reviewNumber").text(myReviewNo);
+						$reviewHtml.find(".reviewTitle").text(review.reviewTitle).attr("href","/review/detail?reviewNo="+ review.reviewNo);
 						$reviewHtml.find(".reviewRead").text(review.reviewRead);
 						$reviewHtml.find(".reviewLike").text(review.reviewLike);
 						$reviewHtml.find(".reviewReply").text(review.reviewReply);
 						$reviewHtml.find(".reviewWtime").text(review.reviewWtime);
-					$("#reviewList").append($reviewHtml);
+					
+						$("#reviewList").append($reviewHtml);
 			    	});
 				}
 			});
@@ -78,6 +96,7 @@
     <div class="cell mt-50">
         <table class="tableStyle">
             <thead>
+            <div class="p-10">등록글 수 : <i class="fa-solid fa-pencil"></i> x <span class="totalCount"></span></div>
                 <tr>
                     <th>번호</th>
                     <th>제목</th>
@@ -87,7 +106,7 @@
                     <th>작성일</th>
                 </tr>
             </thead>
-            <tbody id="reviewList">
+            <tbody id="reviewList"  class="center">
             
             </tbody>
         </table>

@@ -24,8 +24,8 @@ $(function(){
 		data:{page : currentPage, size : size},
 		 success: function(response) { 
 			 	
-		        var totalcount= $(response.totalCount); 
-		        var totalcount = totalcount[0];  //리뷰개수
+		        var totalcount= $(response.totalCount)[0]; 
+
 			 	var lastPage = response.isLastPage;
 		        console.log(response);
 		        console.log("현재페이지: "+ currentPage);
@@ -35,7 +35,7 @@ $(function(){
 		        console.log("현재 조회목록 수 :" + response.length);
 		        console.log("조회목록 : " + response.list);
 		        
-		        $(".totalLikeReviews").show().text(totalcount);
+		        $(".totalLikeReviews").text(totalcount);
 		        if (response.length == 0) { //조회목록이 0개고
 		        	if(currentPage==1) { //1페이지라면
 		        	var reviewNone = `
@@ -55,7 +55,7 @@ $(function(){
         		$(".btn-more").show();
         	}
 		        $(response.list).each(function(index, review) { 
-		        	var myLikeReviewNo = (currentPage - 1) * size + index + 1; //페이지게이
+		        	var myLikeReviewNo = ((currentPage - 1) * size) + index + 1; //페이지게이
 		           //백팁실패한 테블릿 그리고 제발 주석추가하지마 오류
 		        	var reviewHtml = `
 		                <tr>
