@@ -68,27 +68,27 @@ public class ReviewLikeDao {
     }
 	
 	public int count(RestPageVO restPageVO) {
-		String sql = "select count(*) from review_like where = ?";
+		String sql = "select count(*) from review_like where member_id = ?";
 		Object[] data = {restPageVO.getMemberId()};
 		return jdbcTemplate.queryForObject(sql, int.class, data);
 	}
 	
 	public List<ReviewLikeDto> selectListRest(RestPageVO restPageVO){
 		String sql =  "SELECT * FROM ("
-				+ "				    SELECT rownum rn, TMP.*"
-				+ "				    FROM ("
-				+  "SELECT r.review_no, r.review_title, m.member_nickname AS review_writer, " 
-     			+"r.review_wtime, r.review_read, COUNT(rl2.member_id) AS like_count " 
-	        		+"FROM review_like rl " 
-	        		+"JOIN review r ON rl.review_no = r.review_no " 
-	        		+"JOIN member m ON r.review_writer = m.member_id " 
-	        		+"LEFT JOIN review_like rl2 ON r.review_no = rl2.review_no " 
-	        		+"WHERE rl.member_id = ? " 
-	        		+"GROUP BY r.review_no, r.review_title, m.member_nickname, r.review_wtime, r.review_read " 
-	        		+"ORDER BY r.review_wtime DESC"
-					+ "				    ) TMP"
-				+ "				)"
-				+ "				WHERE rn BETWEEN ? AND ?";
+				+ "								    SELECT rownum rn, TMP.*"
+				+ "								    FROM ("
+				+ "				SELECT r.review_no, r.review_title, m.member_nickname AS review_writer, "
+				+ "     			r.review_wtime, r.review_read, COUNT(rl2.member_id) AS like_count , rl.review_like_time"
+				+ "	        		FROM review_like rl "
+				+ "	        		JOIN review r ON rl.review_no = r.review_no "
+				+ "	        		JOIN member m ON r.review_writer = m.member_id "
+				+ "	        		LEFT JOIN review_like rl2 ON r.review_no = rl2.review_no  "
+				+ "	        		WHERE rl.member_id = ?"
+				+ "	        		GROUP BY r.review_no, r.review_title, m.member_nickname, r.review_wtime, r.review_read, rl.review_like_time  "
+				+ "	        		ORDER BY rl.review_like_time DESC"
+				+ "									    ) TMP"
+				+ "								)"
+				+ "								WHERE rn BETWEEN ? AND ?";
 		Object[] data = { restPageVO.getMemberId(), restPageVO.getStartRownum(), restPageVO.getFinishRownum() };
 		return jdbcTemplate.query(sql, reviewLikeMapper, data);
 	}
