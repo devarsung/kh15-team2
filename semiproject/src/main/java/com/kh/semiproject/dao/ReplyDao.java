@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.semiproject.dto.ReplyDto;
+import com.kh.semiproject.dto.ReplyListViewDto;
+import com.kh.semiproject.mapper.ReplyListViewMapper;
 import com.kh.semiproject.mapper.ReplyMapper;
 
 @Repository
@@ -14,6 +16,8 @@ public class ReplyDao {
 
 	@Autowired
 	private ReplyMapper replyMapper;
+	@Autowired
+	private ReplyListViewMapper replyListViewMapper;
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
@@ -36,15 +40,15 @@ public class ReplyDao {
 	}
 
 	// 댓글 목록 조회 (닉네임 포함)
-	public List<ReplyDto> selectList(int replyOrigin) {
-	    String sql = "SELECT r.reply_no, r.reply_origin, m.member_nickname, " +
+	public List<ReplyListViewDto> selectList(int replyOrigin) {
+	    String sql = "SELECT r.reply_no, r.reply_origin, r.reply_writer, m.member_nickname, " +
 	                 "r.reply_content, r.reply_wtime, r.reply_etime " +
 	                 "FROM reply r " +
 	                 "LEFT JOIN member m ON r.reply_writer = m.member_id " +
 	                 "WHERE r.reply_origin = ? " +
 	                 "ORDER BY r.reply_wtime ASC";
 	    Object[] data = {replyOrigin};
-	    return jdbcTemplate.query(sql, replyMapper, data);
+	    return jdbcTemplate.query(sql, replyListViewMapper, data);
 	}
 
 	// 댓글 삭제

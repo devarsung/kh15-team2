@@ -14,6 +14,7 @@ import com.kh.semiproject.dao.ReplyDao;
 import com.kh.semiproject.dao.ReplyListViewDao;
 import com.kh.semiproject.dao.ReviewDao;
 import com.kh.semiproject.dto.ReplyDto;
+import com.kh.semiproject.dto.ReplyListViewDto;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -30,8 +31,10 @@ public class ReplyRestController {
 
 	// 댓글 목록
 	@RequestMapping("/list")
-	public List<ReplyDto> list(@RequestParam int replyOrigin) {
-		return replyDao.selectList(replyOrigin);
+	public List<ReplyListViewDto> list(@RequestParam int replyOrigin) {
+		List<ReplyListViewDto> list = replyDao.selectList(replyOrigin);
+		//System.out.println(list);;
+		return list;
 	}
 	
 	//댓글 작성
