@@ -16,7 +16,6 @@ public class ReplyListViewDto {
 	private Timestamp replyWtime;
 	private Timestamp replyEtime;
 	
-	private String memberId;//아이디
 	private String memberNickname;//닉네임
 }
 

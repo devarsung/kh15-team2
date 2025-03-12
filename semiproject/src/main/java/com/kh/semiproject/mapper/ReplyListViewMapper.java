@@ -21,8 +21,6 @@ public class ReplyListViewMapper implements RowMapper<ReplyListViewDto>{
 				.replyContent(rs.getString("reply_content"))
 				.replyWtime(rs.getTimestamp("reply_wtime"))
 				.replyEtime(rs.getTimestamp("reply_etime"))
-				
-				.memberId(rs.getString("member_id"))
 				.memberNickname(rs.getString("member_nickname"))
 				.build();
 	}

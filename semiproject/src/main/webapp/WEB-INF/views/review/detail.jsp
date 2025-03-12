@@ -55,7 +55,7 @@ $(function(){
 $(function(){
     var params = new URLSearchParams(location.search);
     var reviewNo = params.get("reviewNo");
-    console.log(reviewNo);
+    //console.log(reviewNo);
     loadList();
 
     // 댓글 작성
@@ -85,6 +85,7 @@ $(function(){
         var choice = window.confirm("정말 댓글을 삭제하시겠습니까?");
         if(choice == false) return;
         var replyNo = $(this).data("reply-no");
+        
         $.ajax({
             url:"/rest/reply/delete",
             method:"post",
@@ -97,6 +98,10 @@ $(function(){
 
     // 댓글 수정
     $(document).on("click", ".edit-btn", function(){
+    	console.log($(".reply-edit-item"));
+    	console.log($(".reply-edit-item").prev(".reply-item"));
+    	
+    	
         $(".reply-edit-item").prev(".reply-item").show();
         $(".reply-edit-item").remove();
 
@@ -159,7 +164,6 @@ $(function(){
             method:"post",
             data:{ replyOrigin : reviewNo },
             success:function(response){
-                console.log(response);
                 $(".reply-wrapper").empty();
                 $(response).each(function(){
                     var template = $("#reply-template").text();
@@ -167,7 +171,7 @@ $(function(){
                     var convertTime = moment(this.replyWtime).fromNow();
 
                     $(html).find(".reply-no").text("(no."+this.replyNo+")");
-                    $(html).find(".reply-writer").text(this.replyNickname);
+                    $(html).find(".reply-writer").text(this.memberNickname);
                     $(html).find(".reply-content").text(this.replyContent);
                     $(html).find(".reply-wtime").text(convertTime);
                     $(html).find(".delete-btn").attr("data-reply-no",this.replyNo);
@@ -224,7 +228,7 @@ $(function(){
             </div>
         </div>
         <div class="p-10">
-            <textarea class="save-contentBox reply-content"></textarea>
+            <textarea class="save-contentBox reply-content reply-editbox"></textarea>
         </div>
         <div class="felx-box btns">
             <button class="save-btn"  type="button">
