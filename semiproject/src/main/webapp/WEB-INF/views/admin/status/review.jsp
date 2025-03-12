@@ -118,7 +118,7 @@
 	</div>
 </div>
 	<div class="cell mt-50">
-		<h3>후기 좋아요 현황</h3>
+		<h3>여행지 지역 현황</h3>
 	</div>
 	<div class="cell status-container">
 		<div class="status-item chart-area">
@@ -145,7 +145,7 @@
 	</div>
 </div>
 	<div class="cell mt-50">
-		<h3>후기 조회수 현황</h3>
+		<h3>여행지 타입 현황</h3>
 	</div>
 	<div class="cell status-container">
 		<div class="status-item chart-area">
@@ -160,7 +160,59 @@
 					</tr>
 				</thead>
 				<tbody class="center">
-					<c:forEach var="statusVO" items="${reviewReadList}">
+					<c:forEach var="statusVO" items="${placeTypeList}">
+						<tr>
+							<td class="chart-key">${statusVO.key}</td>
+							<td class="chart-value">${statusVO.value}</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div><div class="cell mt-50">
+		<h3>여행지 지역 현황</h3>
+	</div>
+	<div class="cell status-container">
+		<div class="status-item chart-area">
+			<canvas id="age-chart"></canvas>
+		</div>
+		<div class="status-item table-area">
+			<table class="status-table age-table">
+				<thead>
+					<tr>
+						<th>연령대</th>
+						<th>회원수</th>
+					</tr>
+				</thead>
+				<tbody class="center">
+					<c:forEach var="statusVO" items="${placeRegionList}">
+						<tr>
+							<td class="chart-key">${statusVO.key}</td>
+							<td class="chart-value">${statusVO.value}</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div><div class="cell mt-50">
+		<h3>후기 유저수 현황</h3>
+	</div>
+	<div class="cell status-container">
+		<div class="status-item chart-area">
+			<canvas id="age-chart"></canvas>
+		</div>
+		<div class="status-item table-area">
+			<table class="status-table age-table">
+				<thead>
+					<tr>
+						<th>연령대</th>
+						<th>회원수</th>
+					</tr>
+				</thead>
+				<tbody class="center">
+					<c:forEach var="statusVO" items="${reviewUserList}">
 						<tr>
 							<td class="chart-key">${statusVO.key}</td>
 							<td class="chart-value">${statusVO.value}</td>
