@@ -60,9 +60,11 @@ $(function(){
 				$(response.list).each(function(){
 					var template = $("#reply-template").text();
 					var html = $.parseHTML(template);
+					$(html).find(".btn-delete").data("reply-no", this.replyNo);
 					$(html).find(".reply-wtime").text(this.replyWtime);
 					$(html).find(".reply-writer").text(this.replyNickname);
 					$(html).find(".reply-content").text(this.replyContent);
+					$(html).find(".mainText").attr("href","/review/detail?reviewNo="+ this.replyOrigin)
 					
 					$(".reply-list").append(html);
 					
@@ -79,28 +81,46 @@ $(function(){
 	
 	loadList();
 	
-	
 });
+    // 댓글 삭제
+    $(document).on("click",".btn-delete",function(){
+        var choice = window.confirm("정말 댓글을 삭제하시겠습니까?");
+        if(choice == false) return;
+        var replyNo = $(this).data("reply-no");
+        console.log("삭제할 댓글 번호: " + replyNo);
+        
+        $.ajax({
+            url:"/rest/reply/delete",
+            method:"post",
+            data:{replyNo : replyNo},
+            success:function(response){
+            }
+        });
+    });
 </script>
 
 <script type="text/template" id="reply-template"> 
-    <div class="cell flex-box reply-item"> 
-        <div class="w-150 p-10 inline-flex-box" style="min-width: 150px;"> 
-            <div class="reply-tinyfont">
-                <span class="reply-wtime">댓글작성일/수정일</span>
-                <h3 class="mt-10 reply-writer">닉네임</h3>
+        <div class="container w-1000">
+        <div class="cell flex-box reply-item">
+            <div class="w-150 p-10 inline-flex-box" style="min-width: 150px;">
+                <div class="reply-tinyfont center">
+                    <span class="reply-wtime">댓글작성일/수정일</span>
+                    <h3 class="mt-10 reply-writer">닉네임</h3>
+                </div>
             </div>
-        </div>
-        <div class="w-100 p-10">
-            <h5 class="m-0 reply-content reply-input">댓글본문</h5>
-        </div>
-        <div class="w-150 p-10 btns">
-            <button class="edit-btn"  type="button">
-                <i class="fa-solid fa-pen-to-square"></i>
-            </button>
-            <button class="delete-btn" type="button">
-                <i class="fa-regular fa-trash-can"></i>
-            </button>
+            <div class="flex-box flex-vertical">
+                <div class="float-box">
+                    <div class="float-left">
+                        <a href="/review/detail?reviewNo=" class="mainText">[본문으로 가기]</a>
+                    </div>
+                    <div class="float-right">
+                        <span>댓글삭제  </span><button class="btn-delete" data-reply-no="${replyNo}"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                </div>
+                <div class="w-100 p-10">
+                    <h5 class="m-0 reply-content">댓글본문</h5>
+                </div>
+            </div>
         </div>
     </div>
 </script>
