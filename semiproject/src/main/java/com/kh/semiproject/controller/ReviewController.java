@@ -74,11 +74,12 @@ public class ReviewController {
 	}
 	
 	@PostMapping("/add")
-	public String add(@ModelAttribute ReviewDto reviewDto, HttpSession session) {
+	public String add(@ModelAttribute ReviewDto reviewDto, HttpSession session, @RequestParam int placeNo) {
 		String userId = (String)session.getAttribute("userId");
 		reviewDto.setReviewWriter(userId);
 		int reviewNo = reviewDao.sequence();
 		reviewDto.setReviewNo(reviewNo);
+		reviewDto.setReviewPlace(placeNo);
 		reviewDao.insert(reviewDto);
 		return "redirect:detail?reviewNo="+reviewNo;
 	}

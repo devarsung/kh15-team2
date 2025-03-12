@@ -21,7 +21,7 @@ public class ReviewDto {
 	private Timestamp reviewWtime;
 	private Timestamp reviewEtime;
 	private String reviewWriter;
-	private String reviewPlace;
+	private int reviewPlace;
 	private float reviewStar;
 	
 	public String getWtimeString() {
