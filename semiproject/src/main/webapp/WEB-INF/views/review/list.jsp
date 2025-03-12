@@ -59,7 +59,7 @@
 							
 								<!-- 게시글 제목 -->
 								<a class="aStyle" href="detail?reviewNo=${reviewListViewDto.reviewNo}">
-									${reviewListViewDto.reviewTitle}
+									[${reviewListViewDto.placeTitle}]  ${reviewListViewDto.reviewTitle}
 								</a>
 								
 								<!-- 댓글 표시 -->
@@ -89,7 +89,6 @@
 							</td>
 							<td>${reviewListViewDto.getWtimeString()}</td>
 							<td>${reviewListViewDto.reviewRead}</td>
-							<td>${reviewListViewDto.placeTitle}</td>
 						</tr>
 						</c:forEach>
 					</tbody>
