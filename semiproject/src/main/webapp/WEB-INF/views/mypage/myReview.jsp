@@ -8,11 +8,9 @@
 	$(function(){
 		var currentPage = 1;
 		var size = 10;
+			
+			
 		
-		
-		$(".btn-more").click(function() {
-	        loadMyReviews(currentPage++, size);
-	    });
 		
 		loadMyReviews(currentPage,size);
 		
@@ -23,7 +21,7 @@
 				data:{page : page, size : size},
 				success:function(response){
 					console.log(response);
-					if (response == 0) {
+					if (response.length == 0) {
 			        	var reviewHtml = `
 			        		<tr>
 	                        <td colspan="6" align="center">작성한 후기가 없습니다.</td>
@@ -33,7 +31,11 @@
 			            $(".btn-more").hide();
 			            return;
 			        }
-			       
+					
+					$(".btn-more").click(function() {
+				        loadMyReviews(currentPage++, size);
+				    });
+					
 			        $(response).each(function(index, review) {
 			        	
 			        	var myReviewNo = (currentPage - 1) * size + index + 1; 
@@ -91,7 +93,7 @@
         </table>
     </div>
    <div class="cell center">
-    	<button class="btn-more">더보기+</button>
+    	<a href="#" class="btn-more">더보기+</a>
     </div>
 </div>
 
