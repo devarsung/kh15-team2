@@ -92,33 +92,60 @@ public class PageRestController {
 	}
 	
 	@RequestMapping("/myLikeReview")
-	public List<ReviewLikeDto> reviewList(RestPageVO restPageVO, HttpSession session) {
+	public Map<String, Object> reviewList(RestPageVO restPageVO, HttpSession session) {
 		String userId = (String)session.getAttribute("userId");
 		restPageVO.setMemberId(userId);
-		int count = reviewLikeDao.count(restPageVO);
+		
+		int count = reviewLikeDao.count(restPageVO);//총 데이터의 개수
 		restPageVO.setCount(count);
+		
 		List<ReviewLikeDto> list = reviewLikeDao.selectListRest(restPageVO);
-		return list;
+		boolean isLastPage = restPageVO.isLastPage();//마지막 페이지인지 아닌지
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("totalCount", count);//총 데이터 개수
+		result.put("isLastPage", isLastPage);//마지막 페이지인지 아닌지
+		result.put("length", list.size());//지금 페이지에서 조회한 목록 개수
+		result.put("list", list);//지금 페이지에서 조회한 목록
+		return result;
 	}
 	
 	@RequestMapping("/myReview")
-	public List<MyReviewDto> myReviewList(RestPageVO restPageVO, HttpSession session) {
+	public Map<String, Object> myReviewList(RestPageVO restPageVO, HttpSession session) {
 		 String userId = (String) session.getAttribute("userId");
 		 restPageVO.setMemberId(userId);
+		 
 		 int count = myReviewDao.count(restPageVO);
 		 restPageVO.setCount(count);
+		 
         List<MyReviewDto> list = myReviewDao.selectListRest(restPageVO);
-        return list;
+        boolean isLastPage = restPageVO.isLastPage();//마지막 페이지인지 아닌지
+        
+        Map<String, Object> result = new HashMap<>();
+		result.put("totalCount", count);//총 데이터 개수
+		result.put("isLastPage", isLastPage);//마지막 페이지인지 아닌지
+		result.put("length", list.size());//지금 페이지에서 조회한 목록 개수
+		result.put("list", list);//지금 페이지에서 조회한 목록
+		return result;
 	}
 	
 	@RequestMapping("/myReply")
-	public List<MyReplyDto> myReplyList(RestPageVO restPageVO, HttpSession session) {
-		  String userId = (String) session.getAttribute("userId");
-		    restPageVO.setMemberId(userId);
-		    int count = myReplyDao.count(restPageVO);
-		    restPageVO.setCount(count);
-		    List<MyReplyDto> list = myReplyDao.selectListRest(restPageVO);
-		    return list;
+	public  Map<String, Object> myReplyList(RestPageVO restPageVO, HttpSession session) {
+		String userId = (String) session.getAttribute("userId");
+	    restPageVO.setMemberId(userId);
+	    
+	    int count = myReplyDao.count(restPageVO);
+	    restPageVO.setCount(count);
+	    
+	    List<MyReplyDto> list = myReplyDao.selectListRest(restPageVO);
+	    boolean isLastPage = restPageVO.isLastPage();//마지막 페이지인지 아닌지
+	    
+	    Map<String, Object> result = new HashMap<>();
+		result.put("totalCount", count);//총 데이터 개수
+		result.put("isLastPage", isLastPage);//마지막 페이지인지 아닌지
+		result.put("length", list.size());//지금 페이지에서 조회한 목록 개수
+		result.put("list", list);//지금 페이지에서 조회한 목록
+		return result;
 	}
 	
 }
