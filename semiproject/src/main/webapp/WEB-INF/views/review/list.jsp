@@ -17,7 +17,7 @@
     <div class="cell center my-30">
         <form action="list" method="get">
             <select name="column" class="selectStyle center field">
-                <option value="review_title" ${param.column == 'review_title' ? 'selected' : ''}>제목</option>
+                <option value="review_title" ${param.column == 'review_title' ? 'selected' : ''}>제목별</option>
                 <option value="member_nickname" ${param.column == 'member_nickname' ? 'selected' : ''}>작성자</option>
             </select>
             <input type="text" name="keyword" value="${param.keyword}" class="field w-50 inputStyle" placeholder="많은 후기들을 찾아보세요!">
