@@ -14,5 +14,8 @@ $(function(){
         var checked = $(".check-item").filter(":checked").length;
         var allCheck = all == checked;
         $(".check-all").prop("checked", allCheck);
+		
     });
+	
+	
 });

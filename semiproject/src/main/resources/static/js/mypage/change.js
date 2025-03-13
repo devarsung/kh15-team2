@@ -17,16 +17,24 @@ $(function() {
 			};
 
 
-	//readonly 설정과 해제 
-	$(".editBtn").click(function() {
-		var inputField = $(this).parent("td").find("input");
-		if (inputField.prop('readonly')) {
-			inputField.prop('readonly', false).focus();;
-		}
-		else {
-			inputField.prop('readonly', true);
-		}
-	});
+			//readonly 설정과 해제 
+				//이메일 인증 숨김 설정및 나타네기 관리 설정 추가
+				$(".editBtn").click(function() {
+					var inputField = $(this).parent("td").find("input");
+				//이메일 인증 버튼 변수
+					var checkEmailBtn=$(this).closest("td").find(".checkEmailBtn");
+					
+					if (inputField.prop('readonly')) {
+						inputField.prop('readonly', false).focus();
+						
+						checkEmailBtn.show();//이메일 인증 버튼 보이기
+					}
+					else {
+						inputField.prop('readonly', true);
+						
+						checkEmailBtn.hide();//이메일 인증 버튼 숨기기
+					}
+				});
 
 	//닉네임 처리 //////////////////////////닉네임url추가
 	$("[name=memberNickname]").blur(function() {
@@ -53,13 +61,39 @@ $(function() {
 	});
 
 	//이메일 처리
-	$("[name=memberEmail]").blur(function() {
-		var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-		var isValid = regex.test($(this).val()) && $(this).val().length > 0;
-		$(this).removeClass("success fail").addClass(isValid ? "success" : "fail");
-		status.memberEmail = isValid;
-	});
+		$("[name=memberEmail]").blur(function() {
+			var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+			var isValid = regex.test($(this).val()) && $(this).val().length > 0;
+			$(this).removeClass("success fail").addClass(isValid ? "success" : "fail");
+			status.memberEmail = isValid;
+		});
 
+			$(".btn-send-cert").click(function(){
+					var email = $("[name=memberEmail]").val();//입력된 이메일 가져옴
+					var regex = /^[A-Za-z0-9]+@[A-Za-z0-9.]+$/;
+					if(regex.test(email) == false) return;//형식에 맞지 않으면 차단
+
+					$.ajax({
+						url:"/rest/cert/send",
+						method:"post",
+						data:{ email : email },
+						success:function(response){
+							$(".cert-input-wrapper").fadeIn();
+						},
+						beforeSend:function(){
+							$(".btn-send-cert").prop("disabled", true);
+							$(".btn-send-cert").find("span").text("이메일 발송중");
+							$(".btn-send-cert").find("i").removeClass("fa-paper-plane")
+																	.addClass("fa-spinner fa-spin");
+						},
+						complete:function(){
+							$(".btn-send-cert").prop("disabled", false);
+							$(".btn-send-cert").find("span").text("인증메일 발송");
+							$(".btn-send-cert").find("i").removeClass("fa-spinner fa-spin")
+																	.addClass("fa-paper-plane");
+						}
+					});
+				});
 	//생년월일 처리
 	var picker = new Lightpick({
 		field: document.querySelector("[name=memberBirth]"),
