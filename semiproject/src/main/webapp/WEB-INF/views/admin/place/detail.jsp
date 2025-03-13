@@ -91,18 +91,22 @@ $(function() {
 <div class="container w-1000">
     <div class="cell div-title">
     	<div class="left-btns">
-	    	<a class="btn btn-neutral" href="edit?placeNo=${placeDto.placeNo}">수정하기</a>
-	    	<a class="btn btn-neutral" href="delete?placeNo=${placeDto.placeNo}">삭제하기</a>
+	    	<a class="btn btn-secondary" href="edit?placeNo=${placeDto.placeNo}">수정하기</a>
+	    	<a class="btn btn-secondary" href="delete?placeNo=${placeDto.placeNo}">삭제하기</a>
     	</div>
-        <h1 class="m-0">${placeDto.placeTitle}</h1>
+        <h2 class="m-0">${placeDto.placeTitle}</h2>
     </div>
-
+    
+	<hr style="border-top: 1px solid darkgray; margin-top:25px;">
+	
     <div class="cell center reactions">
     	<div class="review-star" data-max="5" data-rate="${placeStar}"></div><br>
     	<span class="views"><i class="fa-solid fa-eye"></i> :  ${placeDto.placeRead}</span>
     	<span class="likes"><i class="fa-solid fa-heart"></i> : ${placeDto.placeLike}</span>
         <span class="comments"><i class="fa-solid fa-comment-dots"></i> : ${placeDto.placeReview}</span>
     </div>
+
+	<hr style="border-top: 1px solid darkgray; margin-top: 7;" class="mb-20">
 
 	<!-- 이미지 스와이퍼 영역 -->
     <div class="cell my-20">
@@ -236,7 +240,7 @@ $(function() {
     </c:if>
     
     <div class="cell right">
-       <a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-neutral end">후기 더보기</a>
+       <a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-secondary end">후기 더보기</a>
    </div>
 </div>
 
