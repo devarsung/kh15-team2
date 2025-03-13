@@ -17,7 +17,7 @@
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-<script src="/js/mypage/change.js"></script>
+<script src="/js/mypage/change2.js"></script>
 <!-- jQuery cdn -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
@@ -102,16 +102,32 @@
 					</tr>
 					<tr>
 						<th>이메일</th>
-						<td class="p-10"><input name="memberEmail" type="email"
-							class="editInput field  w-75" value="${memberDto.memberEmail}"
+						<td class="p-10">
+						<input name="memberEmail" type="email"
+						class="editInput field  w-75" value="${memberDto.memberEmail}"
 							readonly>
 							<button type="button" class="editBtn">
 								<i class="fa-solid fa-pen-to-square"></i>
 							</button>
+								<button type="button" class="checkEmailBtn btn-send-cert" style="display: none; ">
+							<i class="fa-solid fa-paper-plane"></i>
+							</button>
 							<div class="success-feedback">올바른 이메일 형식입니다</div>
+						
 							<div class="fail-feedback red">
 								<i class="fa-solid fa-check"></i>올바른 형식의 이메일이 아닙니다
-							</div></td>
+							</div>
+							 <div class="cell cert-input-wrapper" style="display:none;">
+	    	<input type="text" inputmode="numeric" class="field"
+	    				name="certNumber" placeholder="인증번호 입력">
+	    	<button type="button" class="btn btn-positive btn-confirm-cert">
+	    		<i class="fa-solid fa-check"></i>
+	    		<span>인증 확인</span>
+	    	</button>
+	    	<div class="success-feedback">인증이 완료되었습니다</div>
+	    	<div class="fail-feedback">인증번호가 일치하지 않습니다</div>
+	    </div>
+							</td>
 					</tr>
 					<tr>
 						<th>연락처</th>
@@ -155,7 +171,6 @@
 				<a href="/mypage/home" class="btn btn-neutral  mx-10">돌아가기</a>
 				<button class="btn btn-positive ms-10" type="submit">변경하기</button>
 			</div>
-
 		</form>
 
 	</div>

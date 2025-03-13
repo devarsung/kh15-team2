@@ -1,0 +1,117 @@
+.content-box{
+        min-height:300px; 
+        border-top: 2px solid #ccc; 
+   		border-right: none;
+    	border-bottom: none;
+   		border-left: none;
+    }
+
+
+
+	
+
+ /*버튼들*/
+    .btns{
+     gap:5px; 
+     margin-left: auto;
+    }
+
+    .edit-btn{
+     border: none;
+     background-color: rgb(224, 241, 255);
+    }
+
+    .delete-btn{
+     border: none;
+     background-color: rgb(255, 224, 224);
+    }
+     
+        
+   .cancel-btn{
+    border: none;
+    background-color : lightgray;
+    }
+
+    .save-btn{
+    border : none;
+    background-color : rgb(212, 239, 255);
+    }
+    
+    .edit-btn,
+    .delete-btn,
+    .cancel-btn,
+    .save-btn{
+    	  width: 45px;
+   		 height: 45px;
+   		 display: flex;
+   		 align-items: center;
+   		 justify-content: center;
+   		 border-radius: 8px;
+   		 display:flex;
+   		 font-size: 18px;
+   		 
+    }
+    
+    
+    .edit-btn:hover,
+    .delete-btn:hover,
+    .cancel-btn:hover,
+    .save-btn:hover,
+    .changebtn:hover,
+	.deletemessage:hover{
+     filter:brightness(1.05);
+     cursor: pointer;
+    }
+    
+    
+        
+        
+.changebtn,
+.deletemessage {
+    font-size: 16px;
+    padding: 0.5em 0.75em;
+    color: #2d3436;
+    border: 1px solid #2d3436;
+    border-radius: 0.1em;
+    cursor: pointer;
+    text-decoration: none;
+    background-color: #dfe6e9;
+    display: inline-block;
+    text-align: center;
+    width: 100px;
+}
+
+.deletemessage {
+    border-color: #d63031;
+    background-color: #d63031;
+    color: white;
+    border-radius : 10px;
+}
+
+.changebtn{
+	border-color: #578FCA;
+	background-color : #578FCA;
+	color: white;
+	border-radius : 10px;
+}
+
+.left-section {
+    align-items: flex-start;
+}
+
+.right-section {
+    align-items: flex-end;
+    text-align: right;
+    font-size: 14px;
+    color: #555;
+    gap: 5px;
+}
+
+.reply-btns {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    gap: 8px; /* 버튼 간 간격 */
+    min-width: 120px; /* 최소 너비 지정 */
+}
+
