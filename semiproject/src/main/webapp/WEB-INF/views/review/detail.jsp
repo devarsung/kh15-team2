@@ -175,6 +175,7 @@ $(function(){
            			},
            			
             success:function(response){
+            	
             	$(".reply-wrapper").empty();//비우기
                 	//여기도 더보기 추가
                 	var totalcount= response.totalCount
@@ -230,7 +231,7 @@ $(function(){
                         $(html).find(".owner-badge").remove();
                     } 
 					
-                    $(".reply-wrapper").prepend(html);
+                    $(".reply-wrapper").append(html);
 
                 });        
                 $(".reply-count").text(response.length);

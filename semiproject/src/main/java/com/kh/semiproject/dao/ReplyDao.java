@@ -49,7 +49,7 @@ public class ReplyDao {
     		 				+ "r.reply_content, r.reply_wtime, r.reply_etime "
     		 				+ "FROM reply r  LEFT JOIN member m ON r.reply_writer = m.member_id "
     		 				+ "WHERE r.reply_origin = ?"
-    		 				+ "ORDER BY r.reply_wtime ASC "
+    		 				+ "ORDER BY r.reply_wtime DESC "
 		 				+ ") tmp "
 	 				+ ") where rn between ? and ?";
 	    Object[] data = {replyOrigin, restPageVO.getStartRownum(), restPageVO.getFinishRownum()};
