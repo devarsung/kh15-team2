@@ -58,12 +58,12 @@
 			        	var myReviewNo = ((currentPage - 1) * size) + index + 1;
 			            var reviewHtml = `
 			                <tr>
-				            	<td class="reviewNumber"></td>
-	                            <td><a href="/review/detail?reviewNo="  class="reviewTitle titleStyle" style="aStyle"></a></td>
-	                            <td class="reviewRead"></td>
-	                            <td class="reviewLike"></td>
-	                            <td class="reviewReply"></td>
-	                            <td class="reviewWtime"></td>
+				            	<td class="reviewNumber center"></td>
+	                            <td><a href="/review/detail?reviewNo="  class="reviewTitle titleStyle aStyle"></a></td>
+	                            <td class="reviewRead center"></td>
+	                            <td class="reviewLike center"></td>
+	                            <td class="reviewReply center"></td>
+	                            <td class="reviewWtime center"></td>
 			                </tr>
 			            `;
 						var $reviewHtml = $(reviewHtml);
@@ -94,9 +94,9 @@
 	</jsp:include>
 
     <div class="cell mt-50">
+            <div class="p-10">등록글 수 : <span class="totalCount"></span></div>
         <table class="tableStyle">
-            <thead>
-            <div class="p-10">등록글 수 : <i class="fa-solid fa-pencil"></i> x <span class="totalCount"></span></div>
+            <thead class="index-item">
                 <tr>
                     <th>번호</th>
                     <th>제목</th>
@@ -106,7 +106,7 @@
                     <th>작성일</th>
                 </tr>
             </thead>
-            <tbody id="reviewList"  class="center">
+            <tbody id="reviewList" >
             
             </tbody>
         </table>

@@ -31,9 +31,7 @@
             color : #78a1df;
             font-weight : bold;
         }
-        .mainText:visited{
-            color : #f1f7ff;
-        }
+  
         .btn-delete{
             width : 30px;
             height: 30px;
