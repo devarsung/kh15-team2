@@ -77,7 +77,7 @@ public class ReviewListViewDao {
 		String sql = "select * from("
 				+ "select rownum rn, TMP.* from("
 				+ "select R.review_no, R.review_Title, R.review_reply, "
-				+ "R.review_wtime, "
+				+ "R.review_wtime, R.review_like, "
 				+ " M.member_nickname "
 				+ "from review R "
 				+ "LEFT JOIN MEMBER M ON R.review_writer = M.member_id "
