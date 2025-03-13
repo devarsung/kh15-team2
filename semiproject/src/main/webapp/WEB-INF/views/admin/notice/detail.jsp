@@ -36,9 +36,9 @@
             </div>
             <div class="cell textarea2">
 
-              작성시각(${noticeDto.noticeWtime})|<br>
-                수정시각( ${noticeDto.noticeEtime})|
-               닉네임(${noticeDto.noticeWriter})|
+              작성시각(${noticeDto.getWtimeString()})|<br>
+                수정시각( ${noticeDto.getEtimeString()})|
+               닉네임(${noticeDto.memberNickname})|
         조회수:${noticeDto.noticeRead}
            
             </div>

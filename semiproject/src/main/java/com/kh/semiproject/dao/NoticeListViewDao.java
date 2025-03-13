@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kh.semiproject.dto.NoticeDto;
+import com.kh.semiproject.dto.NoticeDetailEditDto;
 import com.kh.semiproject.dto.NoticeListViewDto;
+import com.kh.semiproject.mapper.NoticeDetailEditMapper;
 import com.kh.semiproject.mapper.NoticeListViewMapper;
 import com.kh.semiproject.mapper.NoticeMapper;
 import com.kh.semiproject.vo.PageVO;
@@ -21,6 +22,9 @@ public class NoticeListViewDao {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private NoticeDetailEditMapper noticeDetailEditMapper;
 	
 	public List<NoticeListViewDto> selectList(PageVO pageVO){
 		String sql = "";
@@ -95,8 +99,17 @@ public class NoticeListViewDao {
 	    }
 	}
 
-
-
+	
+	public NoticeDetailEditDto selectOne(int noticeNo){
+		String sql = "select N.notice_no, N.notice_title, N.notice_content, N.notice_wtime, N.notice_etime, N.notice_writer, N.notice_read, "
+				+ "M.member_id, M.member_nickname "
+				+ "from notice N "
+				+ "left join member M on N.notice_writer = M.member_id "
+				+ "where notice_no = ?";
+		Object[] data = {noticeNo};
+		List<NoticeDetailEditDto> list = jdbcTemplate.query(sql, noticeDetailEditMapper, data);
+		return list.isEmpty() ? null:list.get(0);
+	}
 
 }
 
