@@ -39,7 +39,8 @@
         <form class="form-check" action="login" method="post" autocomplete="off">
         <div class="cell mt-30">
             <label>아이디</label>
-            <input class="field w-100" type="text" name="memberId" placeholder="ID입력">
+            <input class="field w-100" type="text" name="memberId" placeholder="ID입력"
+            value="${cookie.saveId.value}">
             <div class="fail-feedback red">ID를 입력해주세요</div>
         </div>
         <div class="cell">
@@ -47,9 +48,20 @@
             <input class="field w-100" type="password" name="memberPw" placeholder="PW입력">
             <div class="fail-feedback red">비밀번호를 입력해주세요</div>
         </div>
-        <a href="findPw" style="">비밀번호를 잊으셨나요?</a>
+        
+        <div class="cell">
+         <label>
+        <input type="checkbox"  name="remember" 
+        ${cookie.saveId !=null ?'checked':''}>
+        <span>아이디 저장</span>
+        </label>
+        </div>
+        
+        <div class="cell">
         <button class="btn btn-positive w-100 mt-20">로그인하기</button>
+        </div>
     </form>
+        <a href="findPw" style="">비밀번호를 잊으셨나요?</a>
     	<c:if test="${param.error != null}">
 	<div class="cell center">
 		<h3 class="red"><i class="fa-solid fa-triangle-exclamation"></i>로그인 정보가 일치하지 않습니다</h3>
