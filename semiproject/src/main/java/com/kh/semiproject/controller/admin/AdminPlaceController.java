@@ -96,6 +96,24 @@ public class AdminPlaceController {
 		return "redirect:list";
 	}
 	
+	@RequestMapping("/deleteAll")
+	public String deleteAll(@RequestParam List<Integer> placeNoList) {
+		for(int placeNo : placeNoList) {
+			
+			List<Integer> imageNos = placeDao.selectPlaceImagesNos(placeNo);
+			for(int imageNo : imageNos) {
+				try {
+					attachmentService.delete(imageNo);
+				}
+				catch(Exception e) {}
+			}
+			
+			placeDao.delete(placeNo);
+		}
+		
+		return "redirect:list";
+	}
+	
 	@RequestMapping("/list")
 	public String list(@ModelAttribute("pageVO") PlacePageVO placePageVO, Model model) {
 		if(placePageVO.getOrder() == null || placePageVO.getOrder().isEmpty()) {
