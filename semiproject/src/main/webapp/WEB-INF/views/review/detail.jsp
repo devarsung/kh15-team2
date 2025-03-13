@@ -4,7 +4,7 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="/css/review-detail.css">
 <!-- <link rel="stylesheet" type="text/css" href="/css/test.css"> -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script>
 
 <script type="text/javascript">
@@ -78,6 +78,7 @@ $(function(){
             },
             success:function(response){
                 $(".reply-writebox").val("");
+                currentPage = 1;
                 loadList();
             }
         });
@@ -94,6 +95,7 @@ $(function(){
             method:"post",
             data:{replyNo : replyNo},
             success:function(response){
+            	currentPage = currentPage;
                 loadList();
             }
         });
@@ -129,10 +131,7 @@ $(function(){
     $(document).on("click", ".save-btn", function(){
         var replyNo = $(this).data("reply-no");
         var replyContent = $(this).closest(".reply-edit-item").find(".reply-content").val();
-        if(replyContent.length == 0) {
-            window.alert("수정 하시겠습니까?");
-            return;
-        }
+        
 
         $.ajax({
             url:"/rest/reply/edit",
@@ -142,6 +141,7 @@ $(function(){
                 replyContent : replyContent
             },
             success:function(response){
+            	currentPage = currentPage;
                 loadList();
             }
         });
@@ -159,27 +159,68 @@ $(function(){
     var userId = "${sessionScope.userId}";
     var reviewWriter = "${reviewDto.memberNickname}";
 
+
+    	
+    var currentPage = 1;
+	var size = 10; 
     // 댓글 목록
     function loadList(){
-
+	
         $.ajax({
             url:"/rest/reply/list",
             method:"post",
-            data:{ replyOrigin : reviewNo },
+            data:{ replyOrigin : reviewNo, 
+            			page : currentPage, 
+            			size : 10
+           			},
+           			
             success:function(response){
-                $(".reply-wrapper").empty();
-                $(response).each(function(){
+            	$(".reply-wrapper").empty();//비우기
+                	//여기도 더보기 추가
+                	var totalcount= response.totalCount
+				 	var lastPage = response.isLastPage;
+			
+                	 $(".btn-more").hide(); 
+			        $(".reply-empty").hide();
+			       
+                	 
+			        if(response.length===0){ //응답이 0개다
+			        	if(currentPage ==1){
+			        		$(".reply-empty").show(); //없으ㅁ보여조
+			        		$(".reply-list").hide(); //숨겨 리스트
+			        		 $(".btn-more").hide(); //버튼숨겨
+			        	}
+			        }
+			        //마지막페이지라면 버튼숨기기
+			      	if(lastPage){
+		        		$(".btn-more").hide(); 
+		        		}
+			      	else{
+			      		$(".btn-more").show();
+			      	}
+		       
+			      
+                    console.log(response.list);
+			        console.log("현재페이지: "+ currentPage);
+			        console.log("개수: "+ response.length);
+			        console.log("총 리뷰 개수 :"+totalcount);
+			       	console.log("마지막페이지인가:"+response.isLastPage);
+			        //위에게 다 정해지고 반복하세요
+                $(response.list).each(function(){
+                	
+          
                     var template = $("#reply-template").text();
-                    var html = $.parseHTML(template);
+                    var html = $.parseHTML(template); 
                     var convertTime = moment(this.replyWtime).fromNow();
 
-                    $(html).find(".reply-no").text("(no."+this.replyNo+")");
-                    $(html).find(".reply-writer").text(this.memberNickname);
+                    $(html).find(".reply-no").text("(no."+this.replyNo+")"); 
+                    $(html).find(".reply-writer").text(this.memberNickname); 
                     $(html).find(".reply-content").text(this.replyContent);
                     $(html).find(".reply-wtime").text(convertTime);
                     $(html).find(".delete-btn").attr("data-reply-no",this.replyNo);
                     $(html).find(".edit-btn").attr("data-reply-no",this.replyNo);
-
+					
+               
                     if(userId.length == 0 || this.replyWriter != userId) {
                         $(html).find(".edit-btn").remove();
                         $(html).find(".delete-btn").remove();
@@ -188,13 +229,19 @@ $(function(){
                         || this.replyWriter !=  reviewWriter) {
                         $(html).find(".owner-badge").remove();
                     } 
+					
+                    $(".reply-wrapper").prepend(html);
 
-                    $(".reply-wrapper").append(html);
-                });
+                });        
                 $(".reply-count").text(response.length);
             }
         });
     };
+    
+    $(".btn-more").click(function(){
+    	currentPage++;
+        loadList();
+    });
 
 
 });
@@ -209,7 +256,7 @@ $(function(){
         <div class="w-150 p-10 inline-flex-box" style="min-width: 150px;"> 
             <div class="reply-tinyfont">
                 <span class="reply-wtime">댓글작성일/수정일</span>
-                <h3 class="mt-10 reply-writer">닉네임</h3>
+                <h3 class="mt-10 reply-writer owner-badger">닉네임</h3>
             </div>
         </div>
         <div class="w-100 p-10">
@@ -232,7 +279,7 @@ $(function(){
         <div class="w-150 p-10 inline-flex-box" style="min-width: 150px;"> 
             <div class="reply-tinyfont">
                 <span class="reply-wtime">댓글작성일/수정일</span>
-                <h3 class="mt-10 reply-writer">닉네임</h3>
+                <h3 class="mt-10 reply-writer owner-badge">닉네임</h3>
             </div>
         </div>
         <div class="p-10">
@@ -305,32 +352,28 @@ $(function(){
          
         </c:when>
         <c:otherwise>
-            <div class="flex-box align-items"> 
                 <div class="cell w-100">
-                    <textarea class="reply-writebox2 w-100" placeholder="로그인후 이용가능합니다"></textarea>
+                    <textarea class="reply-writebox w-100" placeholder="로그인후 이용가능합니다"></textarea>
                 </div>
-                <div class="cell right inline-flex-box flex-center w-20">
+                <div class="cell right">
                     <button type="button"  class="btn btn-neutral">등록하기</button>
                 </div>
-            </div>
         </c:otherwise>
     </c:choose>
 <hr class="my-30" >
-    <c:choose>
-        <c:when test="${empty reviewDto.reviewReply  or reviewDto.reviewReply == 0}">
-            <div class="cell left w-100"  >
-                .댓글이 없습니다
-            </div>
-        </c:when>
-        <c:otherwise>
-            <div class="cell left my-0 reply-list">
+         <div class="cell left w-100 reply-empty"  >
+               댓글이 없습니다
+          </div>
+           <div class="cell left my-0 reply-list">
                 <label>댓글목록</label>
-  				<div class="reply-wrapper"></div>
-            </div>
-        </c:otherwise>
-    </c:choose>
+		</div>
+  			<div class="reply-wrapper"></div>
+  
 
 
+          <div class="cell center">
+          	<a href="#" class="btn-more">더보기+</a>
+          </div>
     <div class="cell center">
         <a href="/review/list" class="btn btn-neutral mt-30" style="width:200px">목록으로</a>
     </div>
