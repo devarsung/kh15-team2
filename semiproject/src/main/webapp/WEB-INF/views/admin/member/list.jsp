@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
@@ -53,7 +54,9 @@
 			                    <td>${memberDto.memberBirth}</td>
 			                    <td>${memberDto.memberContact}</td>
 			                    <td>${memberDto.memberEmail}</td>
-			                    <td>${memberDto.memberJoin}</td>
+			                    <td>
+			                    	<fmt:formatDate value="${memberDto.memberJoin}" pattern="yyyy-MM-dd"/>
+			                    </td>
 			                    <td>${memberDto.memberLevel}</td>
 			                </tr>
             			</c:forEach>
