@@ -90,6 +90,18 @@
 	.coord-btn {
 		flex-direction: column;
 	}
+	.field {
+	 	border: 1px solid #ccc;
+	    border-radius: 5px;
+	    padding: 0.5em;
+	    font-size: 16px;
+	    background-color: #fff;
+	    transition: all 0.3s ease-in-out;
+	}
+	.field:hover {
+	    border-color: #007bff;
+	    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+	}
 </style>
 
 <script type="text/javascript" src="/js/place/add.js"></script>
@@ -108,7 +120,7 @@
 	    
 	    <div class="cell flex-box" style="flex-wrap: nowrap;">
 	    	<div class="w-50">
-		    	<h2><i class="fa-solid fa-square-pen"></i> 지역</h2>
+		    	<h2><i class="fa-solid fa-square-pen"></i> 지역 <i class="fa-solid fa-asterisk red"></i></h2>
 		        <select name="placeRegion" class="field w-100">
 		        	<option value="">선택하세요</option>
 		            <option>서울</option>
@@ -133,7 +145,7 @@
 	    	</div>
 	    	
 	    	<div class="w-50 ms-10">
-				<h2><i class="fa-solid fa-square-pen"></i> 타입</h2>
+				<h2><i class="fa-solid fa-square-pen"></i> 타입 <i class="fa-solid fa-asterisk red"></i></h2>
 				<select name="placeType" class="field w-100">
 					<option value="">선택하세요</option>
 					<option>여행지</option>
@@ -145,21 +157,21 @@
 	    </div>
 	
 	    <div class="cell">
-	        <h2><i class="fa-solid fa-grip-vertical"></i> 여행지명</h2>
+	        <h2><i class="fa-solid fa-square-pen"></i> 여행지명 <i class="fa-solid fa-asterisk red"></i></h2>
 	        <input type="text" name="placeTitle" class="field w-100">
 	        <div class="fail-feedback">여행지명을 작성해주세요</div>
 	    </div>
 	
 	    <div class="cell">
-	        <h2><i class="fa-solid fa-grip-vertical"></i> 대표이미지</h2>
+	        <h2><i class="fa-solid fa-square-pen"></i> 대표이미지 <i class="fa-solid fa-asterisk red"></i></h2>
 	        <div class="flex-box flex-vertical">
 	        	<div class="first-image-area">
 			        <div class="preview-firstImage flex-box flex-center">
 			            <img src="/images/defaultBack.png" width="100%" height="400px;">
 			        </div>
 			        <div class="btn-group">
-				        <button type="button" class="btn btn-neutral btn-add-first">사진선택</button>
-			       		<button type="button" class="btn btn-neutral btn-clean-first">&times;</button>
+				        <button type="button" class="btn btn-secondary btn-add-first">사진선택</button>
+			       		<button type="button" class="btn btn-secondary btn-clean-first">&times;</button>
 			        </div>
 	        	</div>
 		        
@@ -170,14 +182,14 @@
 	    </div>
 	
 	    <div class="cell mt-50">
-	        <h2><i class="fa-regular fa-pen-to-square"></i> 주소</h2>
+	        <h2><i class="fa-solid fa-square-pen"></i> 주소 <i class="fa-solid fa-asterisk red"></i></h2>
 	    </div>
 	    <div class="cell">
 	        <input type="text" name="placePost" class="field" placeholder="우편번호" readonly>
-	        <button type="button" class="btn btn-neutral btn-address-search">
+	        <button type="button" class="btn btn-secondary btn-address-search">
 	            <i class="fa-solid fa-magnifying-glass"></i>
 	        </button>
-	        <button type="button" class="btn btn-negative btn-address-clear" style="display: none;">
+	        <button type="button" class="btn btn-danger btn-address-clear" style="display: none;">
 	            <i class="fa-solid fa-trash"></i>
 	        </button>
 	    </div>
@@ -192,7 +204,7 @@
 	    
 	    <div class="cell coord-container">
 	    	<div class="coord-input">
-	    		<h2><i class="fa-solid fa-square-pen"></i> 위도/경도</h2>
+	    		<h2><i class="fa-solid fa-square-pen"></i> 위도/경도 <i class="fa-solid fa-asterisk red"></i></h2>
 	    		<input type="text" name="placeLat" class="field w-100" placeholder="위도" readonly>
 	    		<div class="fail-feedback" style="height: 0;">위도/경도 정보를 설정해주세요</div>
     		</div>
@@ -202,7 +214,7 @@
 	    	</div>
 	    	<div class="coord-btn">
 	    		<h2>&nbsp;</h2>
-	    		<button type="button" class="btn btn-neutral btn-search-xy">구하기</button>
+	    		<button type="button" class="btn btn-secondary btn-search-xy">구하기</button>
     		</div>
 	    </div>
 	    
@@ -211,25 +223,25 @@
 	    </div>
 	    
 	    <div class="cell mt-40">
-	        <h2><i class="fa-solid fa-grip-vertical"></i> 개요</h2>
+	        <h2><i class="fa-solid fa-square-pen"></i> 개요 <i class="fa-solid fa-asterisk red"></i></h2>
 	        <textarea name="placeOverview" class="field w-100" rows="10"></textarea>
 	        <div class="fail-feedback">개요를 작성해주세요</div>
 	    </div>
 	    
 	    <div class="cell">
-	    	<h2><i class="fa-solid fa-grip-vertical"></i> 문의전화(선택)</h2>
-	        <input type="text" name="placeTel" class="field w-100">
+	    	<h2><i class="fa-solid fa-square-pen"></i> 문의전화</h2>
+	        <input type="text" name="placeTel" class="field w-100" placeholder="10~11자 숫자로입력하세요">
 	        <div class="fail-feedback">미입력 or 10~11자로 입력하세요</div>
 	    </div>
 	    
 	    <div class="cell">
-	    	<h2><i class="fa-solid fa-grip-vertical"></i> 홈페이지(선택)</h2>
+	    	<h2><i class="fa-solid fa-square-pen"></i> 홈페이지</h2>
 	        <input type="text" name="placeWebsite" class="field w-100" maxlength="255">
 	        <div class="fail-feedback">255자 이내로 입력하세요</div>
 	    </div>
 	    
 	    <div class="cell">
-	    	<h2><i class="fa-solid fa-grip-vertical"></i> 주차가능여부(선택)</h2>
+	    	<h2><i class="fa-solid fa-square-pen"></i> 주차가능여부</h2>
 	        <select name="placeParking" class="field w-100">
 				<option value="">선택하세요</option>
 				<option value="Y">가능</option>
@@ -238,26 +250,26 @@
 	    </div>
 	    
 	    <div class="cell">
-	    	<h2><i class="fa-solid fa-grip-vertical"></i> 운영(선택)</h2>
+	    	<h2><i class="fa-solid fa-square-pen"></i> 운영</h2>
 	    	<textarea name="placeOperate" class="field w-100" rows="5"
 	    	placeholder="운영일, 운영시간 관련해 200자 이내로 자유롭게 적어주세요"></textarea>
 	    	<div class="fail-feedback">200자 이내로 입력하세요</div>
 	    </div>
 	
 	    <div class="cell">
-	        <h2><i class="fa-solid fa-grip-vertical"></i> 상세이미지(선택)</h2>
+	        <h2><i class="fa-solid fa-square-pen"></i> 상세이미지(여러장 가능)</h2>
 	        <div class="preview-detailImages">
 	        	<!-- <div class="img-container">
 			        <img src="/images/defaultBack.png" alt="">
 			        <button class="btn-close">&times;</button>
 			    </div> -->
 	        </div>
-	        <button type="button" class="btn btn-neutral btn-add-detail mt-20">사진선택</button>
+	        <button type="button" class="btn btn-secondary btn-add-detail mt-20">사진선택</button>
 	        <input type="file" name="detailImages" class="detailImages" multiple style="display:none;">
 	    </div>
 	    
 	    <div class="cell mt-50">
-			<button type="submit" class="btn btn-positive w-100 btn-submit">등록하기</button>
+			<button type="submit" class="btn btn-primary w-100 btn-submit">등록하기</button>
 		</div>
 	</div>
 	
