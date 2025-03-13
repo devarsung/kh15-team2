@@ -8,14 +8,13 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="/css/notice-detail.css">
 <style>
-
 </style>
 
 
 
 <div class="container w-1200">
 	<div class="cell center my-30">
-		<h2 style="color: #1A1A1D">관리자 공지 사항</h2>
+		<h2 style="color: #1A1A1D"> 공지 사항</h2>
 	</div>
 	<hr>
 
