@@ -60,8 +60,9 @@ $(function(){
 				$(response.list).each(function(){
 					var template = $("#reply-template").text();
 					var html = $.parseHTML(template);
+					var wtime = this.replyWtime.slice(0,10);
 					$(html).find(".btn-delete").data("reply-no", this.replyNo);
-					$(html).find(".reply-wtime").text(this.replyWtime);
+					$(html).find(".reply-wtime").text(wtime);
 					$(html).find(".reply-writer").text(this.replyNickname);
 					$(html).find(".reply-content").text(this.replyContent);
 					$(html).find(".mainText").attr("href","/review/detail?reviewNo="+ this.replyOrigin)
