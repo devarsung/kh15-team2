@@ -170,6 +170,14 @@
 .btn-secondary:hover {
     filter: brightness(1.05);
 }
+.btn-danger {
+    background-color: #f06e6e;
+    color: white;
+    border: 1px solid #f06e6e;
+}
+.btn-danger:hover {
+    filter: brightness(1.05);
+}
 
 .overview-content {
    	width: 100%;
