@@ -16,6 +16,9 @@
 <!-- 별점 라이브러리 -->
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
 
+<link rel="stylesheet" type="text/css" href="/css/place.css">
+<link rel="stylesheet" type="text/css" href="/css/review-list.css">
+
 <style>
     .swiper {
         width: 100%;
@@ -25,53 +28,6 @@
   	 	width: 100%;
 		height: 500px;
     }
-    .overview-content {
-    	width: 100%;
-    	overflow: auto;
-    	border: 1px solid gray;
-    	padding: 10px;
-    }
-    .overview-text {
-   	 	white-space: pre-wrap; 
-	  	word-wrap: break-word;
-	  	width: 100%;
-	  	height: auto;
-	  	overflow-wrap: break-word;
-    }
-    
-    .info-container {
-	    background-color: #E2E2E2;
-	    padding: 20px;
-	}
-	.info-item {
-	    display: flex;
-	    align-items: center;
-	    margin-bottom: 10px;
-	    padding: 10px 0;
-	    border-bottom: 1px solid #cccccc;
-	}
-	.info-title {
-		margin-left: 30px;
-		width: 30%;
-		font-weight: bold;
-	}
-	.info-title i {
-	    margin-right: 5px;
-	}
-	.info-detail a {
-	    color: #0066cc;
-	    text-decoration: none;
-	}
-	.info-detail a:hover {
-	    text-decoration: underline;
-	}
-	.textarea-content {
-	    white-space: pre-wrap;
-	    word-wrap: break-word;
-	    color: #333333;
-	    line-height: 1.5;
-	}
-	
 	.div-title {
 		position: relative;
 	    display: flex;
@@ -243,7 +199,7 @@ $(function() {
 	<c:if test="${fn:length(reviews) > 0}">
 	    <div class="cell">
 	    	<h2><i class="fa-solid fa-hand-point-right"></i> 베스트 리뷰</h2>
-	        <table class="table table-border table-stripe">
+	        <table class="table table-border table-hover table-ellipsis tableStyle">
 	            <thead></thead>
 	            <tbody class="center">
 	            	<c:forEach var="review" items="${reviews}">
@@ -254,18 +210,34 @@ $(function() {
 									<c:otherwise>${review.memberNickname}</c:otherwise>
 								</c:choose>
 							</td>
-		                    <td><a href="/review/detail?reviewNo=${review.reviewNo}">${review.reviewTitle}</a></td>
-		                    <td>${review.reviewWtime}</td>
+		                    <td class="left">
+		                    	<a class="aStyle" href="/review/detail?reviewNo=${review.reviewNo}">${review.reviewTitle}</a>
+		                    	<!-- 댓글 표시 -->
+								<c:if test="${review.reviewReply > 0}">
+									<span class="ms-20">
+										<i class="fa-solid fa-comment-dots" style="color:#F3D0D7;" ></i>
+										${review.reviewReply}
+									</span>
+								</c:if>
+								
+								<!-- 좋아요 표시 -->
+								<c:if test="${review.reviewLike > 0}">
+									&nbsp;&nbsp;
+									<i class="fa-solid fa-heart " style="color:#eea5b3;"></i>
+									${review.reviewLike}
+								</c:if>	
+	                    	</td>
+		                    <td>${review.wtimeString}</td>
 	                	</tr>
 	            	</c:forEach>
 	            </tbody>
 	        </table>
-	    	
-	    	<div class="cell right">
-		       <a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-neutral end">이 여행지의 후기 더보기</a>
-		   </div>
 	    </div>
     </c:if>
+    
+    <div class="cell right">
+       <a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-neutral end">후기 더보기</a>
+   </div>
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>   

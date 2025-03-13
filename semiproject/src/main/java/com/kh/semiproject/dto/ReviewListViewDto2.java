@@ -15,6 +15,7 @@ public class ReviewListViewDto2 {
 	private int reviewNo;
 	private String reviewTitle;
 	private int reviewReply;
+	private int reviewLike;
 	private Timestamp reviewWtime;
 	private String memberNickname;//비밀번호
 	

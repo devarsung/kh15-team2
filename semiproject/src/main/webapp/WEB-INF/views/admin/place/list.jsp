@@ -9,78 +9,14 @@
 <!-- 별점 라이브러리 -->
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
 
+<link rel="stylesheet" type="text/css" href="/css/place.css">
+
 <style>
-.search-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    border: 2px solid #D3DDE5;
-    padding: 20px;
-    border-radius: 5px;
-}
-.search-row {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-}
-.half-width {
-    flex: 1;
-    min-width: 180px;
-}
-.small-width {
-    width: 25%;
-    min-width: 150px;
-}
-.large-width {
-    flex: 1;
-    min-width: 300px;
-}
 .etc-group {
 	display: flex;
 	justify-content: space-between;
 }
 
-/* 카드 리스트 전체 스타일 */
-.card-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 10px;
-    place-items: center;
-    margin: 0 auto;
-    gap: 20px;
-}
-.card {
-    background-color: #fff;
-    border-radius: 0px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    height: 250px;
-    text-decoration: none;
-    color: inherit;
-}
-.card a {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-}
-/* 카드 이미지 영역 */
-.card-image {
-    width: 100%;
-    height: 65%;
-    position: relative;
-    overflow: hidden;
-}
-.card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;  /* 이미지가 영역을 가득 채우도록 설정 */
-}
 .check-btn {
 	position: absolute;
 	top: -3px;
@@ -91,87 +27,7 @@
 	cursor: pointer;
 	font-size: 35px;
 }
-/* 카드 내용 영역 */
-.card-content {
-    padding: 10px;
-    flex-grow: 1;  /* 남은 공간을 차지하도록 설정 */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-/* 카드 제목 스타일 */
-.card-title {
-    font-size: 16px;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between; /* 제목 왼쪽, 아이콘 오른쪽 정렬 */
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-}
-.card-title .title-area {
-	margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.card-title .icon-area {
-	margin: 0;
-}
-.card-subtitle {
-    font-size: 14px;
-}
-/* 카드 하단의 조회수, 좋아요수, 댓글수 영역 */
-.card-footer {
-    display: flex;
-    justify-content: flex-start;  /* 아이콘들을 왼쪽으로 정렬 */
-    gap: 10px;  /* 아이콘들 간 간격을 10px로 설정 */
-    font-size: 12px;
-    color: #777;
-    margin-top: 1px;
-}
-/* 각 아이템의 스타일 */
-.card-footer span {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
 
-
-.field {
- 	border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 0.5em;
-    font-size: 16px;
-    background-color: #fff;
-    transition: all 0.3s ease-in-out;
-}
-.field:hover {
-    border-color: #007bff;
-    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
-}
-.btn {
-    border-radius: 5px;
-    padding: 0.5em 0.75em;
-    font-size: 16px;
-    text-align: center;
-}
-.btn-primary {
-    background-color: lightblue;
-    color: white;
-    border: 1px solid lightblue;
-}
-.btn-primary:hover {
-	brightness(1.05);
-}
-.btn-secondary {
-    background-color: darkgray;
-    color: white;
-    border: 1px solid darkgray;
-}
-.btn-secondary:hover {
-    brightness(1.05);
-}
 </style>
 
 <script type="text/javascript">
@@ -318,51 +174,67 @@ $(function(){
 	</form>
    	 
 	<div class="cell">
-	    <div class="card-list">
-	    	<c:forEach var="placeDto" items="${list}">
-		    	<a href="detail?placeNo=${placeDto.placeNo}" class="card">
-		            <div class="card-image">
-		                <img src="/attachment/download?attachmentNo=${placeDto.placeFirstImage}" alt="Card Image" 
-		                onerror="this.onerror=null; this.src='/images/default-image.png';">
-		                <button type="button" class="check-btn">
-							<i class="fa-regular fa-square"></i>
-						</button>
-						<input type="checkbox" class="checkbox" style="display:none;" value="${placeDto.placeNo}"/>
-		            </div>
-		            <div class="card-content">
-		                <div class="card-title">
-		                	<h3 class="title-area">
-		                		${placeDto.placeTitle}
-			                </h3>
-			                <h3 class="icon-area">
-			                	<c:if test="${placeDto.placeType == '여행지'}">
-			                		<i class="fa-solid fa-mountain"></i>
-			                	</c:if>
-			                	
-			                	<c:if test="${placeDto.placeType == '맛집'}">
-			                		<i class="fa-solid fa-utensils"></i>
-			                	</c:if>
-			                	
-			                	<c:if test="${placeDto.placeType == '숙소'}">
-			                		<i class="fa-solid fa-hotel"></i>
-			                	</c:if>
-		                	</h3>	
-		                </div>
-		                <fmt:parseNumber var="placeStar" value="${placeDto.placeStar}"/>
-		                <div class="review-star" data-max="5" data-rate="${placeStar}"></div>
-		                <div class="card-subtitle">${placeDto.placeRegion}</div>
-		                <div class="card-footer">
-		                    <span class="views"><i class="fa-solid fa-eye"></i>:  ${placeDto.placeRead}</span>
-		                    <span class="likes"><i class="fa-solid fa-heart"></i>: ${placeDto.placeLike}</span>
-		                    <span class="comments"><i class="fa-solid fa-comment-dots"></i>: ${placeDto.placeReview}</span>
-		                </div>
-		            </div>
-		        </a>
-	    	</c:forEach>
-	    </div>
+		<c:choose>
+			<c:when test="${list.isEmpty()}">
+				<div class="cell no-list">
+		   			<i class="fa-solid fa-fish"></i>
+		       		<span>목록이 없습니다</span>
+		       	</div>
+			</c:when>
+			
+			<c:otherwise>
+				<div class="card-list">
+			    	<c:forEach var="placeDto" items="${list}">
+				    	<a href="detail?placeNo=${placeDto.placeNo}" class="card">
+				            <div class="card-image">
+				                <img src="/attachment/download?attachmentNo=${placeDto.placeFirstImage}" alt="Card Image" 
+				                onerror="this.onerror=null; this.src='/images/default-image.png';">
+				                <button type="button" class="check-btn">
+									<i class="fa-regular fa-square"></i>
+								</button>
+								<input type="checkbox" class="checkbox" style="display:none;" value="${placeDto.placeNo}"/>
+				            </div>
+				            <div class="card-content">
+				                <div class="card-title">
+				                	<h3 class="title-area">
+				                		${placeDto.placeTitle}
+					                </h3>
+					                <h3 class="icon-area">
+					                	<c:if test="${placeDto.placeType == '여행지'}">
+					                		<i class="fa-solid fa-mountain"></i>
+					                	</c:if>
+					                	
+					                	<c:if test="${placeDto.placeType == '맛집'}">
+					                		<i class="fa-solid fa-utensils"></i>
+					                	</c:if>
+					                	
+					                	<c:if test="${placeDto.placeType == '숙소'}">
+					                		<i class="fa-solid fa-hotel"></i>
+					                	</c:if>
+				                	</h3>	
+				                </div>
+				                <fmt:parseNumber var="placeStar" value="${placeDto.placeStar}"/>
+				                <div class="review-star" data-max="5" data-rate="${placeStar}"></div>
+				                <div class="card-subtitle">${placeDto.placeRegion}</div>
+				                <div class="card-footer">
+				                    <span class="views"><i class="fa-solid fa-eye"></i>:  ${placeDto.placeRead}</span>
+				                    <span class="likes"><i class="fa-solid fa-heart"></i>: ${placeDto.placeLike}</span>
+				                    <span class="comments"><i class="fa-solid fa-comment-dots"></i>: ${placeDto.placeReview}</span>
+				                </div>
+				            </div>
+				        </a>
+			    	</c:forEach>
+	   			 </div>
+			</c:otherwise>
+		</c:choose>
+	
+	
+	    
     </div>
 </div>
 
-<jsp:include page="/WEB-INF/views/template/pagination.jsp"></jsp:include>
+<c:if test="${list.isEmpty() eq false}">
+	<jsp:include page="/WEB-INF/views/template/pagination.jsp"></jsp:include>
+</c:if>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

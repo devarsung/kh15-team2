@@ -18,6 +18,7 @@ public class ReviewListViewMapper2 implements RowMapper<ReviewListViewDto2>{
 				.reviewNo(rs.getInt("review_no"))
 				.reviewTitle(rs.getString("review_title"))
 				.reviewReply(rs.getInt("review_reply"))
+				.reviewLike(rs.getInt("review_like"))
 				.reviewWtime(rs.getTimestamp("review_wtime"))
 				
 				.memberNickname(rs.getString("member_nickname"))
