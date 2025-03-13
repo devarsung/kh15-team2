@@ -25,21 +25,21 @@ public class AdminStatusController {
 	// 후기가 가장 많은 여행지와
 	// 댓글이 가장 많은 후기
 	@RequestMapping("/review")
-	public String place(Model model) {
-		model.addAttribute("placeReviewList", statusDao.placeReviewGroup());
-		model.addAttribute("reviewReplyList", statusDao.reviewReplyGroup());	
-		model.addAttribute("placeLikeList", statusDao.placeLikeGroup()); // 여행지 좋아요
-		model.addAttribute("placeReadList", statusDao.placeReadGroup()); // 여행지 조회수
-		model.addAttribute("reviewLikeList", statusDao.reviewLikeGroup());// 후기 좋아요
-		model.addAttribute("reviewReadList", statusDao.reviewReadGroup());// 후기 조회수
-		model.addAttribute("placeTypeList", statusDao.placeTypeGroup());// 여행지 타입
-		model.addAttribute("placeRegionList", statusDao.placeRegionGroup());// 여행지 지역
+	public String review(Model model) {
 		model.addAttribute("reviewUserList", statusDao.reviewUserGroup());// 후기 유저수
+		model.addAttribute("reviewReplyList", statusDao.reviewReplyGroup());	// 후기 댓글 많으수
+		
 		return "/WEB-INF/views/admin/status/review.jsp";
 	}
 	
 	//현황 3
-//	@RequestMappping("/")
+	@RequestMapping("/place")
+	public String place(Model model) {
+		model.addAttribute("placeTypeList", statusDao.placeTypeGroup());// 여행지 타입
+		model.addAttribute("placeRegionList", statusDao.placeRegionGroup());// 여행지 지역
+		model.addAttribute("placeReviewList", statusDao.placeReviewGroup()); // 리뷰가 많은 여행지순
+		return "/WEB-INF/views/admin/status/place.jsp";
+	}
 	
 	
 	
