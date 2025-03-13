@@ -17,6 +17,7 @@
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
 
 <link rel="stylesheet" type="text/css" href="/css/place.css">
+<link rel="stylesheet" type="text/css" href="/css/review-list.css">
 
 <style>
     .swiper {
@@ -70,20 +71,20 @@ $(function(){
 		method: "post",
 		data: {placeNo: placeNo},
 		success: function(response) {//response에는 done과 count가 있다
-			$(".fa-heart").removeClass("fa-solid fa-regular")
+			$(".my-heart").removeClass("fa-solid fa-regular")
 				.addClass(response.done ? "fa-solid" : "fa-regular");
 			$(".heart-count").text(response.count);
 		}
 	});
 	
 	//하트를 클릭하면 좋아요 설정/해제를 구현
-	$(".fa-heart").click(function(){
+	$(".my-heart").click(function(){
 		$.ajax({
 			url: "/rest/place/action",
 			method: "post",
 			data: {placeNo: placeNo},
 			success: function(response) {//response에는 done과 count가 있다
-				$(".fa-heart").removeClass("fa-solid fa-regular")
+				$(".my-heart").removeClass("fa-solid fa-regular")
 					.addClass(response.done ? "fa-solid" : "fa-regular");
 				$(".heart-count").text(response.count);
 			}
@@ -148,7 +149,7 @@ $(function() {
 	            <span class="comments"><i class="fa-solid fa-comment-dots"></i> : ${placeDto.placeReview}</span>
 	        </div>
 	        <div class="heart-area">
-	            <i class="fa-heart fa-regular red"></i>
+	            <i class="fa-heart fa-regular red my-heart"></i>
 	            <span class="heart-count">${placeDto.placeLike}</span>
 	        </div>
 	    </div>
@@ -250,7 +251,7 @@ $(function() {
 	<c:if test="${fn:length(reviews) > 0}">
 	    <div class="cell">
 	    	<h2><i class="fa-solid fa-hand-point-right"></i> 베스트 리뷰</h2>
-	        <table class="table table-border table-stripe">
+	        <table class="table table-border table-hover table-ellipsis tableStyle">
 	            <thead></thead>
 	            <tbody class="center">
 	            	<c:forEach var="review" items="${reviews}">
@@ -261,7 +262,23 @@ $(function() {
 									<c:otherwise>${review.memberNickname}</c:otherwise>
 								</c:choose>
 							</td>
-		                    <td><a href="/review/detail?reviewNo=${review.reviewNo}">${review.reviewTitle}</a></td>
+		                    <td class="left">
+		                    	<a class="aStyle" href="/review/detail?reviewNo=${review.reviewNo}">${review.reviewTitle}</a>
+		                    	<!-- 댓글 표시 -->
+								<c:if test="${review.reviewReply > 0}">
+									<span class="ms-20">
+										<i class="fa-solid fa-comment-dots" style="color:#F3D0D7;" ></i>
+										${review.reviewReply}
+									</span>
+								</c:if>
+								
+								<!-- 좋아요 표시 -->
+								<c:if test="${review.reviewLike > 0}">
+									&nbsp;&nbsp;
+									<i class="fa-solid fa-heart " style="color:#eea5b3;"></i>
+									${review.reviewLike}
+								</c:if>
+	                    	</td>
 		                    <td>${review.wtimeString}</td>
 	                	</tr>
 	            	</c:forEach>
