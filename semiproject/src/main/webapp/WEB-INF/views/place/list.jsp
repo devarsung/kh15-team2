@@ -97,47 +97,60 @@ $(function(){
 	</form> 
 	
 	<div class="cell">
-	    <div class="card-list">
-	    	<c:forEach var="placeDto" items="${list}">
-		    	<a href="detail?placeNo=${placeDto.placeNo}" class="card">
-		            <div class="card-image">
-		                <img src="/attachment/download?attachmentNo=${placeDto.placeFirstImage}" alt="Card Image" 
-		                onerror="this.onerror=null; this.src='/images/default-image.png';">
-		            </div>
-		            <div class="card-content">
-		                <div class="card-title">
-		                	<h3 class="title-area">
-		                		${placeDto.placeTitle}
-			                </h3>
-			                <h3 class="icon-area">
-			                	<c:if test="${placeDto.placeType == '여행지'}">
-			                		<i class="fa-solid fa-mountain"></i>
-			                	</c:if>
-			                	
-			                	<c:if test="${placeDto.placeType == '맛집'}">
-			                		<i class="fa-solid fa-utensils"></i>
-			                	</c:if>
-			                	
-			                	<c:if test="${placeDto.placeType == '숙소'}">
-			                		<i class="fa-solid fa-hotel"></i>
-			                	</c:if>
-		                	</h3>	
-		                </div>
-		                <fmt:parseNumber var="placeStar" value="${placeDto.placeStar}"/>
-		                <div class="review-star" data-max="5" data-rate="${placeStar}"></div>
-		                <div class="card-subtitle">${placeDto.placeRegion}</div>
-		                <div class="card-footer">
-		                    <span class="views"><i class="fa-solid fa-eye"></i>:  ${placeDto.placeRead}</span>
-		                    <span class="likes"><i class="fa-solid fa-heart"></i>: ${placeDto.placeLike}</span>
-		                    <span class="comments"><i class="fa-solid fa-comment-dots"></i>: ${placeDto.placeReview}</span>
-		                </div>
-		            </div>
-		        </a>
-	    	</c:forEach>
-	    </div>
+		<c:choose>
+			<c:when test="${list.isEmpty()}">
+				<div class="cell no-list">
+		   			<i class="fa-solid fa-fish"></i>
+		       		<span>목록이 없습니다</span>
+		       	</div>
+			</c:when>
+			
+			<c:otherwise>
+				<div class="card-list">
+			    	<c:forEach var="placeDto" items="${list}">
+				    	<a href="detail?placeNo=${placeDto.placeNo}" class="card">
+				            <div class="card-image">
+				                <img src="/attachment/download?attachmentNo=${placeDto.placeFirstImage}" alt="Card Image" 
+				                onerror="this.onerror=null; this.src='/images/default-image.png';">
+				            </div>
+				            <div class="card-content">
+				                <div class="card-title">
+				                	<h3 class="title-area">
+				                		${placeDto.placeTitle}
+					                </h3>
+					                <h3 class="icon-area">
+					                	<c:if test="${placeDto.placeType == '여행지'}">
+					                		<i class="fa-solid fa-mountain"></i>
+					                	</c:if>
+					                	
+					                	<c:if test="${placeDto.placeType == '맛집'}">
+					                		<i class="fa-solid fa-utensils"></i>
+					                	</c:if>
+					                	
+					                	<c:if test="${placeDto.placeType == '숙소'}">
+					                		<i class="fa-solid fa-hotel"></i>
+					                	</c:if>
+				                	</h3>	
+				                </div>
+				                <fmt:parseNumber var="placeStar" value="${placeDto.placeStar}"/>
+				                <div class="review-star" data-max="5" data-rate="${placeStar}"></div>
+				                <div class="card-subtitle">${placeDto.placeRegion}</div>
+				                <div class="card-footer">
+				                    <span class="views"><i class="fa-solid fa-eye"></i>:  ${placeDto.placeRead}</span>
+				                    <span class="likes"><i class="fa-solid fa-heart"></i>: ${placeDto.placeLike}</span>
+				                    <span class="comments"><i class="fa-solid fa-comment-dots"></i>: ${placeDto.placeReview}</span>
+				                </div>
+				            </div>
+				        </a>
+			    	</c:forEach>
+		    	</div>
+			</c:otherwise>
+		</c:choose>
     </div>
 </div>
 
-<jsp:include page="/WEB-INF/views/template/pagination.jsp"></jsp:include>
+<c:if test="${list.isEmpty() eq false}">
+	<jsp:include page="/WEB-INF/views/template/pagination.jsp"></jsp:include>
+</c:if>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
