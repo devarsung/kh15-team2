@@ -7,6 +7,9 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script type="text/javascript">
 $(function(){
+	 var params = new URLSearchParams(location.search);
+	 var reviewNo = params.get("reviewNo");
+	
 	var currentPage =1; 
 	var size = 10; //10개씩?
 	

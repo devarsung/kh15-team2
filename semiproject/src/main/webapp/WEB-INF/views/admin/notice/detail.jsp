@@ -16,7 +16,24 @@
     <div class="cell center my-30">
         <h2 style="color:#1A1A1D">관리자 공지</h2>
     </div>
+
     <hr>
+
+    	<div class="cell">
+            <div class="cell">
+                게시글 넘버:${noticeDto.noticeNo}
+              
+            </div>
+            <div class="cell textarea2">
+
+              작성시각(${noticeDto.getWtimeString()})|<br>
+                수정시각( ${noticeDto.getEtimeString()})|
+               닉네임(${noticeDto.memberNickname})|
+        조회수:${noticeDto.noticeRead}
+           
+            </div>
+    	</div>
+
     
     
     

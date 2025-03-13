@@ -18,7 +18,7 @@ public class ReviewDetailEditDto {
 	private String reviewContent;
 	private int reviewLike;
 	private int reviewRead;
-	private int reviewStar;
+	private float reviewStar;
 	private Timestamp reviewWtime;
 	private String reviewWriter;
 	private int reviewPlace;

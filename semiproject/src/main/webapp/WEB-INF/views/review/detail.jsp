@@ -3,11 +3,14 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="/css/review-detail.css">
+<!-- <link rel="stylesheet" type="text/css" href="/css/test.css"> -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.min.js"></script>
 
 <script type="text/javascript">
 $(function(){
+	
+	
     var params = new URLSearchParams(location.search);
     var reviewNo = params.get("reviewNo");
 
@@ -192,7 +195,12 @@ $(function(){
             }
         });
     };
+
+
 });
+
+
+
 </script>
 
 <!-- 댓글 목록/내글이면 수정/삭제 btn -->
@@ -251,9 +259,9 @@ $(function(){
     
     
   <div class="cell flex-box">
-    <div class="cell flex-box flex-vertical flex-fill left-section">
+    <div class="cell flex-box flex-vertical flex-fill left-section w-70">
         <h3 style="color:#1A1A1D" class="my-0">[${reviewDto.reviewPlace}]</h3>
-        <h2 style="color:#1A1A1D">
+        <h2 style="color:#1A1A1D; " >
             ${reviewDto.reviewTitle}
         </h2>
         <div>
@@ -261,14 +269,14 @@ $(function(){
         <span class="red">${reviewDto.reviewStar}</span></div>
     </div>
 
-    <div class="cell flex-box flex-vertical right-section">
+    <div class="cell flex-box flex-vertical right-section w-50" >
         <div>
             <i class="fa-solid fa-eye"></i> ${reviewDto.reviewRead} | 
             <i class="fa-solid fa-heart"></i> ${reviewDto.reviewLike} | 
             <i class="fa-solid fa-comment-dots"></i> <span class="reply-count"></span>
         </div>
         <div>
-            작성일(${reviewDto.getWtimeString()}) | 수정일(${reviewDto.getEtimeString()})
+        	<span id="wtime">작성일(${reviewDto.getWtimeString()})</span>
         </div>
     </div>
 </div>

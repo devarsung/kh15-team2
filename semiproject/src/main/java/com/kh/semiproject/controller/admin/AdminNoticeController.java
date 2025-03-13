@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.semiproject.dao.NoticeDao;
 import com.kh.semiproject.dao.NoticeListViewDao;
+import com.kh.semiproject.dto.NoticeDetailEditDto;
 import com.kh.semiproject.dto.NoticeDto;
 import com.kh.semiproject.dto.NoticeListViewDto;
 import com.kh.semiproject.error.TargetNotFoundException;
@@ -68,7 +69,7 @@ public class AdminNoticeController {
 	
 	@RequestMapping("/detail")
 	public String detail(@RequestParam int noticeNo, Model model) {
-		NoticeDto noticeDto = noticeDao.selectOne(noticeNo);
+		NoticeDetailEditDto noticeDto = noticeListViewDao.selectOne(noticeNo);
 		if(noticeDto == null) {
 			throw new TargetNotFoundException("존재 하지 않는 공지 사항 입니다");
 		}
@@ -78,7 +79,7 @@ public class AdminNoticeController {
 	
 	@GetMapping("/edit")
 	public String edit(@RequestParam int noticeNo, Model model) {
-		NoticeDto noticeDto = noticeDao.selectOne(noticeNo);
+		NoticeDetailEditDto noticeDto = noticeListViewDao.selectOne(noticeNo);
 
 		model.addAttribute("noticeDto",noticeDto);
 		return "/WEB-INF/views/admin/notice/edit.jsp";

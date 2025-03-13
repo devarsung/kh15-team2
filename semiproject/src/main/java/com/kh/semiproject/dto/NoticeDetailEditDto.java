@@ -10,24 +10,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class MyReplyDto {
-    private int replyNo;
-    private String replyWriter; // 원래 저장된 userId
-    private String replyNickname; // 닉네임 추가 (조회용)
-    private int replyOrigin;
-    private String replyContent;
-    private Timestamp replyWtime;
-    private Timestamp replyEtime;
-    
-    private String reviewTitle;
-    
-    public String getWtimeString() {
+@Data @Builder @NoArgsConstructor @AllArgsConstructor
+public class NoticeDetailEditDto {
+	private int noticeNo;
+	private String noticeTitle;
+	private String noticeContent;
+	private Timestamp noticeWtime;
+	private Timestamp noticeEtime;
+	private String noticeWriter;
+	private int noticeRead;
+	
+	private String memberId;
+	private String memberNickname;
+	
+	
+	public String getWtimeString() {
 		LocalDate today = LocalDate.now();
-		LocalDateTime wtime = replyWtime.toLocalDateTime();
+		LocalDateTime wtime = noticeWtime.toLocalDateTime();
 		LocalDate wdate = wtime.toLocalDate();
 		if(wdate.isBefore(today)) {
 			return wdate.toString();
@@ -35,11 +34,10 @@ public class MyReplyDto {
 		else {
 			return wtime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
 		}
-	}	
-	
+	}
 	public String getEtimeString() {
 		LocalDate today = LocalDate.now();
-		LocalDateTime wtime = replyWtime.toLocalDateTime();
+		LocalDateTime wtime = noticeWtime.toLocalDateTime();
 		LocalDate wdate = wtime.toLocalDate();
 		if(wdate.isBefore(today)) {
 			return wdate.toString();
@@ -47,5 +45,5 @@ public class MyReplyDto {
 		else {
 			return wtime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
 		}
-	}	
+	}
 }

@@ -8,6 +8,7 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="/css/notice-detail.css">
 <style>
+
 </style>
 
 
