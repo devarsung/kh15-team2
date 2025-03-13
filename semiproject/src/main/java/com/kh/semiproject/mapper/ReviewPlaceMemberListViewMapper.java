@@ -18,7 +18,7 @@ public class ReviewPlaceMemberListViewMapper implements RowMapper<ReviewPlaceMem
 				.reviewTitle(rs.getString("review_title"))
 				.reviewLike(rs.getInt("review_like"))
 				.reviewRead(rs.getInt("review_read"))
-				.reviewStar(rs.getInt("review_star"))
+				.reviewStar(rs.getFloat("review_star"))
 				.reviewWtime(rs.getTimestamp("review_wtime"))
 				.reviewWriter(rs.getString("review_writer"))
 				.reviewPlace(rs.getInt("review_place"))
