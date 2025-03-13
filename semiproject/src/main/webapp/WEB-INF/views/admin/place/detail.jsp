@@ -210,17 +210,17 @@ $(function() {
 								</c:choose>
 							</td>
 		                    <td><a href="/review/detail?reviewNo=${review.reviewNo}">${review.reviewTitle}</a></td>
-		                    <td>${review.reviewWtime}</td>
+		                    <td>${review.wtimeString}</td>
 	                	</tr>
 	            	</c:forEach>
 	            </tbody>
 	        </table>
-	    	
-	    	<div class="cell right">
-		       <a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-neutral end">이 여행지의 후기 더보기</a>
-		   </div>
 	    </div>
     </c:if>
+    
+    <div class="cell right">
+       <a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-neutral end">후기 더보기</a>
+   </div>
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>   

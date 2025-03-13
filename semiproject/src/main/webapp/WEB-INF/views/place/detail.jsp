@@ -262,7 +262,7 @@ $(function() {
 								</c:choose>
 							</td>
 		                    <td><a href="/review/detail?reviewNo=${review.reviewNo}">${review.reviewTitle}</a></td>
-		                    <td>${review.reviewWtime}</td>
+		                    <td>${review.wtimeString}</td>
 	                	</tr>
 	            	</c:forEach>
 	            </tbody>
