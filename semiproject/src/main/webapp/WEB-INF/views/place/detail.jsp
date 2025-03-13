@@ -16,6 +16,8 @@
 <!-- 별점 라이브러리 -->
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
 
+<link rel="stylesheet" type="text/css" href="/css/place.css">
+
 <style>
     .swiper {
         width: 100%;
@@ -25,53 +27,6 @@
   	 	width: 100%;
 		height: 500px;
     }
-    .overview-content {
-    	width: 100%;
-    	overflow: auto;
-    	border: 1px solid gray;
-    	padding: 10px;
-    }
-    .overview-text {
-   	 	white-space: pre-wrap; 
-	  	word-wrap: break-word;
-	  	width: 100%;
-	  	height: auto;
-	  	overflow-wrap: break-word;
-    }
-    
-    .info-container {
-	    background-color: #E2E2E2;
-	    padding: 20px;
-	}
-	.info-item {
-	    display: flex;
-	    align-items: center;
-	    margin-bottom: 10px;
-	    padding: 10px 0;
-	    border-bottom: 1px solid #cccccc;
-	}
-	.info-title {
-		margin-left: 30px;
-		width: 30%;
-		font-weight: bold;
-	}
-	.info-title i {
-	    margin-right: 5px;
-	}
-	.info-detail a {
-	    color: #0066cc;
-	    text-decoration: none;
-	}
-	.info-detail a:hover {
-	    text-decoration: underline;
-	}
-	.textarea-content {
-	    white-space: pre-wrap;
-	    word-wrap: break-word;
-	    color: #333333;
-	    line-height: 1.5;
-	}
-	
 	
 	.center-box {
 	    position: relative;
