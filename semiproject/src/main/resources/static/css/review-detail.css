@@ -148,3 +148,13 @@
     min-width: 120px; /* 최소 너비 지정 */
 }
 
+      .btn-more{
+     	border : none;
+     	background-color : white;
+     	cursor : pointer;
+    	color : gray;
+    	font-weight : bold;
+    	text-decoration: none;
+      }
+
+
