@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-
+<link rel="stylesheet" type="text/css" href="/css/mypage-home.css">
 <script type = "text/javascript">
 	 
 </script>
@@ -18,57 +18,56 @@
     </jsp:include>
     
     <div class=" cell mt-50 center">
-     <img name="memberProfile" src="profile?memberId=${memberDto.memberId}" style="border-radius: 50%; width: 300px; height: 300px;box-shadow:0 0 0 1.3px lightgrey;">
+     <img name="memberProfile" src="profile?memberId=${memberDto.memberId}" class="profile">
         </div>
         <div class="cell mt-30">
-            <table class="table table-border table-hover">
+            <table class="tableStyle">
                 <tr>
                     <th>ID</th>
-                <td class="p-10">
+                <td>
                     ${memberDto.memberId}
                 </td>
                 </tr>
                 <tr>
                     <th>닉네임</th>
-                <td class="p-10">
+                <td>
                     ${memberDto.memberNickname}
                 </td>
-
                 </tr>
                 <tr>
                 <th>성별</th>
-                <td class="p-10">
+                <td>
                     ${memberDto.memberGender}
                 </td>
                 </tr>
                 <tr>
                     <th>생년월일</th>
-                <td class="p-10">
+                <td>
                    ${memberDto.memberBirth}
                 </td>
                 </tr>
                 <tr>
                     <th>이메일</th>
-                <td class="p-10">
+                <td>
                     ${memberDto.memberEmail}
                 </td>
                 </tr>
                 <tr>
                     <th>연락처</th>
-                <td class="p-10">
+                <td>
                     ${memberDto.memberContact}
                 </td>
                 </tr>
                 <tr>
                     <th>주소</th>
-                <td class="p-10">
+                <td>
                     ${memberDto.memberPost}<br>
                    ${memberDto.memberAddress1}  ${memberDto.memberAddress2}
                 </td>
                 </tr>
                 <tr>
                     <th>회원가입일</th>
-                   <td class="p-10">
+                   <td>
 			<fmt:formatDate value="${memberDto.memberJoin}" 
 										pattern="y년 M월 d일"/>
 		</td>

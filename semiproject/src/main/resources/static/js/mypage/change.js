@@ -21,7 +21,7 @@ $(function() {
 	$(".editBtn").click(function() {
 		var inputField = $(this).parent("td").find("input");
 		if (inputField.prop('readonly')) {
-			inputField.prop('readonly', false).focus();;
+			inputField.prop('readonly', false).focus();
 		}
 		else {
 			inputField.prop('readonly', true);

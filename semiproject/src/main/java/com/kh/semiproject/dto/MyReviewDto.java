@@ -29,9 +29,10 @@ public class MyReviewDto {
 		LocalDateTime wtime = reviewWtime.toLocalDateTime();
 		LocalDate wdate = wtime.toLocalDate();
 		if (wdate.isBefore(today)) {
-			return wdate.toString();
+			 return wdate.toString();
 		} else {
 			return wtime.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+			
 		}
 	}
 

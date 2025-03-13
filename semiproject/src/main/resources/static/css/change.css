@@ -60,7 +60,7 @@
 
         
         .editInput[readonly] {
-        background-color: #ffffff; 
+        background-color: #FFFCF9;
         color: #363636; 
         cursor: default; 
         border: 1px solid #ffffff;
@@ -68,8 +68,9 @@
         }
 
         #myPhoto{
-            border-radius: 50%; 
-            width: 300px; 
-            height: 300px;
+           border-radius: 50%; 
+			width: 300px; 
+			height: 300px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
        
