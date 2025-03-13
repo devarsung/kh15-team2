@@ -1,6 +1,8 @@
 package com.kh.semiproject.restcontroller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,6 +17,7 @@ import com.kh.semiproject.dao.ReplyListViewDao;
 import com.kh.semiproject.dao.ReviewDao;
 import com.kh.semiproject.dto.ReplyDto;
 import com.kh.semiproject.dto.ReplyListViewDto;
+import com.kh.semiproject.vo.RestPageVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -31,10 +34,19 @@ public class ReplyRestController {
 
 	// 댓글 목록
 	@RequestMapping("/list")
-	public List<ReplyListViewDto> list(@RequestParam int replyOrigin) {
-		List<ReplyListViewDto> list = replyDao.selectList(replyOrigin);
-		//System.out.println(list);;
-		return list;
+	public Map<String, Object> list(@ModelAttribute RestPageVO restPageVO, @RequestParam int replyOrigin) {
+		int count = replyDao.count(replyOrigin);
+		restPageVO.setCount(count);
+		
+		List<ReplyListViewDto> list = replyDao.selectList(replyOrigin, restPageVO);
+		boolean isLastPage = restPageVO.isLastPage();
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("totalCount", count);
+		result.put("isLastPage", isLastPage);
+		result.put("length", list.size());
+		result.put("list", list);
+		return result;
 	}
 	
 	//댓글 작성

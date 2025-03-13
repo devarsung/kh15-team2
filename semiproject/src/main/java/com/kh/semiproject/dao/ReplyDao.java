@@ -10,6 +10,7 @@ import com.kh.semiproject.dto.ReplyDto;
 import com.kh.semiproject.dto.ReplyListViewDto;
 import com.kh.semiproject.mapper.ReplyListViewMapper;
 import com.kh.semiproject.mapper.ReplyMapper;
+import com.kh.semiproject.vo.RestPageVO;
 
 @Repository
 public class ReplyDao {
@@ -40,15 +41,26 @@ public class ReplyDao {
 	}
 
 	// 댓글 목록 조회 (닉네임 포함)
-	public List<ReplyListViewDto> selectList(int replyOrigin) {
-	    String sql = "SELECT r.reply_no, r.reply_origin, r.reply_writer, m.member_nickname, " +
-	                 "r.reply_content, r.reply_wtime, r.reply_etime " +
-	                 "FROM reply r " +
-	                 "LEFT JOIN member m ON r.reply_writer = m.member_id " +
-	                 "WHERE r.reply_origin = ? " +
-	                 "ORDER BY r.reply_wtime ASC";
-	    Object[] data = {replyOrigin};
+	public List<ReplyListViewDto> selectList(int replyOrigin, RestPageVO restPageVO) {
+	    String sql = "select * from ( "
+	    		 		+ "select  rownum rn, TMP.* "
+	    		 		+ "from( "
+	    		 			+ "SELECT r.reply_no, r.reply_origin, r.reply_writer, m.member_nickname,"
+    		 				+ "r.reply_content, r.reply_wtime, r.reply_etime "
+    		 				+ "FROM reply r  LEFT JOIN member m ON r.reply_writer = m.member_id "
+    		 				+ "WHERE r.reply_origin = ?"
+    		 				+ "ORDER BY r.reply_wtime ASC "
+		 				+ ") tmp "
+	 				+ ") where rn between ? and ?";
+	    Object[] data = {replyOrigin, restPageVO.getStartRownum(), restPageVO.getFinishRownum()};
 	    return jdbcTemplate.query(sql, replyListViewMapper, data);
+	}
+	
+	// 댓글 카운트 구하기
+	public int count(int replyOrigin) {	
+		String sql = "select count(*) from reply where reply_origin = ?";
+		Object[] data = {replyOrigin};
+		return jdbcTemplate.queryForObject(sql, int.class, data);
 	}
 
 	// 댓글 삭제
