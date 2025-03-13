@@ -10,6 +10,39 @@
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
 
 <style>
+.search-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border: 2px solid #D3DDE5;
+    padding: 20px;
+    border-radius: 5px;
+}
+.search-row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+.half-width {
+    flex: 1;
+    min-width: 180px;
+}
+.small-width {
+    width: 25%;
+    min-width: 150px;
+}
+.large-width {
+    flex: 1;
+    min-width: 300px;
+}
+.etc-group {
+	display: flex;
+	justify-content: space-between;
+}
+
 /* 카드 리스트 전체 스타일 */
 .card-list {
     display: grid;
@@ -47,6 +80,16 @@
     width: 100%;
     height: 100%;
     object-fit: cover;  /* 이미지가 영역을 가득 채우도록 설정 */
+}
+.check-btn {
+	position: absolute;
+	top: -3px;
+	right: 3px;
+	text-align: center;
+	border: none;
+	background: none;
+	cursor: pointer;
+	font-size: 35px;
 }
 /* 카드 내용 영역 */
 .card-content {
@@ -93,6 +136,42 @@
     align-items: center;
     gap: 5px;
 }
+
+
+.field {
+ 	border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0.5em;
+    font-size: 16px;
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+.field:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+.btn {
+    border-radius: 5px;
+    padding: 0.5em 0.75em;
+    font-size: 16px;
+    text-align: center;
+}
+.btn-primary {
+    background-color: lightblue;
+    color: white;
+    border: 1px solid lightblue;
+}
+.btn-primary:hover {
+	brightness(1.05);
+}
+.btn-secondary {
+    background-color: darkgray;
+    color: white;
+    border: 1px solid darkgray;
+}
+.btn-secondary:hover {
+    brightness(1.05);
+}
 </style>
 
 <script type="text/javascript">
@@ -114,20 +193,74 @@ $(function(){
 		$("[name=keyword]").val("");
 		$("[name=order]").val("place_wtime");
 	});
+	
+	$(".check-btn").click(function(){
+		var checked = $(this).next().prop("checked");
+		if(checked) {
+			//체크 되어있다면 -> 체크해제 
+			$(this).find("i").removeClass("fa-solid fa-square-check fa-regular fa-square")
+							.addClass("fa-regular fa-square");
+		}
+		else {
+			//안되어있다면 -> 체크하기
+			$(this).find("i").removeClass("fa-solid fa-square-check fa-regular fa-square")
+							.addClass("fa-solid fa-square-check");
+		}
+		
+		$(this).next().prop("checked", !checked);
+		
+		/* e.stopPropagation(); */
+		return false;
+	});
+	
+	$(".check-delete").click(function(){
+		var deleteNos = [];
+		$(".checkbox:checked").each(function(){
+			console.log($(this).val());
+			deleteNos.push($(this).val());
+		});
+		
+		
+		if(deleteNos.length === 0) {
+			alert("삭제할 항목을 선택해주세요");
+			return false;
+		}
+		
+		var form = $("<form>", {
+			method: "post",
+			action: "/admin/place/deleteAll"
+		});
+		
+		var input = $("<input>", {
+			type: "hidden",
+			name: "placeNoList",
+			value: deleteNos.join(",")
+		});
+		
+		form.append(input);
+		$("body").append(form);
+		form.submit();
+		
+		return false;
+	});
 });
 
 </script>
 
+<!-- 
+	<i class="fa-solid fa-square-check"></i>
+	<i class="fa-regular fa-square"></i>
+ -->
+
 <div class="container w-1000">
 	<div class="cell flex-box flex-center">
 		<h1>관리자-여행지 목록</h1>
-		<a href="add" class="btn btn-neutral ms-10"><i class="fa-solid fa-plus"></i> 등록</a>
 	</div>
 
 	<form action="list" method="get" class="form-check">
-		<div class="cell center">
-        	<div class="cell">
-        		<select name="region" class="field">
+		<div class="search-container">
+        	<div class="search-row">
+        		<select name="region" class="field half-width">
 	                <option value="">선택하세요</option>
 	                <option ${param.region == '서울' ? 'selected' : ''}>서울</option>
 	                <option ${param.region == '인천' ? 'selected' : ''}>인천</option>
@@ -147,7 +280,7 @@ $(function(){
 	                <option ${param.region == '제주' ? 'selected' : ''}>제주</option>
 	                <option ${param.region == '세종' ? 'selected' : ''}>세종</option>
 	            </select>
-	            <select name="type" class="field">
+	            <select name="type" class="field half-width">
 	            	<option value="">선택하세요</option>
 	                <option ${param.type == '여행지' ? 'selected' : ''}>여행지</option>
 	                <option ${param.type == '맛집' ? 'selected' : ''}>맛집</option>
@@ -155,19 +288,27 @@ $(function(){
 	            </select>
         	</div>
             
-            <div class="cell">
-            	<select name="column" class="field">
+            <div class="search-row">
+            	<select name="column" class="field small-width">
             		<option value="place_title"  ${param.column == 'place_title' ? 'selected' : ''}>여행지명</option>
             		<option value="place_writer" ${param.column == 'place_writer' ? 'selected' : ''}>작성자</option>
             	</select>
-	            <input type="text" name="keyword" value="${param.keyword}" class="field">
-	            <button type="submit" class="btn btn-positive">검색</button>
-	            <button type="button" class="btn btn-neutral btn-search-clean">초기화</button>	
+	            <input type="text" name="keyword" value="${param.keyword}" class="field large-width">
+            </div>
+            
+            <div class="flex-box flex-center mt-10">
+            	<button type="submit" class="btn btn-primary mx-10">검색 <i class="fa-solid fa-magnifying-glass"></i></button>
+	            <button type="button" class="btn btn-secondary btn-search-clean">초기화 <i class="fa-solid fa-rotate-left"></i></button>
             </div>
    		</div>
    		
-   		<div class="right mx-20 mt-20">
-	    	<select name="order" class="field">
+   		<div class="mt-40 etc-group">
+   			<div style="margin-left: 25px;">
+   				<a href="add" class="btn btn-neutral"><i class="fa-solid fa-plus"></i> 등록</a>
+   				<a href="#" class="btn btn-neutral check-delete" style="margin-left: 3px;"><i class="fa-solid fa-plus"></i> 체크삭제</a>
+   			</div>
+   		
+	    	<select name="order" class="field" style="margin-right: 25px;">
 	    		<option value="place_wtime" ${param.order == 'place_wtime' ? 'selected' : ''}>최신순</option>
 	    		<option value="place_star" ${param.order == 'place_star' ? 'selected' : ''}>평점순</option>
 	    		<option value="place_like" ${param.order == 'place_like' ? 'selected' : ''}>좋아요순</option>
@@ -183,6 +324,10 @@ $(function(){
 		            <div class="card-image">
 		                <img src="/attachment/download?attachmentNo=${placeDto.placeFirstImage}" alt="Card Image" 
 		                onerror="this.onerror=null; this.src='/images/default-image.png';">
+		                <button type="button" class="check-btn">
+							<i class="fa-regular fa-square"></i>
+						</button>
+						<input type="checkbox" class="checkbox" style="display:none;" value="${placeDto.placeNo}"/>
 		            </div>
 		            <div class="card-content">
 		                <div class="card-title">
