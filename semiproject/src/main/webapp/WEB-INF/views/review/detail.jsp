@@ -173,9 +173,9 @@ $(function(){
             			page : currentPage, 
             			size : 10
            			},
+           			
             success:function(response){
-            
-				
+            	$(".reply-wrapper").empty();//비우기
                 	//여기도 더보기 추가
                 	var totalcount= response.totalCount
 				 	var lastPage = response.isLastPage;
