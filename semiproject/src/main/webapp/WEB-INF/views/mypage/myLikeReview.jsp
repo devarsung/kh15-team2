@@ -60,6 +60,8 @@ $(function(){
 		        $(response.list).each(function(index, review) { 
 		        	var myLikeReviewNo = ((currentPage - 1) * size) + index + 1; //페이지게이
 		           //백팁실패한 테블릿 그리고 제발 주석추가하지마 오류
+		           
+		           var wtime= review.reviewWtime.slice(0,10);
 		        	var reviewHtml = `
 		                <tr>
 		                    <td class="center reviewNumber"></td>
@@ -76,7 +78,7 @@ $(function(){
 		            $reviewHtml.find(".reviewNumber").text(myLikeReviewNo);
 		            $reviewHtml.find(".reviewTitle").text(review.reviewTitle).attr("href", "/review/detail?reviewNo="+ this.reviewNo);
 		            $reviewHtml.find(".reviewWriter").text(review.reviewWriter);
-		            $reviewHtml.find(".reviewWtime").text(review.reviewWtime);
+		            $reviewHtml.find(".reviewWtime").text(wtime);
 		            $reviewHtml.find(".reviewRead").text(review.reviewRead); 
 		            $reviewHtml.find(".reviewCount").text(review.likeCount); 
 	

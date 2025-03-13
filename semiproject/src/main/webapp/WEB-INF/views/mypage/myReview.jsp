@@ -53,9 +53,10 @@
 			        	else{
 			        		$(".btn-more").show();
 			        	}
-					
 			        $(response.list).each(function(index, review) {	
 			        	var myReviewNo = ((currentPage - 1) * size) + index + 1;
+			        	var wtime = review.reviewWtime.slice(0, 10); // .......ㅋ
+
 			            var reviewHtml = `
 			                <tr>
 				            	<td class="reviewNumber center"></td>
@@ -72,7 +73,7 @@
 						$reviewHtml.find(".reviewRead").text(review.reviewRead);
 						$reviewHtml.find(".reviewLike").text(review.reviewLike);
 						$reviewHtml.find(".reviewReply").text(review.reviewReply);
-						$reviewHtml.find(".reviewWtime").text(review.reviewWtime);
+						$reviewHtml.find(".reviewWtime").text(wtime);
 					
 						$("#reviewList").append($reviewHtml);
 			    	});
