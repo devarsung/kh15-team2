@@ -19,19 +19,19 @@ $(function() {
 	//readonly 설정과 해제 
 	//이메일 인증 숨김 설정및 나타네기 관리 설정 추가
 	$(".editBtn").click(function() {
-		var inputField = $(this).parent("td").find("input");
+		var inputFiled = $(this).parent("td").find("input");
 	//이메일 인증 버튼 변수
 		var checkEmailBtn=$(this).closest("td").find(".checkEmailBtn");
 		
-		if (inputField.prop('readonly')) {
-			inputField.prop('readonly', false).focus();
+		if (inputFiled.prop('readonly')){
+			inputFiled.prop('readonly', false).focus();
 			
-			checkEmailBtn.show();//이메일 인증 버튼 보이기
+			checkEmailBtn.show();//이메일 인증 버튼 보이기	
 		}
 		else {
-			inputField.prop('readonly', true);
+			inputFiled.prop('readonly', true);
 			
-			checkEmailBtn.hide();//이메일 인증 버튼 숨기기
+			checkEmailBtn.hide();//이메일 인증 버튼 숨기기	
 		}
 	});
 
