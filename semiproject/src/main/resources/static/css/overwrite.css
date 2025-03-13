@@ -102,3 +102,34 @@ body {
     height: 40px;
     display: block;
 }
+
+.btn {
+    border-radius: 5px;
+    padding: 0.5em 0.75em;
+    font-size: 16px;
+    text-align: center;
+}
+.btn-primary {
+    background-color: lightblue;
+    color: white;
+    border: 1px solid lightblue;
+}
+.btn-primary:hover {
+	filter: brightness(1.05);
+}
+.btn-secondary {
+    background-color: darkgray;
+    color: white;
+    border: 1px solid darkgray;
+}
+.btn-secondary:hover {
+    filter: brightness(1.05);
+}
+.btn-danger {
+	background-color: #f06e6e;
+    color: white;
+    border: 1px solid #f06e6e;
+}
+.btn-danger:hover {
+	filter: brightness(1.05);
+}

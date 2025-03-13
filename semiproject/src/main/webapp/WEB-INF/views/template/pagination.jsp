@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- 페이지 네비게이터 : pageVO에 기반하여 처리하도록 구현 -->
 
-	<div class="page-navigator">
+	<div class="page-navigator mt-40">
 	
 		<!-- 이전 -->
 		<c:if test="${pageVO.hasPrevBlock()}">

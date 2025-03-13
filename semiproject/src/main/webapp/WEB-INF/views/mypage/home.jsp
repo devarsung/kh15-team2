@@ -77,9 +77,9 @@
     </div>
 
     <div class="cell float-box">
-       <a href="change" class="btn btn-positive float-left me-10">개인정보 변경</a>
-        <a href="password" class="btn btn-positive float-left">비밀번호 변경</a>
-        <a href="exit" class="btn btn-negative float-right">회원탈퇴</a>
+       <a href="change" class="btn btn-primary float-left me-10">개인정보 변경</a>
+        <a href="password" class="btn btn-primary float-left">비밀번호 변경</a>
+        <a href="exit" class="btn btn-danger float-right">회원탈퇴</a>
 
     </div>
 
