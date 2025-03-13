@@ -63,7 +63,7 @@ $(function(){
 		        	var reviewHtml = `
 		                <tr>
 		                    <td class="center reviewNumber"></td>
-		                    <td><a href="/review/detail?reviewNo=" class="titleStyle reviewTitle"></a></td>
+		                    <td><a href="/review/detail?reviewNo=" class="titleStyle reviewTitle" ></a></td>
 		                    <td class="center reviewWriter"></td>
 		                    <td class="center reviewWtime"></td>
 		                    <td class="center reviewRead"></td>
