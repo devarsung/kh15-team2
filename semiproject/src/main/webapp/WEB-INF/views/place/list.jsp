@@ -10,6 +10,39 @@
 <script src="https://cdn.jsdelivr.net/gh/hiphop5782/score@latest/score.js"></script>
 
 <style>
+.search-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border: 2px solid #D3DDE5;
+    padding: 20px;
+    border-radius: 5px;
+}
+.search-row {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+.half-width {
+    flex: 1;
+    min-width: 180px;
+}
+.small-width {
+    width: 25%;
+    min-width: 150px;
+}
+.large-width {
+    flex: 1;
+    min-width: 300px;
+}
+.etc-group {
+	display: flex;
+	justify-content: end;
+}
+
 /* 카드 리스트 전체 스타일 */
 .card-list {
     display: grid;
@@ -93,6 +126,41 @@
     align-items: center;
     gap: 5px;
 }
+
+.field {
+ 	border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0.5em;
+    font-size: 16px;
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
+}
+.field:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+.btn {
+    border-radius: 5px;
+    padding: 0.5em 0.75em;
+    font-size: 16px;
+    text-align: center;
+}
+.btn-primary {
+    background-color: lightblue;
+    color: white;
+    border: 1px solid lightblue;
+}
+.btn-primary:hover {
+	brightness(1.05);
+}
+.btn-secondary {
+    background-color: darkgray;
+    color: white;
+    border: 1px solid darkgray;
+}
+.btn-secondary:hover {
+    brightness(1.05);
+}
 </style>
 <script type="text/javascript">
 $(function(){
@@ -121,11 +189,10 @@ $(function(){
 	<div class="cell center">
 		<h1>여행지 목록</h1>
 	</div>
-	
-	<div class="cell center">
-        <form action="list" method="get" class="form-check">
-        	<div class="cell">
-        		<select name="region" class="field">
+	<form action="list" method="get" class="form-check">
+		<div class="search-container">
+        	<div class="search-row">
+        		<select name="region" class="field half-width">
 	                <option value="">선택하세요</option>
 	                <option ${param.region == '서울' ? 'selected' : ''}>서울</option>
 	                <option ${param.region == '인천' ? 'selected' : ''}>인천</option>
@@ -145,7 +212,7 @@ $(function(){
 	                <option ${param.region == '제주' ? 'selected' : ''}>제주</option>
 	                <option ${param.region == '세종' ? 'selected' : ''}>세종</option>
 	            </select>
-	            <select name="type" class="field">
+	            <select name="type" class="field half-width">
 	            	<option value="">선택하세요</option>
 	                <option ${param.type == '여행지' ? 'selected' : ''}>여행지</option>
 	                <option ${param.type == '맛집' ? 'selected' : ''}>맛집</option>
@@ -153,27 +220,29 @@ $(function(){
 	            </select>
         	</div>
             
-            <div class="cell">
-            	<select name="column" class="field">
+            <div class="search-row">
+            	<select name="column" class="field small-width">
             		<option value="place_title" ${param.column == 'place_title' ? 'selected' : ''}>여행지명</option>
             	</select>
-	            <input type="text" name="keyword" value="${param.keyword}" class="field">
-	            <button type="submit" class="btn btn-positive">검색</button>
-	            <button type="button" class="btn btn-neutral btn-search-clean">초기화</button>	
+	            <input type="text" name="keyword" value="${param.keyword}" class="field large-width">
             </div>
             
-            <div class="right mx-20 mt-20">
-		    	<select name="order" class="field">
-			    	<option value="place_wtime" ${param.order == 'place_wtime' ? 'selected' : ''}>최신순</option>
-		    		<option value="place_star" ${param.order == 'place_star' ? 'selected' : ''}>평점순</option>
-		    		<option value="place_like" ${param.order == 'place_like' ? 'selected' : ''}>좋아요순</option>
-		    		<option value="place_review" ${param.order == 'place_review' ? 'selected' : ''}>후기순</option>
-		    	</select>
-	    	</div>
+            <div class="flex-box flex-center mt-10">
+            	<button type="submit" class="btn btn-primary mx-10">검색 <i class="fa-solid fa-magnifying-glass"></i></button>
+            	<button type="button" class="btn btn-secondary btn-search-clean">초기화 <i class="fa-solid fa-rotate-left"></i></button>
+         	</div>
+       	</div>
             
-        </form>
-    </div>
-	 
+        <div class="mt-40 etc-group">
+	    	<select name="order" class="field" style="margin-right: 25px;">
+		    	<option value="place_wtime" ${param.order == 'place_wtime' ? 'selected' : ''}>최신순</option>
+	    		<option value="place_star" ${param.order == 'place_star' ? 'selected' : ''}>평점순</option>
+	    		<option value="place_like" ${param.order == 'place_like' ? 'selected' : ''}>좋아요순</option>
+	    		<option value="place_review" ${param.order == 'place_review' ? 'selected' : ''}>후기순</option>
+	    	</select>
+   		</div>
+	</form> 
+	
 	<div class="cell">
 	    <div class="card-list">
 	    	<c:forEach var="placeDto" items="${list}">
