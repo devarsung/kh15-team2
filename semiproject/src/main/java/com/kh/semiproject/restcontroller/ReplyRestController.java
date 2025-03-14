@@ -86,7 +86,11 @@ public class ReplyRestController {
 
 	// 댓글 수정
 	@PostMapping("/edit")
-	public void edit(@ModelAttribute ReplyDto replyDto) {
+	public Map<String, Object> edit(@ModelAttribute ReplyDto replyDto) {
 		replyDao.update(replyDto);
+		ReplyListViewDto reply = replyDao.selectOneOfListView(replyDto.getReplyNo());
+		Map<String, Object> result = new HashMap<>();
+		result.put("editReply", reply);
+		return result;
 	}
 }
