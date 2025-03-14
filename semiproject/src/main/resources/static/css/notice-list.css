@@ -42,3 +42,6 @@
     text-align: right;
     color: #888888;
 }
+.hiding{
+	display: none;
+}

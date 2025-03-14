@@ -58,8 +58,8 @@
       <div class="cell right">
        <c:if test="${sessionScope.userId != null}">
             <c:if test="${sessionScope.userId == noticeDto.noticeWriter}">
-                <a href="/review/edit?reviewNo=${noticeDto.noticeNo}" class="changebtn mt-20" >수정</a>
-                <a href="/review/delete?reviewNo=${noticeDto.noticeNo}" class="deletemessage">삭제</a>
+                <a href="/admin/notice/edit?noticeNo=${noticeDto.noticeNo}" class="changebtn mt-20" >수정</a>
+                <a href="/admin/notice/delete?noticeNo=${noticeDto.noticeNo}" class="deletemessage">삭제</a>
             </c:if>
         </c:if> 
     </div>

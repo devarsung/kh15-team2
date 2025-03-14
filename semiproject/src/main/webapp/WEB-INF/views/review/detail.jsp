@@ -44,6 +44,16 @@ $(function(){
             }
         })
     });
+    
+    $(".btn-delete-review").click(function(){
+    	var choice = window.confirm("정말 후기를 삭제하시겠습니까?");
+		 if(choice == false) {
+			 return false;
+		 }
+		 
+	 	var url = "/review/delete?reviewNo=" + $(this).data("no");
+	 	window.location.href = url;
+    });
 });
 
 // 리뷰 스타
@@ -124,7 +134,7 @@ $(function(){
         var replyContent = $(this).closest(".reply-item").find(".reply-content").text();
         var replyWtime = $(this).closest(".reply-item").find(".reply-wtime").text();
         var replyNo = $(this).data("reply-no");
-
+        
         $(html).find(".reply-writer").text(replyWriter);
         $(html).find(".reply-content").val(replyContent);
         $(html).find(".reply-wtime").text(replyWtime);
@@ -139,6 +149,8 @@ $(function(){
         var replyNo = $(this).data("reply-no");
         var replyContent = $(this).closest(".reply-edit-item").find(".reply-content").val();
         
+        var originArea = $(this).closest(".reply-edit-item").prev(".reply-item");
+        var editArea = $(this).closest(".reply-edit-item");
 
         $.ajax({
             url:"/rest/reply/edit",
@@ -148,9 +160,17 @@ $(function(){
                 replyContent : replyContent
             },
             success:function(response){
-            	$(".reply-wrapper").empty();
+            	var newReply = response.editReply;
+            	
+            	//모든걸 교체해야할까? 일단 내용만 바뀌게
+                $(originArea).find(".reply-content").text(newReply.replyContent);
+            	
+            	//수정창 지우고 댓글 보여주고
+            	$(editArea).remove();
+            	$(originArea).show();
+            	/* $(".reply-wrapper").empty();
             	currentPage = currentPage;
-                loadList();
+                loadList(); */
             }
         });
     });
@@ -255,8 +275,6 @@ $(function(){
 
 });
 
-
-
 </script>
 
 <!-- 댓글 목록/내글이면 수정/삭제 btn -->
@@ -343,7 +361,7 @@ $(function(){
         <c:if test="${sessionScope.userId != null}">
             <c:if test="${sessionScope.userId == reviewDto.reviewWriter}">
                 <a href="/review/edit?reviewNo=${reviewDto.reviewNo}" class="btn btn-primary" >수정</a>
-                <a href="/review/delete?reviewNo=${reviewDto.reviewNo}" class="btn btn-danger">삭제</a>
+                <a href="javascript:void(0);" class="btn btn-danger btn-delete-review" data-no="${reviewDto.reviewNo}">삭제</a>
             </c:if>
         </c:if>
     </div>

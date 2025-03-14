@@ -27,7 +27,7 @@ $(function(){
 		data:{page : currentPage, size : size},
 		 success: function(response) { 
 			 	
-		        var totalcount= $(response.totalCount)[0]; 
+		        var totalcount= response.totalCount; 
 
 			 	var lastPage = response.isLastPage;
 		        console.log(response);

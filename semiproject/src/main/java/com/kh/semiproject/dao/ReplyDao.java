@@ -76,6 +76,16 @@ public class ReplyDao {
 		List<ReplyDto> list = jdbcTemplate.query(sql, replyMapper, data);
 		return list.isEmpty() ? null : list.get(0);
 	}
+	
+	public ReplyListViewDto selectOneOfListView(int replyNo) {
+		String sql = "SELECT r.reply_no, r.reply_origin, r.reply_writer, m.member_nickname, "
+						+ "r.reply_content, r.reply_wtime, r.reply_etime "
+					+ "FROM reply r  LEFT JOIN member m ON r.reply_writer = m.member_id "
+					+ "WHERE r.reply_no = ?";
+		Object[] data = {replyNo};
+		List<ReplyListViewDto> list = jdbcTemplate.query(sql, replyListViewMapper, data);
+		return list.isEmpty() ? null : list.get(0);
+	}
 
 	// 댓글 수정
 	public boolean update(ReplyDto replyDto) {

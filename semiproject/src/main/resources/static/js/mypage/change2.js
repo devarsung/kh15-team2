@@ -47,12 +47,12 @@ $(function() {
 				success: function(response) {
 				    if(response) {
 				        $("[name=memberNickname]").removeClass("success fail fail2")
-				            .addClass("fail2");
-				        status.memberNickname = false;
+						.addClass("success");
+										        status.memberNickname = true;
 				    } else {
 				        $("[name=memberNickname]").removeClass("success fail fail2")
-				            .addClass("success");
-				        status.memberNickname = true;
+						.addClass("fail2");
+										        status.memberNickname = false;
 				    }
 				}
 			});
