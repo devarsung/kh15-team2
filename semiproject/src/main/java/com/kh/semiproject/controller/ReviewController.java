@@ -81,6 +81,10 @@ public class ReviewController {
 		reviewDto.setReviewNo(reviewNo);
 		reviewDto.setReviewPlace(placeNo);
 		reviewDao.insert(reviewDto);
+		
+		int reviewCount = placeDao.countPlaceReview(placeNo);
+		placeDao.updatePlaceReview(placeNo, reviewCount);
+		
 		return "redirect:detail?reviewNo="+reviewNo;
 	}
 	
