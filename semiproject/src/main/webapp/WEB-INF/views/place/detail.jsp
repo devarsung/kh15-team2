@@ -292,10 +292,17 @@ $(function() {
     </c:if>
     
     <div class="cell right">
-   		<a href="/review/add?placeNo=${placeDto.placeNo}" class="btn btn-secondary end">후기 작성 <i class="fa-solid fa-pen"></i></a>
+   		<a href="/review/add?placeNo=${placeDto.placeNo}" class="btn btn-primary end">후기 작성 <i class="fa-solid fa-pen"></i></a>
    		<c:if test="${fn:length(reviews) > 0}">
-       		<a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-secondary end">후기 더보기 <i class="fa-solid fa-plus"></i></a>
+       		<a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-primary end">후기 더보기 <i class="fa-solid fa-plus"></i></a>
      	</c:if>
+   </div>
+   
+   <div class="cell center mt-50">
+	<c:choose>
+		<c:when test="${source == 'mypage'}"><a href="/mypage/myLikePlace" class="btn btn-secondary">목록으로</a></c:when>
+		<c:otherwise><a href="/place/list" class="btn btn-secondary">목록으로</a></c:otherwise>
+	</c:choose>
    </div>
 </div>
 

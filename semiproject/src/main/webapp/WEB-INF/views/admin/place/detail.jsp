@@ -242,6 +242,10 @@ $(function() {
     <div class="cell right">
        <a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-secondary end">후기 더보기</a>
    </div>
+   
+   <div class="cell center mt-50">
+		<a href="/admin/place/list" class="btn btn-secondary w-25">목록으로</a>
+   </div>
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>   
