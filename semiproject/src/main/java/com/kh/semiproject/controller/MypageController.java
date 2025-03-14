@@ -132,7 +132,7 @@ public class MypageController {
 			}
 			int newAttachmentNo = attachmentService.save(memberProfile);
 			memberDao.connect(userId, newAttachmentNo);
-			System.out.println("상태: " + deleteProfile);
+		//	System.out.println("상태: " + deleteProfile);
 		}
 
 		// 회원 정보 업데이트
@@ -199,7 +199,6 @@ public class MypageController {
 		 String userId = (String) session.getAttribute("userId");
 		 restPageVO.setMemberId(userId);
 		 int count = myReviewDao.count(restPageVO);
-		 System.out.println("count = " + count);
 		 restPageVO.setCount(count);
        // List<MyReviewDto> myReviewList = myReviewDao.selectMyReviewList(userId);
         List<MyReviewDto> myReviewList = myReviewDao.selectListRest(restPageVO);
