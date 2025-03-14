@@ -46,7 +46,7 @@ $(function(){
 		<div class="search-container">
         	<div class="search-row">
         		<select name="region" class="field half-width">
-	                <option value="">선택하세요</option>
+	                <option value="">지역을 선택하세요</option>
 	                <option ${param.region == '서울' ? 'selected' : ''}>서울</option>
 	                <option ${param.region == '인천' ? 'selected' : ''}>인천</option>
 	                <option ${param.region == '대전' ? 'selected' : ''}>대전</option>
@@ -66,7 +66,7 @@ $(function(){
 	                <option ${param.region == '세종' ? 'selected' : ''}>세종</option>
 	            </select>
 	            <select name="type" class="field half-width">
-	            	<option value="">선택하세요</option>
+	            	<option value="">타입을 선택하세요</option>
 	                <option ${param.type == '여행지' ? 'selected' : ''}>여행지</option>
 	                <option ${param.type == '맛집' ? 'selected' : ''}>맛집</option>
 	                <option ${param.type == '숙소' ? 'selected' : ''}>숙소</option>

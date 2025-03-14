@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
  
+ <style>
+ 	
+ </style>
+ 
  <script src=https://code.jquery.com/jquery-3.7.1.min.js></script>
     <script type = "text/javascript">
         $(function(){
@@ -58,7 +62,7 @@
         </div>
         
         <div class="cell">
-        <button class="btn btn-positive w-100 mt-20">로그인하기</button>
+        <button class="btn btn-primary w-100 mt-20">로그인하기</button>
         </div>
     </form>
         <a href="findPw" style="">비밀번호를 잊으셨나요?</a>

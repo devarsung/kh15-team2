@@ -31,17 +31,17 @@
 				<i class="fa-solid fa-eye"></i> ${noticeDto.noticeRead}
 			</div>
 			<div>작성일(${noticeDto.getWtimeString()}) |
-				수정일(${noticeDto.getEtimeString()})</div>
+				</div>
 		</div>
 	</div>
 
 	<div class="cell p-20 content-box">${noticeDto.noticeContent}</div>
 	<div class="cell right">
-		<c:if test="${sessionScope.userId != null}">
+	
 			<a href="/notice/list" class="changebtn mt-20">목록</a>
-		</c:if>
 	</div>
-	<div></div>
+	<div>
+	</div>
 
 
 

@@ -4,6 +4,7 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!-- kakaomap cdn -->
@@ -148,7 +149,8 @@ $(function() {
 	    
 	    <div class="reactions-box mt-30">
 	        <div class="non-heart-area" style="margin-top: 5px;">
-	            <div class="review-star" data-max="5" data-rate="${placeStar}"></div><br>
+	        	<fmt:parseNumber var="star" value="${placeStar}"/>
+	            <div class="review-star" data-max="5" data-rate="${star}"></div><br>
 	            <span class="views"><i class="fa-solid fa-eye"></i> :  ${placeDto.placeRead}</span>
 	            <span class="comments"><i class="fa-solid fa-comment-dots"></i> : ${placeDto.placeReview}</span>
 	        </div>
@@ -292,10 +294,17 @@ $(function() {
     </c:if>
     
     <div class="cell right">
-   		<a href="/review/add?placeNo=${placeDto.placeNo}" class="btn btn-secondary end">후기 작성 <i class="fa-solid fa-pen"></i></a>
+   		<a href="/review/add?placeNo=${placeDto.placeNo}" class="btn btn-primary end">후기 작성 <i class="fa-solid fa-pen"></i></a>
    		<c:if test="${fn:length(reviews) > 0}">
-       		<a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-secondary end">후기 더보기 <i class="fa-solid fa-plus"></i></a>
+       		<a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-primary end">후기 더보기 <i class="fa-solid fa-plus"></i></a>
      	</c:if>
+   </div>
+   
+   <div class="cell center mt-50">
+	<c:choose>
+		<c:when test="${source == 'mypage'}"><a href="/mypage/myLikePlace" class="btn btn-secondary w-25">목록으로</a></c:when>
+		<c:otherwise><a href="/place/list" class="btn btn-secondary w-25">목록으로</a></c:otherwise>
+	</c:choose>
    </div>
 </div>
 

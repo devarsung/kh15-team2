@@ -138,7 +138,7 @@
                 </div>
         
                 <div class="cell mt-30">
-                    <button type="submit" class="btn btn-positive w-100">회원가입</button>
+                    <button type="submit" class="btn btn-primary w-100">회원가입</button>
                 </div>
             </div>
         </form>

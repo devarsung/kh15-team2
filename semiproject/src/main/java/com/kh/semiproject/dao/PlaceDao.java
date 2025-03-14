@@ -254,7 +254,7 @@ public class PlaceDao {
 	 * 
 	 * 이런 구문도 가능한데 현재 더미데이터라 일단 조인했음
 	 */
-	public Integer selectStarAvg(int placeNo) {
+	public Double selectStarAvg(int placeNo) {
 		String sql = "select round(coalesce(sub.star_avg,0),1) as review_star "
 					+ "from place p "
 					+ "left join ( "
@@ -264,7 +264,7 @@ public class PlaceDao {
 					+ ") sub on p.place_no = sub.review_place "
 					+ "where p.place_no = ?";
 		Object[] data = {placeNo};
-		return jdbcTemplate.queryForObject(sql, Integer.class, data);
+		return jdbcTemplate.queryForObject(sql, Double.class, data);
 	}
 }
 

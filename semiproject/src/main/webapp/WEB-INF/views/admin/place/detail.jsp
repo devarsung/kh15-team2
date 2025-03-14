@@ -4,6 +4,7 @@
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 
 <!-- kakaomap cdn -->
@@ -47,6 +48,17 @@
 
 <script type="text/javascript">
 $(function() {
+	$(".btn-delete-place").click(function() {
+        var confirm = window.confirm("정말 삭제하시겠습니까?");
+        if(confirm) {
+        	var url = "/admin/place/delete?placeNo=" + $(this).data("no");
+        	window.location.href = url;
+        }
+        else {
+        	return false;
+        }
+	});
+	
  	$(".review-star").score({
         display:{
         	showNumber:true,
@@ -92,7 +104,7 @@ $(function() {
     <div class="cell div-title">
     	<div class="left-btns">
 	    	<a class="btn btn-secondary" href="edit?placeNo=${placeDto.placeNo}">수정하기</a>
-	    	<a class="btn btn-secondary" href="delete?placeNo=${placeDto.placeNo}">삭제하기</a>
+	    	<a class="btn btn-secondary btn-delete-place" href="javascript:void(0);" data-no="${placeDto.placeNo}">삭제하기</a>
     	</div>
         <h2 class="m-0">${placeDto.placeTitle}</h2>
     </div>
@@ -100,7 +112,8 @@ $(function() {
 	<hr style="border-top: 1px solid darkgray; margin-top:25px;">
 	
     <div class="cell center reactions">
-    	<div class="review-star" data-max="5" data-rate="${placeStar}"></div><br>
+    	<fmt:parseNumber var="star" value="${placeStar}"/>
+    	<div class="review-star" data-max="5" data-rate="${star}"></div><br>
     	<span class="views"><i class="fa-solid fa-eye"></i> :  ${placeDto.placeRead}</span>
     	<span class="likes"><i class="fa-solid fa-heart"></i> : ${placeDto.placeLike}</span>
         <span class="comments"><i class="fa-solid fa-comment-dots"></i> : ${placeDto.placeReview}</span>
@@ -241,6 +254,10 @@ $(function() {
     
     <div class="cell right">
        <a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-secondary end">후기 더보기</a>
+   </div>
+   
+   <div class="cell center mt-50">
+		<a href="/admin/place/list" class="btn btn-secondary w-25">목록으로</a>
    </div>
 </div>
 
