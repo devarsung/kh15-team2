@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
@@ -37,7 +38,11 @@
                 <tr>
                 <th>성별</th>
                 <td>
-                    ${memberDto.memberGender}
+                	<c:choose>
+                		<c:when test="${memberDto.memberGender == 'M'}">남자</c:when>
+                		<c:when test="${memberDto.memberGender == 'F'}">여자</c:when>
+                		<c:otherwise>알수없음</c:otherwise>
+                	</c:choose>
                 </td>
                 </tr>
                 <tr>

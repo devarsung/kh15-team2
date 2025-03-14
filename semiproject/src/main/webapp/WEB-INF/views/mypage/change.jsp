@@ -85,8 +85,13 @@
 					</tr>
 					<tr>
 						<th>성별</th>
-						<td class="p-10"><input name="memberGender" type="text"
-							class="field  w-75" value="${memberDto.memberGender}" readonly>
+						<td class="p-10">
+                			<c:if test="${memberDto.memberGender == 'M'}">
+                				<input name="memberGender" type="text" class="field  w-75" value="남자" readonly>
+                			</c:if>
+	                		<c:if test="${memberDto.memberGender == 'F'}">
+	                			<input name="memberGender" type="text" class="field  w-75" value="여자" readonly>
+	                		</c:if>
 						</td>
 					</tr>
 					<tr>
