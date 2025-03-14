@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="/css/change.css">
+<link rel="stylesheet" type="text/css" href="/css/mypage-home.css">
 <style>
 </style>
 
@@ -59,7 +60,7 @@
 			</div>
 
 			<div class="cell mt-20">
-				<table class="table table-border table-hover">
+				<table class="tableStyle">
 					<tr>
 						<th>ID</th>
 						<td class="p-10"><input name="memberId" type="text"
