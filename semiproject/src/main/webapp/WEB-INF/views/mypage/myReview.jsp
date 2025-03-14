@@ -95,7 +95,7 @@
 	</jsp:include>
 
     <div class="cell mt-50">
-            <div class="p-10">등록글 수 : <span class="totalCount"></span></div>
+            <div class="p-10 right">나의 리뷰 수 : <span class="totalCount"></span></div>
         <table class="tableStyle">
             <thead class="index-item">
                 <tr>

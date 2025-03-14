@@ -317,7 +317,7 @@ $(function(){
     
   <div class="cell flex-box">
     <div class="cell flex-box flex-vertical flex-fill left-section w-70">
-        <h3 style="color:#1A1A1D" class="my-0">[${reviewDto.placeTitle}]</h3>
+        <h3 class="a-href my-0"><a href="/place/detail?placeNo=${reviewDto.reviewPlace}">[ ${reviewDto.placeTitle} ] </a></h3>
         <h2 style="color:#1A1A1D; " >
             ${reviewDto.reviewTitle}
         </h2>
