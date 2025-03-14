@@ -46,8 +46,8 @@ $(function() {
 				data: { memberNickname: $(this).val() },
 				success: function(response) {
 					$("[name=memberNickname]").removeClass("success fail fail2")
-						.addClass(response ? "fail2" : "success");
-					status.memberNickname = response ? false : true;
+										.addClass(response ? "success":"fail2");
+					status.memberNickname = response;
 				}
 			});
 		}
