@@ -72,13 +72,16 @@ $(function(){
 	$(".check-delete").click(function(){
 		var deleteNos = [];
 		$(".checkbox:checked").each(function(){
-			console.log($(this).val());
 			deleteNos.push($(this).val());
 		});
 		
-		
 		if(deleteNos.length === 0) {
 			alert("삭제할 항목을 선택해주세요");
+			return false;
+		}
+		
+		var confirm = window.confirm(deleteNos.length + "개의 여행지를 삭제하시겠습니까?");
+		if(confirm == false) {
 			return false;
 		}
 		
@@ -117,7 +120,7 @@ $(function(){
 		<div class="search-container">
         	<div class="search-row">
         		<select name="region" class="field half-width">
-	                <option value="">선택하세요</option>
+	                <option value="">지역을 선택하세요</option>
 	                <option ${param.region == '서울' ? 'selected' : ''}>서울</option>
 	                <option ${param.region == '인천' ? 'selected' : ''}>인천</option>
 	                <option ${param.region == '대전' ? 'selected' : ''}>대전</option>
@@ -137,7 +140,7 @@ $(function(){
 	                <option ${param.region == '세종' ? 'selected' : ''}>세종</option>
 	            </select>
 	            <select name="type" class="field half-width">
-	            	<option value="">선택하세요</option>
+	            	<option value="">타입을 선택하세요</option>
 	                <option ${param.type == '여행지' ? 'selected' : ''}>여행지</option>
 	                <option ${param.type == '맛집' ? 'selected' : ''}>맛집</option>
 	                <option ${param.type == '숙소' ? 'selected' : ''}>숙소</option>
@@ -161,7 +164,7 @@ $(function(){
    		<div class="mt-40 etc-group">
    			<div style="margin-left: 25px;">
    				<a href="add" class="btn btn-neutral"><i class="fa-solid fa-plus"></i> 등록</a>
-   				<a href="#" class="btn btn-neutral check-delete" style="margin-left: 3px;"><i class="fa-solid fa-plus"></i> 체크삭제</a>
+   				<a href="javascript:void(0);" class="btn btn-neutral check-delete" style="margin-left: 3px;"><i class="fa-solid fa-trash"></i> 체크삭제</a>
    			</div>
    		
 	    	<select name="order" class="field" style="margin-right: 25px;">

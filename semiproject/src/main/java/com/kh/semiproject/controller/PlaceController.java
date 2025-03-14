@@ -44,7 +44,7 @@ public class PlaceController {
 	}
 	
 	@RequestMapping("/detail")
-	public String detail(@RequestParam int placeNo, Model model) {
+	public String detail(@RequestParam int placeNo, @RequestParam(required = false) String source, Model model) {
 		PlaceDto placeDto = placeDao.selectOne(placeNo);
 		if(placeDto == null) {
 			throw new TargetNotFoundException("존재 하지 않는 여행지 입니다");
@@ -58,6 +58,9 @@ public class PlaceController {
 		
 		//별점 추출
 		model.addAttribute("placeStar", placeDao.selectStarAvg(placeNo));
+		
+		//어디서 왔는지
+		model.addAttribute("source", source);
 		return "/WEB-INF/views/place/detail.jsp";
 	}
 

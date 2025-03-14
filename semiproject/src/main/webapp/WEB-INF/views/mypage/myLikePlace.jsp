@@ -61,7 +61,7 @@ $(function(){
 					var template = $("#place-template").text();
 					var html = $.parseHTML(template);
 					
-					var url = "/place/detail?placeNo=" + this.placeNo;
+					var url = "/place/detail?placeNo=" + this.placeNo + "&source=mypage";
 					
 					$(html).filter(".place-link").attr("href", url);
 					$(html).find(".first-image").attr("src", "/attachment/download?attachmentNo=" + this.placeFirstImage);
