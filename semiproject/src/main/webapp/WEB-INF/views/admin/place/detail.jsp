@@ -50,7 +50,7 @@ $(function() {
 	$(".btn-delete-place").click(function() {
         var confirm = window.confirm("정말 삭제하시겠습니까?");
         if(confirm) {
-        	var url = "delete?placeNo=" + $(this).data("no");
+        	var url = "/admin/place/delete?placeNo=" + $(this).data("no");
         	window.location.href = url;
         }
         else {
