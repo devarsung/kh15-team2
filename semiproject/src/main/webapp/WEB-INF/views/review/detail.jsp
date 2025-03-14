@@ -10,7 +10,11 @@
 <script type="text/javascript">
 $(function(){
 	
-	
+	$(".btn-danger").click(function(){
+		var choice = window.confirm("게시글을 삭제하시겠습니까?");
+        if(choice == false) return false;
+	});
+ 
     var params = new URLSearchParams(location.search);
     var reviewNo = params.get("reviewNo");
 
@@ -25,7 +29,7 @@ $(function(){
             $(".heart-count").text(response.count);
         }
     });
-
+	
     $(".fa-heart").click(function(){
         $.ajax({
             url:"/rest/review/action",

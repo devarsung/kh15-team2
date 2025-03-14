@@ -48,7 +48,7 @@
             <textarea name="reviewContent">${reviewDto.reviewContent}</textarea>
         </div>
         <div class="cell">
-            <button type="submit" class="btn btn-positive w-100" style="height: 50px;">수정하기</button>
+            <button type="submit" class="btn btn-primary w-100" style="height: 50px;">수정하기</button>
         </div>
         </form>
     </div>
