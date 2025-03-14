@@ -4,6 +4,7 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!-- kakaomap cdn -->
@@ -148,7 +149,8 @@ $(function() {
 	    
 	    <div class="reactions-box mt-30">
 	        <div class="non-heart-area" style="margin-top: 5px;">
-	            <div class="review-star" data-max="5" data-rate="${placeStar}"></div><br>
+	        	<fmt:parseNumber var="star" value="${placeStar}"/>
+	            <div class="review-star" data-max="5" data-rate="${star}"></div><br>
 	            <span class="views"><i class="fa-solid fa-eye"></i> :  ${placeDto.placeRead}</span>
 	            <span class="comments"><i class="fa-solid fa-comment-dots"></i> : ${placeDto.placeReview}</span>
 	        </div>
