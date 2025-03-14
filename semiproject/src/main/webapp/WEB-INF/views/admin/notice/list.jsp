@@ -58,7 +58,7 @@ cursor: pointer;
 							<label >
 							<i class="fa-regular fa-square icon-all"></i>
 							</label>
-						<input type="checkbox" class="check-all"><label>전체항목선택</label>
+							<input type="checkbox" class="check-all hiding"><label>전체항목선택</label>
 							</div>
 				<c:choose>
 					<c:when test="${list.isEmpty()}">
@@ -72,7 +72,7 @@ cursor: pointer;
 							<i class="fa-regular fa-square icon me-10"></i>
 					</label>
 	<a href="/admin/notice/detail?noticeNo=${noticeListViewDto.noticeNo}" class="text-decoration-line">
-	<input type="checkbox" class="check-item" name="noticeNo" value="${noticeListViewDto.noticeNo}" >				
+	<input type="checkbox" class="check-item hiding" name="noticeNo" value="${noticeListViewDto.noticeNo}"  >				
 								<span class="notice-icon"><i class="fa-solid fa-bullhorn"></i></span> <span class="notice-title">"${noticeListViewDto.noticeTitle}"</span>
 								<span class="notice-date">${noticeListViewDto.wtimeString}</span>
 	</a>
