@@ -18,13 +18,7 @@
   	align-items : center;
   	font-size: 20px;
 }
-.aStyle{
-   	text-decoration: none;
-   	outline: none; 
-   	padding:10px;
-   	color : black;
-   	font-weight : bold;
-}
+
 </style>
 
 <script type="text/javascript">

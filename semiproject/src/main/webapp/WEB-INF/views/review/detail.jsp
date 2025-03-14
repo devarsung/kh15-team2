@@ -213,7 +213,6 @@ $(function(){
 			        //위에게 다 정해지고 반복하세요
                 $(response.list).each(function(){
                 	
-          
                     var template = $("#reply-template").text();
                     var html = $.parseHTML(template); 
                     var convertTime = moment(this.replyWtime).fromNow();
@@ -314,7 +313,7 @@ $(function(){
     
   <div class="cell flex-box">
     <div class="cell flex-box flex-vertical flex-fill left-section w-70">
-        <h3 style="color:#1A1A1D" class="my-0">[${reviewDto.reviewPlace}]</h3>
+        <h3 style="color:#1A1A1D" class="my-0">[${reviewDto.placeTitle}]</h3>
         <h2 style="color:#1A1A1D; " >
             ${reviewDto.reviewTitle}
         </h2>
