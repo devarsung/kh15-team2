@@ -35,6 +35,7 @@ $(function(){
                 $(".fa-heart").removeClass("fa-solid fa-regular")
                     .addClass(response.done ? "fa-solid" : "fa-regular");
                 $(".heart-count").text(response.count);
+                
                 console.log($(".fa-heart"));
             }
         })
@@ -325,7 +326,7 @@ $(function(){
     <div class="cell flex-box flex-vertical right-section w-50" >
         <div>
             <i class="fa-solid fa-eye"></i> ${reviewDto.reviewRead} | 
-            <i class="fa-solid fa-heart"></i> ${reviewDto.reviewLike} | 
+            <i class="fa-solid fa-heart"></i><span class="heart-count"></span> | 
             <i class="fa-solid fa-comment-dots"></i> <span class="reply-count"></span>
         </div>
         <div>
