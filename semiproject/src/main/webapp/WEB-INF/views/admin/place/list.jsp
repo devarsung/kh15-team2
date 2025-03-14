@@ -161,7 +161,7 @@ $(function(){
    		<div class="mt-40 etc-group">
    			<div style="margin-left: 25px;">
    				<a href="add" class="btn btn-neutral"><i class="fa-solid fa-plus"></i> 등록</a>
-   				<a href="#" class="btn btn-neutral check-delete" style="margin-left: 3px;"><i class="fa-solid fa-plus"></i> 체크삭제</a>
+   				<a href="#" class="btn btn-neutral check-delete" style="margin-left: 3px;"><i class="fa-solid fa-trash"></i> 체크삭제</a>
    			</div>
    		
 	    	<select name="order" class="field" style="margin-right: 25px;">
