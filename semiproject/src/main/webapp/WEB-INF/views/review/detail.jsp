@@ -40,6 +40,16 @@ $(function(){
             }
         })
     });
+    
+    $(".btn-delete-review").click(function(){
+    	var choice = window.confirm("정말 후기를 삭제하시겠습니까?");
+		 if(choice == false) {
+			 return false;
+		 }
+		 
+	 	var url = "/review/delete?reviewNo=" + $(this).data("no");
+	 	window.location.href = url;
+    });
 });
 
 // 리뷰 스타
@@ -252,8 +262,6 @@ $(function(){
 
 });
 
-
-
 </script>
 
 <!-- 댓글 목록/내글이면 수정/삭제 btn -->
@@ -340,7 +348,7 @@ $(function(){
         <c:if test="${sessionScope.userId != null}">
             <c:if test="${sessionScope.userId == reviewDto.reviewWriter}">
                 <a href="/review/edit?reviewNo=${reviewDto.reviewNo}" class="btn btn-primary" >수정</a>
-                <a href="/review/delete?reviewNo=${reviewDto.reviewNo}" class="btn btn-danger">삭제</a>
+                <a href="javascript:void(0);" class="btn btn-danger btn-delete-review" data-no="${reviewDto.reviewNo}">삭제</a>
             </c:if>
         </c:if>
     </div>
