@@ -26,7 +26,7 @@
             <div class="fail-feedback red"><i class="fa-solid fa-check"></i>비밀번호가 일치하지 않습니다</div>
             <div class="fail2-feedback red"><i class="fa-solid fa-check"></i>비밀번호가 형식에 맞지 않습니다</div>
         </div>
-        <button type="submit" class="btn btn-positive w-100 mt-20">비밀번호 변경</button>
+        <button type="submit" class="btn btn-primary w-100 mt-20">비밀번호 변경</button>
     </form>
     </div>
     <c:if test="${param.error == '1'}">

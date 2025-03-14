@@ -90,18 +90,6 @@
 	.coord-btn {
 		flex-direction: column;
 	}
-	.field {
-	 	border: 1px solid #ccc;
-	    border-radius: 5px;
-	    padding: 0.5em;
-	    font-size: 16px;
-	    background-color: #fff;
-	    transition: all 0.3s ease-in-out;
-	}
-	.field:hover {
-	    border-color: #007bff;
-	    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
-	}
 </style>
 
 <script type="text/javascript" src="/js/place/add.js"></script>
