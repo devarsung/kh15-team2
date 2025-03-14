@@ -126,13 +126,10 @@ public class MemberController {
 	@PostMapping("/findPw")
 	public String findPw(@ModelAttribute MemberDto memberDto) throws MessagingException, IOException {
 		MemberDto findDto = memberDao.selectOne(memberDto.getMemberId());
-		//System.out.println("findDto: "+ findDto);
 		if (findDto == null) {
-			// throw new TargetNotFoundException("존재하지 않는 아이디");
 			return "redirect:findPw?error";
 		}
 		if (!findDto.getMemberEmail().equals(memberDto.getMemberEmail())) {
-			// throw new NoPermissionException("이메일 정보 오류");
 			return "redirect:findPw?error";
 		}
 
