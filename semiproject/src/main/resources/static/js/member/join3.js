@@ -9,12 +9,13 @@ $(function(){
             memberGender : false,
             memberContact: true,
             memberEmail : false,
+			memberEmailCert: false,
             memberAddress : true,
             ok : function(){
                 return this.memberId && this.memberPw && this.memberPwReinput
                         && this.memberNickname && this.memberBirth
                         && this.memberGender && this.memberContact
-                        && this.memberEmail && this.memberAddress;
+                        && this.memberEmail && this.memberEmailCert  && this.memberAddress;
             },
         };
 		///프로필등록
@@ -139,12 +140,14 @@ $(function(){
             .addClass(isValid? "success" : "fail");
             status.memberGender = isValid;
         });
+		
+		
         //이메일 처리
 		$(".btn-send-cert").click(function(){
 				var email = $("[name=memberEmail]").val();//입력된 이메일 가져옴
 				var regex = /^[A-Za-z0-9]+@[A-Za-z0-9.]+$/;
-				if(regex.test(email) == false) return status.memberEmail = false;//형식에 맞지 않으면 차단
-
+					//정규식 통과하면 에이작스로 이메일보내세요
+				if(regex.test(email)){
 				$.ajax({
 					url:"/rest/cert/send",
 					method:"post",
@@ -160,17 +163,22 @@ $(function(){
 					},
 					complete:function(){
 						$(".btn-send-cert").prop("disabled", false);
-						$(".btn-send-cert").find("span").text("인증메일 발송");
+						$(".btn-send-cert").find("span").text("인증메일 발송완료");
 						$(".btn-send-cert").find("i").removeClass("fa-spinner fa-spin")
 																.addClass("fa-paper-plane");
 					}
 				});
-			});
+				//정규식일치
+				$(this).removeClass("success fail success2 fail2").addClass("success");
+			}
+				//정규식 불일치 여기까진 어짜피 status 닫혀있음
+				$(this).removeClass("success fail success2 fail2").addClass("fail");
+		});
+			
+			 //인증확인 누를시
 			$(".btn-confirm-cert").click(function(){
 				var certEmail = $("[name=memberEmail]").val();
 				var certNumber = $("[name=certNumber]").val();
-				var regex = /^[0-9]{8}$/;
-				if(regex.test(certNumber) == false) return;
 
 				$.ajax({
 					url:"/rest/cert/check",
@@ -178,8 +186,8 @@ $(function(){
 					data:{ certEmail : certEmail, certNumber : certNumber },
 					success:function(response){//response는 true/false 중 하나
 						status.memberEmailCert = response;//결과를 상태값에 적용
-						$("[name=certNumber]").removeClass("success fail")
-														.addClass(response ? "success" : "fail");
+						$("[name=certNumber]").removeClass("success fail success2 fail2")
+														.addClass(response ? "success2" : "fail2");
 						if(response == true) {
 							$(".cert-input-wrapper").hide();
 							$(".btn-send-cert").prop("disabled", true)

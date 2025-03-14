@@ -79,6 +79,8 @@
                 <div class="success-feedback blue"></div>
                 <div class="fail-feedback red"><i class="fa-solid fa-check"></i>성별을 선택해주세요</div>
             </div>
+            
+            
             <div class="cell">
                 <label style="display:block;">이메일 <i class="fa-solid fa-asterisk red"></i></label>
  	        	<input type="email" inputmode="email" name="memberEmail" class="field">
@@ -96,8 +98,15 @@
  	    		<span>인증 확인</span>
  	    	</button>
                 <div class="success-feedback"><i class="fa-regular fa-circle"></i>올바른 이메일 형식입니다</div>
+                <div class="success2-feedback"><i class="fa-regular fa-circle"></i>인증번호가 일치합니다</div>
                 <div class="fail-feedback red"><i class="fa-solid fa-check"></i>올바른 형식의 이메일이 아닙니다</div>
+                <div class="fail2-feedback red"><i class="fa-solid fa-check"></i>인증번호가 일치하지않습니다</div>
             </div>
+            
+            
+            
+            
+            
             <div class="cell">
                 <label>생년월일<i class="fa-solid fa-asterisk red"></i></label>
                 <input type="text" name="memberBirth" class="field w-100">

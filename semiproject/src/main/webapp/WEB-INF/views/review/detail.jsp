@@ -339,8 +339,8 @@ $(function(){
       <div class="cell right">
         <c:if test="${sessionScope.userId != null}">
             <c:if test="${sessionScope.userId == reviewDto.reviewWriter}">
-                <a href="/review/edit?reviewNo=${reviewDto.reviewNo}" class="changebtn mt-20" >수정</a>
-                <a href="/review/delete?reviewNo=${reviewDto.reviewNo}" class="deletemessage">삭제</a>
+                <a href="/review/edit?reviewNo=${reviewDto.reviewNo}" class="btn btn-primary" >수정</a>
+                <a href="/review/delete?reviewNo=${reviewDto.reviewNo}" class="btn btn-danger">삭제</a>
             </c:if>
         </c:if>
     </div>
