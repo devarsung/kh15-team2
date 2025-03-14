@@ -9,7 +9,8 @@
         <div class="container w-500" style="border:1px solid rgb(163, 163, 163);border-radius: 10px;">
             <div class="cell center">
                 <p>홈페이지 둘러보기</p>
-                <a href="/place/list" class="btn btn-neutral w-75 ">여행지 둘러보기  <i class="fa-solid fa-map-location"></i></a>  
+                <a href="/member/login"class="btn btn-neutral w-75 ">로그인 하러가기  <i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+                <a href="/place/list" class="btn btn-neutral w-75 mt-20">여행지 둘러보기  <i class="fa-solid fa-map-location"></i></a>  
                 <a href="/review/list" class="btn btn-neutral w-75 mt-20">많은 후기 보러가기  <i class="fa-solid fa-feather"></i></a>
                 <a href="/" class="btn btn-neutral w-75 my-20">메인으로 가기  <i class="fa-solid fa-house"></i></a>
              </div>
