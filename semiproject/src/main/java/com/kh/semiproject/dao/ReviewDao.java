@@ -41,7 +41,6 @@ public class ReviewDao {
 	public boolean update(ReviewDto reviewDto) {
 		String sql = "update review set review_title = ?, review_content = ?, review_etime = systimestamp, review_star = ? where review_no =?";
 		Object[] data = { reviewDto.getReviewTitle(), reviewDto.getReviewContent(),reviewDto.getReviewStar(), reviewDto.getReviewNo() };
-		System.out.println(reviewDto.getReviewContent());
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 

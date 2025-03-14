@@ -16,15 +16,22 @@ $(function() {
 				},
 			};
 
-
 	//readonly 설정과 해제 
+	//이메일 인증 숨김 설정및 나타네기 관리 설정 추가
 	$(".editBtn").click(function() {
-		var inputField = $(this).parent("td").find("input");
-		if (inputField.prop('readonly')) {
-			inputField.prop('readonly', false).focus();
+		var inputFiled = $(this).parent("td").find("input");
+	//이메일 인증 버튼 변수
+		var checkEmailBtn=$(this).closest("td").find(".checkEmailBtn");
+		
+		if (inputFiled.prop('readonly')){
+			inputFiled.prop('readonly', false).focus();
+			
+			checkEmailBtn.show();//이메일 인증 버튼 보이기	
 		}
 		else {
-			inputField.prop('readonly', true);
+			inputFiled.prop('readonly', true);
+			
+			checkEmailBtn.hide();//이메일 인증 버튼 숨기기	
 		}
 	});
 
@@ -38,9 +45,15 @@ $(function() {
 				method: "post",
 				data: { memberNickname: $(this).val() },
 				success: function(response) {
-					$("[name=memberNickname]").removeClass("success fail fail2")
-						.addClass(response ? "fail2" : "success");
-					status.memberNickname = response ? false : true;
+				    if(response) {
+				        $("[name=memberNickname]").removeClass("success fail fail2")
+				            .addClass("fail2");
+				        status.memberNickname = false;
+				    } else {
+				        $("[name=memberNickname]").removeClass("success fail fail2")
+				            .addClass("success");
+				        status.memberNickname = true;
+				    }
 				}
 			});
 		}
@@ -53,13 +66,66 @@ $(function() {
 	});
 
 	//이메일 처리
-		$("[name=memberEmail]").blur(function() {
-			var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-			var isValid = regex.test($(this).val()) && $(this).val().length > 0;
-			$(this).removeClass("success fail").addClass(isValid ? "success" : "fail");
-			status.memberEmail = isValid;
-		});
+	$("[name=memberEmail]").blur(function() {
+		var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+		var isValid = regex.test($(this).val()) && $(this).val().length > 0;
+		$(this).removeClass("success fail").addClass(isValid ? "success" : "fail");
+		status.memberEmail = isValid;
+	});
 
+		$(".btn-send-cert").click(function(){
+				var email = $("[name=memberEmail]").val();//입력된 이메일 가져옴
+				var regex = /^[A-Za-z0-9]+@[A-Za-z0-9.]+$/;
+				if(regex.test(email) == false) return;//형식에 맞지 않으면 차단
+
+				$.ajax({
+					url:"/rest/cert/send",
+					method:"post",
+					data:{ email : email },
+					success:function(response){
+						$(".cert-input-wrapper").fadeIn();
+					},
+					beforeSend:function(){
+						$(".btn-send-cert").prop("disabled", true);
+						$(".btn-send-cert").find("span").text("이메일 발송중");
+						$(".btn-send-cert").find("i").removeClass("fa-paper-plane")
+																.addClass("fa-spinner fa-spin");
+					},
+					complete:function(){
+						$(".btn-send-cert").prop("disabled", false);
+						$(".btn-send-cert").find("span").text("인증메일 발송");
+						$(".btn-send-cert").find("i").removeClass("fa-spinner fa-spin")
+																.addClass("fa-paper-plane");
+					}
+				});
+			});
+			$(".btn-confirm-cert").click(function(){
+				var certEmail = $("[name=memberEmail]").val();
+				var certNumber = $("[name=certNumber]").val();
+				var regex = /^[0-9]{8}$/;
+				if(regex.test(certNumber) == false) return;
+
+				$.ajax({
+					url:"/rest/cert/check",
+					method:"post",
+					data:{ certEmail : certEmail, certNumber : certNumber },
+					success:function(response){//response는 true/false 중 하나
+						status.memberEmailCert = response;//결과를 상태값에 적용
+						$("[name=certNumber]").removeClass("success fail")
+														.addClass(response ? "success" : "fail");
+						if(response == true) {
+							$(".cert-input-wrapper").hide();
+							$(".btn-send-cert").prop("disabled", true)
+													.removeClass("btn-neutral")
+													.addClass("btn-positive");
+							$(".btn-confirm-cert").prop("disabled", true);
+							$(".btn-send-cert").find("span").text("인증 완료");
+							$(".btn-send-cert").find("i").removeClass("fa-paper-plane")
+																	.addClass("fa-thumbs-up");
+						}
+					}
+				});
+			});
 	//생년월일 처리
 	var picker = new Lightpick({
 		field: document.querySelector("[name=memberBirth]"),

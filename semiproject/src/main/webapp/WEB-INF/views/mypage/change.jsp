@@ -168,8 +168,8 @@
 				</table>
 			</div>
 			<div class="cell right my-30">
-				<a href="/mypage/home" class="btn btn-neutral  mx-10">돌아가기</a>
-				<button class="btn btn-positive ms-10" type="submit">변경하기</button>
+				<a href="/mypage/home" class="btn btn-secondary me-10">돌아가기</a>
+				<button class="btn btn-primary" type="submit">변경하기</button>
 			</div>
 		</form>
 

@@ -23,7 +23,7 @@
 				data:{page : currentPage, size : size},
 				success:function(response){
 					
-					    var totalcount= $(response.totalCount)[0]
+					    var totalcount= $(response.totalCount)
 					 	var lastPage = response.isLastPage;
 				        console.log(response);
 				        console.log("현재페이지: "+ currentPage);
@@ -53,9 +53,10 @@
 			        	else{
 			        		$(".btn-more").show();
 			        	}
-					
 			        $(response.list).each(function(index, review) {	
 			        	var myReviewNo = ((currentPage - 1) * size) + index + 1;
+			        	var wtime = review.reviewWtime.slice(0, 10); // .......ㅋ
+
 			            var reviewHtml = `
 			                <tr>
 				            	<td class="reviewNumber center"></td>
@@ -72,7 +73,7 @@
 						$reviewHtml.find(".reviewRead").text(review.reviewRead);
 						$reviewHtml.find(".reviewLike").text(review.reviewLike);
 						$reviewHtml.find(".reviewReply").text(review.reviewReply);
-						$reviewHtml.find(".reviewWtime").text(review.reviewWtime);
+						$reviewHtml.find(".reviewWtime").text(wtime);
 					
 						$("#reviewList").append($reviewHtml);
 			    	});
@@ -112,7 +113,7 @@
         </table>
     </div>
    <div class="cell center">
-    	<a href="#" class="btn-more">더보기+</a>
+    	<button class="btn-more" type="button">더보기+</button>
     </div>
 </div>
 

@@ -53,9 +53,6 @@
         		<li><a href="/review/list">후기</a></li>
         		<li><a href="/notice/list">공지사항</a></li>
         		
-        		<!-- 백엔드 개발 전 확인을 위해 임시로 빼둠(삭제예정) -->
-       			<li><a href="/admin/home">관리자메뉴</a></li>
-        		
         		<!-- 회원관련 메뉴는 우측에 -->
         		<!-- 비로그인 시 -->
         		<c:if test="${sessionScope.userId == null}">

@@ -7,7 +7,8 @@
     overflow: hidden; 
      border: 1px solid #ddd!important;
      width : 1000px;
- 	table-layout: fixed;
+
+ 	
 }
 
 .tableStyle th, 
@@ -37,6 +38,12 @@
     	outline: none; 
     	padding:10px;
     	color : #4C585B;
+    	width: 200px;
+        white-space: nowrap; 
+	    overflow: hidden; 
+	    text-overflow: ellipsis;
+	    display: inline-block; 
+    	
       }
       
     .titleStyle:visited{

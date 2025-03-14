@@ -43,6 +43,7 @@
 	    position: relative;
 	    width: 100%;
 	    margin-top: 10px;
+	    border-top: 1px solid darkgray;
 	}
 	.non-heart-area {
      	text-align: center;
@@ -51,9 +52,12 @@
 	.heart-area {
 		position: absolute;
 	    right: 0;
-	    top: 50%;
+	    bottom: -30px;
 	    transform: translateY(-50%);
-	    font-size: 50px;
+	    font-size: 40px;
+	}
+	.heart-count {
+		font-size: 20px;
 	}
 </style>
 
@@ -139,11 +143,11 @@ $(function() {
 
 <div class="container w-1000">
 
-    <div class="cell center-box mt-40">
-	    <h1 class="m-0">${placeDto.placeTitle}</h1>
+    <div class="cell center-box mt-30">
+	    <h2 class="m-0">${placeDto.placeTitle}</h2>
 	    
-	    <div class="reactions-box">
-	        <div class="non-heart-area">
+	    <div class="reactions-box mt-30">
+	        <div class="non-heart-area" style="margin-top: 5px;">
 	            <div class="review-star" data-max="5" data-rate="${placeStar}"></div><br>
 	            <span class="views"><i class="fa-solid fa-eye"></i> :  ${placeDto.placeRead}</span>
 	            <span class="comments"><i class="fa-solid fa-comment-dots"></i> : ${placeDto.placeReview}</span>
@@ -155,7 +159,7 @@ $(function() {
 	    </div>
 	</div>
     
-    
+    <hr style="border-top: 1px solid darkgray">
 
 	<!-- 이미지 스와이퍼 영역 -->
     <div class="cell my-20">
@@ -288,8 +292,10 @@ $(function() {
     </c:if>
     
     <div class="cell right">
-   		<a href="/review/add?placeNo=${placeDto.placeNo}" class="btn btn-neutral end">후기 작성</a>
-       	<a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-neutral end">후기 더보기</a>
+   		<a href="/review/add?placeNo=${placeDto.placeNo}" class="btn btn-secondary end">후기 작성 <i class="fa-solid fa-pen"></i></a>
+   		<c:if test="${fn:length(reviews) > 0}">
+       		<a href="/review/list?placeNo=${placeDto.placeNo}" class="btn btn-secondary end">후기 더보기 <i class="fa-solid fa-plus"></i></a>
+     	</c:if>
    </div>
 </div>
 
