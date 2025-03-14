@@ -18,13 +18,7 @@
   	align-items : center;
   	font-size: 20px;
 }
-.aStyle{
-   	text-decoration: none;
-   	outline: none; 
-   	padding:10px;
-   	color : black;
-   	font-weight : bold;
-}
+
 </style>
 
 <script type="text/javascript">
@@ -53,7 +47,6 @@ $(function(){
 				$(".reply-list").show();
 				$(".reply-count").show().text(response.totalCount + "개");
 				
-				currentPage++;
 				
 				console.log(response.list);
 				
@@ -76,13 +69,11 @@ $(function(){
 	}
 	
 	$(".btn-more").click(function(event){
-		event.preventDefault();
+		currentPage++;
 		loadList();
 	});
 	
 	loadList();
-	
-});
     // 댓글 삭제
     $(document).on("click",".btn-delete",function(){
         var choice = window.confirm("정말 댓글을 삭제하시겠습니까?");
@@ -95,9 +86,14 @@ $(function(){
             method:"post",
             data:{replyNo : replyNo},
             success:function(response){
+            	$(".reply-list").empty();
+            	currentPage = currentPage;
+              	loadList();
             }
         });
     });
+	
+});
 </script>
 
 <script type="text/template" id="reply-template"> 
@@ -141,14 +137,14 @@ $(function(){
        		<span>작성한 댓글이 없습니다</span>
        	</div>
     
-    	<h3 class="right me-10 my-0 card-count" style="display:none;"></h3>
+    	<h3 class="right me-10 my-0 reply-count" style="display:none;"></h3>
     	<div class="reply-list" style="display:none;">
 			         
         </div>
-        <div class="cell center mt-50">
-        	<a href="#" class="aStyle btn-more">더보기+</a>
-        </div>     
     </div>
+      <div style="display: flex; justify-content: center;">
+    <button class="btn-more" type="button">더보기+</button>
+</div>
 </div>
 
 <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

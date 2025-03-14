@@ -67,7 +67,7 @@ $(function() {
 
 	//이메일 처리
 	$("[name=memberEmail]").blur(function() {
-		var regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+		var regex = /^[A-Za-z0-9]+@[A-Za-z0-9.]+$/;
 		var isValid = regex.test($(this).val()) && $(this).val().length > 0;
 		$(this).removeClass("success fail").addClass(isValid ? "success" : "fail");
 		status.memberEmail = isValid;

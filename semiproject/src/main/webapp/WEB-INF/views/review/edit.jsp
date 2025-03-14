@@ -28,7 +28,7 @@
             <h1>후기 수정</h1>
         </div>
         <div class="cell right">
-            <h3 class="placeTitle" >${placeDto.placeTitle}  <i class="fa-solid fa-camera"></i></h3>
+            <h3 class="placeTitle" >${reviewDto.placeTitle}  <i class="fa-solid fa-camera"></i></h3>
         </div>
         
         <form class="form-check" action="edit" method="post">
@@ -39,15 +39,16 @@
            <div class="fail-feedback">&nbsp;&nbsp;제목을 작성해주세요</div>
         </div>
         <div class="cell">
-            <p>"${placeDto.placeTitle}"의 평점을 남겨주세요</p>
-           <div class="reviewStar"  data-max="5"  ></div>
+            <p>"${reviewDto.placeTitle}"의 평점을 남겨주세요</p>
+           <div class="reviewStar"   data-rate="${reviewDto.reviewStar}" ></div>
+           <input class="red" style="border:none; background-color : white;"value="${reviewDto.reviewStar}" disabled>
         </div>
         <div class="cell my-40">
             <label class="p-10">본문</label>
             <textarea name="reviewContent">${reviewDto.reviewContent}</textarea>
         </div>
         <div class="cell">
-            <button type="submit" class="btn btn-positive w-100" style="height: 50px;">수정하기</button>
+            <button type="submit" class="btn btn-primary w-100" style="height: 50px;">수정하기</button>
         </div>
         </form>
     </div>
