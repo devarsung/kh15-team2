@@ -67,7 +67,8 @@
         
         
 .changebtn,
-.deletemessage {
+.deletemessage,
+.inventory {
     font-size: 16px;
     padding: 0.5em 0.75em;
     color: #2d3436;
@@ -80,6 +81,13 @@
     text-align: center;
     width: 100px;
 }
+.inventory{
+	  border-color: #27ae60;
+    background-color: #27ae60;
+    color: white;
+    border-radius : 10px;
+}
+
 
 .deletemessage {
     border-color: #d63031;
