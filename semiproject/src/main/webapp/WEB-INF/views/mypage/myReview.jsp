@@ -23,7 +23,7 @@
 				data:{page : currentPage, size : size},
 				success:function(response){
 					
-					    var totalcount= $(response.totalCount)[0]
+					    var totalcount= $(response.totalCount)
 					 	var lastPage = response.isLastPage;
 				        console.log(response);
 				        console.log("현재페이지: "+ currentPage);
@@ -113,7 +113,7 @@
         </table>
     </div>
    <div class="cell center">
-    	<a href="#" class="btn-more">더보기+</a>
+    	<button class="btn-more" type="button">더보기+</button>
     </div>
 </div>
 

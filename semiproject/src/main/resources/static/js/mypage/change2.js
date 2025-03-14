@@ -45,9 +45,15 @@ $(function() {
 				method: "post",
 				data: { memberNickname: $(this).val() },
 				success: function(response) {
-					$("[name=memberNickname]").removeClass("success fail fail2")
-						.addClass(response ? "fail2" : "success");
-					status.memberNickname = response ? false : true;
+				    if(response) {
+				        $("[name=memberNickname]").removeClass("success fail fail2")
+				            .addClass("fail2");
+				        status.memberNickname = false;
+				    } else {
+				        $("[name=memberNickname]").removeClass("success fail fail2")
+				            .addClass("success");
+				        status.memberNickname = true;
+				    }
 				}
 			});
 		}

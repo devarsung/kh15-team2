@@ -79,6 +79,7 @@ $(function(){
             success:function(response){
                 $(".reply-writebox").val("");
                 currentPage = 1;
+                $(".reply-wrapper").empty();//비우기
                 loadList();
             }
         });
@@ -95,7 +96,8 @@ $(function(){
             method:"post",
             data:{replyNo : replyNo},
             success:function(response){
-            	currentPage = currentPage;
+            	$(".reply-wrapper").empty();//비우기
+            	currentPage = 1;
                 loadList();
             }
         });
@@ -141,6 +143,7 @@ $(function(){
                 replyContent : replyContent
             },
             success:function(response){
+            	$(".reply-wrapper").empty();
             	currentPage = currentPage;
                 loadList();
             }
@@ -175,10 +178,10 @@ $(function(){
            			},
            			
             success:function(response){
+            
             	
-            	$(".reply-wrapper").empty();//비우기
                 	//여기도 더보기 추가
-                	var totalcount= response.totalCount
+                	var totalcount= response.totalCount;
 				 	var lastPage = response.isLastPage;
 			
                 	 $(".btn-more").hide(); 
@@ -204,7 +207,7 @@ $(function(){
                     console.log(response.list);
 			        console.log("현재페이지: "+ currentPage);
 			        console.log("개수: "+ response.length);
-			        console.log("총 리뷰 개수 :"+totalcount);
+			        console.log("총 댓글 개수 :"+totalcount);
 			       	console.log("마지막페이지인가:"+response.isLastPage);
 			        //위에게 다 정해지고 반복하세요
                 $(response.list).each(function(){
@@ -233,8 +236,9 @@ $(function(){
 					
                     $(".reply-wrapper").append(html);
 
-                });        
-                $(".reply-count").text(response.length);
+                });
+			       
+                $(".reply-count").text(totalcount);
             }
         });
     };
@@ -296,6 +300,7 @@ $(function(){
         </div>
     </div>
 </script>
+
 
 </head>
 <div class="container w-1200">
@@ -369,12 +374,13 @@ $(function(){
                 <label>댓글목록</label>
 		</div>
   			<div class="reply-wrapper"></div>
-  
 
 
+
+	
           <div class="cell center">
-          	<a href="#" class="btn-more">더보기+</a>
-          </div>
+    	<button class="btn-more">더보기+</button>
+    </div>
     <div class="cell center">
         <a href="/review/list" class="btn btn-neutral mt-30" style="width:200px">목록으로</a>
     </div>
