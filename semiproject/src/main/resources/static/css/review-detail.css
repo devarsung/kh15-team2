@@ -137,4 +137,11 @@
     	text-decoration: none;
       }
 
+.a-href a{
+	 text-decoration: none;
+	 color:#4C585B;
+}
 
+.a-href:hover{
+	   filter:brightness(1.05);
+}

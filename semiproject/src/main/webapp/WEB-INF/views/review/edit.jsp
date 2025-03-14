@@ -15,6 +15,10 @@
         }
         .placeTitle{
             text-decoration: underline;
+            color : #212121;
+        }
+        .titleInput{
+        	border : 1px solid lightgray;
         }
         </style>
     
@@ -25,23 +29,22 @@
     
  <div class="container w-800">
         <div class="cell center" >
-            <h1>후기 수정</h1>
+            <h1 style="color:#212121;">후기 수정</h1>
         </div>
         <div class="cell right">
-            <h3 class="placeTitle" >${reviewDto.placeTitle}  <i class="fa-solid fa-camera"></i></h3>
+            <h3 class="placeTitle" >PLACE <i class="fa-solid fa-camera"></i> - ${reviewDto.placeTitle}   </h3>
         </div>
         
         <form class="form-check" action="edit" method="post">
         <input type="hidden" name="reviewNo" value="${reviewDto.reviewNo}">
         <div class="cell">
             <label class="p-10 ">제목</label>
-           <input class="field w-100" type="text" name="reviewTitle" value="${reviewDto.reviewTitle}" placeholder="제목 입력">
+           <input class="field w-100 titleInput" type="text" name="reviewTitle" value="${reviewDto.reviewTitle}" placeholder="제목 입력">
            <div class="fail-feedback">&nbsp;&nbsp;제목을 작성해주세요</div>
         </div>
         <div class="cell">
-            <p>"${reviewDto.placeTitle}"의 평점을 남겨주세요</p>
+            <p style="color: #212121;">[ ${reviewDto.placeTitle} ]의 평점을 남겨주세요</p>
            <div class="reviewStar"   data-rate="${reviewDto.reviewStar}" ></div>
-           <input class="red" style="border:none; background-color : white;"value="${reviewDto.reviewStar}" disabled>
         </div>
         <div class="cell my-40">
             <label class="p-10">본문</label>
