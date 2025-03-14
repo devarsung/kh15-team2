@@ -7,7 +7,7 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
 <link rel="stylesheet" type="text/css" href="/css/notice-list.css">
-
+<script src="/js/notice/list.js"></script>
 <script type="text/javascript">
 	$(function() {
 		$(".form-delete").submit(function() {
@@ -20,11 +20,20 @@
 		});
 	});
 </script>
+
 <style>
 .a-control {
 	text-decoration: none;
 	color: black;
 }
+.text-decoration-line{
+text-decoration-line:none;
+}
+.icon-all,
+.icon{
+cursor: pointer;
+}
+
 </style>
 
 <div class="container w-1000">
@@ -36,6 +45,7 @@
 
 	<form class="form-delete" action="deleteAll" method="post">
 
+
 		<div class="cell right">
 			<a href="add" class="btn btn-neutral">글쓰기</a>
 			<button type="submit" class="btn btn-negative">체크항목 삭제</button>
@@ -44,22 +54,29 @@
 		<!-- 테이블 -->
 		<div class="cell mt-50">
 			<div class="notice-list">
-						<div class="cell">
-						<input type="checkbox" class="check-all"><label>전체항목선택</label>
-						</div>
+							<div  class="notice-all">
+							<label >
+							<i class="fa-regular fa-square icon-all"></i>
+							</label>
+							<input type="checkbox" class="check-all hiding"><label>전체항목선택</label>
+							</div>
 				<c:choose>
 					<c:when test="${list.isEmpty()}">
 					등록된 게시글이 없습니다.
 				</c:when>
 					<c:otherwise>
 						<c:forEach var="noticeListViewDto" items="${list}">
-							<a href="/admin/notice/detail?noticeNo=${noticeListViewDto.noticeNo}"
-								class="notice-item"> 
-	<input type="checkbox" class="check-item" name="noticeNo" value="${noticeListViewDto.noticeNo}">								
-								<span class="notice-icon"><i
-									class="fa-solid fa-bullhorn"></i></span> <span class="notice-title">"${noticeListViewDto.noticeTitle}"</span>
+							<div class="notice-item"> 
+					<!-- <i class="fa-regular fa-square-check icon"></i> -->				
+					<label class="ww">
+							<i class="fa-regular fa-square icon me-10"></i>
+					</label>
+	<a href="/admin/notice/detail?noticeNo=${noticeListViewDto.noticeNo}" class="text-decoration-line">
+	<input type="checkbox" class="check-item hiding" name="noticeNo" value="${noticeListViewDto.noticeNo}"  >				
+								<span class="notice-icon"><i class="fa-solid fa-bullhorn"></i></span> <span class="notice-title">"${noticeListViewDto.noticeTitle}"</span>
 								<span class="notice-date">${noticeListViewDto.wtimeString}</span>
-							</a>
+	</a>
+							</div>
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>

@@ -137,7 +137,7 @@ public class AdminNoticeController {
 		}
 		
 		noticeDao.delete(noticeNo);
-		return "redirect:/admin/list";
+		return "redirect:/admin/notice/list";
 	}
 	
 	@PostMapping("/deleteAll")
