@@ -266,6 +266,20 @@ public class PlaceDao {
 		Object[] data = {placeNo};
 		return jdbcTemplate.queryForObject(sql, Double.class, data);
 	}
+	
+	//리뷰 쓸 때마다 리뷰수 갱신
+	public boolean updatePlaceReview(int placeNo, int count) {
+		String sql = "update place set place_review = ? where place_no = ?";
+		Object[] data = { count, placeNo };
+		return jdbcTemplate.update(sql, data) > 0;
+	}
+	
+	//리뷰 몇 개인지
+	public int countPlaceReview(int placeNo) {
+		String sql = "select count(*) from review where review_place = ?";
+		Object[] data = { placeNo };
+		return jdbcTemplate.queryForObject(sql, int.class, data);
+	}
 }
 
 
