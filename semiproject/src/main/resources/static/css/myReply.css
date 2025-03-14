@@ -5,7 +5,15 @@
 
 
         }
-
+      .btn-more{
+     	border : none;
+     	background-color : white;
+     	cursor : pointer;
+    	color : black;
+    	font-weight : bold;
+    	
+    	
+      }
 
         /*얘가 수정창 ;;기믹..*/
         .reply-content {
