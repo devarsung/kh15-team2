@@ -135,7 +135,6 @@ $(function(){
         //성별 처리
         $("[name=memberGender]").on("blur",function(){
             var isValid = $(this).val() != "";
-			 refs/remotes/origin/main
             $(this).removeClass("success fail")
             .addClass(isValid? "success" : "fail");
             status.memberGender = isValid;
@@ -168,11 +167,12 @@ $(function(){
 																.addClass("fa-paper-plane");
 					}
 				});
-				//정규식일치
-				$(this).removeClass("success fail success2 fail2").addClass("success");
-			}
-				//정규식 불일치 여기까진 어짜피 status 닫혀있음
-				$(this).removeClass("success fail success2 fail2").addClass("fail");
+				status.memberEmail = true;
+				  } else {
+				      // 이메일 형식이 맞지 않으면 fail 클래스 추가
+				      $("[name=memberEmail]").removeClass("success").addClass("fail");
+				      status.memberEmail = false;
+				  }
 		});
 			
 			 //인증확인 누를시
@@ -186,8 +186,8 @@ $(function(){
 					data:{ certEmail : certEmail, certNumber : certNumber },
 					success:function(response){//response는 true/false 중 하나
 						status.memberEmailCert = response;//결과를 상태값에 적용
-						$("[name=certNumber]").removeClass("success fail success2 fail2")
-														.addClass(response ? "success2" : "fail2");
+						$("[name=certNumber]").removeClass("success fail ")
+														.addClass(response ? "success" : "fail");
 						if(response == true) {
 							$(".cert-input-wrapper").hide();
 							$(".btn-send-cert").prop("disabled", true)

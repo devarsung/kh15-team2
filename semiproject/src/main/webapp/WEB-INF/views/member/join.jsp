@@ -9,7 +9,7 @@
 
     <!-- kakao post api -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script src="/js/member/join2.js"></script>
+	<script src="/js/member/join3.js"></script>
     <!-- jQuery cdn -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
    <style>
@@ -84,11 +84,12 @@
             <div class="cell">
                 <label style="display:block;">이메일 <i class="fa-solid fa-asterisk red"></i></label>
  	        	<input type="email" inputmode="email" name="memberEmail" class="field">
+	             <div class="success-feedback"><i class="fa-regular fa-circle"></i>올바른 이메일 형식입니다</div>
+	 	    	 <div class="fail-feedback red"><i class="fa-solid fa-check"></i>올바른 형식의 이메일이 아닙니다</div>
  	        	<button type="button" class="btn btn-neutral btn-send-cert">
  	        	<i class="fa-solid fa-paper-plane"></i>
  	        	<span>인증메일 발송</span>
  	        	</button>
- 	        <div class="fail-feedback">이메일은 필수 항목입니다</div>
  	    </div>
  	    <div class="cell cert-input-wrapper" style="display:none;">
  	    	<input type="text" inputmode="numeric" class="field"
@@ -97,10 +98,8 @@
  	    		<i class="fa-solid fa-check"></i>
  	    		<span>인증 확인</span>
  	    	</button>
-                <div class="success-feedback"><i class="fa-regular fa-circle"></i>올바른 이메일 형식입니다</div>
-                <div class="success2-feedback"><i class="fa-regular fa-circle"></i>인증번호가 일치합니다</div>
-                <div class="fail-feedback red"><i class="fa-solid fa-check"></i>올바른 형식의 이메일이 아닙니다</div>
-                <div class="fail2-feedback red"><i class="fa-solid fa-check"></i>인증번호가 일치하지않습니다</div>
+                <div class="success-feedback"><i class="fa-regular fa-circle"></i>인증번호가 일치합니다</div>
+                <div class="fail-feedback red"><i class="fa-solid fa-check"></i>인증번호가 일치하지않습니다</div>
             </div>
             
             
