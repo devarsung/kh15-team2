@@ -300,8 +300,8 @@ $(function() {
    
    <div class="cell center mt-50">
 	<c:choose>
-		<c:when test="${source == 'mypage'}"><a href="/mypage/myLikePlace" class="btn btn-secondary">목록으로</a></c:when>
-		<c:otherwise><a href="/place/list" class="btn btn-secondary">목록으로</a></c:otherwise>
+		<c:when test="${source == 'mypage'}"><a href="/mypage/myLikePlace" class="btn btn-secondary w-25">목록으로</a></c:when>
+		<c:otherwise><a href="/place/list" class="btn btn-secondary w-25">목록으로</a></c:otherwise>
 	</c:choose>
    </div>
 </div>

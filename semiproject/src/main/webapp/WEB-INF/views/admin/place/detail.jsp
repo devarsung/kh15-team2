@@ -47,6 +47,17 @@
 
 <script type="text/javascript">
 $(function() {
+	$(".btn-delete-place").click(function() {
+        var confirm = window.confirm("정말 삭제하시겠습니까?");
+        if(confirm) {
+        	var url = "delete?placeNo=" + $(this).data("no");
+        	window.location.href = url;
+        }
+        else {
+        	return false;
+        }
+	});
+	
  	$(".review-star").score({
         display:{
         	showNumber:true,
@@ -92,7 +103,7 @@ $(function() {
     <div class="cell div-title">
     	<div class="left-btns">
 	    	<a class="btn btn-secondary" href="edit?placeNo=${placeDto.placeNo}">수정하기</a>
-	    	<a class="btn btn-secondary" href="delete?placeNo=${placeDto.placeNo}">삭제하기</a>
+	    	<a class="btn btn-secondary btn-delete-place" href="javascript:void(0);" data-no="${placeDto.placeNo}">삭제하기</a>
     	</div>
         <h2 class="m-0">${placeDto.placeTitle}</h2>
     </div>

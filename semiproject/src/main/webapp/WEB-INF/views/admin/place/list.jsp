@@ -72,13 +72,16 @@ $(function(){
 	$(".check-delete").click(function(){
 		var deleteNos = [];
 		$(".checkbox:checked").each(function(){
-			console.log($(this).val());
 			deleteNos.push($(this).val());
 		});
 		
-		
 		if(deleteNos.length === 0) {
 			alert("삭제할 항목을 선택해주세요");
+			return false;
+		}
+		
+		var confirm = window.confirm(deleteNos.length + "개의 여행지를 삭제하시겠습니까?");
+		if(confirm == false) {
 			return false;
 		}
 		
@@ -161,7 +164,7 @@ $(function(){
    		<div class="mt-40 etc-group">
    			<div style="margin-left: 25px;">
    				<a href="add" class="btn btn-neutral"><i class="fa-solid fa-plus"></i> 등록</a>
-   				<a href="#" class="btn btn-neutral check-delete" style="margin-left: 3px;"><i class="fa-solid fa-trash"></i> 체크삭제</a>
+   				<a href="javascript:void(0);" class="btn btn-neutral check-delete" style="margin-left: 3px;"><i class="fa-solid fa-trash"></i> 체크삭제</a>
    			</div>
    		
 	    	<select name="order" class="field" style="margin-right: 25px;">
