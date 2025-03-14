@@ -166,7 +166,7 @@ $(function () {
                 <div class="swiper-wrapper">
                 	<c:forEach var="place" items="${places}">
 	               		<div class="swiper-slide" data-url="/place/detail?placeNo=${place.placeNo}">
-	               			<img src="/attachment/download?attachment_no=${place.placeFirstImage}"
+	               			<img src="/attachment/download?attachmentNo=${place.placeFirstImage}"
 	               			onerror="this.onerror=null; this.src='/images/default-image.png';">
 	                        <div class="overlay">
 	                            <div class="place-name">${place.placeTitle}</div>
