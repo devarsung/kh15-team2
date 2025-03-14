@@ -70,15 +70,15 @@
 	                	<input class="field w-100" type="text" name="memberAddress2" size="60" placeholder="상세주소" value="${memberDto.memberAddress2}">
 	                </td>
 	            </tr>
-	            <tr>
-	                <th>등급</th>
-	                <td>
-	                	<select class="field w-100" name="memberLevel">
-							<option ${memberDto.memberLevel == '일반회원' ? 'selected' : ''}>일반회원</option>
-							<option ${memberDto.memberLevel == '관리자' ? 'selected' : ''}>관리자</option>
-						</select>
-	                </td>
-	            </tr> 
+<!-- 	            <tr> -->
+<!-- 	                <th>등급</th> -->
+<!-- 	                <td> -->
+<!-- 	                	<select class="field w-100" name="memberLevel"> -->
+<%-- 							<option ${memberDto.memberLevel == '일반회원' ? 'selected' : ''}>일반회원</option> --%>
+<%-- 							<option ${memberDto.memberLevel == '관리자' ? 'selected' : ''}>관리자</option> --%>
+<!-- 						</select> -->
+<!-- 	                </td> -->
+<!-- 	            </tr>  -->
 	        </table>  
 	    </div>
 	
