@@ -15,7 +15,7 @@ $(function() {
 		      }
 		  });
 });
-				s
+				
 $(function(){
 	$(".icon-all").on("click", function(){
 			
@@ -44,7 +44,9 @@ $(function(){
 		
 		
   // [2] .check-all 선택 시, 해당 그룹 내의 아이콘 + check-item 상태 변경
-    $(document).on("change", ".check-all", function(){
+  $(function(){
+	
+  $(".check-all").on("change", ".check-all", function(){
         var noticeAll = $(this).closest(".notice-all"); // 가장 가까운 .notice-all 찾기
         var iconAll = noticeAll.find(".icon-all"); // 같은 그룹의 아이콘 찾기
         var checkItems = noticeAll.closest(".notice-list").find(".check-item"); // 같은 그룹의 check-item 찾기
@@ -56,11 +58,15 @@ $(function(){
             iconAll.removeClass("fa-square").addClass("fa-check-square"); // 체크되면 아이콘 변경
         } else {
             iconAll.removeClass("fa-check-square").addClass("fa-square"); // 체크 해제되면 원래대로
-        }
-
+        
+			}
         // [check-item 변경]
         checkItems.prop("checked", isChecked); // check-all의 상태에 따라 check-item 변경
     });
-
-
-
+  });
+  
+  $(function(){
+	
+	
+  });
+  

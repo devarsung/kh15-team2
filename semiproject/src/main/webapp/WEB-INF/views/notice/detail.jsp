@@ -37,9 +37,7 @@
 
 	<div class="cell p-20 content-box">${noticeDto.noticeContent}</div>
 	<div class="cell right">
-		<c:if test="${sessionScope.userId != null}">
 			<a href="/notice/list" class="changebtn mt-20">목록</a>
-		</c:if>
 	</div>
 	<div></div>
 
