@@ -71,10 +71,10 @@ cursor: pointer;
 					<label class="ww">
 							<i class="fa-regular fa-square icon me-10"></i>
 					</label>
-	<a href="/admin/notice/detail?noticeNo=${noticeListViewDto.noticeNo}" class="text-decoration-line">
+	<a href="/admin/notice/detail?noticeNo=${noticeListViewDto.noticeNo}" class="text-decoration-line 	">
 	<input type="checkbox" class="check-item hiding" name="noticeNo" value="${noticeListViewDto.noticeNo}"  >				
-								<span class="notice-icon"><i class="fa-solid fa-bullhorn"></i></span> <span class="notice-title">"${noticeListViewDto.noticeTitle}"</span>
-								<span class="notice-date">${noticeListViewDto.wtimeString}</span>
+								<span class="notice-icon"><i class="fa-solid fa-bullhorn"></i></span> <span class="notice-title " >"${noticeListViewDto.noticeTitle}"</span>
+								<span class="notice-date me-50" >${noticeListViewDto.wtimeString}</span>
 	</a>
 							</div>
 						</c:forEach>

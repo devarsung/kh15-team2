@@ -19,21 +19,6 @@
 
     <hr>
 
-    	<div class="cell">
-            <div class="cell">
-                게시글 넘버:${noticeDto.noticeNo}
-              
-            </div>
-            <div class="cell textarea2">
-
-              작성시각(${noticeDto.getWtimeString()})|<br>
-                수정시각( ${noticeDto.getEtimeString()})|
-               닉네임(${noticeDto.memberNickname})|
-        조회수:${noticeDto.noticeRead}
-           
-            </div>
-    	</div>
-
     
     
     
@@ -49,7 +34,7 @@
             <i class="fa-solid fa-eye"></i> ${noticeDto.noticeRead}  
         </div>
         <div>
-            작성일(${noticeDto.getWtimeString()}) | 수정일(${noticeDto.getEtimeString()})
+            작성일(${noticeDto.getWtimeString()})
         </div>
     </div>
 </div>
@@ -58,6 +43,8 @@
       <div class="cell right">
        <c:if test="${sessionScope.userId != null}">
             <c:if test="${sessionScope.userId == noticeDto.noticeWriter}">
+            
+            	<a href="/admin/notice/list" class="inventory" >목록</a>
                 <a href="/admin/notice/edit?noticeNo=${noticeDto.noticeNo}" class="changebtn mt-20" >수정</a>
                 <a href="/admin/notice/delete?noticeNo=${noticeDto.noticeNo}" class="deletemessage">삭제</a>
             </c:if>

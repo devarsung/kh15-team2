@@ -31,7 +31,7 @@
 				<i class="fa-solid fa-eye"></i> ${noticeDto.noticeRead}
 			</div>
 			<div>작성일(${noticeDto.getWtimeString()}) |
-				수정일(${noticeDto.getEtimeString()})</div>
+				</div>
 		</div>
 	</div>
 
