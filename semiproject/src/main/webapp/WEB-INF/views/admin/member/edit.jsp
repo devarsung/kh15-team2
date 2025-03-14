@@ -36,7 +36,7 @@
 	            <tr>
 	                <th>성별</th>
 	                <td>
-	                	<select class="field w-100" name="memberLevel">
+	                	<select class="field w-100" name="memberGender">
 							<option ${memberDto.memberGender == 'M' ? 'selected' : ''} value="M">남자</option>
 							<option ${memberDto.memberGender == 'F' ? 'selected' : ''} value="F">여자</option>
 						</select>
