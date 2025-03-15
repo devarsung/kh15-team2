@@ -23,7 +23,7 @@
 			           	<a href="/notice/detail?noticeNo=${noticeListViewDto.noticeNo}" class="notice-item">
 		                   <span class="notice-icon"><i class="fa-solid fa-bullhorn"></i></span>
 		                   <span class="notice-title">"${noticeListViewDto.noticeTitle}"</span>
-		                   <span class="notice-date">${noticeListViewDto.wtimeString}</span>
+		                   <span class="notice-date2">${noticeListViewDto.wtimeString}</span>
 		              	</a>
 		          	</c:forEach>
 				</c:otherwise>

@@ -6,7 +6,9 @@
 
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <link rel="stylesheet" type="text/css" href="/css/notice-detail.css">
+  <script src="/js/notice/detail.js"></script>
 <style>
+
 
 </style>
 
@@ -42,12 +44,10 @@
     <div class="cell p-20 content-box">${noticeDto.noticeContent}</div>
       <div class="cell right">
        <c:if test="${sessionScope.userId != null}">
-            <c:if test="${sessionScope.userId == noticeDto.noticeWriter}">
-            
+                      
             	<a href="/admin/notice/list" class="inventory" >목록</a>
                 <a href="/admin/notice/edit?noticeNo=${noticeDto.noticeNo}" class="changebtn mt-20" >수정</a>
                 <a href="/admin/notice/delete?noticeNo=${noticeDto.noticeNo}" class="deletemessage">삭제</a>
-            </c:if>
         </c:if> 
     </div>
     <div>
