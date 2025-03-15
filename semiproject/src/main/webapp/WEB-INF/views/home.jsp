@@ -240,7 +240,7 @@ $(function () {
 	                	<a href="/notice/detail?noticeNo=${notice.noticeNo}" class="notice-item">
 	                        <span class="notice-icon"><i class="fa-solid fa-bullhorn"></i></span>
 	                        <span class="notice-title">"${notice.noticeTitle}"</span>
-	                        <span class="notice-date">${notice.wtimeString}</span>
+	                        <span class="notice-date2">${notice.wtimeString}</span>
 	                    </a>
                 	</c:forEach>
                 </div>

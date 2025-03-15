@@ -56,3 +56,63 @@ $(function(){
         },
     });
 });
+
+$(function(){
+    // 🔹 Summernote 초기화
+    $("[name=noticeContent]").summernote({
+        height: 250,
+        minHeight: 200,
+        maxHeight: 400,
+        placeholder: "타인에 대한 무분별한 비방 시 예고 없이 삭제될 수 있습니다",
+        toolbar: [
+            ["font", ["style", "fontname", "fontsize", "forecolor", "backcolor"]],
+            ["style", ["bold", "italic", "underline", "strikethrough"]],
+            ["attach", ["picture"]],
+            ["tool", ["ol", "ul", "table", "hr", "fullscreen"]],
+        ]
+    });
+
+    var status = {
+        noticeTitle: false,
+        noticeContent: false,
+        ok: function() {
+            return this.noticeTitle && this.noticeContent;
+        }
+    };
+
+    // 🔹 제목 blur 이벤트 (입력 확인)
+    $("[name=noticeTitle]").blur(function(){
+        var isValid = $(this).val().trim().length > 0;
+        status.noticeTitle = isValid;
+
+        $(this).removeClass("success fail").addClass(isValid ? "success" : "fail");
+    });
+
+    // 🔹 Summernote 본문 유효성 검사 함수 (수동 실행 가능)
+    function checkContentValid() {
+        var isValid = !$("[name=noticeContent]").summernote('isEmpty');
+        status.noticeContent = isValid;
+    }
+
+    // 🔹 Summernote blur 이벤트 (본문 검사)
+    $("[name=noticeContent]").on("summernote.blur", function(){
+        checkContentValid();
+    });
+
+    // 🔹 제출 시 최종 유효성 검사
+    $(".form-check").submit(function(event){
+        console.clear();
+
+        // 강제로 입력값 유효성 검사 실행
+        $("[name=noticeTitle]").trigger("blur");
+        checkContentValid(); // Summernote는 직접 실행해야 안정적
+
+
+        // 유효성 검사 실패 시 제출 막기
+        if (!status.ok()) {
+            event.preventDefault();
+        } 
+		else {
+        }
+    });
+});

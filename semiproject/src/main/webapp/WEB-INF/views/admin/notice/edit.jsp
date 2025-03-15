@@ -21,7 +21,7 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
       <div class="container w-800">
         <div class="cell center" >
-            <h1>공지사항 작성</h1>
+            <h1>공지사항 수정</h1>
         </div>
         
         <form class="form-check" action="edit" method="post" >
