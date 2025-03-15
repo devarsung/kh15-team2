@@ -150,6 +150,8 @@ public class ReviewController {
 			throw new TargetNotFoundException("존재하지 않는 후기 입니다");
 		}
 		
+		int placeNo = reviewDto.getReviewPlace();
+		
 		String content = reviewDto.getReviewContent();
 		Document document = Jsoup.parse(content);
 		Elements elements = document.select(".summernote-img");
@@ -161,6 +163,9 @@ public class ReviewController {
 		}
 		
 		reviewDao.delete(reviewNo);
+		
+		int reviewCount = placeDao.countPlaceReview(placeNo);
+		placeDao.updatePlaceReview(placeNo, reviewCount);
 		return "redirect:list";
 	}
 	
