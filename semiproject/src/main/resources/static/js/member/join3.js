@@ -147,7 +147,11 @@ $(function(){
             status.memberGender = isValid;
         });
 		
-		
+		$("[name=memberEmail]").blur(function() {
+			var isValid = $(this).val().length > 0;
+			$(this).removeClass("success fail").addClass(isValid ? "success" : "fail");
+			status.memberEmail = isValid;
+		});
         //이메일 처리
 		$(".btn-send-cert").click(function(){
 				var email = $("[name=memberEmail]").val();//입력된 이메일 가져옴
@@ -310,7 +314,11 @@ $(function(){
         //폼검사
             $(".form-check").submit(function(){
                 $("[name],#pw-reinput").trigger("blur");
-                return status.ok();
+				if(status.memberEmailCert == false) {
+						window.alert("반드시 이메일 인증을 진행하셔야 합니다");
+					}
+				
+				    return status.ok();
 				
             });
 
