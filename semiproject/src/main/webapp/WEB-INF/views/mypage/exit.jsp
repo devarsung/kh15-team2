@@ -14,7 +14,7 @@
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <link rel="stylesheet" type="text/css" href="./css/commons.css">
+    <link rel="stylesheet" type="text/css" href="/css/commons.css">
     <!-- <link rel="stylesheet" type="text/css" href="./css/test.css"> -->
 <style>
 a {
@@ -59,6 +59,7 @@ a {
             //폼검사
             $(".form-check").submit(function(){
                 $("[name]").trigger("blur","checked");
+                alert("필수항목을 입력해주세요");
                 return status.ok();
             })
         });
