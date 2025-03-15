@@ -31,6 +31,13 @@ $(function(){
                 
                 //정상 선택
                 if(file){
+					  var FileTypes = ['image/png', 'image/jpeg']; 
+					  if (!FileTypes.includes(file.type)) { //배열 안에 특정 값이 포함되어 있는지 확인하는메서드
+					        alert("허용되지 않는 파일 형식입니다.");
+					        $(this).val(''); // 초기화
+					        return;
+					    }
+				
                  reader.onload = function(e) { 
                  $("#myPhoto").attr("src", e.target.result);
                 }
