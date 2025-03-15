@@ -41,7 +41,7 @@
 				        	if(currentPage==1) { //1페이지라면
 				        	var reviewNone = `
 				        		<tr>
-		                        <td colspan="6" align="center">좋아요한 후기가 없습니다.</td>
+		                        <td colspan="6" align="center">리뷰가 없습니다.</td>
 		                    	</tr>
 				        	`;
 				        	$("#reviewList").append(reviewNone); //얘추가하고
