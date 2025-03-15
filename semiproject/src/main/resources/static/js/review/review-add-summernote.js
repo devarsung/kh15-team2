@@ -55,7 +55,9 @@ $(function(){
         status.reviewTitle = isValid;
     });
     $("[name=reviewContent]").blur(function(){
-        var isValid = $(this).val().length > 0;
+		var summernoteHtml = "<p><br></p>"; //진짜섬머노트 열받게하네
+		var content = $(this).summernote('code').trim()  //섬머노트기능
+        var isValid = $(this).val().length > 0 && content !== summernoteHtml;
         if(!isValid){
             $(".note-placeholder").css("color","#d63031");
             status.reviewContent = false;

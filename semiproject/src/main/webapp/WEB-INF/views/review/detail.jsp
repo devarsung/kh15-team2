@@ -10,10 +10,6 @@
 <script type="text/javascript">
 $(function(){
 	
-	$(".btn-danger").click(function(){
-		var choice = window.confirm("게시글을 삭제하시겠습니까?");
-        if(choice == false) return false;
-	});
  
     var params = new URLSearchParams(location.search);
     var reviewNo = params.get("reviewNo");
@@ -381,7 +377,7 @@ $(function(){
         </c:when>
         <c:otherwise>
                 <div class="cell w-100">
-                    <textarea class="reply-writebox w-100" placeholder="로그인후 이용가능합니다"></textarea>
+                    <textarea class="reply-writebox w-100" placeholder="로그인후 이용가능합니다" readonly></textarea>
                 </div>
                 <div class="cell right">
                     <button type="button"  class="btn btn-neutral">등록하기</button>

@@ -32,7 +32,7 @@
 			<thead>
 				<tr>
 					<th class="w-10">No</th>
-					<th style="width:450px; max-width:450px;">제목</th>
+					<th style="width:500px; max-width:500px;">제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
 					<th>조회수</th>
@@ -63,10 +63,10 @@
 								
 								<!-- 댓글 표시 -->
 								<c:if test="${reviewListViewDto.reviewReply > 0}">
-									<span class="ms-20">
+
 										<i class="fa-solid fa-comment-dots" style="color:#F3D0D7;" ></i>
 										${reviewListViewDto.reviewReply}
-									</span>
+						
 								</c:if>
 								
 								<!-- 좋아요 표시 -->
