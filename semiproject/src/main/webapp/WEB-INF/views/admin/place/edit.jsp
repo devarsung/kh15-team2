@@ -167,7 +167,7 @@
 			        </div>
 		        </div>
 		    	
-		    	<input type="file" name="firstImage" class="firstImage field" style="display:none;">    
+		    	<input type="file" name="firstImage" class="firstImage field" style="display:none;" accept=".jpg, .jpeg, .png">    
 		    	<div class="fail-feedback center">대표이미지를 선택해주세요</div>    
 		        <span class="first-name center"></span>
 	        </div>
@@ -260,7 +260,7 @@
 	        	</c:forEach>
 	        </div>
 	        <button type="button" class="btn btn-secondary btn-add-detail mt-20">사진선택</button>
-	        <input type="file" name="detailImages" class="detailImages" multiple style="display:none;">
+	        <input type="file" name="detailImages" class="detailImages" multiple style="display:none;" accept=".jpg, .jpeg, .png">
 	    </div>
 	    
 	    <input type="hidden" name="firstImageChange">
