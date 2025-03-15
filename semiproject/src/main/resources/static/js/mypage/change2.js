@@ -77,7 +77,10 @@ $(function() {
 		$(".btn-send-cert").click(function(){
 				var email = $("[name=memberEmail]").val();//입력된 이메일 가져옴
 				var regex = /^[A-Za-z0-9]+@[A-Za-z0-9.]+$/;
-				if(regex.test(email) == false) return;//형식에 맞지 않으면 차단
+				if (!regex.test(email)) {
+				       status.memberEmail = false;
+				       return;
+				   }
 
 				$.ajax({
 					url:"/rest/cert/send",
@@ -85,6 +88,8 @@ $(function() {
 					data:{ email : email },
 					success:function(response){
 						$(".cert-input-wrapper").fadeIn();
+						status.memberEmail = true;
+						status.memberEmailCert = false; //인증시작시 false막아둠
 					},
 					beforeSend:function(){
 						$(".btn-send-cert").prop("disabled", true);
@@ -100,11 +105,16 @@ $(function() {
 					}
 				});
 			});
+			
+			//인증확인버튼
 			$(".btn-confirm-cert").click(function(){
 				var certEmail = $("[name=memberEmail]").val();
 				var certNumber = $("[name=certNumber]").val();
 				var regex = /^[0-9]{8}$/;
-				if(regex.test(certNumber) == false) return;
+				if (!regex.test(certNumber)) {
+				      status.memberEmailCert = false;  
+				      return;
+				  }
 
 				$.ajax({
 					url:"/rest/cert/check",

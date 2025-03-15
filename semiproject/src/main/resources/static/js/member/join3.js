@@ -315,7 +315,7 @@ $(function(){
             $(".form-check").submit(function(){
                 $("[name],#pw-reinput").trigger("blur");
 				if(status.memberEmailCert == false) {
-						window.alert("반드시 이메일 인증을 진행하셔야 합니다");
+						window.alert("필수 입력사항을 입력해주세요");
 					}
 				
 				    return status.ok();
