@@ -84,12 +84,12 @@
             <div class="cell">
                 <label style="display:block;">이메일 <i class="fa-solid fa-asterisk red"></i></label>
  	        	<input type="email" inputmode="email" name="memberEmail" class="field">
+ 	        	<button type="button" class="btn btn-neutral btn-send-cert">
+ 	        	<span>인증메일 발송</span>
+ 	        	<i class="fa-solid fa-paper-plane"></i>
+ 	        	</button>
 	             <div class="success-feedback"><i class="fa-regular fa-circle"></i>올바른 이메일 형식입니다</div>
 	 	    	 <div class="fail-feedback red"><i class="fa-solid fa-check"></i>올바른 형식의 이메일이 아닙니다</div>
- 	        	<button type="button" class="btn btn-neutral btn-send-cert">
- 	        	<i class="fa-solid fa-paper-plane"></i>
- 	        	<span>인증메일 발송</span>
- 	        	</button>
  	    </div>
  	    <div class="cell cert-input-wrapper" style="display:none;">
  	    	<input type="text" inputmode="numeric" class="field"
