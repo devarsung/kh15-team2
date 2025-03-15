@@ -8,11 +8,12 @@ $(function() {
 		memberContact: true,
 		memberAddress: true,
 		memberPw: false,
+		memberEmailCert: true,
 		ok: function() {
 					return this.memberNickname
 						&& this.memberEmail && this.memberBirth
 						&& this.memberContact && this.memberAddress
-						&& this.memberPw;
+						&& this.memberPw && this.memberEmailCert;
 				},
 			};
 
@@ -70,7 +71,7 @@ $(function() {
 		var regex = /^[A-Za-z0-9]+@[A-Za-z0-9.]+$/;
 		var isValid = regex.test($(this).val()) && $(this).val().length > 0;
 		$(this).removeClass("success fail").addClass(isValid ? "success" : "fail");
-		status.memberEmail = isValid;
+		status.memberEmail = isValid
 	});
 
 		$(".btn-send-cert").click(function(){

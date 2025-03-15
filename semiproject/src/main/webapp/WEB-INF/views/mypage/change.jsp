@@ -18,7 +18,7 @@
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-<script src="/js/mypage/change.js"></script>
+<script src="/js/mypage/change2.js"></script>
 <!-- jQuery cdn -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
@@ -87,10 +87,12 @@
 						<th>성별</th>
 						<td class="p-10">
                 			<c:if test="${memberDto.memberGender == 'M'}">
-                				<input name="memberGender" type="text" class="field  w-75" value="남자" readonly>
+                			<input name="memberGender" type="hidden" class="field  w-75" value="M" >
+                				<input type="text" class="field  w-75" value="남자" readonly>
                 			</c:if>
 	                		<c:if test="${memberDto.memberGender == 'F'}">
-	                			<input name="memberGender" type="text" class="field  w-75" value="여자" readonly>
+	                		<input name="memberGender" type="hidden" class="field  w-75" value="F" >
+	                			<input type="text" class="field  w-75" value="여자" readonly>
 	                		</c:if>
 						</td>
 					</tr>
