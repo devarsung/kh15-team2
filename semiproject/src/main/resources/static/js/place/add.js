@@ -290,7 +290,28 @@ $(function() {
 	$(".firstImage").change(function(){
 		var file = this.files[0];
 		
-		if(file) {
+		//취소를 누른 경우
+		if(!file) {
+			//취소를 눌렀는데 이전에 선택한 파일이 있는 경우
+			if(previousFile) {
+				var dataTransfer = new DataTransfer();
+				dataTransfer.items.add(previousFile);
+				$(".firstImage")[0].files = dataTransfer.files;//input값 변경
+				//.preiew-firstImage, .first-name, status.firstImage는 그대로 유지됨. 여기서 또 설정할 필요없음
+			}
+			else {
+				checkFirstImageValid();
+			}
+			
+			return;
+		}
+		
+		//파일을 선택한 경우
+		var FileTypes = ['image/png', 'image/jpeg']; 
+		var typeValid = FileTypes.includes(file.type);
+				
+		if (typeValid) {
+			//이미지면 
 			previousFile = file;
 			var reader = new FileReader();
 	        reader.onload = function(e) {
@@ -299,19 +320,34 @@ $(function() {
 				checkFirstImageValid();
 	        };
 	        reader.readAsDataURL(file);
-			return;
-		}
+			return;	
+	    }
 		
-		//취소를 눌렀는데 이전에 선택한 파일이 있는 경우
+		//이미지 아닌 경우
 		if(previousFile) {
+			//이전 파일 있는 경우 이전 파일 그대로 유지해야한다
+			//중복 별로지만 급한대로 작성
 			var dataTransfer = new DataTransfer();
 			dataTransfer.items.add(previousFile);
 			$(".firstImage")[0].files = dataTransfer.files;//input값 변경
-			//.preiew-firstImage, .first-name, status.firstImage는 그대로 유지됨. 여기서 또 설정할 필요없음
+			var reader = new FileReader();
+	        reader.onload = function(e) {
+	            $(".preview-firstImage").find("img").attr("src", e.target.result);
+				$(".first-name").text(previousFile.name);
+				checkFirstImageValid();
+	        };
+	        reader.readAsDataURL(previousFile);
 		}
 		else {
+			//이전 파일 없는 경우(처음)
+			$(".firstImage").val("");
+			previousFile = null;
+			$(".preview-firstImage").find("img").attr("src", "/images/defaultBack.png");
+			$(".first-name").text("");
 			checkFirstImageValid();
 		}
+		
+		alert("허용되지 않는 파일 형식입니다.");
 	});
 	
 	//상세 이미지
@@ -324,12 +360,32 @@ $(function() {
 	
 	$(".detailImages").change(function(){
 		var selectedFiles = this.files;
+		var FileTypes = ['image/png', 'image/jpeg']; 
+		var validFiles = [];
+		var failCnt = 0;
+		
+		//이미지 파일만 필터링하기
 		for(var i=0; i<selectedFiles.length; i++) {
-			var fileIndex = fileCnt++;
-			fileListMap.set(fileIndex, selectedFiles[i]);
-			showDetailPreview(fileIndex, selectedFiles[i]);
+			if(FileTypes.includes(selectedFiles[i].type)) {
+				validFiles.push(selectedFiles[i]);
+			}
+			else {
+				failCnt++;
+			}
 		}
+		
+		//유효한 파일만
+		for(var i=0; i<validFiles.length; i++) {
+			var fileIndex = fileCnt++;
+			fileListMap.set(fileIndex, validFiles[i]);
+			showDetailPreview(fileIndex, validFiles[i]);
+		}
+		
 		updateDetailInput();
+		
+		if(failCnt > 0) {
+			alert("허용되지 않은 " + failCnt + "개의 파일은 제외되었습니다");
+		}
 	});
 	
 	$(document).on("click", ".btn-close", function(){
