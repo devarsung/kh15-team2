@@ -90,6 +90,7 @@ $(function() {
 						$(".cert-input-wrapper").fadeIn();
 						status.memberEmail = true;
 						status.memberEmailCert = false; //인증시작시 false막아둠
+					
 					},
 					beforeSend:function(){
 						$(".btn-send-cert").prop("disabled", true);
@@ -113,7 +114,9 @@ $(function() {
 				var regex = /^[0-9]{8}$/;
 				if (!regex.test(certNumber)) {
 				      status.memberEmailCert = false;  
-				      return;
+					  $("[name=certNumber]").removeClass("success fail").addClass("fail");
+					  $(".cert-status").text("인증번호는 8자리 숫자여야 합니다.").show();
+					    return;
 				  }
 
 				$.ajax({
