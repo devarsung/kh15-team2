@@ -133,7 +133,8 @@
 	    		<span>인증 확인</span>
 	    	</button>
 	    	<div class="success-feedback">인증이 완료되었습니다</div>
-	    	<div class="fail-feedback">인증번호가 일치하지 않습니다</div>
+	    	<div class="fail-feedback">인증번호를 입력해주세요</div>
+	    		<div class="fail2-feedback">인증번호가 일치하지 않습니다</div>
 	    </div>
 							</td>
 					</tr>

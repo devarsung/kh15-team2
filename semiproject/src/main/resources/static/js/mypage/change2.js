@@ -112,12 +112,22 @@ $(function() {
 				var certEmail = $("[name=memberEmail]").val();
 				var certNumber = $("[name=certNumber]").val();
 				var regex = /^[0-9]{8}$/;
-				if (!regex.test(certNumber)) {
-				      status.memberEmailCert = false;  
-					  $("[name=certNumber]").removeClass("success fail").addClass("fail");
-					  $(".cert-status").text("인증번호는 8자리 숫자여야 합니다.").show();
-					    return;
-				  }
+				// 🔹 미입력 시 (공백 포함)
+				if (certNumber.length === 0) {  
+				    status.memberEmailCert = false;  
+				    $("[name=certNumber]").removeClass("success fail").addClass("fail");
+				    $(".cert-status").text("인증번호를 입력해주세요.").removeClass("success").addClass("fail").show();
+				    return;
+				}
+
+				// 🔹 숫자 8자리가 아닐 경우
+				if (!regex.test(certNumber)) {  
+				    status.memberEmailCert = false;  
+				    $("[name=certNumber]").removeClass("success fail").addClass("fail2");
+				    $(".cert-status").text("인증번호는 8자리 숫자여야 합니다.").removeClass("success").addClass("fail").show();
+				    return;
+				}
+
 
 				$.ajax({
 					url:"/rest/cert/check",
