@@ -5,6 +5,10 @@
     
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 
+ <link rel="stylesheet" type="text/css" href="/css/member-list.css">
+
+
+
 <div class="container w-1000">
     <div class="cell center mb-50">
         <h1>회원 목록 및 검색</h1>
@@ -13,19 +17,19 @@
 	<div class="cell right">
         <form action="list" method="get" autocomplete="off">
             <select name="column" class="field">
-                <option value="member_id">아이디</option>
-				<option value="member_nickname">닉네임</option>
-				<option value="member_birth">생년월일</option>
-				<option value="member_contact">연락처</option>
-				<option value="member_email">이메일</option>
+                <option value="member_id"${param.column == 'member_id' ? 'selected' : ''}>아이디</option>
+				<option value="member_nickname"${param.column == 'member_nickname' ? 'selected' : ''}>닉네임</option>
+				<option value="member_birth"${param.column == 'member_birth' ? 'selected' : ''}>생년월일</option>
+				<option value="member_contact"${param.column == 'member_contact' ? 'selected' : ''}>연락처</option>
+				<option value="member_email"${param.column == 'member_email' ? 'selected' : ''}>이메일</option>
             </select>
-            <input type="search" name="keyword" class="field" value="">
+            <input type="search" name="keyword" class="field" value="${ param.keyword}">
             <button type="submit" class="btn btn-neutral">검색</button>
         </form>
     </div>
-    
+        
     <div class="cell center">
-        <table class="table table-border table-hover">
+        <table class="table table-border table-hover table-ellipsis tableStyle">
             <thead>
                 <tr>
                 	<th>아이디</th>
@@ -49,7 +53,7 @@
             				<tr>
 			                    <td>${memberDto.memberId}</td>
 			                    <td>
-			                    	<a href="detail?memberId=${memberDto.memberId}">${memberDto.memberNickname}</a>
+			                    	<a href="detail?memberId=${memberDto.memberId}" class="aStyle">${memberDto.memberNickname}</a>
 			                    </td>
 			                    <td>${memberDto.memberBirth}</td>
 			                    <td>${memberDto.memberContact}</td>
