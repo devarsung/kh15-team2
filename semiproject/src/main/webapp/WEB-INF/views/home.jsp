@@ -202,7 +202,6 @@ $(function () {
             </div>
         </div>
     </div>
-
     <div class="cell flex-box">
         <div class="cell w-50 ms-10 me-10">
             <div class="cell">
@@ -214,7 +213,7 @@ $(function () {
 	                	<a href="/review/detail?reviewNo=${review.reviewNo}" class="review-item">
 	                        <div class="review-info">
 	                            <span class="review-writer">${review.memberNickname}</span> ·
-	                            <span class="review-place">OOO 레스토랑</span>
+	                            <span class="review-place">${review.placeTitle}</span>
 	                        </div>
 	                        <div class="review-title">"${review.reviewTitle}"</div>
 	                        <div class="review-footer">
