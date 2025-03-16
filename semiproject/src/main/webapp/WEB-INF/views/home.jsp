@@ -186,7 +186,7 @@ $(function () {
                             	</div>
                             	<fmt:parseNumber value="${place.placeStar}" var="reviewStar"/>
 	                            <div class="review-star" data-max="5" data-rate="${reviewStar}"></div>
-	                            <div class="reaction">
+	                            <div class="">
 	                            	<span><i class="fa-solid fa-eye"></i> : ${place.placeRead}</span>
 	                                <span><i class="fa-solid fa-heart"></i> : ${place.placeLike}</span>
 	                                <span><i class="fa-solid fa-comment-dots"></i> : ${place.placeReview}</span>

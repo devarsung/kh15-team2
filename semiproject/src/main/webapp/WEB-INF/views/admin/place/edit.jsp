@@ -222,8 +222,8 @@
 	    
 	    <div class="cell">
 	    	<h2><i class="fa-solid fa-square-pen"></i> 문의전화</h2>
-	        <input type="text" name="placeTel" class="field w-100" value="${placeDto.placeTel}" placeholder="10~11자 숫자로입력하세요">
-	        <div class="fail-feedback">미입력 or 10~11자로 입력하세요</div>
+	        <input type="text" name="placeTel" class="field w-100" value="${placeDto.placeTel}" placeholder="8~12자 숫자로입력하세요">
+	        <div class="fail-feedback">미입력 or 8~12자로 입력하세요</div>
 	    </div>
 	    
 	    <div class="cell">

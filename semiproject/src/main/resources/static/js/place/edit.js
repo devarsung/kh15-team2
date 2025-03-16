@@ -233,7 +233,7 @@ $(function() {
 	
     $("[name=placeTel]").blur(function(){
 		var empty = $(this).val().length <= 0; //아예 입력하지말거나
-		var regex = /^[0-9]{2,3}[0-9]{8}$/
+		var regex = /^[0-9]{8,12}$/
 		var pass = regex.test($(this).val());//정규식을 통과했냐
 		
 		var isValid = empty || pass;
