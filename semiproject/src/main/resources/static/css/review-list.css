@@ -1,64 +1,96 @@
- .selectStyle{
-	 	 padding: 5px;
-            border: 1px solid lightgrey;
-            border-radius: 4px;
-            outline : none;
-            font-size: 15px;
-            appearance: none;
-            width: 100px;
+/*  기본 검색창, 버튼, 입력 필드 */
+.selectStyle {
+    padding: 5px;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    outline: none;
+    font-size: 15px;
+    appearance: none;
+    width: 100px;
+}
 
-		}
-    .inputStyle{
-        padding:10px;
-        border: 1px solid lightgrey;
-        border-radius: 5px;
-    }
-    .btnStyle{
-        border-radius: 5px;
-        border : 1px, solid #F6F5F2;
-        background:#F6F5F2;
-        width: 100px;
-    }
+.inputStyle {
+    padding: 10px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
 
-    .selectStyle:hover,
-    .inputStyle:hover,
-    .btnStyle:hover{
-        outline :none;
-        border: 2px solid #F0EBE3;
-    }
+.btnStyle {
+    border-radius: 5px;
+    border: 1px solid #F6F5F2;
+    background: #F6F5F2;
+    width: 100px;
+}
 
-  .tableStyle {
+.selectStyle:hover,
+.inputStyle:hover,
+.btnStyle:hover {
+    outline: none;
+    border: 2px solid #F0EBE3;
+}
+
+/* 테이블*/
+.tableStyle {
     background: #fdfdfb; 
-   	border-collapse: separate; 
+    border-collapse: separate; 
     border-spacing: 0;
     border-radius: 10px; 
     overflow: hidden; 
-    border: 1px solid #ddd!important;
+    border: 1px solid #ddd !important;
     table-layout: fixed;
-
+    width: 100%;
 }
 
-		.tableStyle th, 
-		.tableStyle td {
-		    border: 1px solid #F6F5F2!important;
-		}
+.tableStyle th, 
+.tableStyle td {
+    border: 1px solid #F6F5F2 !important;
+}
 
-		.table.table-hover > tbody > tr:hover {
-		    background-color: #F0EBE3; /* 마우스 오버 시 부드러운 오렌지 톤 */
-		}
+.table.table-hover > tbody > tr:hover {
+    background-color: #F0EBE3; 
+}
 
-      th,
-      td{
-      height: 50px;
-      }
+th, td {
+    height: 50px;
+}
 
-      .aStyle{
-     	 text-decoration: none;
-    	outline: none; 
-    	padding:10px;
-    	color : black;
-    	font-weight : bold;
-      }
-      .aStyle:visited{
-      	color:gray;
-      }
+/* 한 줄 정렬 */
+.title-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    max-width: 450px; 
+    overflow: hidden;
+}
+
+.title-text {
+    flex: 1; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.icon-container i {
+    margin-left: 5px;
+}
+
+/*제목 클릭 */
+.aStyle {
+    text-decoration: none;
+    outline: none; 
+    padding: 10px;
+    color: black;
+    font-weight: bold;
+    display: inline-block;
+    max-width: 100%;
+}
+
+.aStyle:visited {
+    color: gray;
+}
