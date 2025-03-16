@@ -25,7 +25,7 @@
 $(function(){
 	
 	var currentPage = 1;
-	var size = 4;//테스트 위해 임시로 줄여둠
+	var size = 16;//테스트 위해 임시로 줄여둠
 	
 	//목록 불러오기
 	function loadList() {
